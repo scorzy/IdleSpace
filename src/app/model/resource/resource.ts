@@ -15,6 +15,7 @@ export class Resource extends AbstractUnlockable implements ISpendable {
   c = new Decimal(0);
   endIn: number = Number.POSITIVE_INFINITY;
   isEnding = false;
+  isNew = false;
 
   products = new Array<Production>();
   generators = new Array<Production>();

@@ -1,0 +1,41 @@
+.qta {
+  // float: right;
+}
+@media only screen and (max-width: 768px) {
+  .resName {
+    display: inline-block;
+    padding-right: 0.5rem;
+  }
+
+  a {
+    padding-left: 0.3rem;
+  }
+  .clr-treenode-content clr-icon,
+  .clr-treenode-content .clr-icon {
+    margin-right: 0;
+  }
+
+  .clr-col-xs-12 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .resName {
+    display: inline-block;
+    width: 50%;
+  }
+
+  a {
+    padding-left: 0.5rem;
+  }
+}
+
+.perSec {
+  text-align: right;
+  width: 25%;
+}
+:host /deep/ .nav-link {
+  height: 1.1rem;
+  line-height: 1.1rem;
+}

@@ -2,10 +2,13 @@ import { Resource } from "./resource";
 import { ISalvable } from "../base/ISalvable";
 import isArray from "lodash-es/isArray";
 import { solveEquation } from "ant-utils";
+import { ResourceGroup } from "./resourceGroup";
 
 export class ResourceManager implements ISalvable {
   unlockedResources: Resource[];
   allResources: Resource[];
+  tierGroups: ResourceGroup[];
+  unlockedTierGroups: ResourceGroup[];
 
   // #region Resources
   metal: Resource;
@@ -61,7 +64,6 @@ export class ResourceManager implements ISalvable {
     this.tier2 = [this.metalX2, this.crystalX2, this.alloyX2];
     this.tier3 = [this.metalX3, this.crystalX3, this.alloyX3];
 
-
     this.allResources = [
       this.metal,
       this.crystal,
@@ -82,11 +84,20 @@ export class ResourceManager implements ISalvable {
       r.unlocked = true;
     });
 
+    this.tierGroups = [
+      new ResourceGroup("1", "Tier 1", "", this.tier1),
+      new ResourceGroup("2", "Tier 2", "", this.tier2),
+      new ResourceGroup("3", "Tier 3", "", this.tier3)
+    ];
+
     this.reloadList();
   }
-
   reloadList(): void {
     this.unlockedResources = this.allResources.filter(r => r.unlocked);
+    this.tierGroups.forEach(tg => tg.reload());
+    this.unlockedTierGroups = this.tierGroups.filter(
+      u => u.unlockedResources.filter.length > 0
+    );
   }
   loadPolynomial(): void {
     for (const unit of this.unlockedResources) {

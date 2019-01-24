@@ -6,9 +6,9 @@ describe("Resource", () => {
   let res3: Resource;
 
   beforeEach(() => {
-    res1 = new Resource("1");
-    res2 = new Resource("1");
-    res3 = new Resource("2");
+    res1 = new Resource("m");
+    res2 = new Resource("m");
+    res3 = new Resource("e");
   });
   it("Save 1", () => {
     res1.quantity = new Decimal(10);

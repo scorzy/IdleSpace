@@ -9,6 +9,7 @@ declare let LZString: any;
 export class MainService {
   zipWorker: ITypedWorker<CompressRequest, CompressRequest>;
   game: Game;
+  show = false;
 
   constructor() {
     this.zipWorker = createWorker({
@@ -17,6 +18,10 @@ export class MainService {
       onError: error => {},
       importScripts: ["http://localhost:4200/lz-string.min.js"]
     });
+  }
+  start() {
+    this.game = new Game();
+    this.show = true;
   }
 
   comp(input: CompressRequest, cb: (_: CompressRequest) => void): void {

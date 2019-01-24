@@ -13,10 +13,10 @@ describe("ResourceManager", () => {
     }
   });
   it("loadPolynomial", () => {
-    const res1 = new Resource("1");
-    const res2 = new Resource("2");
-    const res3 = new Resource("3");
-    const res4 = new Resource("4");
+    const res1 = new Resource("m");
+    const res2 = new Resource("c");
+    const res3 = new Resource("e");
+    const res4 = new Resource("f");
 
     res1.addGenerator(res2);
     res2.addGenerator(res3);

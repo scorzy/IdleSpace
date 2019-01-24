@@ -1,0 +1,48 @@
+<a
+  [routerLink]="['./unit/' + res.id]"
+  clrVerticalNavLink
+  routerLinkActive="active"
+>
+  <span class="clr-row clr-justify-content-between">
+    <span class="resName">
+      {{ res.name }}
+      <!-- <clr-icon
+        class="is-info is-solid"
+        shape="angle"
+        *ngIf="!isMalus && team"
+        (click)="unit.teamAction.buy()"
+      ></clr-icon> -->
+      <!-- <clr-icon
+        class="is-info is-solid"
+        shape="angle-double"
+        *ngIf="!isMalus && twin"
+        (click)="unit.twinAction.buy()"
+      ></clr-icon> -->
+      <clr-icon
+        class="is-warning is-solid"
+        shape="pause"
+        *ngIf="res.efficiency <= 0"
+        (click)="unit.efficiency = 100"
+      ></clr-icon>
+      <clr-icon
+        class="is-error is-error is-solid"
+        shape="exclamation-triangle"
+        *ngIf="res.isEnding"
+      ></clr-icon>
+      <clr-icon
+        class="is-info is-solid"
+        shape="info-standard"
+        *ngIf="os.showI && res.isNew"
+      ></clr-icon>
+    </span>
+    <span *ngIf="res.quantity.abs().gt(0.001)" class="qta monospace">
+      {{ res.quantity | format }}
+    </span>
+    <!-- <span class="perSec monospace">
+      <span *ngIf="perSec.abs().gt(0.001)" [class.notEnough]="isEnding">
+        {{ res.perSec | format }}/s
+      </span>
+      &nbsp;
+    </span> -->
+  </span>
+</a>

@@ -1,0 +1,50 @@
+<clr-vertical-nav
+  [clrVerticalNavCollapsible]="true"
+  [clr-nav-level]="2"
+  class="nav-trigger--bottom"
+>
+  <clr-vertical-nav-group
+    [(clrVerticalNavGroupExpanded)]="unitGroup.isExpanded"
+    routerLinkActive="active"
+    *ngFor="
+      let unitGroup of ms.game.resourceManager.unlockedTierGroups;
+      trackBy: getGroupId
+    "
+  >
+    <a
+      class="font-weight-bold"
+      clrVerticalNavLink
+      [routerLink]="['./group/' + unitGroup.id]"
+      [routerLinkActive]="'active'"
+    >
+      <clr-icon [attr.shape]="unitGroup.icon" clrVerticalNavIcon></clr-icon>
+      {{ unitGroup.name }}
+      <!-- <clr-icon
+        class="is-error is-solid"
+        shape="exclamation-triangle"
+        *ngIf="unitGroup.isEnding"
+      ></clr-icon>
+      <clr-icon
+        class="is-info is-solid"
+        shape="angle"
+        *ngIf="unitGroup.upTeam"
+      ></clr-icon>
+      <clr-icon
+        class="is-info is-solid"
+        shape="angle-double"
+        *ngIf="unitGroup.upTwin"
+      ></clr-icon> -->
+    </a>
+
+    <clr-vertical-nav-group-children>
+      <ng-container *clrIfExpanded>
+        <app-res-line
+          *ngFor="let g of unitGroup.unlockedResources; trackBy: getResId"
+          [res]="g"
+        ></app-res-line>
+      </ng-container>
+    </clr-vertical-nav-group-children>
+  </clr-vertical-nav-group>
+</clr-vertical-nav>
+
+<router-outlet></router-outlet>
