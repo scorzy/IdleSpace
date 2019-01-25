@@ -1,0 +1,11 @@
+<h1>{{ res?.name }}</h1>
+
+<clr-tabs *ngIf="res">
+  <clr-tab>
+    <button clrTabLink id="link1">Overview</button>
+    <clr-tab-content id="content1">
+      <!-- <app-unit [unit]="unit"></app-unit> -->
+      <app-resource-overview [res]="res"></app-resource-overview>
+    </clr-tab-content>
+  </clr-tab>
+</clr-tabs>

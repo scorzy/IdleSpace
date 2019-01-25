@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, HostBinding } from "@angular/core";
 import { createWorker, ITypedWorker } from "typed-web-workers";
 import { Game } from "./model/game";
 declare let LZString: any;
@@ -10,6 +10,7 @@ export class MainService {
   zipWorker: ITypedWorker<CompressRequest, CompressRequest>;
   game: Game;
   show = false;
+  lastUnitUrl = "/home/res/m";
 
   constructor() {
     this.zipWorker = createWorker({
