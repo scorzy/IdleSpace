@@ -2,23 +2,22 @@ import {
   Component,
   OnInit,
   ChangeDetectionStrategy,
-  HostBinding,
-  ChangeDetectorRef,
-  OnDestroy
+  Input,
+  OnDestroy,
+  ChangeDetectorRef
 } from "@angular/core";
-import { MainService } from "../main.service";
-import { ResourceGroup } from "../model/resource/resourceGroup";
+import { Resource } from "../..//model/resource/resource";
 import { Subscription } from "rxjs";
+import { MainService } from "../../main.service";
 
 @Component({
-  selector: "app-home",
-  templateUrl: "./home.component.html",
-  styleUrls: ["./home.component.scss"],
+  selector: "app-tab",
+  templateUrl: "./tab.component.html",
+  styleUrls: ["./tab.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HomeComponent implements OnInit, OnDestroy {
-  @HostBinding("class")
-  contentContainer = "content-container";
+export class TabComponent implements OnInit, OnDestroy {
+  @Input() res: Resource;
   private subscriptions: Subscription[] = [];
 
   constructor(public ms: MainService, private cd: ChangeDetectorRef) {}
@@ -32,12 +31,5 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
-  }
-
-  getGroupId(index, list: ResourceGroup) {
-    return list.id;
-  }
-  getResId(index, res: ResourceGroup) {
-    return res.id;
   }
 }

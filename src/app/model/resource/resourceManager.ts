@@ -32,6 +32,8 @@ export class ResourceManager implements ISalvable {
   // #endregion
 
   //#region group
+  materials: Resource[];
+  matGroup: ResourceGroup;
   tier1: Resource[];
   tier2: Resource[];
   tier3: Resource[];
@@ -49,6 +51,10 @@ export class ResourceManager implements ISalvable {
     this.computing = new Resource("f");
 
     this.metalX1 = new Resource("m1");
+    this.metal.addGenerator(this.metalX1);
+    this.metalX1.unlocked = true;
+    this.metalX1.quantity = new Decimal(1);
+
     this.metalX2 = new Resource("m2");
     this.metalX3 = new Resource("m3");
 
@@ -60,6 +66,13 @@ export class ResourceManager implements ISalvable {
     this.alloyX2 = new Resource("a2");
     this.alloyX3 = new Resource("a3");
 
+    this.materials = [
+      this.metal,
+      this.crystal,
+      this.alloy,
+      this.energy,
+      this.computing
+    ];
     this.tier1 = [this.metalX1, this.crystalX1, this.alloyX1];
     this.tier2 = [this.metalX2, this.crystalX2, this.alloyX2];
     this.tier3 = [this.metalX3, this.crystalX3, this.alloyX3];
@@ -83,8 +96,9 @@ export class ResourceManager implements ISalvable {
     this.allResources.forEach(r => {
       r.unlocked = true;
     });
-
+    this.matGroup = new ResourceGroup("0", "Materials", "", this.materials);
     this.tierGroups = [
+      this.matGroup,
       new ResourceGroup("1", "Tier 1", "", this.tier1),
       new ResourceGroup("2", "Tier 2", "", this.tier2),
       new ResourceGroup("3", "Tier 3", "", this.tier3)

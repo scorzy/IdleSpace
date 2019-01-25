@@ -1,0 +1,27 @@
+:host /deep/ .nav .nav-link {
+  line-height: 0.8rem;
+}
+:host /deep/ .matTab {
+  max-width: 200px;
+  min-width: 130px;
+  text-align: left;
+  width: 100%;
+}
+
+ul {
+  min-height: fit-content;
+}
+
+li {
+  padding-left: 1rem;
+}
+:host /deep/ .navMat {
+  padding-left: 0 !important;
+}
+
+.nav {
+  height: auto;
+}
+:host /deep/ .alert {
+  margin-top: auto;
+}

@@ -8,3 +8,8 @@
 
 // Clarity Component SCSS
 @import "../node_modules/@clr/ui/src/utils/components.clarity";
+
+.monospace {
+  font-family: RobotoMono, Consolas, Monaco, Courier, monospace !important;
+  font-size: 90%;
+}

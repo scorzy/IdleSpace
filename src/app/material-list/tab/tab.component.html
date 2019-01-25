@@ -1,0 +1,22 @@
+<a
+  [routerLink]="['/home/res/' + res.id]"
+  class="nav-link matLink clr-row clr-justify-content-between"
+  routerLinkActive="active"
+  [ngClass]="{ red: res.isEnding }"
+>
+  <span>
+    <clr-icon
+      class="is-error is-solid"
+      shape="exclamation-triangle"
+      *ngIf="res.isEnding"
+    ></clr-icon>
+    <span class="first small">{{ res.name }}</span> <br />
+    <span class="monospace">{{ res.quantity | format }}</span>
+  </span>
+
+  <span class="perSecTab  monospace clr-col clr-align-self-end">
+    <span *ngIf="res.c.abs().gt(0.001)" [ngClass]="{ notEnough: res.c.lt(0) }">
+      {{ res.c | format }}/s
+    </span>
+  </span>
+</a>

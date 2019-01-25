@@ -1,7 +1,10 @@
 import { Injectable, HostBinding } from "@angular/core";
 import { createWorker, ITypedWorker } from "typed-web-workers";
 import { Game } from "./model/game";
+import { Emitters } from "./emitters";
 declare let LZString: any;
+
+const UP_INTERVAL = 250; // 4 fps
 
 @Injectable({
   providedIn: "root"
@@ -11,6 +14,8 @@ export class MainService {
   game: Game;
   show = false;
   lastUnitUrl = "/home/res/m";
+  last: number;
+  em = new Emitters();
 
   constructor() {
     this.zipWorker = createWorker({
@@ -23,6 +28,15 @@ export class MainService {
   start() {
     this.game = new Game();
     this.show = true;
+    setInterval(this.update.bind(this), UP_INTERVAL);
+  }
+
+  update() {
+    const now = Date.now();
+    const diff = (now - this.last) / 1000;
+    this.game.update(diff);
+    this.last = now;
+    this.em.updateEmitter.emit(diff);
   }
 
   comp(input: CompressRequest, cb: (_: CompressRequest) => void): void {

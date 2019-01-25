@@ -1,0 +1,30 @@
+<ul class="nav navMat" role="tablist">
+  <li
+    class="nav-item"
+    class="matTab"
+    *ngFor="
+      let g of ms.game.resourceManager.matGroup.unlockedResources;
+      trackBy: getResId
+    "
+  >
+    <app-tab [res]="g"></app-tab>
+  </li>
+
+  <!-- <li *ngIf="ms.game.firstEndingUnit">
+    <clr-alert
+      [clrAlertClosable]="false"
+      [clrAlertType]="
+        ms.game.firstEndingUnit.endIn < 3600000
+          ? 'alert-danger'
+          : 'alert-warning'
+      "
+    >
+      <div clr-alert-item class="alert-item">
+        <span class="alert-text">
+          {{ ms.game.firstEndingUnit.name }} is ending in
+          {{ ms.game.firstEndingUnit.endIn | endIn }}
+        </span>
+      </div>
+    </clr-alert>
+  </li> -->
+</ul>

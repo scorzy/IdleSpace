@@ -7,18 +7,19 @@ import {
   OnDestroy
 } from "@angular/core";
 import { MainService } from "../main.service";
-import { ResourceGroup } from "../model/resource/resourceGroup";
+import { Resource } from "../model/resource/resource";
 import { Subscription } from "rxjs";
 
 @Component({
-  selector: "app-home",
-  templateUrl: "./home.component.html",
-  styleUrls: ["./home.component.scss"],
+  selector: "app-material-list",
+  templateUrl: "./material-list.component.html",
+  styleUrls: ["./material-list.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class MaterialListComponent implements OnInit, OnDestroy {
   @HostBinding("class")
-  contentContainer = "content-container";
+  subNav = "sub-nav";
+
   private subscriptions: Subscription[] = [];
 
   constructor(public ms: MainService, private cd: ChangeDetectorRef) {}
@@ -34,10 +35,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
 
-  getGroupId(index, list: ResourceGroup) {
-    return list.id;
-  }
-  getResId(index, res: ResourceGroup) {
-    return res.id;
+  getResId(index, base: Resource) {
+    return base.id;
   }
 }

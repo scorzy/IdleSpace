@@ -11,6 +11,8 @@ import { ResLineComponent } from "./home/res-line/res-line.component";
 import { FormatPipe } from "./format.pipe";
 import { ResourceComponent } from "./resource/resource.component";
 import { ResourceOverviewComponent } from "./resource-overview/resource-overview.component";
+import { MaterialListComponent } from './material-list/material-list.component';
+import { TabComponent } from './material-list/tab/tab.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { ResourceOverviewComponent } from "./resource-overview/resource-overview
     ResLineComponent,
     FormatPipe,
     ResourceComponent,
-    ResourceOverviewComponent
+    ResourceOverviewComponent,
+    MaterialListComponent,
+    TabComponent
   ],
   imports: [
     BrowserAnimationsModule,
