@@ -4,6 +4,8 @@ import { ISalvable } from "./ISalvable";
 export abstract class AbstractUnlockable implements IUnlockable, ISalvable {
   id: string;
   unlocked: boolean;
+  name: string;
+  description: string;
   unlock(): boolean {
     this.unlocked = true;
     return this.unlocked;

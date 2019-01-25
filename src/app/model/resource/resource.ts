@@ -2,8 +2,13 @@ import { AbstractUnlockable } from "../base/AbstractUnlockable";
 import { ISpendable } from "../base/ISpendable";
 import { Production } from "../production";
 import { descriptions } from "../descriptions";
+import { IBuyable } from "../base/IBuyable";
+import { BuyAction } from "../actions/buyAction";
+import { MultiPrice } from "../prices/multiPrice";
+import { Multiplier } from "../base/multiplier";
 
-export class Resource extends AbstractUnlockable implements ISpendable {
+export class Resource extends AbstractUnlockable
+  implements ISpendable, IBuyable {
   name: string;
   description: string;
 
@@ -16,9 +21,13 @@ export class Resource extends AbstractUnlockable implements ISpendable {
   endIn: number = Number.POSITIVE_INFINITY;
   isEnding = false;
   isNew = false;
+  actions = new Array<BuyAction>();
 
   products = new Array<Production>();
   generators = new Array<Production>();
+  buyAction: BuyAction;
+
+  efficiencyMulti = new Array<Multiplier>();
 
   constructor(public id: string) {
     super();
@@ -36,6 +45,20 @@ export class Resource extends AbstractUnlockable implements ISpendable {
       this.unlocked && this.efficiency > Number.EPSILON && this.quantity.gt(0)
     );
   }
+  generateBuyAction(multiPrice: MultiPrice) {
+    this.buyAction = new BuyAction(this, multiPrice);
+    this.actions.push(this.buyAction);
+  }
+  reloadProd() {
+    let prodMulti = new Decimal(1);
+    this.efficiencyMulti.forEach(eff => {
+      prodMulti = prodMulti.plus(eff.getBonus());
+    });
+
+    this.products.forEach(prod => {
+      prod.prodPerSec = prod.ratio.times(prodMulti);
+    });
+  }
 
   reset(): void {
     super.reset();
@@ -47,11 +70,22 @@ export class Resource extends AbstractUnlockable implements ISpendable {
   getSave(): any {
     const data = super.getSave();
     if (!this.quantity.eq(0)) data.q = this.quantity;
+    if (this.actions.findIndex(act => act.unlocked) > -1) {
+      data.a = this.actions.filter(a => a.unlocked).map(a => a.getSave());
+    }
     return data;
   }
   load(data: any): boolean {
     if (!super.load(data)) return false;
     this.quantity = new Decimal("q" in data ? data.q : 0);
+    if ("a" in data) {
+      for (const actData of data.a) {
+        if ("i" in actData) {
+          const act = this.actions.find(a => a.id === actData.id);
+          if (act) act.load(actData);
+        }
+      }
+    }
     return true;
   }
 }

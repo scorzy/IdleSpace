@@ -16,6 +16,9 @@ export class ResourceManager implements ISalvable {
   alloy: Resource;
   energy: Resource;
   computing: Resource;
+  habitableSpace: Resource;
+  miningDistrict: Resource;
+  crystalDistrict: Resource;
 
   metalX1: Resource;
   metalX2: Resource;
@@ -28,7 +31,6 @@ export class ResourceManager implements ISalvable {
   alloyX1: Resource;
   alloyX2: Resource;
   alloyX3: Resource;
-
   // #endregion
 
   //#region group
@@ -51,14 +53,19 @@ export class ResourceManager implements ISalvable {
     this.computing = new Resource("f");
 
     this.metalX1 = new Resource("m1");
-    this.metal.addGenerator(this.metalX1);
+    this.metal.addGenerator(this.metalX1, 0.01);
     this.metalX1.unlocked = true;
+
     this.metalX1.quantity = new Decimal(1);
 
     this.metalX2 = new Resource("m2");
     this.metalX3 = new Resource("m3");
 
     this.crystalX1 = new Resource("c1");
+    this.crystal.addGenerator(this.crystalX1, 0.01);
+    this.crystalX1.unlocked = true;
+    this.crystalX1.quantity = new Decimal(1);
+
     this.crystalX2 = new Resource("c2");
     this.crystalX3 = new Resource("c3");
 
@@ -114,6 +121,10 @@ export class ResourceManager implements ISalvable {
     );
   }
   loadPolynomial(): void {
+    this.unlockedResources.forEach(res => {
+      res.reloadProd();
+    });
+
     for (const unit of this.unlockedResources) {
       unit.a = new Decimal(0);
       unit.b = new Decimal(0);
