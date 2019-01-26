@@ -8,9 +8,13 @@ export class Game {
     this.resourceManager = new ResourceManager();
   }
   update(diff: number): void {
-    this.resourceManager.loadPolynomial();
-    this.resourceManager.loadEndTime();
-    this.resourceManager.update(diff);
+    while (diff > 0) {
+      this.resourceManager.loadPolynomial();
+      let max = this.resourceManager.loadEndTime();
+      if (max > diff) max = diff;
+      diff -= max;
+      this.resourceManager.update(max);
+    }
   }
   save(): any {
     const save: any = {};

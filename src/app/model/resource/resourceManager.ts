@@ -156,7 +156,7 @@ export class ResourceManager implements ISalvable {
       unit.b = unit.b.div(2);
     }
   }
-  loadEndTime(): void {
+  loadEndTime(): number {
     this.maxTime = Number.POSITIVE_INFINITY;
     this.unitZero = null;
 
@@ -186,6 +186,7 @@ export class ResourceManager implements ISalvable {
         }
       }
     });
+    return this.maxTime;
   }
   /**
    * Update resources
