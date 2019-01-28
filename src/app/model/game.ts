@@ -9,11 +9,18 @@ export class Game {
   }
   update(diff: number): void {
     while (diff > 0) {
+      let resEnded = false;
       this.resourceManager.loadPolynomial();
       let max = this.resourceManager.loadEndTime();
-      if (max > diff) max = diff;
+      if (max > diff) {
+        max = diff;
+        resEnded = true;
+      }
       diff -= max;
       this.resourceManager.update(max);
+      if (resEnded) {
+        this.resourceManager.stopResource();
+      }
     }
   }
   save(): any {

@@ -14,7 +14,7 @@ export class Resource extends AbstractUnlockable
 
   unlocked = false;
   quantity = new Decimal(0);
-  efficiency = 1;
+  operativity = 1;
   a = new Decimal(0);
   b = new Decimal(0);
   c = new Decimal(0);
@@ -29,6 +29,12 @@ export class Resource extends AbstractUnlockable
 
   efficiencyMulti = new Array<Multiplier>();
 
+  isLimited = false;
+  isCapped = false;
+  limit = new Decimal(Number.POSITIVE_INFINITY);
+  limitMine: Resource;
+  workerPerMine = new Decimal(10);
+
   constructor(public id: string) {
     super();
     this.name = descriptions.resources[id][0];
@@ -42,7 +48,7 @@ export class Resource extends AbstractUnlockable
   }
   isActive(): boolean {
     return (
-      this.unlocked && this.efficiency > Number.EPSILON && this.quantity.gt(0)
+      this.unlocked && this.operativity > Number.EPSILON && this.quantity.gt(0)
     );
   }
   generateBuyAction(multiPrice: MultiPrice) {
@@ -58,6 +64,13 @@ export class Resource extends AbstractUnlockable
     this.products.forEach(prod => {
       prod.prodPerSec = prod.ratio.times(prodMulti);
     });
+
+    this.isCapped = this.isLimited && this.quantity.gte(this.limit);
+  }
+  reloadLimit() {
+    if (this.isLimited) {
+      this.limit = this.limitMine.quantity.times(this.workerPerMine);
+    }
   }
 
   reset(): void {
