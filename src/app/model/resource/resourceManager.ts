@@ -6,6 +6,7 @@ import { ResourceGroup } from "./resourceGroup";
 
 export class ResourceManager implements ISalvable {
   unlockedResources: Resource[];
+  limitedResources: Resource[];
   allResources: Resource[];
   tierGroups: ResourceGroup[];
   unlockedTierGroups: ResourceGroup[];
@@ -150,6 +151,7 @@ export class ResourceManager implements ISalvable {
   }
   reloadList(): void {
     this.unlockedResources = this.allResources.filter(r => r.unlocked);
+    this.limitedResources = this.limited.filter(r => r.unlocked);
     this.tierGroups.forEach(tg => tg.reload());
     this.unlockedTierGroups = this.tierGroups.filter(
       u => u.unlockedResources.filter.length > 0
@@ -203,11 +205,14 @@ export class ResourceManager implements ISalvable {
     this.maxTime = Number.POSITIVE_INFINITY;
     this.unitZero = null;
 
+    //  Reset
     this.unlockedResources.forEach(unit => {
       unit.endIn = Number.POSITIVE_INFINITY;
       unit.isEnding = false;
+      unit.fullIn = Number.POSITIVE_INFINITY;
     });
 
+    //  Load end times
     this.unlockedResources.forEach(unit => {
       const d = unit.quantity;
       if (unit.a.lt(0) || unit.b.lt(0) || unit.c.lt(0) || d.lt(0)) {
@@ -229,6 +234,31 @@ export class ResourceManager implements ISalvable {
         }
       }
     });
+
+    //  Load full times
+    this.limitedResources
+      .filter(r => !r.isCapped && !r.isEnding)
+      .forEach(unit => {
+        const d = unit.quantity.minus(unit.limit);
+        if (unit.a.gt(0) || unit.b.gt(0) || unit.c.gt(0)) {
+          const solution = solveEquation(unit.a, unit.b, unit.c, d).filter(s =>
+            s.gte(0)
+          );
+
+          if (solution.length > 0) {
+            const min = solution.reduce(
+              (p, c) => p.min(c),
+              new Decimal(Number.POSITIVE_INFINITY)
+            );
+            if (this.maxTime > min.toNumber() * 1000) {
+              this.maxTime = min.toNumber() * 1000;
+              this.unitZero = unit;
+            }
+            unit.fullIn = Math.min(min.times(1000).toNumber(), unit.fullIn);
+          }
+        }
+      });
+
     return this.maxTime;
   }
   /**
@@ -250,13 +280,14 @@ export class ResourceManager implements ISalvable {
     });
   }
   stopResource() {
-    if (this.unitZero) {
+    if (this.unitZero && this.unitZero.isEnding) {
       //  Stop consumers
       this.unitZero.generators
         .filter(p => p.ratio.lt(0))
         .forEach(p => {
           p.producer.operativity = 0;
         });
+      //  Stop consumers of producers
       this.unitZero.generators
         .filter(p => p.ratio.gt(0))
         .forEach(p => {
@@ -266,6 +297,9 @@ export class ResourceManager implements ISalvable {
               p2.producer.operativity = 0;
             });
         });
+    }
+    if (this.unitZero && !this.unitZero.isEnding) {
+      this.unitZero.isCapped = true;
     }
   }
 

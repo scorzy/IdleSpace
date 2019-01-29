@@ -31,6 +31,7 @@ export class Resource extends AbstractUnlockable
 
   isLimited = false;
   isCapped = false;
+  fullIn: number = Number.POSITIVE_INFINITY;
   limit = new Decimal(Number.POSITIVE_INFINITY);
   limitMine: Resource;
   workerPerMine = new Decimal(10);
