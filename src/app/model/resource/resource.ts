@@ -14,7 +14,7 @@ export class Resource extends AbstractUnlockable
 
   unlocked = false;
   quantity = new Decimal(0);
-  operativity = 1;
+  operativity = 100;
   a = new Decimal(0);
   b = new Decimal(0);
   c = new Decimal(0);
@@ -64,6 +64,7 @@ export class Resource extends AbstractUnlockable
 
     this.products.forEach(prod => {
       prod.prodPerSec = prod.ratio.times(prodMulti);
+      prod.prodPerSec = prod.prodPerSec.times(this.operativity / 100);
     });
 
     this.isCapped = this.isLimited && this.quantity.gte(this.limit);

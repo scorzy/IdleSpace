@@ -11,8 +11,9 @@ import { ResLineComponent } from "./home/res-line/res-line.component";
 import { FormatPipe } from "./format.pipe";
 import { ResourceComponent } from "./resource/resource.component";
 import { ResourceOverviewComponent } from "./resource-overview/resource-overview.component";
-import { MaterialListComponent } from './material-list/material-list.component';
-import { TabComponent } from './material-list/tab/tab.component';
+import { MaterialListComponent } from "./material-list/material-list.component";
+import { TabComponent } from "./material-list/tab/tab.component";
+import { Ng5SliderModule } from "ng5-slider";
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { TabComponent } from './material-list/tab/tab.component';
     BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
-    ClarityModule
+    ClarityModule,
+    Ng5SliderModule
   ],
   providers: [MainService],
   bootstrap: [AppComponent]

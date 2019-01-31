@@ -1,1 +1,13 @@
-<p>{{ res?.description }}</p>
+<div class="clr-row">
+  <div class="clr-col-sm-12 clr-col-md-6">
+    <h5>{{ res?.description }}</h5>
+
+    <div *ngIf="showSlider && res?.products.length > 0">
+      <h6>Operativity:</h6>
+      <ng5-slider
+        [(value)]="res.operativity"
+        [options]="sliderOptions"
+      ></ng5-slider>
+    </div>
+  </div>
+</div>

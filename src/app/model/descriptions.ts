@@ -1,16 +1,16 @@
 export const descriptions = {
   resources: {
-    m: ["Metal", ""],
-    c: ["Crystal", ""],
-    a: ["Alloy", ""],
-    e: ["Energy", ""],
-    f: ["Computing", ""],
+    m: ["Metal", "Metal"],
+    c: ["Crystal", "Crystal"],
+    a: ["Alloy", "Alloy"],
+    e: ["Energy", "Energy"],
+    f: ["Computing", "Computing"],
 
     mm: ["Metal Mine", ""],
     cm: ["Crystal Mine", ""],
     af: ["Alloy Foundry", ""],
 
-    m1: ["Metal 1", ""],
+    m1: ["Mining Drone", "Mining Drone"],
     m2: ["Metal 2", ""],
     m3: ["Metal 3", ""],
 

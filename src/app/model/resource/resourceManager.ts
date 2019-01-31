@@ -63,7 +63,7 @@ export class ResourceManager implements ISalvable {
     this.alloyFoundry = new Resource("af");
 
     this.metalX1 = new Resource("m1");
-    this.metal.addGenerator(this.metalX1, 0.01);
+    this.metal.addGenerator(this.metalX1);
     this.metalX1.unlocked = true;
 
     this.metalX1.quantity = new Decimal(1);
@@ -72,7 +72,7 @@ export class ResourceManager implements ISalvable {
     this.metalX3 = new Resource("m3");
 
     this.crystalX1 = new Resource("c1");
-    this.crystal.addGenerator(this.crystalX1, 0.01);
+    this.crystal.addGenerator(this.crystalX1);
     this.crystalX1.unlocked = true;
     this.crystalX1.quantity = new Decimal(1);
 

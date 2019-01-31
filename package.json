@@ -32,6 +32,7 @@
     "core-js": "^2.5.4",
     "lodash-es": "^4.17.11",
     "lz-string": "^1.4.4",
+    "ng5-slider": "^1.1.12",
     "normalize.css": "^8.0.1",
     "rxjs": "~6.3.3",
     "swarm-numberformat": "^0.4.0",

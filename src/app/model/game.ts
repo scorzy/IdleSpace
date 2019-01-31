@@ -1,4 +1,3 @@
-import { Resource } from "./resource/resource";
 import { ResourceManager } from "./resource/resourceManager";
 
 export class Game {
