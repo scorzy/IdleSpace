@@ -13,3 +13,13 @@
   font-family: RobotoMono, Consolas, Monaco, Courier, monospace !important;
   font-size: 90%;
 }
+.notEnough {
+  color: #c92100;
+
+  a:link :not(.noRed) {
+    color: #c92100;
+  }
+  a:visited :not(.noRed) {
+    color: #c92100;
+  }
+}

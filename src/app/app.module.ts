@@ -14,6 +14,15 @@ import { ResourceOverviewComponent } from "./resource-overview/resource-overview
 import { MaterialListComponent } from "./material-list/material-list.component";
 import { TabComponent } from "./material-list/tab/tab.component";
 import { Ng5SliderModule } from "ng5-slider";
+import { ActionComponent } from "./action/action.component";
+import { ActionHeaderComponent } from "./action/action-header/action-header.component";
+import { ButtonsComponent } from "./action/buttons/buttons.component";
+import { CantBuySignpostsComponent } from "./action/cant-buy-signposts/cant-buy-signposts.component";
+import { PriceLineComponent } from "./action/price-line/price-line.component";
+import { EndInPipe } from "./end-in.pipe";
+import { PolynomComponent } from "./polynom/polynom.component";
+import { FormsModule } from "@angular/forms";
+import { OptionsService } from "./options.service";
 
 @NgModule({
   declarations: [
@@ -24,16 +33,25 @@ import { Ng5SliderModule } from "ng5-slider";
     ResourceComponent,
     ResourceOverviewComponent,
     MaterialListComponent,
-    TabComponent
+    TabComponent,
+    ActionComponent,
+    ActionHeaderComponent,
+    ButtonsComponent,
+    CantBuySignpostsComponent,
+    PriceLineComponent,
+    EndInPipe,
+    PolynomComponent
   ],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
     ClarityModule,
-    Ng5SliderModule
+    Ng5SliderModule,
+    FormsModule
   ],
-  providers: [MainService],
-  bootstrap: [AppComponent]
+  providers: [MainService, OptionsService],
+  bootstrap: [AppComponent],
+  exports: [PolynomComponent]
 })
 export class AppModule {}

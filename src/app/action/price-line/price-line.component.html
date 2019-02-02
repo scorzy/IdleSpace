@@ -1,0 +1,30 @@
+<span [class.notEnough]="!canBuy">
+  <span class="monospace">{{price | format}}</span>
+  <!-- <a [routerLink]="'/nav/unit/'+unit.id"> {{unit.name}}</a>, -->
+
+  <clr-signpost>
+    <a clrSignpostTrigger>
+      {{unit.name}},
+    </a>
+    <clr-signpost-content *clrIfOpen>
+      <h3 style="margin-top: 0">{{unit.name}}</h3>
+      <p>
+        Quantity:
+        <span *ngIf="unit.quantity.abs().gt(0.001)"
+              class="qta monospace">
+          {{unit.quantity | format}}
+        </span>
+        <br />
+        <app-polynom [a]="unit.a"
+                     [b]="unit.b"
+                     [c]="unit.c">
+        </app-polynom>
+      </p>
+      <a [routerLink]="'/nav/unit/'+unit.id"
+         class="noRed">
+        Go to {{unit.name}}
+      </a>
+    </clr-signpost-content>
+  </clr-signpost>
+
+</span>

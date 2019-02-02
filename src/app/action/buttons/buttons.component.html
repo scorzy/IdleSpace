@@ -1,0 +1,67 @@
+<div *ngIf="!action.complete">
+  <input
+    *ngIf="!action.onlyOne; else one"
+    id="userNum"
+    [(ngModel)]="action.numWanted"
+    (change)="action.reload()"
+    type="number"
+    placeholder="1"
+    step="1"
+    min="1"
+    size="3"
+  />
+  <ng-template #one>1</ng-template>
+  <span>will cost: </span>
+  <app-price-line
+    *ngFor="let price of action.multiPrice.prices; trackBy: getPriceId"
+    [unit]="price.spendable"
+    [canBuy]="price.canBuyMulti"
+    [price]="price.multiCost"
+  ></app-price-line>
+</div>
+
+<div *ngIf="!action.complete" class="btn-group">
+  <button *ngIf="!action.canBuy && !canSkip" class="btn btn-sm w-100" disabled>
+    Can't buy.
+    <span *ngIf="action.showTime">
+      Available in {{ action.availableIn | endIn }}
+    </span>
+  </button>
+  <button
+    *ngIf="!action.canBuy && action.skippable && action.showTime && canSkip"
+    class="btn btn-primary btn-sm w-100"
+    (click)="skip()"
+  >
+    Can't buy. Skip {{ minuteSkip }} minutes
+  </button>
+  <app-cant-buy-signposts
+    *ngIf="action.showTime && !action.canBuy"
+    [action]="action"
+  ></app-cant-buy-signposts>
+
+  <button
+    *ngIf="action.canBuy"
+    class="btn btn-sm w-100"
+    (click)="buy(action.numWanted)"
+    [disabled]="!action.canBuyWanted"
+  >
+    Get
+    <span *ngIf="!action.isLimited || action.limit.gte(2)">{{
+      action.numWanted | format: true
+    }}</span>
+  </button>
+  <button
+    *ngIf="action.maxBuy.gt(3)"
+    class="btn btn-sm w-100"
+    (click)="buy(action.maxBuy.div(2).floor())"
+  >
+    Get {{ action.maxBuy.div(2).floor() | format: true }}
+  </button>
+  <button
+    *ngIf="action.maxBuy.gte(2)"
+    class="btn btn-sm w-100"
+    (click)="buy(action.maxBuy)"
+  >
+    Get {{ action.maxBuy | format: true }}
+  </button>
+</div>

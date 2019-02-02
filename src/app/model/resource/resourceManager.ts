@@ -3,6 +3,8 @@ import { ISalvable } from "../base/ISalvable";
 import isArray from "lodash-es/isArray";
 import { solveEquation } from "ant-utils";
 import { ResourceGroup } from "./resourceGroup";
+import { MultiPrice } from "../prices/multiPrice";
+import { Price } from "../prices/price";
 
 export class ResourceManager implements ISalvable {
   unlockedResources: Resource[];
@@ -115,6 +117,10 @@ export class ResourceManager implements ISalvable {
       rl.isLimited = true;
       rl.reloadLimit();
     });
+
+    this.metalX1.generateBuyAction(
+      new MultiPrice([new Price(this.metal, 100), new Price(this.crystal, 25)])
+    );
 
     this.allResources = [
       this.metal,
@@ -301,6 +307,11 @@ export class ResourceManager implements ISalvable {
     if (this.unitZero && !this.unitZero.isEnding) {
       this.unitZero.isCapped = true;
     }
+  }
+  reloadActions() {
+    this.unlockedResources.forEach(res => {
+      res.actions.forEach(act => act.reload());
+    });
   }
 
   getSave(): any {

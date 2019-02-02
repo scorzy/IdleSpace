@@ -34,6 +34,7 @@
     "no-empty": false,
     "no-empty-interface": true,
     "no-eval": true,
+    "no-implicit-dependencies": [true, ["src", "app"]],
     "no-inferrable-types": [true],
     "no-misused-new": true,
     "no-non-null-assertion": true,
@@ -60,6 +61,7 @@
     "use-life-cycle-interface": true,
     "use-pipe-transform-interface": true,
     "component-class-suffix": true,
-    "directive-class-suffix": true
+    "directive-class-suffix": true,
+    "semicolon": [true, "always", "ignore-bound-class-methods"]
   }
 }

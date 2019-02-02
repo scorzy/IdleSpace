@@ -5,6 +5,7 @@ import { IBuyable } from "../base/IBuyable";
 export class BuyAction extends AbstractAction {
   constructor(public buyable: IBuyable, multiPrice: MultiPrice) {
     super("B", multiPrice);
+    this.name = "Buy";
   }
 
   onBuy(number: Decimal): boolean {

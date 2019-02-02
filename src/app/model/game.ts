@@ -5,6 +5,9 @@ export class Game {
 
   constructor() {
     this.resourceManager = new ResourceManager();
+
+    this.resourceManager.metal.quantity = new Decimal(1000);
+    this.resourceManager.crystal.quantity = new Decimal(1000);
   }
   update(diff: number): void {
     while (diff > 0) {
@@ -21,6 +24,7 @@ export class Game {
         this.resourceManager.stopResource();
       }
     }
+    this.resourceManager.reloadActions();
   }
   save(): any {
     const save: any = {};

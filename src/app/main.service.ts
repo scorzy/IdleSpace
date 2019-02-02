@@ -22,7 +22,12 @@ export class MainService {
       workerFunction: this.comp,
       onMessage: this.onZip,
       onError: error => {},
-      importScripts: ["http://localhost:4200/lz-string.min.js"]
+      importScripts: [
+        document.location.protocol +
+          "//" +
+          document.location.host +
+          "/lz-string.min.js"
+      ]
     });
   }
   start() {

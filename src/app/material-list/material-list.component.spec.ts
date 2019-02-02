@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-
 import { MaterialListComponent } from "./material-list.component";
 import { FormatPipe } from "../format.pipe";
 import { RouterTestingModule } from "@angular/router/testing";
