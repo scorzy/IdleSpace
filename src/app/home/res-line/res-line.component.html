@@ -4,36 +4,39 @@
   routerLinkActive="active"
 >
   <span class="clr-row clr-justify-content-between">
-    <span class="resName">
-      {{ res.name }}
-      <!-- <clr-icon
+    <span>
+      <clr-icon [attr.shape]="res.shape" *ngIf="res.shape"></clr-icon>&nbsp;
+      <span class="resName">
+        {{ res.name }}
+        <!-- <clr-icon
         class="is-info is-solid"
         shape="angle"
         *ngIf="!isMalus && team"
         (click)="unit.teamAction.buy()"
       ></clr-icon> -->
-      <!-- <clr-icon
+        <!-- <clr-icon
         class="is-info is-solid"
         shape="angle-double"
         *ngIf="!isMalus && twin"
         (click)="unit.twinAction.buy()"
       ></clr-icon> -->
-      <clr-icon
-        class="is-warning is-solid"
-        shape="pause"
-        *ngIf="res.operativity <= 0"
-        (click)="unit.operativity = 100"
-      ></clr-icon>
-      <clr-icon
-        class="is-error is-error is-solid"
-        shape="exclamation-triangle"
-        *ngIf="res.isEnding"
-      ></clr-icon>
-      <clr-icon
-        class="is-info is-solid"
-        shape="info-standard"
-        *ngIf="os.showI && res.isNew"
-      ></clr-icon>
+        <clr-icon
+          class="is-warning is-solid"
+          shape="pause"
+          *ngIf="res.operativity <= 0"
+          (click)="unit.operativity = 100"
+        ></clr-icon>
+        <clr-icon
+          class="is-error is-error is-solid"
+          shape="exclamation-triangle"
+          *ngIf="res.isEnding"
+        ></clr-icon>
+        <clr-icon
+          class="is-info is-solid"
+          shape="info-standard"
+          *ngIf="os.showI && res.isNew"
+        ></clr-icon>
+      </span>
     </span>
     <span *ngIf="res.quantity.abs().gt(0.001)" class="qta monospace">
       {{ res.quantity | format }}

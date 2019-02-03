@@ -1,4 +1,10 @@
 <h1>
+  <clr-icon
+    [attr.shape]="res.shape"
+    *ngIf="res.shape"
+    size="48"
+    class="resIcon"
+  ></clr-icon>
   {{ res?.name }}
   <span class="monospace" style="margin-left: 1rem;">
     {{ res.quantity | format }}</span
@@ -7,13 +13,14 @@
     / {{ res.limit | format }}</span
   >
 </h1>
-
-<clr-tabs *ngIf="res">
-  <clr-tab>
-    <button clrTabLink id="link1">Overview</button>
-    <clr-tab-content id="content1">
-      <!-- <app-unit [unit]="unit"></app-unit> -->
-      <app-resource-overview [res]="res"></app-resource-overview>
-    </clr-tab-content>
-  </clr-tab>
-</clr-tabs>
+<div>
+  <clr-tabs *ngIf="res">
+    <clr-tab>
+      <button clrTabLink id="link1">Overview</button>
+      <clr-tab-content id="content1">
+        <!-- <app-unit [unit]="unit"></app-unit> -->
+        <app-resource-overview [res]="res"></app-resource-overview>
+      </clr-tab-content>
+    </clr-tab>
+  </clr-tabs>
+</div>

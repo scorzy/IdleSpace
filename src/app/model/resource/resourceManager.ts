@@ -8,6 +8,7 @@ import { Price } from "../prices/price";
 
 export class ResourceManager implements ISalvable {
   unlockedResources: Resource[];
+  unlockedProdResources: Resource[];
   limitedResources: Resource[];
   allResources: Resource[];
   tierGroups: ResourceGroup[];
@@ -54,17 +55,23 @@ export class ResourceManager implements ISalvable {
 
   constructor() {
     this.metal = new Resource("m");
+    this.metal.shape = "metal";
     this.metal.unlocked = true;
     this.crystal = new Resource("c");
+    this.crystal.shape = "crystal";
     this.alloy = new Resource("a");
+    this.alloy.shape = "alloy";
     this.energy = new Resource("e");
+    this.energy.shape = "energy";
     this.computing = new Resource("f");
+    this.computing.shape = "computing";
 
     this.metalMine = new Resource("mm");
     this.crystalMine = new Resource("cm");
     this.alloyFoundry = new Resource("af");
 
     this.metalX1 = new Resource("m1");
+    this.metalX1.shape = "metalx1";
     this.metal.addGenerator(this.metalX1);
     this.metalX1.unlocked = true;
 
@@ -74,6 +81,7 @@ export class ResourceManager implements ISalvable {
     this.metalX3 = new Resource("m3");
 
     this.crystalX1 = new Resource("c1");
+    this.crystalX1.shape = "crystalx1";
     this.crystal.addGenerator(this.crystalX1);
     this.crystalX1.unlocked = true;
     this.crystalX1.quantity = new Decimal(1);
@@ -160,6 +168,9 @@ export class ResourceManager implements ISalvable {
   }
   reloadList(): void {
     this.unlockedResources = this.allResources.filter(r => r.unlocked);
+    this.unlockedProdResources = this.unlockedResources.filter(
+      r => r.generators.length > 0 || r.products.length > 0
+    );
     this.limitedResources = this.limited.filter(r => r.unlocked);
     this.tierGroups.forEach(tg => tg.reload());
     this.unlockedTierGroups = this.tierGroups.filter(
@@ -167,11 +178,11 @@ export class ResourceManager implements ISalvable {
     );
   }
   loadPolynomial(): void {
-    this.unlockedResources.forEach(res => {
+    this.unlockedProdResources.forEach(res => {
       res.reloadProd();
     });
 
-    for (const unit of this.unlockedResources) {
+    for (const unit of this.unlockedProdResources) {
       unit.a = new Decimal(0);
       unit.b = new Decimal(0);
       unit.c = new Decimal(0);
@@ -215,14 +226,14 @@ export class ResourceManager implements ISalvable {
     this.unitZero = null;
 
     //  Reset
-    this.unlockedResources.forEach(unit => {
+    this.unlockedProdResources.forEach(unit => {
       unit.endIn = Number.POSITIVE_INFINITY;
       unit.isEnding = false;
       unit.fullIn = Number.POSITIVE_INFINITY;
     });
 
     //  Load end times
-    this.unlockedResources.forEach(unit => {
+    this.unlockedProdResources.forEach(unit => {
       const d = unit.quantity;
       if (unit.a.lt(0) || unit.b.lt(0) || unit.c.lt(0) || d.lt(0)) {
         const solution = solveEquation(unit.a, unit.b, unit.c, d).filter(s =>

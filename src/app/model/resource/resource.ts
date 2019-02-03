@@ -11,6 +11,7 @@ export class Resource extends AbstractUnlockable
   implements ISpendable, IBuyable {
   name: string;
   description: string;
+  shape: string;
 
   unlocked = false;
   quantity = new Decimal(0);

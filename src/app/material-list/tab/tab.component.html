@@ -6,11 +6,16 @@
 >
   <span>
     <clr-icon
+      [attr.shape]="res.shape"
+      *ngIf="res.shape"
+      class="resIcon"
+    ></clr-icon>
+    <clr-icon
       class="is-error is-solid"
       shape="exclamation-triangle"
       *ngIf="res.isEnding"
     ></clr-icon>
-    <span class="first small">{{ res.name }}</span> <br />
+    <!-- <span class="first">{{ res.name }}</span> <br /> -->
     <span class="monospace">{{ res.quantity | format }}</span>
   </span>
 
