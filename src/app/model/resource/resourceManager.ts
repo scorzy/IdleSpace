@@ -113,6 +113,9 @@ export class ResourceManager implements ISalvable {
     this.metalX1.limitMine = this.metalMine;
     this.crystalX1.limitMine = this.crystalMine;
     this.alloyX1.limitMine = this.alloyFoundry;
+    this.metalMine.quantity = new Decimal(1);
+    this.crystalMine.quantity = new Decimal(1);
+    this.alloyFoundry.quantity = new Decimal(1);
     this.limited.forEach(rl => {
       rl.isLimited = true;
       rl.reloadLimit();

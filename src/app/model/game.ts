@@ -6,8 +6,8 @@ export class Game {
   constructor() {
     this.resourceManager = new ResourceManager();
 
-    this.resourceManager.metal.quantity = new Decimal(1000);
-    this.resourceManager.crystal.quantity = new Decimal(1000);
+    this.resourceManager.metal.quantity = new Decimal(10000);
+    this.resourceManager.crystal.quantity = new Decimal(10000);
   }
   update(diff: number): void {
     while (diff > 0) {

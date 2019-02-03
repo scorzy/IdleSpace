@@ -1,4 +1,12 @@
-<h1>{{ res?.name }}</h1>
+<h1>
+  {{ res?.name }}
+  <span class="monospace" style="margin-left: 1rem;">
+    {{ res.quantity | format }}</span
+  >
+  <span class="monospace" *ngIf="res.isLimited">
+    / {{ res.limit | format }}</span
+  >
+</h1>
 
 <clr-tabs *ngIf="res">
   <clr-tab>

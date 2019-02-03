@@ -64,4 +64,8 @@ export class ButtonsComponent implements OnInit, OnDestroy {
   skip() {
     // if (this.canSkip) this.ms.game.actMin.buy(new Decimal(this.minuteSkip));
   }
+  onNumChange() {
+    this.action.setNumWanted();
+    this.action.reload();
+  }
 }

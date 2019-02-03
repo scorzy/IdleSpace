@@ -3,7 +3,10 @@
     <h5>{{ res.description }}</h5>
 
     <div *ngIf="showSlider && res?.products.length > 0">
-      <h6>Operativity:</h6>
+      <h6>
+        Operativity:
+        <span class="monospace"> {{ res.operativity }}</span>
+      </h6>
       <ng5-slider
         [(value)]="res.operativity"
         [options]="sliderOptions"

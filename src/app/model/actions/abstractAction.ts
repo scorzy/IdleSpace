@@ -49,6 +49,10 @@ export abstract class AbstractAction extends AbstractUnlockable {
     }
     return false;
   }
+  setNumWanted() {
+    this.numWanted = new Decimal(this.numWantedUi);
+    this.numWanted = this.numWanted.max(0);
+  }
   reload() {
     this.multiPrice.reload(this.quantity, this.numWanted);
     this.canBuy = this.multiPrice.canBuy;

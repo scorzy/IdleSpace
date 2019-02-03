@@ -2,8 +2,8 @@
   <input
     *ngIf="!action.onlyOne; else one"
     id="userNum"
-    [(ngModel)]="action.numWanted"
-    (change)="action.reload()"
+    [(ngModel)]="action.numWantedUi"
+    (change)="onNumChange()"
     type="number"
     placeholder="1"
     step="1"
