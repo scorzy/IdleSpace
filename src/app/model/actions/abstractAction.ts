@@ -28,10 +28,13 @@ export abstract class AbstractAction extends AbstractUnlockable {
       if (this.multiPrice.buy(number, this.quantity)) {
         this.quantity = this.quantity.plus(number);
         this.onBuy(number);
+        this.afterBuy(number);
       }
     }
   }
   abstract onBuy(number: Decimal): boolean;
+  afterBuy(number: Decimal) {}
+
   unlock(): boolean {
     this.unlocked = true;
     return this.unlocked;

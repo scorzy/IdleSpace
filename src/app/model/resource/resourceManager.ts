@@ -5,6 +5,7 @@ import { solveEquation } from "ant-utils";
 import { ResourceGroup } from "./resourceGroup";
 import { MultiPrice } from "../prices/multiPrice";
 import { Price } from "../prices/price";
+import { BuyAction } from "../actions/buyAction";
 
 export class ResourceManager implements ISalvable {
   unlockedResources: Resource[];
@@ -57,12 +58,17 @@ export class ResourceManager implements ISalvable {
     this.metal = new Resource("m");
     this.metal.shape = "metal";
     this.metal.unlocked = true;
+
     this.crystal = new Resource("c");
     this.crystal.shape = "crystal";
+    this.crystal.unlocked = true;
+
     this.alloy = new Resource("a");
     this.alloy.shape = "alloy";
+
     this.energy = new Resource("e");
     this.energy.shape = "energy";
+
     this.computing = new Resource("f");
     this.computing.shape = "computing";
 
@@ -132,6 +138,37 @@ export class ResourceManager implements ISalvable {
     this.metalX1.generateBuyAction(
       new MultiPrice([new Price(this.metal, 100), new Price(this.crystal, 25)])
     );
+    //#region Mine
+    this.metalMine.unlocked = true;
+    const buyMetalMine = new BuyAction(
+      this.metalMine,
+      new MultiPrice([
+        new Price(this.metal, 1000),
+        new Price(this.metal, 250),
+        new Price(this.miningDistrict, 1, 1)
+      ])
+    );
+    buyMetalMine.afterBuy = number => {
+      this.metalX1.reloadLimit();
+    };
+    buyMetalMine.name = "Buy Metal Mine";
+    this.metalX1.actions.push(buyMetalMine);
+
+    this.crystalMine.unlocked = true;
+    const buyCrystalMine = new BuyAction(
+      this.crystalMine,
+      new MultiPrice([
+        new Price(this.metal, 1000),
+        new Price(this.metal, 500),
+        new Price(this.miningDistrict, 1, 1)
+      ])
+    );
+    buyCrystalMine.afterBuy = number => {
+      this.crystalX1.reloadLimit();
+    };
+    buyCrystalMine.name = "Buy Crystal Mine";
+    this.crystalX1.actions.push(buyCrystalMine);
+    //#endregion
 
     this.allResources = [
       this.metal,
@@ -342,6 +379,9 @@ export class ResourceManager implements ISalvable {
       if (resource) resource.load(res);
     }
 
+    this.limited.forEach(rl => {
+      rl.reloadLimit();
+    });
     return true;
   }
 }
