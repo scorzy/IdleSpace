@@ -17,24 +17,31 @@ import { MainService } from "../../main.service";
   styleUrls: ["./res-line.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ResLineComponent implements OnInit, OnDestroy {
-  @Input() res: Resource;
-  private subscriptions: Subscription[] = [];
+export class ResLineComponent {
+  @Input() id: string;
+  @Input() name: string;
+  @Input() shape: string;
+  @Input() operativity: number;
+  @Input() isEnding: boolean;
+  @Input() isNew: boolean;
+  @Input() quantity: Decimal;
+  @Input() c: Decimal;
+
+  // private subscriptions: Subscription[] = [];
 
   constructor(
     public os: OptionsService,
-    private ms: MainService,
-    private cd: ChangeDetectorRef
+    private ms: MainService // private cd: ChangeDetectorRef
   ) {}
 
-  ngOnInit() {
-    this.subscriptions.push(
-      this.ms.em.updateEmitter.subscribe(() => {
-        this.cd.markForCheck();
-      })
-    );
-  }
-  ngOnDestroy() {
-    this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
-  }
+  // ngOnInit() {
+  //   this.subscriptions.push(
+  //     this.ms.em.updateEmitter.subscribe(() => {
+  //       this.cd.markForCheck();
+  //     })
+  //   );
+  // }
+  // ngOnDestroy() {
+  //   this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
+  // }
 }

@@ -16,20 +16,25 @@ import { MainService } from "../../main.service";
   styleUrls: ["./tab.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TabComponent implements OnInit, OnDestroy {
-  @Input() res: Resource;
-  private subscriptions: Subscription[] = [];
+export class TabComponent {
+  @Input() id: string;
+  @Input() name: string;
+  @Input() shape: string;
+  @Input() isEnding: boolean;
+  @Input() quantity: Decimal;
+  @Input() c: Decimal;
+  // private subscriptions: Subscription[] = [];
 
-  constructor(public ms: MainService, private cd: ChangeDetectorRef) {}
+  constructor(public ms: MainService) {}
 
-  ngOnInit() {
-    this.subscriptions.push(
-      this.ms.em.updateEmitter.subscribe(() => {
-        this.cd.markForCheck();
-      })
-    );
-  }
-  ngOnDestroy() {
-    this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
-  }
+  // ngOnInit() {
+  //   this.subscriptions.push(
+  //     this.ms.em.updateEmitter.subscribe(() => {
+  //       this.cd.markForCheck();
+  //     })
+  //   );
+  // }
+  // ngOnDestroy() {
+  //   this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
+  // }
 }

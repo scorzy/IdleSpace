@@ -1,27 +1,23 @@
 <a
-  [routerLink]="['/home/res/' + res.id]"
+  [routerLink]="['/home/res/' + id]"
   class="nav-link matLink clr-row clr-justify-content-between"
   routerLinkActive="active"
-  [ngClass]="{ red: res.isEnding }"
+  [ngClass]="{ red: isEnding }"
 >
   <span>
-    <clr-icon
-      [attr.shape]="res.shape"
-      *ngIf="res.shape"
-      class="resIcon"
-    ></clr-icon>
+    <clr-icon [attr.shape]="shape" *ngIf="shape" class="resIcon"></clr-icon>
     <clr-icon
       class="is-error is-solid"
       shape="exclamation-triangle"
-      *ngIf="res.isEnding"
+      *ngIf="isEnding"
     ></clr-icon>
     <!-- <span class="first">{{ res.name }}</span> <br /> -->
-    <span class="monospace">{{ res.quantity | format }}</span>
+    <span class="monospace">{{ quantity | format }}</span>
   </span>
 
   <span class="perSecTab  monospace clr-col clr-align-self-end">
-    <span *ngIf="res.c.abs().gt(0.001)" [ngClass]="{ notEnough: res.c.lt(0) }">
-      {{ res.c | format }}/s
+    <span *ngIf="c.abs().gt(0.001)" [ngClass]="{ notEnough: c.lt(0) }">
+      {{ c | format }}/s
     </span>
   </span>
 </a>

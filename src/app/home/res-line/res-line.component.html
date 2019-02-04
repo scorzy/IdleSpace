@@ -1,13 +1,13 @@
 <a
-  [routerLink]="['/home/res/' + res.id]"
+  [routerLink]="['/home/res/' + id]"
   clrVerticalNavLink
   routerLinkActive="active"
 >
   <span class="clr-row clr-justify-content-between">
     <span class="resLeft">
-      <clr-icon [attr.shape]="res.shape" *ngIf="res.shape"></clr-icon>&nbsp;
+      <clr-icon [attr.shape]="shape" *ngIf="shape"></clr-icon>&nbsp;
       <span class="resName">
-        {{ res.name }}
+        {{ name }}
         <!-- <clr-icon
         class="is-info is-solid"
         shape="angle"
@@ -23,27 +23,27 @@
         <clr-icon
           class="is-warning is-solid"
           shape="pause"
-          *ngIf="res.operativity <= 0"
+          *ngIf="operativity <= 0"
           (click)="unit.operativity = 100"
         ></clr-icon>
         <clr-icon
           class="is-error is-error is-solid"
           shape="exclamation-triangle"
-          *ngIf="res.isEnding"
+          *ngIf="isEnding"
         ></clr-icon>
         <clr-icon
           class="is-info is-solid"
           shape="info-standard"
-          *ngIf="os.showI && res.isNew"
+          *ngIf="os.showI && isNew"
         ></clr-icon>
       </span>
     </span>
-    <span *ngIf="res.quantity.abs().gt(0.001)" class="qta monospace">
-      {{ res.quantity | format }}
+    <span *ngIf="quantity.abs().gt(0.001)" class="qta monospace">
+      {{ quantity | format }}
     </span>
     <span class="perSec monospace">
-      <span *ngIf="res.c.abs().gt(0.001)" [class.notEnough]="res.isEnding">
-        {{ res.c | format }}/s
+      <span *ngIf="c.abs().gt(0.001)" [class.notEnough]="isEnding">
+        {{ c | format }}/s
       </span>
       &nbsp;
     </span>

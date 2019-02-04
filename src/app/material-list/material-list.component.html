@@ -7,7 +7,14 @@
       trackBy: getResId
     "
   >
-    <app-tab [res]="g"></app-tab>
+    <app-tab
+      [id]="g.id"
+      [name]="g.name"
+      [shape]="g.shape"
+      [isEnding]="g.isEnding"
+      [quantity]="g.quantity"
+      [c]="g.c"
+    ></app-tab>
   </li>
 
   <!-- <li *ngIf="ms.game.firstEndingUnit">

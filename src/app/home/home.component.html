@@ -40,7 +40,14 @@
       <ng-container *clrIfExpanded>
         <app-res-line
           *ngFor="let g of unitGroup.unlockedResources; trackBy: getResId"
-          [res]="g"
+          [id]="g.id"
+          [name]="g.name"
+          [shape]="g.shape"
+          [operativity]="g.operativity"
+          [isEnding]="g.isEnding"
+          [isNew]="g.isNew"
+          [quantity]="g.quantity"
+          [c]="g.c"
         ></app-res-line>
       </ng-container>
     </clr-vertical-nav-group-children>

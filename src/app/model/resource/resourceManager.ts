@@ -78,26 +78,32 @@ export class ResourceManager implements ISalvable {
 
     this.metalX1 = new Resource("m1");
     this.metalX1.shape = "metalx1";
-    this.metal.addGenerator(this.metalX1);
     this.metalX1.unlocked = true;
-
     this.metalX1.quantity = new Decimal(1);
 
     this.metalX2 = new Resource("m2");
     this.metalX3 = new Resource("m3");
+    this.metal.addGenerator(this.metalX1);
+    this.metalX1.addGenerator(this.metalX2);
+    this.metalX2.addGenerator(this.metalX3);
 
     this.crystalX1 = new Resource("c1");
     this.crystalX1.shape = "crystalx1";
-    this.crystal.addGenerator(this.crystalX1);
     this.crystalX1.unlocked = true;
     this.crystalX1.quantity = new Decimal(1);
 
     this.crystalX2 = new Resource("c2");
     this.crystalX3 = new Resource("c3");
+    this.crystal.addGenerator(this.crystalX1);
+    this.crystalX1.addGenerator(this.crystalX2);
+    this.crystalX2.addGenerator(this.crystalX3);
 
     this.alloyX1 = new Resource("a1");
     this.alloyX2 = new Resource("a2");
     this.alloyX3 = new Resource("a3");
+    this.alloy.addGenerator(this.alloyX1);
+    this.alloyX1.addGenerator(this.alloyX2);
+    this.alloyX2.addGenerator(this.alloyX3);
 
     this.habitableSpace = new Resource("hs");
     this.miningDistrict = new Resource("md");
@@ -135,10 +141,21 @@ export class ResourceManager implements ISalvable {
       rl.reloadLimit();
     });
 
+    //#region Actions
+    //#region Buy
     this.metalX1.generateBuyAction(
       new MultiPrice([new Price(this.metal, 100), new Price(this.crystal, 25)])
     );
+    this.crystalX1.generateBuyAction(
+      new MultiPrice([new Price(this.metal, 100), new Price(this.crystal, 50)])
+    );
+    this.alloyX1.generateBuyAction(
+      new MultiPrice([new Price(this.metal, 100), new Price(this.crystal, 100)])
+    );
+    //#endregion
     //#region Mine
+
+    //  Metal Mine
     this.metalMine.unlocked = true;
     const buyMetalMine = new BuyAction(
       this.metalMine,
@@ -151,23 +168,40 @@ export class ResourceManager implements ISalvable {
     buyMetalMine.afterBuy = number => {
       this.metalX1.reloadLimit();
     };
-    buyMetalMine.name = "Buy Metal Mine";
+    buyMetalMine.name = "Buy " + this.metalMine.name;
     this.metalX1.actions.push(buyMetalMine);
 
+    //  Crystal Mine
     this.crystalMine.unlocked = true;
     const buyCrystalMine = new BuyAction(
       this.crystalMine,
       new MultiPrice([
         new Price(this.metal, 1000),
         new Price(this.metal, 500),
-        new Price(this.miningDistrict, 1, 1)
+        new Price(this.crystalDistrict, 1, 1)
       ])
     );
     buyCrystalMine.afterBuy = number => {
       this.crystalX1.reloadLimit();
     };
-    buyCrystalMine.name = "Buy Crystal Mine";
+    buyCrystalMine.name = "Buy " + this.crystalMine.name;
     this.crystalX1.actions.push(buyCrystalMine);
+
+    //  Alloy Foundry
+    const buyFoundry = new BuyAction(
+      this.alloyFoundry,
+      new MultiPrice([
+        new Price(this.metal, 1000),
+        new Price(this.metal, 1000),
+        new Price(this.habitableSpace, 1, 1)
+      ])
+    );
+    buyFoundry.afterBuy = number => {
+      this.crystalX1.reloadLimit();
+    };
+    buyFoundry.name = "Buy " + this.alloyFoundry.name;
+    this.alloyX1.actions.push(buyFoundry);
+    //#endregion
     //#endregion
 
     this.allResources = [

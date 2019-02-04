@@ -56,6 +56,7 @@ export class Resource extends AbstractUnlockable
   generateBuyAction(multiPrice: MultiPrice) {
     this.buyAction = new BuyAction(this, multiPrice);
     this.actions.push(this.buyAction);
+    this.buyAction.name = "Buy " + this.name;
   }
   reloadProd() {
     let prodMulti = new Decimal(1);
