@@ -29,6 +29,8 @@ export abstract class AbstractAction extends AbstractUnlockable {
         this.quantity = this.quantity.plus(number);
         this.onBuy(number);
         this.afterBuy(number);
+
+        this.reload();
       }
     }
   }
@@ -62,5 +64,8 @@ export abstract class AbstractAction extends AbstractUnlockable {
     this.canBuyWanted = this.multiPrice.canBuyWanted;
     this.availableIn = this.multiPrice.availableIn;
     this.maxBuy = this.multiPrice.maxBuy;
+  }
+  isCapped(): boolean {
+    return false;
   }
 }

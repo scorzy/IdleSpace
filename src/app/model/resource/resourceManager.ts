@@ -161,7 +161,7 @@ export class ResourceManager implements ISalvable {
       this.metalMine,
       new MultiPrice([
         new Price(this.metal, 1000),
-        new Price(this.metal, 250),
+        new Price(this.crystal, 250),
         new Price(this.miningDistrict, 1, 1)
       ])
     );
@@ -177,7 +177,7 @@ export class ResourceManager implements ISalvable {
       this.crystalMine,
       new MultiPrice([
         new Price(this.metal, 1000),
-        new Price(this.metal, 500),
+        new Price(this.crystal, 500),
         new Price(this.crystalDistrict, 1, 1)
       ])
     );
@@ -192,7 +192,7 @@ export class ResourceManager implements ISalvable {
       this.alloyFoundry,
       new MultiPrice([
         new Price(this.metal, 1000),
-        new Price(this.metal, 1000),
+        new Price(this.crystal, 1000),
         new Price(this.habitableSpace, 1, 1)
       ])
     );

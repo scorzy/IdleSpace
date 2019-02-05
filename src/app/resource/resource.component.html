@@ -6,10 +6,18 @@
     class="resIcon"
   ></clr-icon>
   {{ res?.name }}
-  <span class="monospace" style="margin-left: 1rem;">
+  <span
+    class="monospace"
+    style="margin-left: 1rem;"
+    [ngClass]="{ notEnough: res.isCapped }"
+  >
     {{ res.quantity | format }}</span
   >
-  <span class="monospace" *ngIf="res.isLimited">
+  <span
+    class="monospace"
+    *ngIf="res.isLimited"
+    [ngClass]="{ notEnough: res.isCapped }"
+  >
     / {{ res.limit | format }}</span
   >
 </h1>

@@ -1,13 +1,13 @@
 <clr-signpost>
   <clr-signpost-content *clrIfOpen>
     <h3 style="margin-top: 0">{{ action.name }}</h3>
-    <!-- <p>Available in {{ action.availableIn | endIn }}</p> -->
+    <p>Available in {{ action.availableIn | endIn }}</p>
 
     <div *ngFor="let cost of action.multiPrice.prices; trackBy: getPriceId">
       <h6>{{ cost.spendable.name }} {{ getVal(cost) }}%</h6>
-      <!-- <span *ngIf="!cost.canBuy"
+      <span *ngIf="!cost.canBuy"
         >Available in {{ cost.avIn.times(1000).toNumber() | endIn }}</span
-      > -->
+      >
       <div
         class="progress-static danger"
         [ngClass]="{ success: cost.canBuy, danger: !cost.canBuy }"

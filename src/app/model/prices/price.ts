@@ -7,6 +7,7 @@ export class Price {
   cost = new Decimal(0);
   avIn = new Decimal(Number.POSITIVE_INFINITY);
   multiCost = new Decimal(0);
+  singleCost = new Decimal(0);
   canBuyMulti = false;
 
   constructor(
@@ -37,6 +38,7 @@ export class Price {
     this.canBuy = this.maxBuy.gte(1);
 
     this.multiCost = this.getPrice(numWanted, bought);
+    this.singleCost = this.getPrice(new Decimal(1), bought);
     this.canBuyMulti = this.multiCost.lte(this.spendable.quantity);
   }
   buy(toBuy: Decimal, bought: Decimal): boolean {
@@ -47,13 +49,13 @@ export class Price {
     return true;
   }
   getTime(): Decimal {
-    if (this.cost.lte(this.spendable.quantity)) return new Decimal(0);
+    if (this.singleCost.lte(this.spendable.quantity)) return new Decimal(0);
     else {
       this.avIn = solveEquation(
         this.spendable.a,
         this.spendable.b,
         this.spendable.c,
-        this.spendable.quantity.minus(this.cost)
+        this.spendable.quantity.minus(this.singleCost)
       )
         .filter(s => s.gte(0))
         .reduce((p, c) => p.min(c), new Decimal(Number.POSITIVE_INFINITY));

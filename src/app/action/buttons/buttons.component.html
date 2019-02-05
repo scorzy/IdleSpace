@@ -21,14 +21,27 @@
 </div>
 
 <div *ngIf="!action.complete" class="btn-group">
-  <button *ngIf="!action.canBuy && !canSkip" class="btn btn-sm w-100" disabled>
+  <button
+    *ngIf="action.isCapped() || (!action.canBuy && !canSkip)"
+    class="btn btn-sm w-100"
+    disabled
+  >
     Can't buy.
-    <span *ngIf="action.showTime">
+    <span *ngIf="action.showTime && !action.isCapped()">
       Available in {{ action.availableIn | endIn }}
+    </span>
+    <span *ngIf="action.isCapped()">
+      Limit reach.
     </span>
   </button>
   <button
-    *ngIf="!action.canBuy && action.skippable && action.showTime && canSkip"
+    *ngIf="
+      !action.isCapped() &&
+      !action.canBuy &&
+      action.skippable &&
+      action.showTime &&
+      canSkip
+    "
     class="btn btn-primary btn-sm w-100"
     (click)="skip()"
   >

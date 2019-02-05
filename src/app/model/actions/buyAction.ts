@@ -6,6 +6,7 @@ export class BuyAction extends AbstractAction {
   constructor(public buyable: Resource, multiPrice: MultiPrice) {
     super("B", multiPrice);
     this.name = "Buy";
+    this.showTime = true;
   }
 
   buy(number: Decimal) {
@@ -31,6 +32,7 @@ export class BuyAction extends AbstractAction {
 
   reload() {
     if (this.buyable.isCapped) {
+      super.reload();
       this.canBuy = false;
       this.canBuyWanted = false;
       this.availableIn = Number.POSITIVE_INFINITY;
@@ -47,5 +49,8 @@ export class BuyAction extends AbstractAction {
     }
 
     super.reload();
+  }
+  isCapped(): boolean {
+    return this.buyable.isCapped;
   }
 }
