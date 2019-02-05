@@ -1,14 +1,28 @@
-import { Pipe, PipeTransform } from "@angular/core";
+import { Pipe, PipeTransform, OnDestroy } from "@angular/core";
 import { OptionsService } from "./options.service";
 
 @Pipe({
   name: "format"
 })
-export class FormatPipe implements PipeTransform {
-  constructor(public options: OptionsService) {}
+export class FormatPipe implements PipeTransform, OnDestroy {
+  private map: Map<string, string> = new Map<string, string>();
+  private interval: number;
 
-  transform(value: any, integer?: boolean, formatter?: any): any {
-    value = new Decimal(value);
+  constructor(public options: OptionsService) {
+    this.interval = window.setInterval(this.clear.bind(this), 2000);
+  }
+
+  transform(value1: any, integer?: boolean, formatter?: any): any {
+    const value = new Decimal(value1);
+
+    let index = "";
+    if (!formatter) {
+      index = value.toString().substring(0, 5) + integer;
+      console.log(index);
+      const ret1 = this.map.get(index);
+      if (ret1 !== undefined) return ret1;
+    }
+
     if (!formatter) formatter = this.options.formatter;
 
     let str = "";
@@ -38,6 +52,19 @@ export class FormatPipe implements PipeTransform {
       if (!this.options.usaFormat) str = str.replace(".", ",");
     }
 
-    return (value.lt(0) ? "-" : "") + str;
+    const ret = (value.lt(0) ? "-" : "") + str;
+
+    if (index !== "") {
+      this.map.set(index, ret);
+    }
+
+    return ret;
+  }
+
+  clear() {
+    if (this.map.entries.length > 100) this.map.clear();
+  }
+  ngOnDestroy(): void {
+    if (this.interval > 0) clearInterval(this.interval);
   }
 }
