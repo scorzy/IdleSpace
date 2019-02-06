@@ -14,12 +14,12 @@ export class Game {
       let resEnded = false;
       this.resourceManager.loadPolynomial();
       let max = this.resourceManager.loadEndTime();
-      if (max > diff) {
+      if (max < diff) {
         max = diff;
         resEnded = true;
       }
       diff -= max;
-      this.resourceManager.update(max);
+      if (max > 0) this.resourceManager.update(max);
       if (resEnded) {
         this.resourceManager.stopResource();
       }

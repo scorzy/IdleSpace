@@ -34,7 +34,7 @@ export class Resource extends AbstractUnlockable
   isCapped = false;
   fullIn: number = Number.POSITIVE_INFINITY;
   limit = new Decimal(Number.POSITIVE_INFINITY);
-  limitMine: Resource;
+  limitStorage: Resource;
   workerPerMine = new Decimal(10);
 
   constructor(public id: string) {
@@ -60,20 +60,26 @@ export class Resource extends AbstractUnlockable
   }
   reloadProd() {
     let prodMulti = new Decimal(1);
-    this.efficiencyMulti.forEach(eff => {
-      prodMulti = prodMulti.plus(eff.getBonus());
-    });
 
-    this.products.forEach(prod => {
-      prod.prodPerSec = prod.ratio.times(prodMulti);
-      prod.prodPerSec = prod.prodPerSec.times(this.operativity / 100);
-    });
+    if (this.operativity > 0) {
+      this.efficiencyMulti.forEach(eff => {
+        prodMulti = prodMulti.plus(eff.getBonus());
+      });
 
+      this.products.forEach(prod => {
+        prod.prodPerSec = prod.ratio.times(prodMulti);
+        prod.prodPerSec = prod.prodPerSec.times(this.operativity / 100);
+      });
+    } else {
+      this.products.forEach(prod => {
+        prod.prodPerSec = new Decimal(0);
+      });
+    }
     this.isCapped = this.isLimited && this.quantity.gte(this.limit);
   }
   reloadLimit() {
     if (this.isLimited) {
-      this.limit = this.limitMine.quantity.times(this.workerPerMine);
+      this.limit = this.limitStorage.quantity.times(this.workerPerMine);
     }
   }
 

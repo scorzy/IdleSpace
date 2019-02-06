@@ -4,9 +4,12 @@
       <clr-icon
         size="24"
         [attr.shape]="unit.shape"
-        *ngIf="unit.shape"
+        *ngIf="unit.shape; else name"
         class="resIcon"
       ></clr-icon>
+      <ng-template #name>
+        {{ unit.name }}
+      </ng-template>
 
       <span class="monospace">{{ price | format }}</span>
       <!-- <a [routerLink]="'/nav/unit/'+unit.id"> {{unit.name}}</a>, -->

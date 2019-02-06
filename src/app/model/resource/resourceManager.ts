@@ -77,24 +77,26 @@ export class ResourceManager implements ISalvable {
     this.alloyFoundry = new Resource("af");
 
     this.metalX1 = new Resource("m1");
-    this.metalX1.shape = "metalx1";
+    // this.metalX1.shape = "metalx1";
     this.metalX1.unlocked = true;
     this.metalX1.quantity = new Decimal(1);
 
     this.metalX2 = new Resource("m2");
     this.metalX3 = new Resource("m3");
     this.metal.addGenerator(this.metalX1);
+    this.energy.addGenerator(this.metalX1, -1);
     this.metalX1.addGenerator(this.metalX2);
     this.metalX2.addGenerator(this.metalX3);
 
     this.crystalX1 = new Resource("c1");
-    this.crystalX1.shape = "crystalx1";
+    // this.crystalX1.shape = "crystalx1";
     this.crystalX1.unlocked = true;
     this.crystalX1.quantity = new Decimal(1);
 
     this.crystalX2 = new Resource("c2");
     this.crystalX3 = new Resource("c3");
     this.crystal.addGenerator(this.crystalX1);
+    this.energy.addGenerator(this.crystalX1, -1);
     this.crystalX1.addGenerator(this.crystalX2);
     this.crystalX2.addGenerator(this.crystalX3);
 
@@ -102,6 +104,7 @@ export class ResourceManager implements ISalvable {
     this.alloyX2 = new Resource("a2");
     this.alloyX3 = new Resource("a3");
     this.alloy.addGenerator(this.alloyX1);
+    this.energy.addGenerator(this.alloyX1, -1);
     this.alloyX1.addGenerator(this.alloyX2);
     this.alloyX2.addGenerator(this.alloyX3);
 
@@ -130,9 +133,9 @@ export class ResourceManager implements ISalvable {
     this.tier3 = [this.metalX3, this.crystalX3, this.alloyX3];
 
     this.limited = [this.metalX1, this.crystalX1, this.alloyX1];
-    this.metalX1.limitMine = this.metalMine;
-    this.crystalX1.limitMine = this.crystalMine;
-    this.alloyX1.limitMine = this.alloyFoundry;
+    this.metalX1.limitStorage = this.metalMine;
+    this.crystalX1.limitStorage = this.crystalMine;
+    this.alloyX1.limitStorage = this.alloyFoundry;
     this.metalMine.quantity = new Decimal(1);
     this.crystalMine.quantity = new Decimal(1);
     this.alloyFoundry.quantity = new Decimal(1);
