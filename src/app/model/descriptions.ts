@@ -9,6 +9,7 @@ export const descriptions = {
     mm: ["Metal Mine", "Metal Mine"],
     cm: ["Crystal Mine", "Crystal Mine"],
     af: ["Alloy Foundry", "Alloy Foundry"],
+    ep: ["Energy Plant", "Energy Plant"],
 
     m1: ["Mining Drone", "Metal Mining Drone"],
     m2: ["Metal 2", ""],
@@ -21,6 +22,10 @@ export const descriptions = {
     a1: ["Alloy 1", ""],
     a2: ["Alloy 2", ""],
     a3: ["Alloy 3", ""],
+
+    e1: ["Energy 1", ""],
+    e2: ["Energy 2", ""],
+    e3: ["Energy 3", ""],
 
     hs: ["Habitable Space", ""],
     md: ["Mining District", ""],

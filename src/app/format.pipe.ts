@@ -17,7 +17,7 @@ export class FormatPipe implements PipeTransform, OnDestroy {
 
     let index = "";
     if (!formatter) {
-      index = value.toString().substring(0, 5) + integer;
+      index = value.toString().substring(0, 5) + !!integer;
       const ret1 = this.map.get(index);
       if (ret1 !== undefined) return ret1;
     }

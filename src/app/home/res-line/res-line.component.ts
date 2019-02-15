@@ -26,6 +26,7 @@ export class ResLineComponent {
   @Input() isNew: boolean;
   @Input() quantity: Decimal;
   @Input() c: Decimal;
+  @Input() unit: Resource;
 
   // private subscriptions: Subscription[] = [];
 
@@ -33,6 +34,11 @@ export class ResLineComponent {
     public os: OptionsService,
     private ms: MainService // private cd: ChangeDetectorRef
   ) {}
+
+  setOp100() {
+    this.unit.operativity = 100;
+    this.ms.reload();
+  }
 
   // ngOnInit() {
   //   this.subscriptions.push(

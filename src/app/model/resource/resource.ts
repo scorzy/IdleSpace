@@ -59,9 +59,8 @@ export class Resource extends AbstractUnlockable
     this.buyAction.name = "Buy " + this.name;
   }
   reloadProd() {
-    let prodMulti = new Decimal(1);
-
     if (this.operativity > 0) {
+      let prodMulti = new Decimal(1);
       this.efficiencyMulti.forEach(eff => {
         prodMulti = prodMulti.plus(eff.getBonus());
       });
@@ -71,6 +70,7 @@ export class Resource extends AbstractUnlockable
         prod.prodPerSec = prod.prodPerSec.times(this.operativity / 100);
       });
     } else {
+      //  Inactive
       this.products.forEach(prod => {
         prod.prodPerSec = new Decimal(0);
       });

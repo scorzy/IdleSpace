@@ -52,7 +52,7 @@ export class ButtonsComponent implements OnInit, OnDestroy {
   }
   buy(quantity: Decimal) {
     this.action.buy(quantity);
-    this.ms.em.updateEmitter.emit(1);
+    this.ms.reload();
   }
   // checkSkip() {
   //   this.canSkip = false;

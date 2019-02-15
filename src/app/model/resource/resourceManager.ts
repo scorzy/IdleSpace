@@ -6,7 +6,6 @@ import { ResourceGroup } from "./resourceGroup";
 import { MultiPrice } from "../prices/multiPrice";
 import { Price } from "../prices/price";
 import { BuyAction } from "../actions/buyAction";
-import { ClrSignpostModule } from "@clr/angular";
 
 export class ResourceManager implements ISalvable {
   unlockedResources: Resource[];
@@ -42,6 +41,11 @@ export class ResourceManager implements ISalvable {
   alloyX1: Resource;
   alloyX2: Resource;
   alloyX3: Resource;
+
+  energyPlant: Resource;
+  energyX1: Resource;
+  energyX2: Resource;
+  energyX3: Resource;
   // #endregion
   //#region group
   materials: Resource[];
@@ -58,6 +62,7 @@ export class ResourceManager implements ISalvable {
   maxTime: number = Number.POSITIVE_INFINITY;
 
   constructor() {
+    //#region Materials
     this.metal = new Resource("m");
     this.metal.shape = "metal";
     this.metal.unlocked = true;
@@ -72,19 +77,21 @@ export class ResourceManager implements ISalvable {
     this.energy = new Resource("e");
     this.energy.shape = "energy";
     this.energy.isLimited = true;
+    this.energy.limit = new Decimal(10);
 
     this.computing = new Resource("f");
     this.computing.shape = "computing";
+    //#endregion
 
     this.metalMine = new Resource("mm");
     this.crystalMine = new Resource("cm");
     this.alloyFoundry = new Resource("af");
+    this.energyPlant = new Resource("ep");
 
+    //      Metal
     this.metalX1 = new Resource("m1");
-    // this.metalX1.shape = "metalx1";
     this.metalX1.unlocked = true;
     this.metalX1.quantity = new Decimal(1);
-
     this.metalX2 = new Resource("m2");
     this.metalX3 = new Resource("m3");
     this.metal.addGenerator(this.metalX1);
@@ -92,11 +99,10 @@ export class ResourceManager implements ISalvable {
     this.metalX1.addGenerator(this.metalX2);
     this.metalX2.addGenerator(this.metalX3);
 
+    //      Crystal
     this.crystalX1 = new Resource("c1");
-    // this.crystalX1.shape = "crystalx1";
     this.crystalX1.unlocked = true;
     this.crystalX1.quantity = new Decimal(1);
-
     this.crystalX2 = new Resource("c2");
     this.crystalX3 = new Resource("c3");
     this.crystal.addGenerator(this.crystalX1);
@@ -104,6 +110,7 @@ export class ResourceManager implements ISalvable {
     this.crystalX1.addGenerator(this.crystalX2);
     this.crystalX2.addGenerator(this.crystalX3);
 
+    //      Alloy
     this.alloyX1 = new Resource("a1");
     this.alloyX2 = new Resource("a2");
     this.alloyX3 = new Resource("a3");
@@ -112,6 +119,17 @@ export class ResourceManager implements ISalvable {
     this.alloyX1.addGenerator(this.alloyX2);
     this.alloyX2.addGenerator(this.alloyX3);
 
+    //      Energy
+    this.energyX1 = new Resource("e1");
+    this.energyX2 = new Resource("e2");
+    this.energyX3 = new Resource("e3");
+    this.energyX1.unlocked = true;
+    this.energyX1.quantity = new Decimal(1);
+    this.energy.addGenerator(this.energyX1);
+    this.energyX1.addGenerator(this.energyX2);
+    this.energyX2.addGenerator(this.energyX3);
+
+    //      Space
     this.habitableSpace = new Resource("hs");
     this.miningDistrict = new Resource("md");
     this.crystalDistrict = new Resource("cd");
@@ -132,9 +150,9 @@ export class ResourceManager implements ISalvable {
       this.energy,
       this.computing
     ];
-    this.tier1 = [this.metalX1, this.crystalX1, this.alloyX1];
-    this.tier2 = [this.metalX2, this.crystalX2, this.alloyX2];
-    this.tier3 = [this.metalX3, this.crystalX3, this.alloyX3];
+    this.tier1 = [this.metalX1, this.crystalX1, this.alloyX1, this.energyX1];
+    this.tier2 = [this.metalX2, this.crystalX2, this.alloyX2, this.energyX2];
+    this.tier3 = [this.metalX3, this.crystalX3, this.alloyX3, this.energyX3];
 
     this.limited = [this.metalX1, this.crystalX1, this.alloyX1];
     this.metalX1.limitStorage = this.metalMine;
@@ -223,6 +241,9 @@ export class ResourceManager implements ISalvable {
       this.crystalX1,
       this.crystalX2,
       this.crystalX3,
+      this.energyX1,
+      this.energyX2,
+      this.energyX3,
       this.alloyX1,
       this.alloyX2,
       this.alloyX3,
@@ -259,7 +280,7 @@ export class ResourceManager implements ISalvable {
     this.unlockedProdResources.forEach(res => {
       res.reloadProd();
     });
-
+    this.energy.isCapped = false;
     for (const unit of this.unlockedProdResources) {
       unit.a = new Decimal(0);
       unit.b = new Decimal(0);
@@ -297,6 +318,10 @@ export class ResourceManager implements ISalvable {
       }
       unit.a = unit.a.div(6);
       unit.b = unit.b.div(2);
+    }
+
+    if (this.energy.quantity.gte(this.energy.limit)) {
+      this.energy.isCapped = true;
     }
   }
   loadEndTime(): number {
@@ -372,9 +397,12 @@ export class ResourceManager implements ISalvable {
           .plus(u.b.times(Decimal.pow(seconds, 2)))
           .plus(u.c.times(seconds));
       });
-    this.unlockedResources.forEach(u => {
-      u.quantity = u.quantity.max(0);
-    });
+    this.unlockedResources
+      .filter(u => u.quantity.lt(0))
+      .forEach(u => {
+        u.quantity = new Decimal(0);
+      });
+    this.energy.quantity = this.energy.quantity.min(this.energy.limit);
   }
   stopResource() {
     if (this.unitZero && this.unitZero.isEnding) {

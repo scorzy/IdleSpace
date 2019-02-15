@@ -23,7 +23,7 @@
           class="is-warning is-solid"
           shape="pause"
           *ngIf="operativity <= 0"
-          (click)="unit.operativity = 100"
+          (click)="setOp100()"
         ></clr-icon>
         <clr-icon
           class="is-error is-error is-solid"

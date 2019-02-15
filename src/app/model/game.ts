@@ -18,8 +18,8 @@ export class Game {
         max = diff;
         resEnded = true;
       }
-      diff -= max;
       max = Math.min(max, diff);
+      diff -= max;
       if (max > 0) this.resourceManager.update(max);
       if (resEnded) {
         this.resourceManager.stopResource();
@@ -27,6 +27,10 @@ export class Game {
     }
     this.resourceManager.loadPolynomial();
     this.resourceManager.reloadActions();
+  }
+  reload() {
+    this.resourceManager.loadPolynomial();
+    this.resourceManager.loadEndTime();
   }
   save(): any {
     const save: any = {};

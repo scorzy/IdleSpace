@@ -43,6 +43,10 @@ export class MainService {
     this.last = now;
     this.em.updateEmitter.emit(diff);
   }
+  reload() {
+    this.game.reload();
+    this.em.updateEmitter.emit(0);
+  }
 
   comp(input: CompressRequest, cb: (_: CompressRequest) => void): void {
     if (input.compress) {
