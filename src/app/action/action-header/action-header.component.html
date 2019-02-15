@@ -1,5 +1,13 @@
 <h6>
   <clr-icon *ngIf="action.shape" [attr.shape]="action.shape"></clr-icon>
   {{ action.name }}
-  <span>({{ quantity | format: true }})</span>
+  <span
+    >(
+    <app-formatted-quantity
+      [quantity]="quantity"
+      [integer]="true"
+      [monospace]="false"
+    ></app-formatted-quantity>
+    )</span
+  >
 </h6>

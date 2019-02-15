@@ -37,7 +37,8 @@ export class Price {
 
     this.canBuy = this.maxBuy.gte(1);
 
-    this.multiCost = this.getPrice(numWanted, bought);
+    const tempMultiCost = this.getPrice(numWanted, bought);
+    if (!tempMultiCost.eq(this.multiCost)) this.multiCost = tempMultiCost;
     this.singleCost = this.getPrice(new Decimal(1), bought);
     this.canBuyMulti = this.multiCost.lte(this.spendable.quantity);
   }

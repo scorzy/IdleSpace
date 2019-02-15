@@ -38,12 +38,13 @@
         {{ name }}
       </span>
     </span>
-    <span *ngIf="quantity.abs().gt(0.001)" class="qta monospace">
-      {{ quantity | format }}
+    <span *ngIf="quantity.abs().gt(0.001)" class="qta">
+      <app-formatted-quantity [quantity]="quantity"> </app-formatted-quantity>
     </span>
     <span class="perSec monospace">
       <span *ngIf="c.abs().gt(0.001)" [class.notEnough]="isEnding">
-        {{ c | format }}/s
+        <app-formatted-quantity [quantity]="c"> </app-formatted-quantity>
+        /s
       </span>
       &nbsp;
     </span>

@@ -23,6 +23,7 @@ import { EndInPipe } from "./end-in.pipe";
 import { PolynomComponent } from "./polynom/polynom.component";
 import { FormsModule } from "@angular/forms";
 import { OptionsService } from "./options.service";
+import { FormattedQuantityComponent } from './formatted-quantity/formatted-quantity.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { OptionsService } from "./options.service";
     CantBuySignpostsComponent,
     PriceLineComponent,
     EndInPipe,
-    PolynomComponent
+    PolynomComponent,
+    FormattedQuantityComponent
   ],
   imports: [
     BrowserAnimationsModule,

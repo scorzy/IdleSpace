@@ -4,7 +4,7 @@ import { Game } from "./model/game";
 import { Emitters } from "./emitters";
 declare let LZString: any;
 
-const UP_INTERVAL = 250; // 4 fps
+const UP_INTERVAL = 200; // 5 fps
 
 @Injectable({
   providedIn: "root"

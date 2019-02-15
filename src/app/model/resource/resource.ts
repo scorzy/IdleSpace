@@ -19,6 +19,9 @@ export class Resource extends AbstractUnlockable
   a = new Decimal(0);
   b = new Decimal(0);
   c = new Decimal(0);
+  private lastA = new Decimal(0);
+  private lastB = new Decimal(0);
+  private lastC = new Decimal(0);
   endIn: number = Number.POSITIVE_INFINITY;
   isEnding = false;
   isNew = false;
@@ -83,6 +86,25 @@ export class Resource extends AbstractUnlockable
     }
   }
 
+  setABC() {
+    if (this.lastA.eq(this.a)) {
+      this.a = this.lastA;
+    } else {
+      this.lastA = this.a;
+    }
+
+    if (this.lastB.eq(this.b)) {
+      this.b = this.lastB;
+    } else {
+      this.lastB = this.b;
+    }
+
+    if (this.lastC.eq(this.c)) {
+      this.c = this.lastC;
+    } else {
+      this.lastC = this.c;
+    }
+  }
   reset(): void {
     super.reset();
     this.quantity = new Decimal(0);

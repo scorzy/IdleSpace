@@ -42,7 +42,7 @@ export class BuyAction extends AbstractAction {
 
     if (this.buyable.isLimited) {
       const max = this.buyable.limit.minus(this.buyable.quantity);
-      this.numWanted = this.numWanted.min(max);
+      if (this.numWanted.gt(max)) this.numWanted = max;
       super.reload();
       this.maxBuy = this.maxBuy.min(max);
       return;

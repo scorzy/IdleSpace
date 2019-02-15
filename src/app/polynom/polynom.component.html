@@ -1,15 +1,15 @@
 <span class="monospace">
   <span *ngIf="a.abs().gt(0.01)" [class.notEnough]="a.lt(0)">
-    {{ a | format }}/s
+    <app-formatted-quantity [quantity]="c"> </app-formatted-quantity>/s
     <sup>3</sup>
   </span>
   <span *ngIf="!b.eq(0)" [class.notEnough]="b.lt(0)">
     <span *ngIf="b.gt(0)">+</span>
-    {{ b | format }}/s
+    <app-formatted-quantity [quantity]="c"> </app-formatted-quantity>/s
     <sup>2</sup>
   </span>
   <span *ngIf="!c.eq(0)" [class.notEnough]="c.lt(0)">
     <span *ngIf="c.gt(0)">+</span>
-    {{ c | format }}/s
+    <app-formatted-quantity [quantity]="c"> </app-formatted-quantity>/s
   </span>
 </span>

@@ -18,6 +18,7 @@ export class FormatPipe implements PipeTransform, OnDestroy {
     let index = "";
     if (!formatter) {
       index = value.toString().substring(0, 5) + !!integer;
+      // console.log(index);
       const ret1 = this.map.get(index);
       if (ret1 !== undefined) return ret1;
     }
@@ -47,7 +48,7 @@ export class FormatPipe implements PipeTransform, OnDestroy {
       });
     } else {
       str = formatter.formatShort(value.abs());
-      if (integer && value.abs().lessThan(100)) str = str.replace(/\.0+$/, "");
+      if (integer) str = str.replace(/\.0+$/, "");
       if (!this.options.usaFormat) str = str.replace(".", ",");
     }
 

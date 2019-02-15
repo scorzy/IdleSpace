@@ -59,22 +59,35 @@
     [disabled]="!action.canBuyWanted"
   >
     Get
-    <span *ngIf="!action.isLimited || action.limit.gte(2)">{{
-      action.numWanted | format: true
-    }}</span>
+    <app-formatted-quantity
+      *ngIf="!action.isLimited || action.limit.gte(2)"
+      [quantity]="action.numWanted"
+      [integer]="true"
+      [monospace]="false"
+    ></app-formatted-quantity>
   </button>
   <button
     *ngIf="action.maxBuy.gt(3)"
     class="btn btn-sm w-100"
     (click)="buy(action.maxBuy.div(2).floor())"
   >
-    Get {{ action.maxBuy.div(2).floor() | format: true }}
+    Get
+    <app-formatted-quantity
+      [quantity]="getHalfBuy()"
+      [integer]="true"
+      [monospace]="false"
+    ></app-formatted-quantity>
   </button>
   <button
     *ngIf="action.maxBuy.gte(2)"
     class="btn btn-sm w-100"
     (click)="buy(action.maxBuy)"
   >
-    Get {{ action.maxBuy | format: true }}
+    Get
+    <app-formatted-quantity
+      [quantity]="getMaxBuy()"
+      [integer]="true"
+      [monospace]="false"
+    ></app-formatted-quantity>
   </button>
 </div>

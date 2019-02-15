@@ -24,6 +24,9 @@ export class ButtonsComponent implements OnInit, OnDestroy {
   minuteSkip = 1;
   canSkip = false;
 
+  lastMaxBuy: Decimal;
+  lastHalfBuy: Decimal;
+
   private subscriptions: Subscription[] = [];
 
   constructor(public ms: MainService, private cd: ChangeDetectorRef) {}
@@ -67,5 +70,18 @@ export class ButtonsComponent implements OnInit, OnDestroy {
   onNumChange() {
     this.action.setNumWanted();
     this.action.reload();
+  }
+  getMaxBuy(): Decimal {
+    if (!this.action.maxBuy.eq(this.lastMaxBuy)) {
+      this.lastMaxBuy = this.action.maxBuy;
+    }
+    return this.lastMaxBuy;
+  }
+  getHalfBuy(): Decimal {
+    const hlf = this.action.maxBuy.div(2).floor();
+    if (!hlf.eq(this.lastHalfBuy)) {
+      this.lastHalfBuy = hlf;
+    }
+    return this.lastHalfBuy;
   }
 }

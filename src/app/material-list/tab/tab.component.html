@@ -12,12 +12,12 @@
       *ngIf="isEnding"
     ></clr-icon>
     <!-- <span class="first">{{ res.name }}</span> <br /> -->
-    <span class="monospace">{{ quantity | format }}</span>
+    <app-formatted-quantity [quantity]="quantity"></app-formatted-quantity>
   </span>
 
   <span class="perSecTab  monospace clr-col clr-align-self-end">
     <span *ngIf="c.abs().gt(0.001)" [ngClass]="{ notEnough: c.lt(0) }">
-      {{ c | format }}/s
+      <app-formatted-quantity [quantity]="c"> </app-formatted-quantity>/s
     </span>
   </span>
 </a>

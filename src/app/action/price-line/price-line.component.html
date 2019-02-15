@@ -11,7 +11,7 @@
         {{ unit.name }}
       </ng-template>
 
-      <span class="monospace">{{ price | format }}</span>
+      <app-formatted-quantity [quantity]="price"></app-formatted-quantity>
       <!-- <a [routerLink]="'/nav/unit/'+unit.id"> {{unit.name}}</a>, -->
     </span>
     <!-- <a clrSignpostTrigger> {{ unit.name }}, </a> -->
@@ -19,8 +19,10 @@
       <h3 style="margin-top: 0">{{ unit.name }}</h3>
       <p>
         Quantity:
-        <span *ngIf="unit.quantity.abs().gt(0.001)" class="qta monospace">
-          {{ unit.quantity | format }}
+        <span *ngIf="unit.quantity.abs().gt(0.001)" class="qta">
+          <app-formatted-quantity
+            [quantity]="unit.quantity"
+          ></app-formatted-quantity>
         </span>
         <br />
         <app-polynom [a]="unit.a" [b]="unit.b" [c]="unit.c"> </app-polynom>
