@@ -6,6 +6,7 @@ import { ResourceGroup } from "./resourceGroup";
 import { MultiPrice } from "../prices/multiPrice";
 import { Price } from "../prices/price";
 import { BuyAction } from "../actions/buyAction";
+import { ClrSignpostModule } from "@clr/angular";
 
 export class ResourceManager implements ISalvable {
   unlockedResources: Resource[];
@@ -24,6 +25,8 @@ export class ResourceManager implements ISalvable {
   habitableSpace: Resource;
   miningDistrict: Resource;
   crystalDistrict: Resource;
+
+  battery: Resource;
 
   metalMine: Resource;
   metalX1: Resource;
@@ -68,6 +71,7 @@ export class ResourceManager implements ISalvable {
 
     this.energy = new Resource("e");
     this.energy.shape = "energy";
+    this.energy.isLimited = true;
 
     this.computing = new Resource("f");
     this.computing.shape = "computing";
@@ -309,7 +313,7 @@ export class ResourceManager implements ISalvable {
     //  Load end times
     this.unlockedProdResources.forEach(unit => {
       const d = unit.quantity;
-      if (unit.a.lt(0) || unit.b.lt(0) || unit.c.lt(0) || d.lt(0)) {
+      if (unit.a.lt(0) || unit.b.lt(0) || unit.c.lt(0) || d.lte(0)) {
         const solution = solveEquation(unit.a, unit.b, unit.c, d).filter(s =>
           s.gte(0)
         );
@@ -352,7 +356,6 @@ export class ResourceManager implements ISalvable {
           }
         }
       });
-
     return this.maxTime;
   }
   /**
@@ -391,6 +394,7 @@ export class ResourceManager implements ISalvable {
               p2.producer.operativity = 0;
             });
         });
+      this.unitZero.isEnding = false;
     }
     if (this.unitZero && !this.unitZero.isEnding) {
       this.unitZero.isCapped = true;
