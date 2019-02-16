@@ -190,7 +190,7 @@ export class ResourceManager implements ISalvable {
         new Price(this.miningDistrict, 1, 1)
       ])
     );
-    buyMetalMine.afterBuy = number => {
+    buyMetalMine.afterBuy = () => {
       this.metalX1.reloadLimit();
     };
     buyMetalMine.name = "Buy " + this.metalMine.name;
@@ -206,7 +206,7 @@ export class ResourceManager implements ISalvable {
         new Price(this.crystalDistrict, 1, 1)
       ])
     );
-    buyCrystalMine.afterBuy = number => {
+    buyCrystalMine.afterBuy = () => {
       this.crystalX1.reloadLimit();
     };
     buyCrystalMine.name = "Buy " + this.crystalMine.name;
@@ -221,7 +221,7 @@ export class ResourceManager implements ISalvable {
         new Price(this.habitableSpace, 1, 1)
       ])
     );
-    buyFoundry.afterBuy = number => {
+    buyFoundry.afterBuy = () => {
       this.crystalX1.reloadLimit();
     };
     buyFoundry.name = "Buy " + this.alloyFoundry.name;
@@ -281,11 +281,11 @@ export class ResourceManager implements ISalvable {
       res.reloadProd();
     });
     this.energy.isCapped = false;
+
     for (const unit of this.unlockedProdResources) {
       unit.a = new Decimal(0);
       unit.b = new Decimal(0);
       unit.c = new Decimal(0);
-      const d = unit.quantity;
 
       if (!unit.isCapped) {
         for (const prod1 of unit.generators.filter(p =>

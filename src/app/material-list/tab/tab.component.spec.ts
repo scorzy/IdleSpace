@@ -23,7 +23,12 @@ describe("TabComponent", () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TabComponent);
     component = fixture.componentInstance;
-    component.res = new Resource("m");
+    component.c = new Decimal(1);
+    component.id = "10";
+    component.isEnding = false;
+    component.name = "name";
+    component.quantity = new Decimal(1);
+
     fixture.detectChanges();
   });
 

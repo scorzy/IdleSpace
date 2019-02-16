@@ -25,7 +25,11 @@ describe("ResLineComponent", () => {
     fixture = TestBed.createComponent(ResLineComponent);
     component = fixture.componentInstance;
     component.os = new OptionsService();
-    component.res = new Resource("m");
+    component.c = new Decimal(1);
+    component.id = "10";
+    component.isEnding = false;
+    component.name = "name";
+    component.quantity = new Decimal(1);
     fixture.detectChanges();
   });
 

@@ -22,9 +22,10 @@ describe("ResourceManager", () => {
     res2.addGenerator(res3);
     res3.addGenerator(res4);
 
-    resourceManager.unlockedResources = [res1, res2, res3, res4];
-    resourceManager.unlockedResources.forEach(res => {
+    resourceManager.unlockedProdResources = [res1, res2, res3, res4];
+    resourceManager.unlockedProdResources.forEach(res => {
       res.quantity = new Decimal(1);
+      res.operativity = 100;
       res.unlocked = true;
     });
     resourceManager.loadPolynomial();
