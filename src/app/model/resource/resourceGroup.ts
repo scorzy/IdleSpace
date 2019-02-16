@@ -1,7 +1,7 @@
 import { Resource } from "./resource";
 
 export class ResourceGroup {
-  isExpanded = false;
+  isExpanded = true;
   unlockedResources = new Array<Resource>();
 
   constructor(

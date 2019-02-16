@@ -120,11 +120,13 @@ export class ResourceManager implements ISalvable {
     this.alloyX2.addGenerator(this.alloyX3);
 
     //      Energy
+    this.energy.unlocked = true;
+    this.energy.quantity = new Decimal(1);
     this.energyX1 = new Resource("e1");
     this.energyX2 = new Resource("e2");
     this.energyX3 = new Resource("e3");
     this.energyX1.unlocked = true;
-    this.energyX1.quantity = new Decimal(1);
+    this.energyX1.quantity = new Decimal(3);
     this.energy.addGenerator(this.energyX1);
     this.energyX1.addGenerator(this.energyX2);
     this.energyX2.addGenerator(this.energyX3);
@@ -134,9 +136,9 @@ export class ResourceManager implements ISalvable {
     this.miningDistrict = new Resource("md");
     this.crystalDistrict = new Resource("cd");
     this.districts = [
-      this.habitableSpace,
       this.miningDistrict,
-      this.crystalDistrict
+      this.crystalDistrict,
+      this.habitableSpace
     ];
     this.districts.forEach(d => {
       d.unlocked = true;
@@ -154,13 +156,17 @@ export class ResourceManager implements ISalvable {
     this.tier2 = [this.metalX2, this.crystalX2, this.alloyX2, this.energyX2];
     this.tier3 = [this.metalX3, this.crystalX3, this.alloyX3, this.energyX3];
 
-    this.limited = [this.metalX1, this.crystalX1, this.alloyX1];
+    this.limited = [this.metalX1, this.crystalX1, this.alloyX1, this.energyX1];
     this.metalX1.limitStorage = this.metalMine;
     this.crystalX1.limitStorage = this.crystalMine;
     this.alloyX1.limitStorage = this.alloyFoundry;
+    this.energyX1.limitStorage = this.energyPlant;
+
     this.metalMine.quantity = new Decimal(1);
     this.crystalMine.quantity = new Decimal(1);
     this.alloyFoundry.quantity = new Decimal(1);
+    this.energyPlant.quantity = new Decimal(1);
+
     this.limited.forEach(rl => {
       rl.isLimited = true;
       rl.reloadLimit();
@@ -175,6 +181,9 @@ export class ResourceManager implements ISalvable {
       new MultiPrice([new Price(this.metal, 100), new Price(this.crystal, 50)])
     );
     this.alloyX1.generateBuyAction(
+      new MultiPrice([new Price(this.metal, 100), new Price(this.crystal, 100)])
+    );
+    this.energyX1.generateBuyAction(
       new MultiPrice([new Price(this.metal, 100), new Price(this.crystal, 100)])
     );
     //#endregion
@@ -211,6 +220,22 @@ export class ResourceManager implements ISalvable {
     };
     buyCrystalMine.name = "Buy " + this.crystalMine.name;
     this.crystalX1.actions.push(buyCrystalMine);
+
+    //  Energy Plant
+    this.energyPlant.unlocked = true;
+    const buyEnergyPlant = new BuyAction(
+      this.energyPlant,
+      new MultiPrice([
+        new Price(this.metal, 1500),
+        new Price(this.crystal, 1000),
+        new Price(this.habitableSpace, 1, 1)
+      ])
+    );
+    buyEnergyPlant.afterBuy = () => {
+      this.energyX1.reloadLimit();
+    };
+    buyEnergyPlant.name = "Buy " + this.energyPlant.name;
+    this.energyX1.actions.push(buyEnergyPlant);
 
     //  Alloy Foundry
     const buyFoundry = new BuyAction(
@@ -251,9 +276,9 @@ export class ResourceManager implements ISalvable {
       this.miningDistrict,
       this.crystalDistrict
     ];
-    this.allResources.forEach(r => {
-      r.unlocked = true;
-    });
+    // this.allResources.forEach(r => {
+    //   r.unlocked = true;
+    // });
     this.matGroup = new ResourceGroup("0", "Materials", "", this.materials);
     this.tierGroups = [
       this.matGroup,
@@ -273,7 +298,7 @@ export class ResourceManager implements ISalvable {
     this.limitedResources = this.limited.filter(r => r.unlocked);
     this.tierGroups.forEach(tg => tg.reload());
     this.unlockedTierGroups = this.tierGroups.filter(
-      u => u.unlockedResources.filter.length > 0
+      u => u.unlockedResources.length > 0
     );
   }
   loadPolynomial(): void {

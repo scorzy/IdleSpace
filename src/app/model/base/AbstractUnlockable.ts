@@ -6,9 +6,13 @@ export abstract class AbstractUnlockable implements IUnlockable, ISalvable {
   unlocked: boolean;
   name: string;
   description: string;
+
   unlock(): boolean {
-    this.unlocked = true;
-    return this.unlocked;
+    if (!this.unlocked) {
+      this.unlocked = true;
+      return true;
+    }
+    return false;
   }
   reset(): void {
     this.unlocked = true;

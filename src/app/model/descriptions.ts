@@ -23,7 +23,7 @@ export const descriptions = {
     a2: ["Alloy 2", ""],
     a3: ["Alloy 3", ""],
 
-    e1: ["Energy 1", ""],
+    e1: ["Technician", ""],
     e2: ["Energy 2", ""],
     e3: ["Energy 3", ""],
 
