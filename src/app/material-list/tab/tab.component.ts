@@ -1,14 +1,4 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-  Input,
-  OnDestroy,
-  ChangeDetectorRef
-} from "@angular/core";
-import { Resource } from "../..//model/resource/resource";
-import { Subscription } from "rxjs";
-import { MainService } from "../../main.service";
+import { Component, ChangeDetectionStrategy, Input } from "@angular/core";
 
 @Component({
   selector: "app-tab",
@@ -23,18 +13,6 @@ export class TabComponent {
   @Input() isEnding: boolean;
   @Input() quantity: Decimal;
   @Input() c: Decimal;
-  // private subscriptions: Subscription[] = [];
 
-  constructor(public ms: MainService) {}
-
-  // ngOnInit() {
-  //   this.subscriptions.push(
-  //     this.ms.em.updateEmitter.subscribe(() => {
-  //       this.cd.markForCheck();
-  //     })
-  //   );
-  // }
-  // ngOnDestroy() {
-  //   this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
-  // }
+  constructor() {}
 }

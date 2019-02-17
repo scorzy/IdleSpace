@@ -1,6 +1,6 @@
 import { AbstractAction } from "./abstractAction";
-import { MultiPrice } from "../prices/multiPrice";
 import { Resource } from "../resource/resource";
+import { MultiPrice } from "../prices/multiPrice";
 
 export class BuyAction extends AbstractAction {
   constructor(public buyable: Resource, multiPrice: MultiPrice) {

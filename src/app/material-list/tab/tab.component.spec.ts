@@ -1,12 +1,9 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-
 import { TabComponent } from "./tab.component";
-import { FormatPipe } from "../../format.pipe";
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
-import { ClarityModule } from "@clr/angular";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
-import { Resource } from "../../model/resource/resource";
+import { ClarityModule } from "@clr/angular";
 
 describe("TabComponent", () => {
   let component: TabComponent;
@@ -14,7 +11,7 @@ describe("TabComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [TabComponent, FormatPipe],
+      declarations: [TabComponent],
       imports: [RouterTestingModule, ClarityModule, BrowserAnimationsModule],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
@@ -28,7 +25,8 @@ describe("TabComponent", () => {
     component.isEnding = false;
     component.name = "name";
     component.quantity = new Decimal(1);
-
+    component.shape = "";
+    // component.ms = getMainService();
     fixture.detectChanges();
   });
 

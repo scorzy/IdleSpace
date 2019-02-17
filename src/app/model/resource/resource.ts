@@ -89,6 +89,7 @@ export class Resource extends AbstractUnlockable
   unlock(): boolean {
     if (super.unlock()) {
       ResourceManager.getInstance().reloadList();
+      this.operativity = 100;
       return true;
     }
     return false;
