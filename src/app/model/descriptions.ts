@@ -29,6 +29,14 @@ export const descriptions = {
 
     hs: ["Habitable Space", ""],
     md: ["Mining District", ""],
-    cd: ["Crystal District", ""]
+    cd: ["Crystal District", ""],
+
+    f1: ["Super Computer", ""],
+    f2: ["Super Computing Center", ""],
+    f3: ["Computing 3", ""]
+  },
+  researches: {
+    a: ["Alloy", "Unlock allory foundry"],
+    r: ["Better Researching", "+20% researching speed"]
   }
 };

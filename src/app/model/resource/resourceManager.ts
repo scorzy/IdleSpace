@@ -8,6 +8,8 @@ import { Price } from "../prices/price";
 import { BuyAction } from "../actions/buyAction";
 
 export class ResourceManager implements ISalvable {
+  private static instance: ResourceManager;
+
   unlockedResources: Resource[];
   unlockedProdResources: Resource[];
   limitedResources: Resource[];
@@ -46,6 +48,10 @@ export class ResourceManager implements ISalvable {
   energyX1: Resource;
   energyX2: Resource;
   energyX3: Resource;
+
+  computingX1: Resource;
+  computingX2: Resource;
+  computingX3: Resource;
   // #endregion
   //#region group
   materials: Resource[];
@@ -62,6 +68,8 @@ export class ResourceManager implements ISalvable {
   maxTime: number = Number.POSITIVE_INFINITY;
 
   constructor() {
+    ResourceManager.instance = this;
+
     //#region Materials
     this.metal = new Resource("m");
     this.metal.shape = "metal";
@@ -131,6 +139,15 @@ export class ResourceManager implements ISalvable {
     this.energyX1.addGenerator(this.energyX2);
     this.energyX2.addGenerator(this.energyX3);
 
+    //      Computing
+    this.computingX1 = new Resource("f1");
+    this.computingX2 = new Resource("f2");
+    this.computingX3 = new Resource("f3");
+    this.computing.addGenerator(this.computingX1);
+    this.energy.addGenerator(this.computingX1, -2);
+    this.computingX1.addGenerator(this.computingX2);
+    this.computingX2.addGenerator(this.computingX3);
+
     //      Space
     this.habitableSpace = new Resource("hs");
     this.miningDistrict = new Resource("md");
@@ -145,6 +162,7 @@ export class ResourceManager implements ISalvable {
       d.quantity = new Decimal(10);
     });
 
+    //#region Group
     this.materials = [
       this.metal,
       this.crystal,
@@ -152,9 +170,28 @@ export class ResourceManager implements ISalvable {
       this.energy,
       this.computing
     ];
-    this.tier1 = [this.metalX1, this.crystalX1, this.alloyX1, this.energyX1];
-    this.tier2 = [this.metalX2, this.crystalX2, this.alloyX2, this.energyX2];
-    this.tier3 = [this.metalX3, this.crystalX3, this.alloyX3, this.energyX3];
+    this.tier1 = [
+      this.metalX1,
+      this.crystalX1,
+      this.alloyX1,
+      this.energyX1,
+      this.computingX1
+    ];
+    this.tier2 = [
+      this.metalX2,
+      this.crystalX2,
+      this.alloyX2,
+      this.energyX2,
+      this.computingX2
+    ];
+    this.tier3 = [
+      this.metalX3,
+      this.crystalX3,
+      this.alloyX3,
+      this.energyX3,
+      this.computingX3
+    ];
+    //#endregion
 
     this.limited = [this.metalX1, this.crystalX1, this.alloyX1, this.energyX1];
     this.metalX1.limitStorage = this.metalMine;
@@ -180,11 +217,17 @@ export class ResourceManager implements ISalvable {
     this.crystalX1.generateBuyAction(
       new MultiPrice([new Price(this.metal, 100), new Price(this.crystal, 50)])
     );
+    this.metalX1.buyAction.afterBuy = this.unlockComputing.bind(this);
+    this.crystalX1.buyAction.afterBuy = this.unlockComputing.bind(this);
+
     this.alloyX1.generateBuyAction(
       new MultiPrice([new Price(this.metal, 100), new Price(this.crystal, 100)])
     );
     this.energyX1.generateBuyAction(
       new MultiPrice([new Price(this.metal, 100), new Price(this.crystal, 100)])
+    );
+    this.computingX1.generateBuyAction(
+      new MultiPrice([new Price(this.metal, 100), new Price(this.crystal, 200)])
     );
     //#endregion
     //#region Mine
@@ -272,6 +315,9 @@ export class ResourceManager implements ISalvable {
       this.alloyX1,
       this.alloyX2,
       this.alloyX3,
+      this.computingX1,
+      this.computingX2,
+      this.computingX3,
       this.habitableSpace,
       this.miningDistrict,
       this.crystalDistrict
@@ -289,6 +335,10 @@ export class ResourceManager implements ISalvable {
     ];
 
     this.reloadList();
+  }
+
+  static getInstance() {
+    return ResourceManager.instance;
   }
   reloadList(): void {
     this.unlockedResources = this.allResources.filter(r => r.unlocked);
@@ -457,6 +507,17 @@ export class ResourceManager implements ISalvable {
     this.unlockedResources.forEach(res => {
       res.actions.forEach(act => act.reload());
     });
+  }
+
+  unlockComputing() {
+    if (
+      !this.computing.unlocked &&
+      this.metalX1.quantity.gte(5) &&
+      this.crystalX1.quantity.gte(5)
+    ) {
+      this.computing.unlock();
+      this.computingX1.unlock();
+    }
   }
 
   getSave(): any {

@@ -1,5 +1,6 @@
 import { IUnlockable } from "./IUnlockable";
 import { ISalvable } from "./ISalvable";
+import { Resource } from "../resource/resource";
 
 export abstract class AbstractUnlockable implements IUnlockable, ISalvable {
   id: string;
@@ -10,6 +11,7 @@ export abstract class AbstractUnlockable implements IUnlockable, ISalvable {
   unlock(): boolean {
     if (!this.unlocked) {
       this.unlocked = true;
+      if (this instanceof Resource) this.operativity = 100;
       return true;
     }
     return false;

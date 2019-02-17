@@ -1,31 +1,62 @@
 import { AbstractUnlockable } from "../base/AbstractUnlockable";
 import { IUnlockable } from "../base/IUnlockable";
 import { ResearchManager } from "./researchManager";
+import { descriptions } from "../descriptions";
+import { RomanPipe } from "src/app/roman.pipe";
 
 export class Research extends AbstractUnlockable {
+  static romanPipe = new RomanPipe();
+
   progress = new Decimal(0);
   total = new Decimal(0);
+  private cost: Decimal;
   toUnlock = new Array<IUnlockable>();
   completed = false;
   resManager: ResearchManager;
   limit = new Decimal(1);
   quantity = new Decimal(0);
+  ratio = 2;
 
-  constructor(public id: string) {
+  progressPercent = 0;
+  done = false;
+  number = "";
+
+  constructor(public id: string, cost: DecimalSource) {
     super();
+    this.name = descriptions.researches[id][0];
+    this.description = descriptions.researches[id][1];
+    this.cost = new Decimal(cost);
+    this.total = new Decimal(this.cost);
   }
 
   addProgress(toAdd: Decimal): Decimal {
-    this.progress = this.progress.plus(toAdd);
+    const diff = this.total.minus(this.progress);
+    this.progress = Decimal.min(this.progress.plus(toAdd), this.total);
+    this.done = false;
+    let ret = new Decimal(0);
 
     if (this.progress.gte(this.total)) {
+      ret = diff;
+      this.done = true;
       this.toUnlock.forEach(u => u.unlock());
       this.quantity = this.quantity.plus(1);
-      if (this.quantity.gte(this.limit)) this.completed = true;
+      this.progress = new Decimal(0);
+      if (this.quantity.gte(this.limit)) {
+        this.completed = true;
+      } else {
+        this.total = Decimal.pow(this.ratio, this.quantity).times(this.cost);
+        this.number = Research.romanPipe.transform(this.quantity.plus(1));
+      }
     }
 
-    const ret = this.total.minus(this.progress);
-    return ret.min(0);
+    this.progressPercent = Math.floor(
+      this.progress
+        .div(this.total)
+        .times(100)
+        .toNumber()
+    );
+
+    return ret;
   }
 
   unlock(): boolean {
@@ -39,11 +70,18 @@ export class Research extends AbstractUnlockable {
   getSave(): any {
     const save = super.getSave();
     if (this.progress.gt(0)) save.p = this.progress;
+    if (this.quantity.gt(0)) save.q = this.quantity;
     return save;
   }
   load(data: any): boolean {
     if (!super.load(data)) return false;
     this.progress = new Decimal("p" in data ? data.p : 0);
+    this.quantity = new Decimal("q" in data ? data.p : 0);
+
+    this.total = Decimal.pow(this.ratio, this.quantity).times(this.cost);
+    if (this.quantity.gte(1) && this.limit.gt(1)) {
+      this.number = Research.romanPipe.transform(this.quantity.plus(1));
+    }
     return true;
   }
 }

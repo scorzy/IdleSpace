@@ -6,6 +6,7 @@ import { IBuyable } from "../base/IBuyable";
 import { BuyAction } from "../actions/buyAction";
 import { MultiPrice } from "../prices/multiPrice";
 import { Multiplier } from "../base/multiplier";
+import { ResourceManager } from "./resourceManager";
 
 export class Resource extends AbstractUnlockable
   implements ISpendable, IBuyable {
@@ -84,6 +85,13 @@ export class Resource extends AbstractUnlockable
     if (this.isLimited) {
       this.limit = this.limitStorage.quantity.times(this.workerPerMine);
     }
+  }
+  unlock(): boolean {
+    if (super.unlock()) {
+      ResourceManager.getInstance().reloadList();
+      return true;
+    }
+    return false;
   }
 
   setABC() {

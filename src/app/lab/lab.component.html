@@ -1,0 +1,30 @@
+<div class="content-area">
+  <h1>Laboratory</h1>
+
+  <div class="clr-row">
+    <div class="clr-col-12	clr-col-sm-12	clr-col-md-7	clr-col-lg-6	clr-col-xl-5">
+      <div
+        cdkDropList
+        class="researches-list"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <app-research
+          *ngFor="let res of ms.game.researchManager.toDo"
+          [res]="res"
+          cdkDrag
+        >
+        </app-research>
+      </div>
+    </div>
+    <div class="clr-col-12	clr-col-sm-12	clr-col-md-5	clr-col-lg-5	clr-col-xl-5">
+      <p>Unused Computing are converted to research.</p>
+      <span>Your Computing is increasing at: </span>
+      <app-polynom
+        [a]="ms.game.resourceManager.computing.a"
+        [b]="ms.game.resourceManager.computing.b"
+        [c]="ms.game.resourceManager.computing.c"
+      >
+      </app-polynom>
+    </div>
+  </div>
+</div>

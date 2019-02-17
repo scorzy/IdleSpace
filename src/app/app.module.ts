@@ -1,6 +1,5 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
-
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { ClarityModule } from "@clr/angular";
@@ -23,7 +22,11 @@ import { EndInPipe } from "./end-in.pipe";
 import { PolynomComponent } from "./polynom/polynom.component";
 import { FormsModule } from "@angular/forms";
 import { OptionsService } from "./options.service";
-import { FormattedQuantityComponent } from './formatted-quantity/formatted-quantity.component';
+import { FormattedQuantityComponent } from "./formatted-quantity/formatted-quantity.component";
+import { LabComponent } from "./lab/lab.component";
+import { DragDropModule } from "@angular/cdk/drag-drop";
+import { ResearchComponent } from './lab/research/research.component';
+import { RomanPipe } from './roman.pipe';
 
 @NgModule({
   declarations: [
@@ -42,7 +45,10 @@ import { FormattedQuantityComponent } from './formatted-quantity/formatted-quant
     PriceLineComponent,
     EndInPipe,
     PolynomComponent,
-    FormattedQuantityComponent
+    FormattedQuantityComponent,
+    LabComponent,
+    ResearchComponent,
+    RomanPipe
   ],
   imports: [
     BrowserAnimationsModule,
@@ -50,7 +56,8 @@ import { FormattedQuantityComponent } from './formatted-quantity/formatted-quant
     AppRoutingModule,
     ClarityModule,
     Ng5SliderModule,
-    FormsModule
+    FormsModule,
+    DragDropModule
   ],
   providers: [MainService, OptionsService],
   bootstrap: [AppComponent],

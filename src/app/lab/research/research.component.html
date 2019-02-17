@@ -1,0 +1,27 @@
+<div class="card-block">
+  <!-- <div class="progress top">
+    <progress [attr.value]="res.progressPercent" max="100"></progress>
+  </div> -->
+
+  <div class="progress-static">
+    <div class="progress-meter" [attr.data-value]="res.progressPercent"></div>
+  </div>
+
+  <h4 class="card-title">
+    {{ res.name }}
+    <span>{{ res.number }}</span>
+
+    <span class="res-progress">
+      <app-formatted-quantity
+        [quantity]="res.progress"
+        [integer]="true"
+      ></app-formatted-quantity>
+      /
+      <app-formatted-quantity
+        [quantity]="res.total"
+        [integer]="true"
+      ></app-formatted-quantity>
+    </span>
+  </h4>
+  <p class="card-text">{{ res.description }}</p>
+</div>

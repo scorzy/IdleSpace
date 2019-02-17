@@ -6,10 +6,18 @@ export class ResearchManager {
   completed = new Array<Research>();
 
   //#region Researches
-
+  alloy: Research;
+  betterResearch: Research;
   //#endregion
 
-  constructor() {}
+  constructor() {
+    this.alloy = new Research("a", 100);
+    this.betterResearch = new Research("r", 50);
+    this.betterResearch.limit = new Decimal(Number.POSITIVE_INFINITY);
+
+    this.toDo = [this.alloy, this.betterResearch];
+    this.researches = [this.alloy, this.betterResearch];
+  }
 
   update(progress: Decimal) {
     while (progress.gt(0) && this.toDo.length > 0) {
@@ -18,7 +26,7 @@ export class ResearchManager {
       if (res.completed) {
         this.toDo.shift();
         this.completed.push(res);
-      } else if (progress.gte(0)) {
+      } else if (progress.gt(0)) {
         this.toDo.shift();
         this.toDo.push(res);
       }
