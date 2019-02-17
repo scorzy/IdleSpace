@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./src/assets",
+    "sourceMap": false,
+    "declaration": false,
+    "module": "umd",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es5",
+    "typeRoots": ["node_modules/@types", "src/break_infinity.d.ts"],
+    "lib": ["es2018", "dom"]
+  },
+  "files": ["./src/app/compressRequest.ts"]
+}

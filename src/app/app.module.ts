@@ -27,6 +27,8 @@ import { LabComponent } from "./lab/lab.component";
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { ResearchComponent } from './lab/research/research.component';
 import { RomanPipe } from './roman.pipe';
+import { OptionsNavComponent } from './options-nav/options-nav.component';
+import { SaveComponent } from './options-nav/save/save.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import { RomanPipe } from './roman.pipe';
     FormattedQuantityComponent,
     LabComponent,
     ResearchComponent,
-    RomanPipe
+    RomanPipe,
+    OptionsNavComponent,
+    SaveComponent
   ],
   imports: [
     BrowserAnimationsModule,

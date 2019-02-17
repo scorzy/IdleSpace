@@ -4,6 +4,7 @@
 /dist
 /tmp
 /out-tsc
+compressRequest.js
 
 # dependencies
 /node_modules

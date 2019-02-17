@@ -1,0 +1,90 @@
+<h1>Save</h1>
+
+<ng-container *ngIf="ms.kongregate">
+  <clr-alert [clrAlertClosable]="false" [clrAlertType]="'alert-warning'">
+    <div clr-alert-item class="alert-item">
+      <span class="alert-text">
+        Cloud Save are experimental! Exporting a backup is recommended.
+      </span>
+    </div>
+  </clr-alert>
+  <br />
+</ng-container>
+
+<div class="btn-group btn-primary">
+  <button class="btn btn-success" (click)="ms.save()">
+    <clr-icon shape="floppy"></clr-icon>
+    Save
+  </button>
+  <button class="btn" (click)="ms.load()">
+    <clr-icon shape="install"></clr-icon>
+    Load
+  </button>
+  <button class="btn btn-danger" (click)="clearModal = true">
+    <clr-icon shape="uninstall"></clr-icon>
+    Clear
+  </button>
+</div>
+
+<div class="btn-group btn-primary" *ngIf="ms.kongregate">
+  <button class="btn btn-info" (click)="ms.playFabLogin()">
+    <clr-icon shape="user"></clr-icon>
+    Log PlayFab
+  </button>
+  <button
+    *ngIf="ms.playFabLogged"
+    class="btn btn-success"
+    (click)="ms.savePlayFab()"
+  >
+    <clr-icon shape="upload-cloud"></clr-icon>
+    Cloud Save
+  </button>
+  <button *ngIf="ms.playFabLogged" class="btn" (click)="ms.loadPlayFab()">
+    <clr-icon shape="download-cloud"></clr-icon>
+    Cloud Load
+  </button>
+</div>
+<p>
+  <br />
+  Autosave every 5 minutes.
+  <br />
+  <!-- Last save: {{ ms.lastSave | date: "medium" }} -->
+</p>
+<h2>Export / Import Save</h2>
+<textarea name="raw" [(ngModel)]="exp" rows="3"></textarea>
+<div class="btn-group btn-primary">
+  <button class="btn btn-success" (click)="export()">
+    Export
+  </button>
+  <button class="btn" (click)="import()">
+    Import
+  </button>
+</div>
+<h2>Autosave Options</h2>
+<div class="toggle-switch">
+  <input type="checkbox" id="t1" [(ngModel)]="os.autosaveNotification" />
+  <label for="t1">Autosave Notification</label>
+</div>
+<br />
+<a href="https://scorzy.github.io/IdleAnt2/changelog.txt" target="_blank"
+  >Changelog link
+</a>
+
+<clr-modal [(clrModalOpen)]="clearModal">
+  <h3 class="modal-title">Clear</h3>
+  <div class="modal-body">
+    <p>Are you sure you want to delete everything ?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="clearModal = false">
+      Cancel
+    </button>
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="ms.clear(); clearModal = false"
+    >
+      Clear
+    </button>
+  </div>
+</clr-modal>

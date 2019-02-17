@@ -3,16 +3,17 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --open",
-    "start:prod": "ng serve --open --prod",
-    "build": "ng build --prod --aot --build-optimizer --base-href ./",
+    "start": "npm run compileCompResult && ng serve --open",
+    "start:prod": "npm run compileCompResult && ng serve --open --prod",
+    "build": "npm run compileCompResult && ng build --prod --aot --build-optimizer --base-href ./",
     "test": "ng test",
     "test:watch": "ng test --watch",
     "test:coverage": "ng test --code-coverage",
     "lint": "ng lint",
     "lint:fix": "ng lint IdleSpace --fix",
     "e2e": "ng e2e",
-    "tslint-check": "tslint-config-prettier-check ./tslint.json"
+    "tslint-check": "tslint-config-prettier-check ./tslint.json",
+    "compileCompResult":"tsc  -p myTsconfig.json"
   },
   "private": true,
   "dependencies": {

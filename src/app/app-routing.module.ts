@@ -3,6 +3,8 @@ import { Routes, RouterModule } from "@angular/router";
 import { HomeComponent } from "./home/home.component";
 import { ResourceComponent } from "./resource/resource.component";
 import { LabComponent } from "./lab/lab.component";
+import { OptionsNavComponent } from "./options-nav/options-nav.component";
+import { SaveComponent } from "./options-nav/save/save.component";
 
 const routes: Routes = [
   {
@@ -22,6 +24,11 @@ const routes: Routes = [
   {
     path: "lab",
     component: LabComponent
+  },
+  {
+    path: "opt",
+    component: OptionsNavComponent,
+    children: [{ path: "save", component: SaveComponent }]
   }
 ];
 
