@@ -5,6 +5,10 @@ export class ResearchManager {
   toDo = new Array<Research>();
   completed = new Array<Research>();
 
+  //#region Researches
+
+  //#endregion
+
   constructor() {}
 
   update(progress: Decimal) {
@@ -14,6 +18,9 @@ export class ResearchManager {
       if (res.completed) {
         this.toDo.shift();
         this.completed.push(res);
+      } else if (progress.gte(0)) {
+        this.toDo.shift();
+        this.toDo.push(res);
       }
     }
   }

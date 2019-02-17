@@ -8,6 +8,8 @@ export class Research extends AbstractUnlockable {
   toUnlock = new Array<IUnlockable>();
   completed = false;
   resManager: ResearchManager;
+  limit = new Decimal(1);
+  quantity = new Decimal(0);
 
   constructor(public id: string) {
     super();
@@ -18,7 +20,8 @@ export class Research extends AbstractUnlockable {
 
     if (this.progress.gte(this.total)) {
       this.toUnlock.forEach(u => u.unlock());
-      this.completed = true;
+      this.quantity = this.quantity.plus(1);
+      if (this.quantity.gte(this.limit)) this.completed = true;
     }
 
     const ret = this.total.minus(this.progress);
