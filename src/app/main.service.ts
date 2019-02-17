@@ -54,7 +54,12 @@ export class MainService {
     data.g = this.game.save();
     return data;
   }
-  load(data: any): any {
+  load(): any {
+    this.zipWorker.postMessage(
+      new CompressRequest(localStorage.getItem("save"), "", false, 2)
+    );
+  }
+  load2(data: any): any {
     this.game = new Game();
     this.game.load(data.g);
   }
@@ -74,7 +79,7 @@ export class MainService {
     if (input.compress) {
       let save = "";
       try {
-        save = LZString.compressToBase64(JSON.stringify(input));
+        save = LZString.compressToBase64(JSON.stringify(input.obj));
       } catch (ex) {
         save = "";
       }
@@ -105,7 +110,7 @@ export class MainService {
       }
     } else {
       if (result.obj != null) {
-        this.load(result.obj);
+        this.load2(result.obj);
       } else {
         console.log("Error");
       }

@@ -534,6 +534,7 @@ export class ResourceManager implements ISalvable {
       if (resource) resource.load(res);
     }
 
+    this.reloadList();
     this.limited.forEach(rl => {
       rl.reloadLimit();
     });

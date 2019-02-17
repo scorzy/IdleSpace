@@ -131,7 +131,7 @@ export class Resource extends AbstractUnlockable
   }
   load(data: any): boolean {
     if (!super.load(data)) return false;
-    this.quantity = new Decimal("q" in data ? data.q : 0);
+    if ("q" in data) this.quantity = Decimal.fromDecimal(data.q);
     if ("a" in data) {
       for (const actData of data.a) {
         if ("i" in actData) {

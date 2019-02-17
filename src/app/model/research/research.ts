@@ -75,8 +75,8 @@ export class Research extends AbstractUnlockable {
   }
   load(data: any): boolean {
     if (!super.load(data)) return false;
-    this.progress = new Decimal("p" in data ? data.p : 0);
-    this.quantity = new Decimal("q" in data ? data.p : 0);
+    if ("p" in data) this.progress = Decimal.fromDecimal(data.p);
+    if ("q" in data) this.quantity = Decimal.fromDecimal(data.q);
 
     this.total = Decimal.pow(this.ratio, this.quantity).times(this.cost);
     if (this.quantity.gte(1) && this.limit.gt(1)) {

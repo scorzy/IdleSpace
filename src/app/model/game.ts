@@ -46,10 +46,14 @@ export class Game {
   save(): any {
     const save: any = {};
     save.r = this.resourceManager.getSave();
+    save.e = this.researchManager.getSave();
     return save;
   }
   load(data: any) {
     if (!("r" in data)) return false;
     this.resourceManager.load(data.r);
+    this.researchManager.load(data.e);
+
+    this.reload();
   }
 }

@@ -43,6 +43,9 @@ export class ResearchManager {
     return save;
   }
   load(data: any): boolean {
+    this.toDo = [];
+    this.completed = [];
+
     if ("t" in data) {
       for (const res of data.t) {
         const research = this.researches.find(u => u.id === res.i);

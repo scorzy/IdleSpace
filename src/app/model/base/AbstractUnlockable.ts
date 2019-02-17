@@ -15,7 +15,7 @@ export abstract class AbstractUnlockable implements IUnlockable, ISalvable {
     return false;
   }
   reset(): void {
-    this.unlocked = true;
+    this.unlocked = false;
   }
   getSave(): any {
     const data: any = {};
@@ -27,7 +27,7 @@ export abstract class AbstractUnlockable implements IUnlockable, ISalvable {
   }
   load(data: any): boolean {
     if (!("i" in data && data.i === this.id)) return false;
-    this.unlocked = !!data.u;
+    if ("u" in data) this.unlocked = data.u;
     return true;
   }
 }

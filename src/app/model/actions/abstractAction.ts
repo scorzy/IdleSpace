@@ -49,7 +49,7 @@ export abstract class AbstractAction extends AbstractUnlockable {
   load(data: any): boolean {
     if (super.load(data)) {
       this.unlocked = true;
-      if ("q" in data) this.quantity = new Decimal(data.q);
+      if ("q" in data) this.quantity = Decimal.fromDecimal(data.q);
       return true;
     }
     return false;
