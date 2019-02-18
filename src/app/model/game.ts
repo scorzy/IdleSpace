@@ -1,9 +1,13 @@
 import { ResourceManager } from "./resource/resourceManager";
 import { ResearchManager } from "./research/researchManager";
+import { BonusStack } from "./bonus/bonusStack";
+import { Bonus } from "./bonus/bonus";
 
 export class Game {
   resourceManager: ResourceManager;
   researchManager: ResearchManager;
+
+  researchBonus: BonusStack;
 
   constructor() {
     this.resourceManager = new ResourceManager();
@@ -11,6 +15,11 @@ export class Game {
 
     this.resourceManager.metal.quantity = new Decimal(10000);
     this.resourceManager.crystal.quantity = new Decimal(10000);
+
+    this.researchBonus = new BonusStack();
+    this.researchBonus.multiplicativeBonus.push(
+      new Bonus(this.researchManager.betterResearch, new Decimal(0.2))
+    );
   }
   update(diff: number): void {
     while (diff > 0) {
@@ -31,7 +40,10 @@ export class Game {
 
     //  Convert computing to researches
     if (this.resourceManager.computing.quantity.gt(0)) {
-      this.researchManager.update(this.resourceManager.computing.quantity);
+      let computing = this.resourceManager.computing.quantity;
+      computing = computing.times(this.researchBonus.getMultiplicativeBonus());
+      this.researchManager.update(computing);
+
       this.resourceManager.computing.quantity = new Decimal(0);
     }
 

@@ -11,7 +11,8 @@ export class BonusStack {
   }
   getMultiplicativeBonus(): Decimal {
     return this.multiplicativeBonus
-      .map(b => b.quantity.times(b.base.quantity))
-      .reduce((p, c) => p.times(c), new Decimal(0));
+      .filter(t => t.base.quantity.gt(0))
+      .map(b => b.quantity.times(b.base.quantity).plus(1))
+      .reduce((p, c) => p.times(c), new Decimal(1));
   }
 }

@@ -1,4 +1,5 @@
 import { Research } from "./research";
+import { ResourceManager } from "../resource/resourceManager";
 
 export class ResearchManager {
   researches = new Array<Research>();
@@ -11,9 +12,16 @@ export class ResearchManager {
   //#endregion
 
   constructor() {
-    this.alloy = new Research("a", 100);
+    const resManager = ResourceManager.getInstance();
     this.betterResearch = new Research("r", 50);
     this.betterResearch.limit = new Decimal(Number.POSITIVE_INFINITY);
+
+    this.alloy = new Research("a", 100);
+    this.alloy.toUnlock = [
+      resManager.alloy,
+      resManager.alloyFoundry,
+      resManager.alloyX1
+    ];
 
     this.toDo = [this.alloy, this.betterResearch];
     this.researches = [this.alloy, this.betterResearch];

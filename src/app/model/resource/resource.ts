@@ -127,6 +127,7 @@ export class Resource extends AbstractUnlockable
     if (this.actions.findIndex(act => act.unlocked) > -1) {
       data.a = this.actions.filter(a => a.unlocked).map(a => a.getSave());
     }
+    if (this.operativity !== 100) data.o = this.operativity;
     return data;
   }
   load(data: any): boolean {
@@ -140,6 +141,8 @@ export class Resource extends AbstractUnlockable
         }
       }
     }
+    if ("o" in data) this.operativity = data.o;
+
     return true;
   }
 }

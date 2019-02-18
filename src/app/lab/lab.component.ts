@@ -2,10 +2,14 @@ import {
   Component,
   OnInit,
   ChangeDetectionStrategy,
-  HostBinding
+  HostBinding,
+  ChangeDetectorRef,
+  OnDestroy
 } from "@angular/core";
 import { MainService } from "../main.service";
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
+import { Research } from "../model/research/research";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-lab",
@@ -13,13 +17,30 @@ import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
   styleUrls: ["./lab.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LabComponent implements OnInit {
+export class LabComponent implements OnInit, OnDestroy {
   @HostBinding("class")
   contentContainer = "content-container";
+  resMulti = new Decimal(1);
+  resPerSec = new Decimal(1);
 
-  constructor(public ms: MainService) {}
+  private subscriptions: Subscription[] = [];
 
-  ngOnInit() {}
+  constructor(public ms: MainService, private cd: ChangeDetectorRef) {}
+
+  ngOnInit() {
+    this.subscriptions.push(
+      this.ms.em.updateEmitter.subscribe(() => {
+        this.resMulti = this.ms.game.researchBonus.getMultiplicativeBonus();
+        this.resPerSec = this.resMulti.times(
+          this.ms.game.resourceManager.computing.c
+        );
+        this.cd.markForCheck();
+      })
+    );
+  }
+  ngOnDestroy() {
+    this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
+  }
 
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(
@@ -27,5 +48,8 @@ export class LabComponent implements OnInit {
       event.previousIndex,
       event.currentIndex
     );
+  }
+  getResId(index: number, res: Research) {
+    return res.id;
   }
 }

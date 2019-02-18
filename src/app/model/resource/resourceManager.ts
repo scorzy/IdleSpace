@@ -440,7 +440,7 @@ export class ResourceManager implements ISalvable {
         const d = unit.quantity.minus(unit.limit);
         if (unit.a.gt(0) || unit.b.gt(0) || unit.c.gt(0)) {
           const solution = solveEquation(unit.a, unit.b, unit.c, d).filter(s =>
-            s.gte(0)
+            s.gt(0)
           );
 
           if (solution.length > 0) {
@@ -456,6 +456,13 @@ export class ResourceManager implements ISalvable {
           }
         }
       });
+
+    //  Fix Computing
+    if (this.unitZero === this.computing && this.computing.c.gt(0)) {
+      this.maxTime = Number.POSITIVE_INFINITY;
+      this.computing.isEnding = false;
+      this.unitZero = null;
+    }
     return this.maxTime;
   }
   /**

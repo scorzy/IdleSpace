@@ -52,6 +52,6 @@ export class SaveComponent implements OnInit, OnDestroy, AfterViewInit {
     this.ms.export();
   }
   import() {
-    // this.ms.import(this.exp.trim());
+    this.ms.import(this.exp.trim());
   }
 }

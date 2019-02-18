@@ -9,7 +9,7 @@
         (cdkDropListDropped)="drop($event)"
       >
         <app-research
-          *ngFor="let res of ms.game.researchManager.toDo"
+          *ngFor="let res of ms.game.researchManager.toDo; trackBy: getResId"
           [res]="res"
           cdkDrag
         >
@@ -17,14 +17,22 @@
       </div>
     </div>
     <div class="clr-col-12	clr-col-sm-12	clr-col-md-5	clr-col-lg-5	clr-col-xl-5">
-      <p>Unused Computing are converted to research.</p>
-      <span>Your Computing is increasing at: </span>
+      <p>
+        Unused Computing are converted to research.<br />
+        Research multiplier:
+        <app-formatted-quantity [quantity]="resMulti"></app-formatted-quantity
+        ><br />
+        Research /s:
+        <app-formatted-quantity [quantity]="resPerSec"></app-formatted-quantity>
+      </p>
+
+      <!-- <span>Your Computing is increasing at: </span>
       <app-polynom
         [a]="ms.game.resourceManager.computing.a"
         [b]="ms.game.resourceManager.computing.b"
         [c]="ms.game.resourceManager.computing.c"
       >
-      </app-polynom>
+      </app-polynom> -->
     </div>
   </div>
 </div>

@@ -63,6 +63,9 @@ export class MainService {
     this.game = new Game();
     this.game.load(data.g);
   }
+  import(str: string) {
+    this.zipWorker.postMessage(new CompressRequest(str, "", false, 2));
+  }
 
   export() {
     this.zipWorker.postMessage(new CompressRequest(this.getSave(), "", true, 1));

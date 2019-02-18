@@ -3,9 +3,14 @@ import { IUnlockable } from "../base/IUnlockable";
 import { ResearchManager } from "./researchManager";
 import { descriptions } from "../descriptions";
 import { RomanPipe } from "src/app/roman.pipe";
+import { ISpendable } from "../base/ISpendable";
 
-export class Research extends AbstractUnlockable {
+export class Research extends AbstractUnlockable implements ISpendable {
   static romanPipe = new RomanPipe();
+
+  a: Decimal;
+  c: Decimal;
+  b: Decimal;
 
   progress = new Decimal(0);
   total = new Decimal(0);
