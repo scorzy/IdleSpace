@@ -7,16 +7,19 @@ export class ResearchManager {
   completed = new Array<Research>();
 
   //#region Researches
-  alloy: Research;
   betterResearch: Research;
+  alloy: Research;
+
   //#endregion
 
   constructor() {
     const resManager = ResourceManager.getInstance();
     this.betterResearch = new Research("r", 50);
+    this.betterResearch.shape = "flask";
     this.betterResearch.limit = new Decimal(Number.POSITIVE_INFINITY);
 
     this.alloy = new Research("a", 100);
+    this.alloy.shape = "alloy";
     this.alloy.toUnlock = [
       resManager.alloy,
       resManager.alloyFoundry,

@@ -12,6 +12,7 @@ export class Research extends AbstractUnlockable implements ISpendable {
   c: Decimal;
   b: Decimal;
 
+  shape:string;
   progress = new Decimal(0);
   total = new Decimal(0);
   private cost: Decimal;
