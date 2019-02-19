@@ -1,16 +1,27 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { OptionsNavComponent } from "./options-nav.component";
+import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import { ClarityModule } from "@clr/angular";
+import { RouterTestingModule } from "@angular/router/testing";
+import { FormsModule } from "@angular/forms";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { FormatPipe } from "../format.pipe";
 
-import { OptionsNavComponent } from './options-nav.component';
-
-describe('OptionsNavComponent', () => {
+describe("OptionsNavComponent", () => {
   let component: OptionsNavComponent;
   let fixture: ComponentFixture<OptionsNavComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OptionsNavComponent ]
-    })
-    .compileComponents();
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      imports: [
+        ClarityModule,
+        RouterTestingModule,
+        FormsModule,
+        BrowserAnimationsModule
+      ],
+      declarations: [OptionsNavComponent, FormatPipe]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +30,7 @@ describe('OptionsNavComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

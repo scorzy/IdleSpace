@@ -131,3 +131,13 @@ export class MainService {
     //  ToDo
   }
 }
+
+// tslint:disable-next-line:max-classes-per-file
+class CompressRequest {
+  constructor(
+    public obj: any,
+    public zipped: string,
+    public compress: boolean,
+    public requestId: number
+  ) {}
+}

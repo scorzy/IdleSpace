@@ -1,16 +1,27 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { SaveComponent } from "./save.component";
+import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import { ClarityModule } from "@clr/angular";
+import { RouterTestingModule } from "@angular/router/testing";
+import { FormsModule } from "@angular/forms";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { FormatPipe } from "src/app/format.pipe";
 
-import { SaveComponent } from './save.component';
-
-describe('SaveComponent', () => {
+describe("SaveComponent", () => {
   let component: SaveComponent;
   let fixture: ComponentFixture<SaveComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SaveComponent ]
-    })
-    .compileComponents();
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      imports: [
+        ClarityModule,
+        RouterTestingModule,
+        FormsModule,
+        BrowserAnimationsModule
+      ],
+      declarations: [SaveComponent, FormatPipe]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +30,7 @@ describe('SaveComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
