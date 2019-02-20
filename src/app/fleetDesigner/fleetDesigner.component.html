@@ -1,0 +1,17 @@
+<router-outlet></router-outlet>
+<clr-vertical-nav [clrVerticalNavCollapsible]="false" [clr-nav-level]="2">
+  <a clrVerticalNavLink routerLink="/fleet/design" routerLinkActive="active">
+    <!-- <clr-icon shape="floppy"></clr-icon> -->
+    Add Design
+  </a>
+
+  <a
+    clrVerticalNavLink
+    *ngFor="let ds of ms.game.fleetManager.ships; trackBy: designId"
+    [routerLink]="'/fleet/design/' + ds.id"
+    routerLinkActive="active"
+  >
+    <!-- <clr-icon shape="floppy"></clr-icon> -->
+    {{ ds.name }}
+  </a>
+</clr-vertical-nav>

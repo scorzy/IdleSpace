@@ -1,9 +1,12 @@
-export class Weapon {
-  name = "";
-  size: number;
-  power: Decimal;
-  hullDamagePercent: number;
-  shieldDamagePercent: number;
+import { Module } from "./module";
 
-  constructor(public id: string) {}
+export class Weapon extends Module {
+  damage: Decimal;
+  hullPercent = 100;
+  armorPercent = 100;
+  shieldPercent = 100;
+
+  constructor(id: string) {
+    super(id);
+  }
 }

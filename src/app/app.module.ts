@@ -25,10 +25,12 @@ import { OptionsService } from "./options.service";
 import { FormattedQuantityComponent } from "./formatted-quantity/formatted-quantity.component";
 import { LabComponent } from "./lab/lab.component";
 import { DragDropModule } from "@angular/cdk/drag-drop";
-import { ResearchComponent } from './lab/research/research.component';
-import { RomanPipe } from './roman.pipe';
-import { OptionsNavComponent } from './options-nav/options-nav.component';
-import { SaveComponent } from './options-nav/save/save.component';
+import { ResearchComponent } from "./lab/research/research.component";
+import { RomanPipe } from "./roman.pipe";
+import { OptionsNavComponent } from "./options-nav/options-nav.component";
+import { SaveComponent } from "./options-nav/save/save.component";
+import { FleetDesignerComponent } from "./fleetDesigner/fleetDesigner.component";
+import { DesignComponent } from "./fleetDesigner/design/design.component";
 
 @NgModule({
   declarations: [
@@ -52,7 +54,9 @@ import { SaveComponent } from './options-nav/save/save.component';
     ResearchComponent,
     RomanPipe,
     OptionsNavComponent,
-    SaveComponent
+    SaveComponent,
+    FleetDesignerComponent,
+    DesignComponent
   ],
   imports: [
     BrowserAnimationsModule,

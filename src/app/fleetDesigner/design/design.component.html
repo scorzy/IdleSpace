@@ -1,0 +1,28 @@
+<div *ngIf="!design; else designEditor">
+  <form clrForm>
+    <clr-input-container>
+      <label>Ship Name</label>
+      <input clrInput type="text" [(ngModel)]="name" name="name" required />
+      <clr-control-error>This field is required!</clr-control-error>
+    </clr-input-container>
+
+    <clr-select-container>
+      <label>Ship Type</label>
+      <select clrSelect name="shipType" [(ngModel)]="type" required>
+        <option
+          *ngFor="let tp of ShipTypes; trackBy: typeId"
+          [attr.value]="tp.id"
+          >{{ tp.name }}</option
+        >
+      </select>
+      <!-- <clr-control-helper>Helper text</clr-control-helper> -->
+      <clr-control-error>This field is required!</clr-control-error>
+    </clr-select-container>
+
+    <button class="btn btn-primary" type="submit" (click)="generate()">
+      Create
+    </button>
+  </form>
+</div>
+
+<ng-template #designEditor> </ng-template>
