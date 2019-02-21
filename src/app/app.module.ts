@@ -31,6 +31,8 @@ import { OptionsNavComponent } from "./options-nav/options-nav.component";
 import { SaveComponent } from "./options-nav/save/save.component";
 import { FleetDesignerComponent } from "./fleetDesigner/fleetDesigner.component";
 import { DesignComponent } from "./fleetDesigner/design/design.component";
+import { EditorComponent } from "./fleetDesigner/editor/editor.component";
+import { ViewComponent } from './fleetDesigner/view/view.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,9 @@ import { DesignComponent } from "./fleetDesigner/design/design.component";
     OptionsNavComponent,
     SaveComponent,
     FleetDesignerComponent,
-    DesignComponent
+    DesignComponent,
+    EditorComponent,
+    ViewComponent
   ],
   imports: [
     BrowserAnimationsModule,

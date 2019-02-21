@@ -38,5 +38,11 @@ export const descriptions = {
   researches: {
     a: ["Alloy", "Unlock allory foundry"],
     r: ["Better Researching", "+20% researching speed"]
+  },
+  weapons: {
+    ls: ["Small Laser"],
+    lm: ["Medium Laser"],
+    ll: ["Large Laser"],
+    lxl: ["Extra Large Laser"]
   }
 };

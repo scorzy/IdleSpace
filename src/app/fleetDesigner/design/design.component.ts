@@ -7,7 +7,7 @@ import {
 } from "@angular/core";
 import { Subscription } from "rxjs";
 import { MainService } from "src/app/main.service";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { ShipDesign } from "src/app/model/fleet/shipDesign";
 import { ShipTypes, ShipType } from "src/app/model/fleet/shipTypes";
 
@@ -33,7 +33,8 @@ export class DesignComponent implements OnInit {
   constructor(
     public ms: MainService,
     private route: ActivatedRoute,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -46,8 +47,12 @@ export class DesignComponent implements OnInit {
   }
 
   generate() {
+    if (this.isDisabled()) return false;
+
     const shipType = ShipTypes.find(t => t.id === this.type);
     const design = this.ms.game.fleetManager.addDesign(this.name, shipType);
+
+    this.router.navigate(["/fleet/design/" + design.id]);
   }
 
   getDesign(params: any) {
@@ -65,5 +70,8 @@ export class DesignComponent implements OnInit {
 
   typeId(index: number, shipType: ShipType) {
     return shipType.id;
+  }
+  isDisabled(): boolean {
+    return !(this.name.trim() !== "" && this.type.length > 0);
   }
 }

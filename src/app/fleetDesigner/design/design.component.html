@@ -1,7 +1,7 @@
 <div *ngIf="!design; else designEditor">
   <form clrForm>
     <clr-input-container>
-      <label>Ship Name</label>
+      <label>Design Name</label>
       <input clrInput type="text" [(ngModel)]="name" name="name" required />
       <clr-control-error>This field is required!</clr-control-error>
     </clr-input-container>
@@ -19,10 +19,17 @@
       <clr-control-error>This field is required!</clr-control-error>
     </clr-select-container>
 
-    <button class="btn btn-primary" type="submit" (click)="generate()">
+    <button
+      class="btn btn-primary"
+      type="submit"
+      (click)="generate()"
+      [disabled]="isDisabled()"
+    >
       Create
     </button>
   </form>
 </div>
 
-<ng-template #designEditor> </ng-template>
+<ng-template #designEditor>
+  <app-editor [design]="design"></app-editor>
+</ng-template>
