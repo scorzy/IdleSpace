@@ -2,9 +2,12 @@ import {
   Component,
   OnInit,
   ChangeDetectionStrategy,
-  Input
+  Input,
+  ChangeDetectorRef
 } from "@angular/core";
 import { ShipDesign } from "src/app/model/fleet/shipDesign";
+import { Subscription } from "rxjs";
+import { MainService } from "src/app/main.service";
 
 @Component({
   selector: "app-view",
@@ -14,8 +17,21 @@ import { ShipDesign } from "src/app/model/fleet/shipDesign";
 })
 export class ViewComponent implements OnInit {
   @Input() design: ShipDesign;
+  @Input() showDifference = false;
 
-  constructor() {}
+  private subscriptions: Subscription[] = [];
 
-  ngOnInit() {}
+  constructor(public ms: MainService, private cd: ChangeDetectorRef) {}
+
+  ngOnInit() {
+    this.subscriptions.push(
+      this.ms.em.designEmitter.subscribe(() => {
+        this.cd.markForCheck();
+      })
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
+  }
 }

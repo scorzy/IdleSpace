@@ -1,3 +1,73 @@
-<p>
-  view works!
-</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Total Damage</td>
+      <td>
+        <app-formatted-quantity
+          [quantity]="design.totalDamage"
+        ></app-formatted-quantity>
+      </td>
+      <td *ngIf="showDifference">
+        <app-formatted-quantity
+          [quantity]="design.editable.totalDamage"
+        ></app-formatted-quantity>
+      </td>
+    </tr>
+
+    <tr>
+      <td>Total Armor</td>
+      <td>
+        <app-formatted-quantity
+          [quantity]="design.totalArmor"
+        ></app-formatted-quantity>
+      </td>
+      <td *ngIf="showDifference">
+        <app-formatted-quantity
+          [quantity]="design.editable.totalArmor"
+        ></app-formatted-quantity>
+      </td>
+    </tr>
+
+    <tr>
+      <td>Total Shield</td>
+      <td>
+        <app-formatted-quantity
+          [quantity]="design.totalShield"
+        ></app-formatted-quantity>
+      </td>
+      <td *ngIf="showDifference">
+        <app-formatted-quantity
+          [quantity]="design.editable.totalShield"
+        ></app-formatted-quantity>
+      </td>
+    </tr>
+
+    <tr>
+      <td>Total Hull</td>
+      <td>
+        <app-formatted-quantity
+          [quantity]="design.totalHull"
+        ></app-formatted-quantity>
+      </td>
+      <td *ngIf="showDifference">
+        <app-formatted-quantity
+          [quantity]="design.editable.totalHull"
+        ></app-formatted-quantity>
+      </td>
+    </tr>
+
+    <tr>
+      <td>Total Energy</td>
+      <td>
+        <app-formatted-quantity
+          [quantity]="design.totalEnergy"
+        ></app-formatted-quantity>
+      </td>
+      <td *ngIf="showDifference">
+        <app-formatted-quantity
+          [quantity]="design.editable.totalEnergy"
+        ></app-formatted-quantity>
+      </td>
+    </tr>
+  </tbody>
+</table>

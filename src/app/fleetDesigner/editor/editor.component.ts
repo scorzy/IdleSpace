@@ -32,9 +32,22 @@ export class EditorComponent implements OnInit, OnChanges {
   }
   addWeapon() {
     this.design.addWeapon();
-    this.cd.markForCheck();
   }
   removeWeapon(i: number) {
     this.design.removeWeapon(i);
+  }
+  reload() {
+    this.design.editable.weapons.forEach(w => {
+      w.module = this.ms.game.fleetManager.unlockedWeapons.find(
+        q => q.id === w.moduleId
+      );
+      w.quantity = new Decimal(w.quantityUi);
+    });
+    this.design.editable.utility.forEach(w => {
+      w[0] = new Decimal(w[2]);
+    });
+
+    this.design.editable.reload();
+    this.ms.em.designEmitter.emit(1);
   }
 }

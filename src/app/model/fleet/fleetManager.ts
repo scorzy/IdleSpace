@@ -23,6 +23,8 @@ export class FleetManager implements ISalvable {
     this.laserL = new Weapon("ll");
     this.laserXL = new Weapon("lxl");
 
+    this.laserS.damage = new Decimal(50);
+
     this.allWeapons = [this.laserS, this.laserM, this.laserL, this.laserXL];
 
     this.allWeapons.forEach(w => (w.unlocked = true));
@@ -50,7 +52,7 @@ export class FleetManager implements ISalvable {
 
   getSave() {}
   load(data: any): boolean {
-    reload();
+    this.reload();
     return true;
   }
 }

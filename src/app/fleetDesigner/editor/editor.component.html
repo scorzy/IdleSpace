@@ -1,9 +1,9 @@
 <h1>{{ design.name }}</h1>
 <div class="clr-row">
-  <div class="clr-col-sm-12 clr-col-md-6" *ngIf="design.editable">
+  <div class="clr-col-sm-12 clr-col-md-8" *ngIf="design.editable">
     <form clrForm clr-form-compact>
       <clr-input-container>
-        <label>Name</label>
+        <label>Name:</label>
         <input
           clrInput
           type="text"
@@ -11,32 +11,15 @@
           name="name"
           required
         />
-        <clr-control-helper>Design name.</clr-control-helper>
+        <!-- <clr-control-helper>Design name.</clr-control-helper> -->
         <clr-control-error>Name is required!</clr-control-error>
       </clr-input-container>
-
-      <!-- <clr-input-container
-        *ngFor="let w of design.editable.weapons; trackBy: getModuleId"
-      >
-        <label>Weapon</label>
-        <input
-          clrInput
-          type="numeric"
-          [(ngModel)]="w[2]"
-          [name]="'w'"
-          required
-        />
-
-        <button type="button" class="btn btn-icon btn-warning">
-          <clr-icon shape="warning-standard"></clr-icon>
-        </button>
-      </clr-input-container> -->
 
       <h4>Weapons:</h4>
       <table class="table table-noborder">
         <thead>
           <tr>
-            <th>Num.</th>
+            <!-- <th>Num.</th> -->
             <th>Weapon</th>
             <th>Quantity</th>
             <th>Energy</th>
@@ -52,13 +35,95 @@
             "
             [attr.data-index]="i"
           >
-            <td>{{ i }}</td>
+            <!-- <td>{{ i }}</td> -->
             <td>
               <div class="clr-select-wrapper">
                 <select
                   class="clr-select"
                   [name]="'weap' + i"
-                  [(ngModel)]="w[1]"
+                  [(ngModel)]="w.moduleId"
+                  (ngModelChange)="reload()"
+                >
+                  <option
+                    *ngFor="
+                      let wt of ms.game.fleetManager.unlockedWeapons;
+                      trackBy: getModuleId
+                    "
+                    [ngValue]="wt.id"
+                    >{{ wt.name }}</option
+                  >
+                </select>
+              </div>
+            </td>
+            <td>
+              <div class="btn-group btn-primary">
+                <button
+                  type="button"
+                  class="btn  btn-sm btn-outline btn-icon"
+                  (click)="w.quantityUi = w.quantityUi - 1"
+                >
+                  <clr-icon shape="minus"></clr-icon>
+                </button>
+                <input
+                  class="clr-input smallInput"
+                  type="number"
+                  [(ngModel)]="w.quantityUi"
+                  [name]="'w' + i"
+                  required
+                />
+                <button
+                  type="button"
+                  class="btn  btn-sm btn-outline btn-icon"
+                  (click)="w.quantityUi = w.quantityUi + 1"
+                >
+                  <clr-icon shape="plus"></clr-icon>
+                </button>
+              </div>
+            </td>
+            <td>{{ w[1]?.energy }}</td>
+            <td>
+              <button
+                type="button"
+                class="btn btn-warning btn-sm btn-icon noTopMargin"
+                (click)="removeWeapon(i)"
+              >
+                <clr-icon shape="trash"></clr-icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button class="btn btn-outline btn-sm" (click)="addWeapon()">
+        <clr-icon shape="plus"></clr-icon>
+        Add Weapon
+      </button>
+
+      <!-- <h4>Defense and Utility:</h4>
+      <table class="table table-noborder">
+        <thead>
+          <tr>
+            <th>Module</th>
+            <th>Quantity</th>
+            <th>Energy</th>
+            <th>Remove</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="
+              let w of design.editable.weapons;
+              let i = index;
+              trackBy: getModuleId
+            "
+            [attr.data-index]="i"
+          >
+            <td>
+              <div class="clr-select-wrapper">
+                <select
+                  class="clr-select"
+                  [name]="'weap' + i"
+                  [ngModel]="w[3]"
+                  (ngModelChange)="reload()"
                 >
                   <option
                     *ngFor="let wt of ms.game.fleetManager.unlockedWeapons"
@@ -86,8 +151,9 @@
                 />
                 <button
                   type="button"
-                  class="btn  btn-sm btn-outline btn-icon"
+                  class="btn btn-sm btn-outline btn-icon"
                   (click)="w[2] = w[2] + 1"
+                  (change)="reload()"
                 >
                   <clr-icon shape="plus"></clr-icon>
                 </button>
@@ -105,15 +171,15 @@
             </td>
           </tr>
         </tbody>
-      </table>
+      </table> -->
 
-      <button class="btn btn-outline" (click)="addWeapon()">
+      <button class="btn btn-outline btn-sm" (click)="addWeapon()">
         <clr-icon shape="plus"></clr-icon>
         Add Weapon
       </button>
     </form>
   </div>
-  <div class="clr-col-sm-12 clr-col-md-6">
-    <app-view [design]="design"></app-view>
+  <div class="clr-col-sm-12 clr-col-md-4">
+    <app-view [design]="design" [showDifference]="true"></app-view>
   </div>
 </div>
