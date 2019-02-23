@@ -32,9 +32,11 @@ export class EditorComponent implements OnInit, OnChanges {
   }
   addWeapon() {
     this.design.addWeapon();
+    this.reload();
   }
   removeWeapon(i: number) {
     this.design.removeWeapon(i);
+    this.reload();
   }
   reload() {
     this.design.editable.weapons.forEach(w => {

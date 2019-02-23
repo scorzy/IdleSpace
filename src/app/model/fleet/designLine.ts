@@ -2,9 +2,9 @@ import { Module } from "./module";
 
 export class DesignLine {
   constructor(
-    public quantity: Decimal = new Decimal(0),
+    public quantity: Decimal = new Decimal(1),
     public module: Module = null,
-    public quantityUi = 0,
+    public quantityUi = 1,
     public moduleId = ""
   ) {}
 

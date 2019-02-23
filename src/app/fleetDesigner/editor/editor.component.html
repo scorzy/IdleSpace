@@ -60,7 +60,7 @@
                 <button
                   type="button"
                   class="btn  btn-sm btn-outline btn-icon"
-                  (click)="w.quantityUi = w.quantityUi - 1"
+                  (click)="w.quantityUi = w.quantityUi - 1; reload()"
                 >
                   <clr-icon shape="minus"></clr-icon>
                 </button>
@@ -69,12 +69,13 @@
                   type="number"
                   [(ngModel)]="w.quantityUi"
                   [name]="'w' + i"
+                  (ngModelChange)="reload()"
                   required
                 />
                 <button
                   type="button"
                   class="btn  btn-sm btn-outline btn-icon"
-                  (click)="w.quantityUi = w.quantityUi + 1"
+                  (click)="w.quantityUi = w.quantityUi + 1; reload()"
                 >
                   <clr-icon shape="plus"></clr-icon>
                 </button>

@@ -23,7 +23,7 @@ export class ShipDesign implements ISalvable {
     this.totalDamage = new Decimal(0);
     this.totalArmor = new Decimal(0);
     this.totalShield = new Decimal(0);
-    if (this.type) this.totalHull = new Decimal(this.type.health);
+    this.totalHull = new Decimal(this.type ? this.type.health : 0);
     this.totalEnergy = new Decimal(0);
 
     this.weapons
@@ -66,6 +66,7 @@ export class ShipDesign implements ISalvable {
     this.editable = new ShipDesign();
     this.editable.name = this.name;
     this.editable.id = this.id;
+    this.editable.type = this.type;
     this.editable.shipQuantity = new Decimal(this.shipQuantity);
     this.weapons.forEach(w => {
       this.editable.weapons.push(DesignLine.copy(w));
@@ -78,8 +79,10 @@ export class ShipDesign implements ISalvable {
   }
   addWeapon() {
     this.editable.weapons.push(new DesignLine());
+    this.editable.reload();
   }
   removeWeapon(i: number) {
     this.editable.weapons.splice(i, 1);
+    this.editable.reload();
   }
 }

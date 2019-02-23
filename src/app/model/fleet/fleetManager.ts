@@ -24,6 +24,9 @@ export class FleetManager implements ISalvable {
     this.laserXL = new Weapon("lxl");
 
     this.laserS.damage = new Decimal(50);
+    this.laserM.damage = new Decimal(100);
+    this.laserL.damage = new Decimal(200);
+    this.laserXL.damage = new Decimal(400);
 
     this.allWeapons = [this.laserS, this.laserM, this.laserL, this.laserXL];
 
@@ -46,6 +49,7 @@ export class FleetManager implements ISalvable {
     design.name = name;
     design.type = type;
 
+    design.reload();
     this.ships.push(design);
     return design;
   }

@@ -3,7 +3,8 @@ import {
   OnInit,
   HostBinding,
   ChangeDetectionStrategy,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  OnDestroy
 } from "@angular/core";
 import { Subscription } from "rxjs";
 import { MainService } from "src/app/main.service";
@@ -17,7 +18,7 @@ import { ShipTypes, ShipType } from "src/app/model/fleet/shipTypes";
   styleUrls: ["./design.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DesignComponent implements OnInit {
+export class DesignComponent implements OnInit, OnDestroy {
   @HostBinding("class")
   contentArea = "content-area";
   design: ShipDesign;

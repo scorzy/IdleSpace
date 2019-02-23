@@ -1,13 +1,19 @@
-<table>
+<table class="table table-noborder table-compact">
   <tbody>
     <tr>
-      <td>Total Damage</td>
+      <td class="left">Total Damage</td>
       <td>
         <app-formatted-quantity
           [quantity]="design.totalDamage"
         ></app-formatted-quantity>
       </td>
-      <td *ngIf="showDifference">
+      <td
+        *ngIf="showDifference"
+        [ngClass]="{
+          green: design.editable?.totalDamage.gt(design.totalDamage),
+          notEnough: design.editable?.totalDamage.lt(design.totalDamage)
+        }"
+      >
         <app-formatted-quantity
           [quantity]="design.editable.totalDamage"
         ></app-formatted-quantity>
@@ -15,13 +21,19 @@
     </tr>
 
     <tr>
-      <td>Total Armor</td>
+      <td class="left">Total Armor</td>
       <td>
         <app-formatted-quantity
           [quantity]="design.totalArmor"
         ></app-formatted-quantity>
       </td>
-      <td *ngIf="showDifference">
+      <td
+        *ngIf="showDifference"
+        [ngClass]="{
+          green: design.editable.totalArmor.gt(design.totalArmor),
+          notEnough: design.editable.totalArmor.lt(design.totalArmor)
+        }"
+      >
         <app-formatted-quantity
           [quantity]="design.editable.totalArmor"
         ></app-formatted-quantity>
@@ -29,13 +41,19 @@
     </tr>
 
     <tr>
-      <td>Total Shield</td>
+      <td class="left">Total Shield</td>
       <td>
         <app-formatted-quantity
           [quantity]="design.totalShield"
         ></app-formatted-quantity>
       </td>
-      <td *ngIf="showDifference">
+      <td
+        *ngIf="showDifference"
+        [ngClass]="{
+          green: design.editable.totalShield.gt(design.totalShield),
+          notEnough: design.editable.totalShield.lt(design.totalShield)
+        }"
+      >
         <app-formatted-quantity
           [quantity]="design.editable.totalShield"
         ></app-formatted-quantity>
@@ -43,7 +61,7 @@
     </tr>
 
     <tr>
-      <td>Total Hull</td>
+      <td class="left">Total Hull</td>
       <td>
         <app-formatted-quantity
           [quantity]="design.totalHull"
@@ -52,12 +70,16 @@
       <td *ngIf="showDifference">
         <app-formatted-quantity
           [quantity]="design.editable.totalHull"
+          [ngClass]="{
+            green: design.editable.totalHull.gt(design.totalHull),
+            notEnough: design.editable.totalHull.lt(design.totalHull)
+          }"
         ></app-formatted-quantity>
       </td>
     </tr>
 
     <tr>
-      <td>Total Energy</td>
+      <td class="left">Total Energy</td>
       <td>
         <app-formatted-quantity
           [quantity]="design.totalEnergy"
@@ -66,6 +88,10 @@
       <td *ngIf="showDifference">
         <app-formatted-quantity
           [quantity]="design.editable.totalEnergy"
+          [ngClass]="{
+            green: design.editable.totalEnergy.gt(design.totalEnergy),
+            notEnough: design.editable.totalEnergy.lt(design.totalEnergy)
+          }"
         ></app-formatted-quantity>
       </td>
     </tr>
