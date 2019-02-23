@@ -3,7 +3,8 @@ import {
   OnInit,
   ChangeDetectionStrategy,
   Input,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  OnDestroy
 } from "@angular/core";
 import { ShipDesign } from "src/app/model/fleet/shipDesign";
 import { Subscription } from "rxjs";
@@ -15,7 +16,7 @@ import { MainService } from "src/app/main.service";
   styleUrls: ["./view.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ViewComponent implements OnInit {
+export class ViewComponent implements OnInit, OnDestroy {
   @Input() design: ShipDesign;
   @Input() showDifference = false;
 

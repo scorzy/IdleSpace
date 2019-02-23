@@ -63,5 +63,8 @@
     "component-class-suffix": true,
     "directive-class-suffix": true,
     "semicolon": [true, "always", "ignore-bound-class-methods"]
+  },
+  "linterOptions": {
+    "exclude": ["src/polyfills.ts"]
   }
 }

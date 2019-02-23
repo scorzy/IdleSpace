@@ -1,28 +1,42 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { By } from "@angular/platform-browser";
+import { DebugElement, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 
-import { EditorComponent } from './editor.component';
+import { EditorComponent } from "./editor.component";
+import { ClarityModule } from "@clr/angular";
+import { RouterTestingModule } from "@angular/router/testing";
+import { FormsModule } from "@angular/forms";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { getMainService } from "src/app/app.component.spec";
+import { ShipDesign } from "src/app/model/fleet/shipDesign";
 
-describe('EditorComponent', () => {
+describe("EditorComponent", () => {
   let component: EditorComponent;
   let fixture: ComponentFixture<EditorComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditorComponent ]
-    })
-    .compileComponents();
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      imports: [
+        ClarityModule,
+        RouterTestingModule,
+        FormsModule,
+        BrowserAnimationsModule
+      ],
+      declarations: [EditorComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(EditorComponent);
     component = fixture.componentInstance;
+    component.ms = getMainService();
+    component.design = new ShipDesign();
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

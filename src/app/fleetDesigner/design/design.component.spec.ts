@@ -1,19 +1,29 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { By } from "@angular/platform-browser";
+import { DebugElement, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 
-import { DesignComponent } from './design.component';
+import { DesignComponent } from "./design.component";
+import { ClarityModule } from "@clr/angular";
+import { RouterTestingModule } from "@angular/router/testing";
+import { FormsModule } from "@angular/forms";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
-describe('DesignComponent', () => {
+describe("DesignComponent", () => {
   let component: DesignComponent;
   let fixture: ComponentFixture<DesignComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DesignComponent ]
-    })
-    .compileComponents();
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      imports: [
+        ClarityModule,
+        RouterTestingModule,
+        FormsModule,
+        BrowserAnimationsModule
+      ],
+      declarations: [DesignComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -22,7 +32,7 @@ describe('DesignComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

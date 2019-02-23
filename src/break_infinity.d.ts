@@ -1,3 +1,4 @@
+  /* tslint:disable */
   type DecimalSource = Decimal | number | string | undefined | null;
 
   declare class Decimal {
