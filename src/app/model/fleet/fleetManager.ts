@@ -1,41 +1,25 @@
 import { ISalvable } from "../base/ISalvable";
 import { ShipDesign } from "./shipDesign";
 import { ShipType } from "./shipTypes";
-import { Weapon } from "./weapon";
+import { Module } from "./module";
+import { ModulesData } from "./moduleData";
 
 export class FleetManager implements ISalvable {
   totalNavalCapacity = new Decimal(20);
   ships = new Array<ShipDesign>();
 
-  allWeapons = new Array<Weapon>();
-  unlockedWeapons = new Array<Weapon>();
-
-  //#region Weapons
-  laserS: Weapon;
-  laserM: Weapon;
-  laserL: Weapon;
-  laserXL: Weapon;
-  //#endregion
+  allModules = new Array<Module>();
+  unlockedModules = new Array<Module>();
 
   constructor() {
-    this.laserS = new Weapon("ls");
-    this.laserM = new Weapon("lm");
-    this.laserL = new Weapon("ll");
-    this.laserXL = new Weapon("lxl");
+    for (const data of ModulesData) this.allModules.push(Module.fromData(data));
 
-    this.laserS.damage = new Decimal(50);
-    this.laserM.damage = new Decimal(100);
-    this.laserL.damage = new Decimal(200);
-    this.laserXL.damage = new Decimal(400);
-
-    this.allWeapons = [this.laserS, this.laserM, this.laserL, this.laserXL];
-
-    this.allWeapons.forEach(w => (w.unlocked = true));
+    this.allModules.forEach(w => (w.unlocked = true));
     this.reload();
   }
 
   reload() {
-    this.unlockedWeapons = this.allWeapons.filter(w => w.unlocked);
+    this.unlockedModules = this.allModules.filter(w => w.unlocked);
   }
   addDesign(name: string, type: ShipType): ShipDesign {
     const design = new ShipDesign();
@@ -53,7 +37,9 @@ export class FleetManager implements ISalvable {
     this.ships.push(design);
     return design;
   }
-
+  deleteDesign(ds: ShipDesign) {
+    this.ships = this.ships.filter(d => d !== ds);
+  }
   getSave() {}
   load(data: any): boolean {
     this.reload();

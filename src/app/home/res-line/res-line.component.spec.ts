@@ -29,7 +29,7 @@ describe("ResLineComponent", () => {
     component.id = "10";
     component.isEnding = false;
     component.name = "name";
-    component.quantity = new Decimal(1);
+    // component.quantity = new Decimal(1);
     fixture.detectChanges();
   });
 

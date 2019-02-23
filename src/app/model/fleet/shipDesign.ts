@@ -8,46 +8,46 @@ export class ShipDesign implements ISalvable {
   name = "";
   shipQuantity = new Decimal(0);
 
-  weapons = new Array<DesignLine>();
-  utility = new Array<DesignLine>();
+  modules = new Array<DesignLine>();
 
   totalDamage: Decimal;
   totalArmor: Decimal;
   totalShield: Decimal;
-  totalHull: Decimal;
   totalEnergy: Decimal;
 
   editable: ShipDesign;
+  usedModulePoint = 0;
+  isValid = true;
 
   reload() {
     this.totalDamage = new Decimal(0);
-    this.totalArmor = new Decimal(0);
     this.totalShield = new Decimal(0);
-    this.totalHull = new Decimal(this.type ? this.type.health : 0);
     this.totalEnergy = new Decimal(0);
+    this.totalArmor = new Decimal(this.type ? this.type.health : 0);
+    this.usedModulePoint = 0;
 
-    this.weapons
+    this.modules
       .filter(q => q.isValid())
       .forEach(w => {
         this.totalDamage = this.totalDamage.plus(
-          w.quantity.times(w.module.damage)
+          w.module.damage.times(w.size).times(w.quantity)
         );
-
         this.totalEnergy = this.totalEnergy.plus(
-          w.quantity.times(w.module.energyBalance)
+          w.module.energyBalance.times(w.size).times(w.quantity)
         );
-      });
-    this.utility
-      .filter(q => q.isValid())
-      .forEach(w => {
-        this.totalEnergy = this.totalEnergy.plus(
-          w.quantity.times(w.module.energyBalance)
+        this.totalArmor = this.totalArmor.plus(
+          w.module.armor.times(w.size).times(w.quantity)
         );
-        this.totalArmor = this.totalArmor.plus(w.quantity.times(w.module.armor));
         this.totalShield = this.totalShield.plus(
-          w.quantity.times(w.module.shield)
+          w.module.shield.times(w.size).times(w.quantity)
         );
+        this.usedModulePoint += w.quantity * w.size;
       });
+
+    this.isValid =
+      this.totalEnergy.gte(0) &&
+      this.usedModulePoint <= this.type.modulePoint &&
+      this.modules.length <= this.type.moduleCount;
   }
   getSave(): any {
     const data: any = {};
@@ -68,21 +68,18 @@ export class ShipDesign implements ISalvable {
     this.editable.id = this.id;
     this.editable.type = this.type;
     this.editable.shipQuantity = new Decimal(this.shipQuantity);
-    this.weapons.forEach(w => {
-      this.editable.weapons.push(DesignLine.copy(w));
-    });
-    this.utility.forEach(w => {
-      this.editable.utility.push(DesignLine.copy(w));
+    this.modules.forEach(w => {
+      this.editable.modules.push(DesignLine.copy(w));
     });
 
     this.editable.reload();
   }
-  addWeapon() {
-    this.editable.weapons.push(new DesignLine());
+  addModule() {
+    this.editable.modules.push(new DesignLine());
     this.editable.reload();
   }
-  removeWeapon(i: number) {
-    this.editable.weapons.splice(i, 1);
+  removeModule(i: number) {
+    this.editable.modules.splice(i, 1);
     this.editable.reload();
   }
 }

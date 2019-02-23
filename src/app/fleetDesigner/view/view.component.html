@@ -61,24 +61,6 @@
     </tr>
 
     <tr>
-      <td class="left">Total Hull</td>
-      <td>
-        <app-formatted-quantity
-          [quantity]="design.totalHull"
-        ></app-formatted-quantity>
-      </td>
-      <td *ngIf="showDifference">
-        <app-formatted-quantity
-          [quantity]="design.editable.totalHull"
-          [ngClass]="{
-            green: design.editable.totalHull.gt(design.totalHull),
-            notEnough: design.editable.totalHull.lt(design.totalHull)
-          }"
-        ></app-formatted-quantity>
-      </td>
-    </tr>
-
-    <tr>
       <td class="left">Total Energy</td>
       <td>
         <app-formatted-quantity

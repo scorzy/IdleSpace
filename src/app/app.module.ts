@@ -33,6 +33,7 @@ import { FleetDesignerComponent } from "./fleetDesigner/fleetDesigner.component"
 import { DesignComponent } from "./fleetDesigner/design/design.component";
 import { EditorComponent } from "./fleetDesigner/editor/editor.component";
 import { ViewComponent } from './fleetDesigner/view/view.component';
+import { SizesPipe } from './sizes.pipe';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { ViewComponent } from './fleetDesigner/view/view.component';
     FleetDesignerComponent,
     DesignComponent,
     EditorComponent,
-    ViewComponent
+    ViewComponent,
+    SizesPipe
   ],
   imports: [
     BrowserAnimationsModule,

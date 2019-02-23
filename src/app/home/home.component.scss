@@ -25,3 +25,8 @@
 :host /deep/.nav-text {
   overflow: visible !important;
 }
+:host /deep/ .clr-vertical-nav .nav-group-text,
+:host /deep/ .clr-vertical-nav .nav-link,
+:host /deep/ .clr-vertical-nav.has-icons .nav-group-children .nav-link {
+  padding-left: 0.8rem;
+}

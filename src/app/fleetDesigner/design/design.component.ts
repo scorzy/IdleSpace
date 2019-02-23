@@ -25,7 +25,7 @@ export class DesignComponent implements OnInit, OnDestroy {
 
   name = "";
   id = "";
-  type = "";
+  type = "1";
 
   ShipTypes = ShipTypes;
 
@@ -39,6 +39,7 @@ export class DesignComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.type = "1";
     this.subscriptions.push(
       this.route.params.subscribe(this.getDesign.bind(this))
     );

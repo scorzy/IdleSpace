@@ -1,23 +1,25 @@
-import { Module } from "./module";
+import { Module, Sizes } from "./module";
 
 export class DesignLine {
   constructor(
-    public quantity: Decimal = new Decimal(1),
+    public quantity = 1,
     public module: Module = null,
+    public size: Sizes = 1,
     public quantityUi = 1,
     public moduleId = ""
   ) {}
 
   static copy(other: DesignLine): DesignLine {
     return new DesignLine(
-      new Decimal(other.quantity),
+      other.quantity,
       other.module,
+      Sizes.Small,
       other.quantityUi,
       other.moduleId
     );
   }
 
   isValid() {
-    return this.module && this.quantity.gt(0);
+    return this.module && this.quantity > 0;
   }
 }

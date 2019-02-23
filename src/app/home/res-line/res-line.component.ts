@@ -24,15 +24,16 @@ export class ResLineComponent {
   @Input() operativity: number;
   @Input() isEnding: boolean;
   @Input() isNew: boolean;
-  @Input() quantity: Decimal;
+  quantity: Decimal = new Decimal(0);
   @Input() c: Decimal;
   @Input() unit: Resource;
 
-  // private subscriptions: Subscription[] = [];
+  private subscriptions: Subscription[] = [];
 
   constructor(
     public os: OptionsService,
-    private ms: MainService // private cd: ChangeDetectorRef
+    private ms: MainService,
+    private cd: ChangeDetectorRef
   ) {}
 
   setOp100() {
@@ -40,14 +41,19 @@ export class ResLineComponent {
     this.ms.reload();
   }
 
-  // ngOnInit() {
-  //   this.subscriptions.push(
-  //     this.ms.em.updateEmitter.subscribe(() => {
-  //       this.cd.markForCheck();
-  //     })
-  //   );
-  // }
-  // ngOnDestroy() {
-  //   this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
-  // }
+  ngOnInit() {
+    this.quantity = this.unit.quantity;
+
+    this.subscriptions.push(
+      this.ms.em.updateEmitter.subscribe(() => {
+        if (!this.quantity.eq(this.unit.quantity)) {
+          this.quantity = this.unit.quantity;
+          this.cd.markForCheck();
+        }
+      })
+    );
+  }
+  ngOnDestroy() {
+    this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
+  }
 }
