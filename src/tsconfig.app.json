@@ -4,5 +4,5 @@
     "outDir": "../out-tsc/app",
     "types": []
   },
-  "exclude": ["test.ts", "**/*.spec.ts", "polyfills.ts", "break_infinity.d.ts"]
+  "exclude": ["test.ts", "**/*.spec.ts"]
 }
