@@ -10,6 +10,8 @@ import { FormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { getMainService } from "src/app/app.component.spec";
 import { ShipDesign } from "src/app/model/fleet/shipDesign";
+import { SizesPipe } from "src/app/sizes.pipe";
+import { ShipTypes } from "src/app/model/fleet/shipTypes";
 
 describe("EditorComponent", () => {
   let component: EditorComponent;
@@ -24,7 +26,7 @@ describe("EditorComponent", () => {
         FormsModule,
         BrowserAnimationsModule
       ],
-      declarations: [EditorComponent]
+      declarations: [EditorComponent, SizesPipe]
     }).compileComponents();
   }));
 
@@ -33,6 +35,7 @@ describe("EditorComponent", () => {
     component = fixture.componentInstance;
     component.ms = getMainService();
     component.design = new ShipDesign();
+    component.design.type = ShipTypes[0];
     fixture.detectChanges();
   });
 

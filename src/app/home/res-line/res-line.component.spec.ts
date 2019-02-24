@@ -8,6 +8,7 @@ import { OptionsService } from "../../options.service";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FormatPipe } from "../../format.pipe";
 import { Resource } from "../../model/resource/resource";
+import { getMainService } from "src/app/app.component.spec";
 
 describe("ResLineComponent", () => {
   let component: ResLineComponent;
@@ -29,6 +30,8 @@ describe("ResLineComponent", () => {
     component.id = "10";
     component.isEnding = false;
     component.name = "name";
+    component.ms = getMainService();
+    component.unit = new Resource("m");
     // component.quantity = new Decimal(1);
     fixture.detectChanges();
   });

@@ -48,7 +48,11 @@
           [ngClass]="{
             notEnough: design.editable.totalEnergy.lt(0)
           }"
-          >{{ design.editable.totalEnergy | format: true }}
+        >
+          <app-formatted-quantity
+            [quantity]="design.editable.totalEnergy"
+            [integer]="true"
+          ></app-formatted-quantity>
         </span>
       </span>
       <br />

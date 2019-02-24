@@ -17,7 +17,7 @@ import { MainService } from "../../main.service";
   styleUrls: ["./res-line.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ResLineComponent {
+export class ResLineComponent implements OnInit, OnDestroy {
   @Input() id: string;
   @Input() name: string;
   @Input() shape: string;
@@ -32,7 +32,7 @@ export class ResLineComponent {
 
   constructor(
     public os: OptionsService,
-    private ms: MainService,
+    public ms: MainService,
     private cd: ChangeDetectorRef
   ) {}
 
