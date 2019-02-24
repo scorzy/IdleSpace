@@ -152,7 +152,9 @@
                   type="button"
                   class="btn  btn-sm btn-outline btn-icon"
                   (click)="w.quantityUi = w.quantityUi + 1; reload()"
-                  [disabled]="w.quantity >= design.type.modulePoint"
+                  [disabled]="
+                    design.editable.usedModulePoint >= design.type.modulePoint
+                  "
                 >
                   <clr-icon shape="plus"></clr-icon>
                 </button>
