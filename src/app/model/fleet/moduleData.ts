@@ -1,4 +1,4 @@
-import { IModuleData, Sizes, ALL_SIZES } from "./module";
+import { IModuleData, ALL_SIZES } from "./module";
 
 export const ModulesData: IModuleData[] = [
   {
