@@ -1,0 +1,77 @@
+<div *ngIf="activeProduct?.length > 0">
+  <h6>{{ unit.name }} produces:</h6>
+  <clr-datagrid class="datagrid-compact">
+    <clr-dg-column [clrDgField]="'product.name'">Name</clr-dg-column>
+    <clr-dg-column [clrDgSortBy]="prodSorter">Ratio</clr-dg-column>
+    <clr-dg-column [clrDgSortBy]="totalProdSorter"
+      >Total production</clr-dg-column
+    >
+    <clr-dg-row *clrDgItems="let product of activeProduct">
+      <clr-dg-cell>
+        <a [routerLink]="'/home/res/' + product.product.id">
+          {{ product.product.name }}
+        </a>
+      </clr-dg-cell>
+      <clr-dg-cell>
+        <span [class.notEnough]="product.ratio.lt(0)" class="monospace">
+          {{ product.prodPerSec | format }}</span
+        >
+      </clr-dg-cell>
+      <clr-dg-cell>
+        <span [class.notEnough]="product.ratio.lt(0)" class="monospace">
+          {{ product.prodPerSec.times(unit.quantity) | format }}
+        </span>
+      </clr-dg-cell>
+      <clr-dg-row-detail *clrIfExpanded>
+        <!-- <app-production-signposts
+          [production]="product"
+        ></app-production-signposts> -->
+      </clr-dg-row-detail>
+    </clr-dg-row>
+
+    <clr-dg-footer>
+      <clr-dg-pagination #pagination [clrDgPageSize]="10">
+        {{ pagination.firstItem + 1 }} - {{ pagination.lastItem + 1 }} of
+        {{ pagination.totalItems }}
+      </clr-dg-pagination>
+    </clr-dg-footer>
+  </clr-datagrid>
+</div>
+
+<div *ngIf="activeProducer?.length > 0">
+  <h6>{{ unit.name }} is made by:</h6>
+  <clr-datagrid class="datagrid-compact">
+    <clr-dg-column [clrDgField]="'producer.name'">Name</clr-dg-column>
+    <clr-dg-column [clrDgSortBy]="prodSorter">Ratio</clr-dg-column>
+    <clr-dg-column [clrDgSortBy]="totalProdSorter"
+      >Total production</clr-dg-column
+    >
+
+    <clr-dg-row *clrDgItems="let producer of activeProducer">
+      <clr-dg-cell>
+        <a [routerLink]="'/home/res/' + producer.producer.id">
+          {{ producer.producer.name }}
+        </a>
+      </clr-dg-cell>
+      <clr-dg-cell>
+        <span [class.notEnough]="producer.ratio.lt(0)" class="monospace">
+          {{ producer.prodPerSec | format }}
+        </span>
+      </clr-dg-cell>
+      <clr-dg-cell>
+        <span [class.notEnough]="producer.ratio.lt(0)" class="monospace">
+          {{
+            producer.prodPerSec.times(producer.producer.quantity) | format
+          }}</span
+        >
+      </clr-dg-cell>
+    </clr-dg-row>
+
+    <clr-dg-footer>
+      <clr-dg-pagination #pagination [clrDgPageSize]="10">
+        {{ pagination.firstItem + 1 }} - {{ pagination.lastItem + 1 }} of
+        {{ pagination.totalItems }}
+      </clr-dg-pagination>
+    </clr-dg-footer>
+  </clr-datagrid>
+</div>

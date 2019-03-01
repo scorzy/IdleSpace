@@ -34,6 +34,7 @@ import { DesignComponent } from "./fleetDesigner/design/design.component";
 import { EditorComponent } from "./fleetDesigner/editor/editor.component";
 import { ViewComponent } from './fleetDesigner/view/view.component';
 import { SizesPipe } from './sizes.pipe';
+import { ProductionTablesComponent } from './production-tables/production-tables.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { SizesPipe } from './sizes.pipe';
     DesignComponent,
     EditorComponent,
     ViewComponent,
-    SizesPipe
+    SizesPipe,
+    ProductionTablesComponent
   ],
   imports: [
     BrowserAnimationsModule,
