@@ -88,3 +88,17 @@ select {
 .nav-group-content {
   background: #404e60 !important;
 }
+
+::-webkit-scrollbar {
+  height: 0.2rem;
+  width: 0.2rem;
+}
+
+::-webkit-scrollbar-button {
+  height: 0;
+  width: 0;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 0.2rem;
+}

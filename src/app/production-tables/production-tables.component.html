@@ -3,9 +3,7 @@
   <clr-datagrid class="datagrid-compact">
     <clr-dg-column [clrDgField]="'product.name'">Name</clr-dg-column>
     <clr-dg-column [clrDgSortBy]="prodSorter">Ratio</clr-dg-column>
-    <clr-dg-column [clrDgSortBy]="totalProdSorter"
-      >Total production</clr-dg-column
-    >
+    <clr-dg-column [clrDgSortBy]="totalProdSorter">Total</clr-dg-column>
     <clr-dg-row *clrDgItems="let product of activeProduct">
       <clr-dg-cell>
         <a [routerLink]="'/home/res/' + product.product.id">
@@ -14,12 +12,16 @@
       </clr-dg-cell>
       <clr-dg-cell>
         <span [class.notEnough]="product.ratio.lt(0)" class="monospace">
-          {{ product.prodPerSec | format }}</span
-        >
+          <app-formatted-quantity [quantity]="product.prodPerSec">
+          </app-formatted-quantity>
+        </span>
       </clr-dg-cell>
       <clr-dg-cell>
         <span [class.notEnough]="product.ratio.lt(0)" class="monospace">
-          {{ product.prodPerSec.times(unit.quantity) | format }}
+          <app-formatted-quantity
+            [quantity]="product.prodPerSec.times(unit.quantity)"
+          >
+          </app-formatted-quantity>
         </span>
       </clr-dg-cell>
       <clr-dg-row-detail *clrIfExpanded>
@@ -55,15 +57,17 @@
       </clr-dg-cell>
       <clr-dg-cell>
         <span [class.notEnough]="producer.ratio.lt(0)" class="monospace">
-          {{ producer.prodPerSec | format }}
+          <app-formatted-quantity [quantity]="producer.prodPerSec">
+          </app-formatted-quantity>
         </span>
       </clr-dg-cell>
       <clr-dg-cell>
         <span [class.notEnough]="producer.ratio.lt(0)" class="monospace">
-          {{
-            producer.prodPerSec.times(producer.producer.quantity) | format
-          }}</span
-        >
+          <app-formatted-quantity
+            [quantity]="producer.prodPerSec.times(producer.producer.quantity)"
+          >
+          </app-formatted-quantity>
+        </span>
       </clr-dg-cell>
     </clr-dg-row>
 
