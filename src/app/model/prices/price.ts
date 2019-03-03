@@ -19,6 +19,10 @@ export class Price {
   }
 
   reload(bought: Decimal, numWanted: Decimal = new Decimal(1)) {
+    const tempMultiCost = this.getPrice(numWanted, bought);
+    if (!tempMultiCost.eq(this.multiCost)) this.multiCost = tempMultiCost;
+    this.singleCost = this.getPrice(new Decimal(1), bought);
+
     if (this.spendable.quantity.lte(0)) {
       this.maxBuy = new Decimal(0);
       this.canBuy = false;
@@ -36,10 +40,6 @@ export class Price {
           ));
 
     this.canBuy = this.maxBuy.gte(1);
-
-    const tempMultiCost = this.getPrice(numWanted, bought);
-    if (!tempMultiCost.eq(this.multiCost)) this.multiCost = tempMultiCost;
-    this.singleCost = this.getPrice(new Decimal(1), bought);
     this.canBuyMulti = this.multiCost.lte(this.spendable.quantity);
   }
   buy(toBuy: Decimal, bought: Decimal): boolean {

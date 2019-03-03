@@ -7,6 +7,11 @@ import { MultiPrice } from "../prices/multiPrice";
 import { Price } from "../prices/price";
 import { BuyAction } from "../actions/buyAction";
 
+const TIER_2_COST_MULTI = 100;
+const TIER_3_COST_MULTI = 1000;
+const TIER_2_ALLOY_PERCENT = 1;
+const TIER_3_ALLOY_PERCENT = 1;
+
 export class ResourceManager implements ISalvable {
   private static instance: ResourceManager;
 
@@ -90,7 +95,7 @@ export class ResourceManager implements ISalvable {
     this.computing = new Resource("f");
     this.computing.shape = "computing";
     //#endregion
-
+    //#region Declarations
     this.metalMine = new Resource("mm");
     this.crystalMine = new Resource("cm");
     this.alloyFoundry = new Resource("af");
@@ -104,8 +109,6 @@ export class ResourceManager implements ISalvable {
     this.metalX3 = new Resource("m3");
     this.metal.addGenerator(this.metalX1);
     this.energy.addGenerator(this.metalX1, -1);
-    this.metalX1.addGenerator(this.metalX2);
-    this.metalX2.addGenerator(this.metalX3);
 
     //      Crystal
     this.crystalX1 = new Resource("c1");
@@ -115,8 +118,6 @@ export class ResourceManager implements ISalvable {
     this.crystalX3 = new Resource("c3");
     this.crystal.addGenerator(this.crystalX1);
     this.energy.addGenerator(this.crystalX1, -1);
-    this.crystalX1.addGenerator(this.crystalX2);
-    this.crystalX2.addGenerator(this.crystalX3);
 
     //      Alloy
     this.alloyX1 = new Resource("a1");
@@ -124,8 +125,6 @@ export class ResourceManager implements ISalvable {
     this.alloyX3 = new Resource("a3");
     this.alloy.addGenerator(this.alloyX1);
     this.energy.addGenerator(this.alloyX1, -1);
-    this.alloyX1.addGenerator(this.alloyX2);
-    this.alloyX2.addGenerator(this.alloyX3);
 
     //      Energy
     this.energy.unlocked = true;
@@ -136,8 +135,6 @@ export class ResourceManager implements ISalvable {
     this.energyX1.unlocked = true;
     this.energyX1.quantity = new Decimal(3);
     this.energy.addGenerator(this.energyX1);
-    this.energyX1.addGenerator(this.energyX2);
-    this.energyX2.addGenerator(this.energyX3);
 
     //      Computing
     this.computingX1 = new Resource("f1");
@@ -145,8 +142,6 @@ export class ResourceManager implements ISalvable {
     this.computingX3 = new Resource("f3");
     this.computing.addGenerator(this.computingX1);
     this.energy.addGenerator(this.computingX1, -2);
-    this.computingX1.addGenerator(this.computingX2);
-    this.computingX2.addGenerator(this.computingX3);
 
     //      Space
     this.habitableSpace = new Resource("hs");
@@ -161,7 +156,7 @@ export class ResourceManager implements ISalvable {
       d.unlocked = true;
       d.quantity = new Decimal(10);
     });
-
+    //#endregion
     //#region Group
     this.materials = [
       this.metal,
@@ -231,7 +226,65 @@ export class ResourceManager implements ISalvable {
     );
     //#endregion
     //#region Mine
+    //#region Tier 2 and 3
+    for (let i = 0; i < this.tier2.length; i++) {
+      const t1 = this.tier1[i];
+      const t2 = this.tier2[i];
 
+      const prices = new Array<Price>();
+      let total = new Decimal(0);
+      t1.buyAction.multiPrice.prices.forEach(pr => {
+        const price = pr.cost.times(TIER_2_COST_MULTI);
+        prices.push(new Price(pr.spendable, price));
+        total = total.plus(price);
+      });
+
+      prices.push(new Price(this.alloy, total.times(TIER_2_ALLOY_PERCENT)));
+      t2.generateBuyAction(new MultiPrice(prices));
+    }
+    for (let i = 0; i < this.tier2.length; i++) {
+      const t2 = this.tier2[i];
+      const t3 = this.tier3[i];
+
+      const prices = new Array<Price>();
+      let total = new Decimal(0);
+      t2.buyAction.multiPrice.prices
+        .filter(p => p.spendable !== this.alloy)
+        .forEach(pr => {
+          const price = pr.cost.times(TIER_3_COST_MULTI);
+          prices.push(new Price(pr.spendable, price));
+          total = total.plus(price);
+        });
+      prices.push(new Price(this.alloy, total.times(TIER_3_ALLOY_PERCENT)));
+      t3.generateBuyAction(new MultiPrice(prices));
+    }
+    for (let i = 0; i < this.tier2.length; i++) {
+      const t1 = this.tier1[i];
+      const t2 = this.tier2[i];
+      const t3 = this.tier3[i];
+
+      t1.addGenerator(t2);
+      t2.addGenerator(t3);
+      const ba = t1.buyAction;
+      if (ba) {
+        ba.multiPrice.prices.forEach(p => {
+          if (p.spendable instanceof Resource) {
+            p.spendable.addGenerator(t2, p.cost.times(-1));
+          }
+        });
+      }
+
+      const ba2 = t2.buyAction;
+      if (ba2) {
+        ba2.multiPrice.prices.forEach(p => {
+          if (p.spendable instanceof Resource) {
+            p.spendable.addGenerator(t3, p.cost.times(-1));
+          }
+        });
+      }
+    }
+    //#endregion
+    //#region Limits
     //  Metal Mine
     this.metalMine.unlocked = true;
     const buyMetalMine = new BuyAction(
@@ -295,7 +348,6 @@ export class ResourceManager implements ISalvable {
     buyFoundry.name = "Buy " + this.alloyFoundry.name;
     this.alloyX1.actions.push(buyFoundry);
     //#endregion
-    //#endregion
 
     this.allResources = [
       this.metal,
@@ -322,9 +374,9 @@ export class ResourceManager implements ISalvable {
       this.miningDistrict,
       this.crystalDistrict
     ];
-    // this.allResources.forEach(r => {
-    //   r.unlocked = true;
-    // });
+    this.allResources.forEach(r => {
+      r.unlocked = true;
+    });
     this.matGroup = new ResourceGroup("0", "Materials", "", this.materials);
     this.tierGroups = [
       this.matGroup,
@@ -490,13 +542,13 @@ export class ResourceManager implements ISalvable {
     if (this.unitZero && this.unitZero.isEnding) {
       //  Stop consumers
       this.unitZero.generators
-        .filter(p => p.ratio.lt(0))
+        .filter(p => p.producer.quantity.gt(0) && p.ratio.lt(0))
         .forEach(p => {
           p.producer.operativity = 0;
         });
       //  Stop consumers of producers
       this.unitZero.generators
-        .filter(p => p.ratio.gt(0))
+        .filter(p => p.producer.quantity.gt(0) && p.ratio.gt(0))
         .forEach(p => {
           p.producer.generators
             .filter(p2 => p2.ratio.lt(0))

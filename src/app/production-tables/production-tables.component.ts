@@ -3,7 +3,9 @@ import {
   OnInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Input
+  Input,
+  OnDestroy,
+  OnChanges
 } from "@angular/core";
 import { Subscription } from "rxjs/internal/Subscription";
 import { Resource } from "../model/resource/resource";
@@ -19,7 +21,8 @@ import { TotalProductionSorter } from "../model/utility/totalProductionSorter";
   styleUrls: ["./production-tables.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ProductionTablesComponent implements OnInit {
+export class ProductionTablesComponent
+  implements OnInit, OnDestroy, OnInit, OnChanges {
   private subscriptions: Subscription[] = [];
   activeProduct = new Array<Production>();
   activeProducer = new Array<Production>();
