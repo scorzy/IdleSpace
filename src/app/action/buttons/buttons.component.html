@@ -55,7 +55,7 @@
   <button
     *ngIf="action.canBuy"
     class="btn btn-sm w-100"
-    (click)="buy(action.numWanted)"
+    (click)="buyOrModal(action.numWanted)"
     [disabled]="!action.canBuyWanted"
   >
     Get
@@ -69,7 +69,7 @@
   <button
     *ngIf="action.maxBuy.gt(3)"
     class="btn btn-sm w-100"
-    (click)="buy(action.maxBuy.div(2).floor())"
+    (click)="buyOrModal(action.maxBuy.div(2).floor())"
   >
     Get
     <app-formatted-quantity
@@ -81,7 +81,7 @@
   <button
     *ngIf="action.maxBuy.gte(2)"
     class="btn btn-sm w-100"
-    (click)="buy(action.maxBuy)"
+    (click)="buyOrModal(action.maxBuy)"
   >
     Get
     <app-formatted-quantity
@@ -91,3 +91,21 @@
     ></app-formatted-quantity>
   </button>
 </div>
+
+<clr-modal [(clrModalOpen)]="alertModal">
+  <h3 class="modal-title">
+    {{ action.name }}
+    <app-formatted-quantity [quantity]="alertQuantity"></app-formatted-quantity>
+  </h3>
+  <div class="modal-body">
+    <p>{{ action.alertMessage }}</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="alertModal = false">
+      Cancel
+    </button>
+    <button type="button" class="btn btn-danger" (click)="buy(alertQuantity)">
+      Ok
+    </button>
+  </div>
+</clr-modal>

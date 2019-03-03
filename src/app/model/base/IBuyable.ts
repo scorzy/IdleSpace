@@ -1,6 +1,7 @@
 import { BuyAction } from "../actions/buyAction";
+import { AbstractAction } from "../actions/abstractAction";
 
 export interface IBuyable {
-  actions: BuyAction[];
+  actions: AbstractAction[];
   quantity: Decimal;
 }

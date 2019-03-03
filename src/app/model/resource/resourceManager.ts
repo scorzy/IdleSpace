@@ -194,11 +194,6 @@ export class ResourceManager implements ISalvable {
     this.alloyX1.limitStorage = this.alloyFoundry;
     this.energyX1.limitStorage = this.energyPlant;
 
-    this.metalMine.quantity = new Decimal(1);
-    this.crystalMine.quantity = new Decimal(1);
-    this.alloyFoundry.quantity = new Decimal(1);
-    this.energyPlant.quantity = new Decimal(1);
-
     this.limited.forEach(rl => {
       rl.isLimited = true;
       rl.reloadLimit();
@@ -238,8 +233,8 @@ export class ResourceManager implements ISalvable {
         prices.push(new Price(pr.spendable, price));
         total = total.plus(price);
       });
-
       prices.push(new Price(this.alloy, total.times(TIER_2_ALLOY_PERCENT)));
+      prices.push(new Price(this.habitableSpace, 1, 1));
       t2.generateBuyAction(new MultiPrice(prices));
     }
     for (let i = 0; i < this.tier2.length; i++) {
@@ -256,6 +251,7 @@ export class ResourceManager implements ISalvable {
           total = total.plus(price);
         });
       prices.push(new Price(this.alloy, total.times(TIER_3_ALLOY_PERCENT)));
+      prices.push(new Price(this.habitableSpace, 1, 1));
       t3.generateBuyAction(new MultiPrice(prices));
     }
     for (let i = 0; i < this.tier2.length; i++) {
@@ -374,6 +370,7 @@ export class ResourceManager implements ISalvable {
       this.miningDistrict,
       this.crystalDistrict
     ];
+    this.allResources.forEach(r => r.generateRefundActions());
     this.allResources.forEach(r => {
       r.unlocked = true;
     });

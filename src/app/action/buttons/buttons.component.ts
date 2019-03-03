@@ -26,6 +26,8 @@ export class ButtonsComponent implements OnInit, OnDestroy {
 
   lastMaxBuy: Decimal;
   lastHalfBuy: Decimal;
+  alertModal = false;
+  alertQuantity = new Decimal(0);
 
   private subscriptions: Subscription[] = [];
 
@@ -56,6 +58,7 @@ export class ButtonsComponent implements OnInit, OnDestroy {
   buy(quantity: Decimal) {
     this.action.buy(quantity);
     this.ms.reload();
+    this.alertModal = false;
   }
   // checkSkip() {
   //   this.canSkip = false;
@@ -83,5 +86,13 @@ export class ButtonsComponent implements OnInit, OnDestroy {
       this.lastHalfBuy = hlf;
     }
     return this.lastHalfBuy;
+  }
+  buyOrModal(quantity: Decimal) {
+    if (this.action.alertMessage) {
+      this.alertQuantity = quantity;
+      this.alertModal = true;
+    } else {
+      this.buy(quantity);
+    }
   }
 }

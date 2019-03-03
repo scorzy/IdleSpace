@@ -7,6 +7,9 @@ import { BuyAction } from "../actions/buyAction";
 import { MultiPrice } from "../prices/multiPrice";
 import { Multiplier } from "../base/multiplier";
 import { ResourceManager } from "./resourceManager";
+import { AbstractAction } from "../actions/abstractAction";
+import { RefundAction } from "../actions/refundAction";
+import { Price } from "../prices/price";
 
 export class Resource extends AbstractUnlockable
   implements ISpendable, IBuyable {
@@ -26,11 +29,12 @@ export class Resource extends AbstractUnlockable
   endIn: number = Number.POSITIVE_INFINITY;
   isEnding = false;
   isNew = false;
-  actions = new Array<BuyAction>();
+  actions = new Array<AbstractAction>();
 
   products = new Array<Production>();
   generators = new Array<Production>();
   buyAction: BuyAction;
+  refundAction: RefundAction;
 
   efficiencyMulti = new Array<Multiplier>();
 
@@ -57,10 +61,31 @@ export class Resource extends AbstractUnlockable
       this.unlocked && this.operativity > Number.EPSILON && this.quantity.gt(0)
     );
   }
+  /**
+   * Generate Buy Action and Refund Action
+   */
   generateBuyAction(multiPrice: MultiPrice) {
     this.buyAction = new BuyAction(this, multiPrice);
     this.actions.push(this.buyAction);
     this.buyAction.name = "Buy " + this.name;
+  }
+  generateRefundActions() {
+    this.actions.forEach(a => {
+      if (
+        a instanceof BuyAction &&
+        a.multiPrice.prices.findIndex(
+          p => p.spendable === ResourceManager.getInstance().habitableSpace
+        ) > -1
+      ) {
+        this.refundAction = new RefundAction(
+          "ref",
+          new MultiPrice([new Price(a.buyable, 1, 1)])
+        );
+        this.refundAction.actionToRefund = a;
+        this.refundAction.name = "Refund " + a.name.slice(3);
+        this.actions.push(this.refundAction);
+      }
+    });
   }
   reloadProd() {
     if (this.operativity > 0) {
@@ -83,7 +108,7 @@ export class Resource extends AbstractUnlockable
   }
   reloadLimit() {
     if (this.isLimited) {
-      this.limit = this.limitStorage.quantity.times(this.workerPerMine);
+      this.limit = this.limitStorage.quantity.plus(1).times(this.workerPerMine);
     }
   }
   unlock(): boolean {

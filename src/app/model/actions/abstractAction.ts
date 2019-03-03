@@ -17,6 +17,8 @@ export abstract class AbstractAction extends AbstractUnlockable {
   numWantedUi = 1;
   maxBuy = new Decimal(0);
 
+  alertMessage: string;
+
   constructor(id: string, public multiPrice: MultiPrice) {
     super();
     this.id = id;
