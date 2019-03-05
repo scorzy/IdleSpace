@@ -11,6 +11,7 @@ import { MainService } from "src/app/main.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ShipDesign } from "src/app/model/fleet/shipDesign";
 import { ShipTypes, ShipType } from "src/app/model/fleet/shipTypes";
+import { ResearchManager } from "src/app/model/research/researchManager";
 
 @Component({
   selector: "app-design",
@@ -27,7 +28,7 @@ export class DesignComponent implements OnInit, OnDestroy {
   id = "";
   type = "1";
 
-  ShipTypes = ShipTypes;
+  unlockedShips: ShipType[] = [];
 
   private subscriptions: Subscription[] = [];
 
@@ -39,6 +40,26 @@ export class DesignComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.unlockedShips = [];
+    if (ResearchManager.getInstance().corvette.done) {
+      this.unlockedShips.push(ShipTypes[0]);
+    }
+    if (ResearchManager.getInstance().frigate.done) {
+      this.unlockedShips.push(ShipTypes[1]);
+    }
+    if (ResearchManager.getInstance().destroyer.done) {
+      this.unlockedShips.push(ShipTypes[2]);
+    }
+    if (ResearchManager.getInstance().cruiser.done) {
+      this.unlockedShips.push(ShipTypes[3]);
+    }
+    if (ResearchManager.getInstance().battlecruiser.done) {
+      this.unlockedShips.push(ShipTypes[4]);
+    }
+    if (ResearchManager.getInstance().battleship.done) {
+      this.unlockedShips.push(ShipTypes[5]);
+    }
+
     this.type = "1";
     this.subscriptions.push(
       this.route.params.subscribe(this.getDesign.bind(this))

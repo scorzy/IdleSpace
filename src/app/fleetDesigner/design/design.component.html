@@ -11,7 +11,7 @@
       <label>Ship Type</label>
       <select clrSelect name="shipType" [(ngModel)]="type" required>
         <option
-          *ngFor="let tp of ShipTypes; trackBy: typeId"
+          *ngFor="let tp of unlockedShips; trackBy: typeId"
           [ngValue]="tp.id"
           >{{ tp.name }}</option
         >
