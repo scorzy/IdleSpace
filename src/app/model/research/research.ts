@@ -12,13 +12,12 @@ export class Research extends AbstractUnlockable implements ISpendable {
   c: Decimal;
   b: Decimal;
 
-  shape:string;
+  shape: string;
   progress = new Decimal(0);
   total = new Decimal(0);
   private cost: Decimal;
   toUnlock = new Array<IUnlockable>();
   completed = false;
-  resManager: ResearchManager;
   limit = new Decimal(1);
   quantity = new Decimal(0);
   ratio = 2;
@@ -30,7 +29,8 @@ export class Research extends AbstractUnlockable implements ISpendable {
   constructor(public id: string, cost: DecimalSource) {
     super();
     this.name = descriptions.researches[id][0];
-    this.description = descriptions.researches[id][1];
+    this.description = descriptions.researches[id][2];
+    this.shape = descriptions.researches[id][1];
     this.cost = new Decimal(cost);
     this.total = new Decimal(this.cost);
   }
@@ -67,7 +67,7 @@ export class Research extends AbstractUnlockable implements ISpendable {
 
   unlock(): boolean {
     if (super.unlock()) {
-      this.resManager.addAvailable(this);
+      ResearchManager.getInstance().addAvailable(this);
       return true;
     }
     return false;

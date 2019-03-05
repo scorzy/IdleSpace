@@ -16,8 +16,8 @@ export class Game {
     this.researchManager = new ResearchManager();
     this.fleetManager = new FleetManager();
 
-    this.resourceManager.metal.quantity = new Decimal(10000);
-    this.resourceManager.crystal.quantity = new Decimal(10000);
+    this.resourceManager.metal.quantity = new Decimal(100000);
+    this.resourceManager.crystal.quantity = new Decimal(100000);
 
     this.researchBonus = new BonusStack();
     this.researchBonus.multiplicativeBonus.push(

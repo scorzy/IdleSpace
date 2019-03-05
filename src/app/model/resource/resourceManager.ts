@@ -371,9 +371,9 @@ export class ResourceManager implements ISalvable {
       this.crystalDistrict
     ];
     this.allResources.forEach(r => r.generateRefundActions());
-    this.allResources.forEach(r => {
-      r.unlocked = true;
-    });
+    // this.allResources.forEach(r => {
+    //   r.unlocked = true;
+    // });
     this.matGroup = new ResourceGroup("0", "Materials", "", this.materials);
     this.tierGroups = [
       this.matGroup,

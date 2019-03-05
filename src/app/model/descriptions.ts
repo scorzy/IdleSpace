@@ -36,8 +36,15 @@ export const descriptions = {
     f3: ["Computing 3", ""]
   },
   researches: {
-    a: ["Alloy", "Unlock allory foundry"],
-    r: ["Better Researching", "+20% researching speed"]
+    a: ["Alloy", "alloy", "Unlock allory foundry"],
+    r: ["Better Researching", "flask", "+20% researching speed"],
+    m: ["Army", "flask", "Unlock Army"],
+    c: ["Corvette", "flask", "Unlock Corvette"],
+    f: ["Frigate", "flask", "Unlock frigate"],
+    d: ["Destroyer", "flask", "Unlock destroyer"],
+    b: ["Cruiser", "flask", "Unlock cruiser"],
+    t: ["Battlecruiser", "flask", "Unlock battlecruiser"],
+    s: ["Battleship", "flask", "Unlock battleship"]
   },
   module: {
     ls: ["Small Laser"],

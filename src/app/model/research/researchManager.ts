@@ -2,6 +2,8 @@ import { Research } from "./research";
 import { ResourceManager } from "../resource/resourceManager";
 
 export class ResearchManager {
+  private static instance: ResearchManager;
+
   researches = new Array<Research>();
   toDo = new Array<Research>();
   completed = new Array<Research>();
@@ -9,25 +11,55 @@ export class ResearchManager {
   //#region Researches
   betterResearch: Research;
   alloy: Research;
+  corvette: Research;
+  frigate: Research;
+  destroyer: Research;
+  cruiser: Research;
+  battlecruiser: Research;
+  battleship: Research;
 
   //#endregion
 
   constructor() {
     const resManager = ResourceManager.getInstance();
+    ResearchManager.instance = this;
     this.betterResearch = new Research("r", 50);
-    this.betterResearch.shape = "flask";
     this.betterResearch.limit = new Decimal(Number.POSITIVE_INFINITY);
 
+    this.corvette = new Research("c", 200);
+    this.frigate = new Research("f", 200);
+    this.destroyer = new Research("d", 200);
+    this.cruiser = new Research("b", 200);
+    this.battlecruiser = new Research("t", 200);
+    this.battleship = new Research("s", 200);
+
+    this.corvette.toUnlock = [this.frigate];
+    this.frigate.toUnlock = [this.destroyer];
+    this.destroyer.toUnlock = [this.cruiser];
+    this.cruiser.toUnlock = [this.battlecruiser];
+    this.battlecruiser.toUnlock = [this.battleship];
+
     this.alloy = new Research("a", 100);
-    this.alloy.shape = "alloy";
     this.alloy.toUnlock = [
       resManager.alloy,
       resManager.alloyFoundry,
-      resManager.alloyX1
+      resManager.alloyX1,
+      this.corvette
     ];
 
     this.toDo = [this.alloy, this.betterResearch];
-    this.researches = [this.alloy, this.betterResearch];
+    this.researches = [
+      this.alloy,
+      this.betterResearch,
+      this.corvette,
+      this.frigate,
+      this.destroyer,
+      this.cruiser,
+      this.battlecruiser
+    ];
+  }
+  static getInstance() {
+    return ResearchManager.instance;
   }
 
   update(progress: Decimal) {
