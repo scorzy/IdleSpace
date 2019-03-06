@@ -47,12 +47,7 @@ export class Research extends AbstractUnlockable implements ISpendable {
       this.toUnlock.forEach(u => u.unlock());
       this.quantity = this.quantity.plus(1);
       this.progress = new Decimal(0);
-      if (this.quantity.gte(this.limit)) {
-        this.completed = true;
-      } else {
-        this.total = Decimal.pow(this.ratio, this.quantity).times(this.cost);
-        this.number = Research.romanPipe.transform(this.quantity.plus(1));
-      }
+      this.reloadNum();
     }
 
     this.progressPercent = Math.floor(
@@ -63,6 +58,15 @@ export class Research extends AbstractUnlockable implements ISpendable {
     );
 
     return ret;
+  }
+
+  reloadNum() {
+    if (this.quantity.gte(this.limit)) {
+      this.completed = true;
+    } else {
+      this.total = Decimal.pow(this.ratio, this.quantity).times(this.cost);
+      this.number = Research.romanPipe.transform(this.quantity.plus(1));
+    }
   }
 
   unlock(): boolean {

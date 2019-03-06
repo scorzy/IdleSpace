@@ -1,4 +1,6 @@
 <h1>
+  <clr-icon [attr.shape]="design.type.shape" size="48" class="resIcon">
+  </clr-icon>
   {{ design.name }} -
   {{ design.type.name }}
 </h1>
@@ -208,6 +210,7 @@
         <clr-button
           class="btn btn-success"
           [disabled]="!design.editable.isValid"
+          (click)="save()"
           ><clr-icon shape="floppy"></clr-icon>Save</clr-button
         >
         <clr-button class="btn btn-warning" (click)="deleteModal = true"

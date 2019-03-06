@@ -1,4 +1,4 @@
-import { ShipType } from "./shipTypes";
+import { ShipType, ShipTypes } from "./shipTypes";
 import { ISalvable } from "../base/ISalvable";
 import { DesignLine } from "./designLine";
 
@@ -53,13 +53,24 @@ export class ShipDesign implements ISalvable {
     const data: any = {};
     data.i = this.id;
     if (!this.shipQuantity.eq(0)) data.q = this.shipQuantity;
+    data.t = this.type.id;
+    data.n = this.name;
+    data.m = this.modules.map(m => m.getSave());
 
     return data;
   }
   load(data: any): boolean {
-    if (!("i" in data && data.i === this.id)) return false;
+    this.id = data.i;
     if ("q" in data) this.shipQuantity = Decimal.fromDecimal(data.q);
+    this.type = ShipTypes.find(t => t.id === data.t);
+    this.name = data.n;
+    if ("m" in data) {
+      for (const modData of data.m) {
+        this.modules.push(DesignLine.CreateFromData(modData));
+      }
+    }
 
+    this.reload();
     return true;
   }
   copy() {
@@ -81,5 +92,12 @@ export class ShipDesign implements ISalvable {
   removeModule(i: number) {
     this.editable.modules.splice(i, 1);
     this.editable.reload();
+  }
+
+  saveConfig() {
+    if (this.editable && this.editable.isValid) {
+      this.modules = this.editable.modules;
+      this.reload();
+    }
   }
 }

@@ -66,4 +66,9 @@ export class EditorComponent implements OnInit, OnChanges {
   getSizeId(index: number, size: Sizes) {
     return size;
   }
+  save() {
+    this.design.saveConfig();
+    this.ms.em.designEmitter.emit(5);
+    this.cd.markForCheck();
+  }
 }

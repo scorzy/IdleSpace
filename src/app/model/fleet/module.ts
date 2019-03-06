@@ -1,4 +1,5 @@
 import { AbstractUnlockable } from "../base/AbstractUnlockable";
+import { Research } from "../research/research";
 
 export enum Sizes {
   Small = 1,
@@ -34,6 +35,8 @@ export interface IModuleData {
   armor?: DecimalSource;
 }
 export class Module extends AbstractUnlockable {
+  research: Research;
+
   constructor(
     id: string,
     name: string,
@@ -62,5 +65,9 @@ export class Module extends AbstractUnlockable {
     if (data.armorPercent) ret.armorPercent = data.armorPercent;
     if (data.shieldPercent) ret.shieldPercent = data.shieldPercent;
     return ret;
+  }
+
+  reload() {
+    this.unlocked = !this.research || this.research.done;
   }
 }

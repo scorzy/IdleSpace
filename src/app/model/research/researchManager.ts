@@ -11,13 +11,14 @@ export class ResearchManager {
   //#region Researches
   betterResearch: Research;
   alloy: Research;
+  //#region Ship Types
   corvette: Research;
   frigate: Research;
   destroyer: Research;
   cruiser: Research;
   battlecruiser: Research;
   battleship: Research;
-
+  //#endregion
   //#endregion
 
   constructor() {
@@ -47,7 +48,7 @@ export class ResearchManager {
       this.corvette
     ];
 
-    this.toDo = [this.alloy, this.betterResearch];
+    this.toDo = [this.betterResearch, this.alloy];
     this.researches = [
       this.alloy,
       this.betterResearch,
@@ -100,10 +101,11 @@ export class ResearchManager {
     }
 
     if ("c" in data) {
-      for (const res of data.t) {
+      for (const res of data.c) {
         const research = this.researches.find(u => u.id === res.i);
         if (research) {
           research.load(res);
+          research.done = true;
           this.completed.push(research);
         }
       }

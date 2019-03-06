@@ -1,4 +1,5 @@
 import { Module, Sizes } from "./module";
+import { FleetManager } from "./fleetManager";
 
 export class DesignLine {
   constructor(
@@ -18,8 +19,26 @@ export class DesignLine {
       other.moduleId
     );
   }
+  static CreateFromData(data: any): DesignLine {
+    const ret = new DesignLine();
+    ret.quantity = data.q;
+    ret.module = FleetManager.getInstance().allModules.find(
+      m => m.id === data.m
+    );
+    ret.size = data.s;
+
+    return ret;
+  }
 
   isValid() {
     return this.module && this.quantity > 0;
+  }
+
+  getSave(): any {
+    const data: any = {};
+    data.q = this.quantity;
+    data.m = this.module.id;
+    data.s = this.size;
+    return data;
   }
 }

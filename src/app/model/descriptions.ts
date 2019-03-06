@@ -36,7 +36,7 @@ export const descriptions = {
     f3: ["Computing 3", ""]
   },
   researches: {
-    a: ["Alloy", "alloy", "Unlock allory foundry"],
+    a: ["Alloy", "alloy", "Unlock alloy foundry"],
     r: ["Better Researching", "flask", "+20% researching speed"],
     m: ["Army", "flask", "Unlock Army"],
     c: ["Corvette", "rank1", "Unlock Corvette"],

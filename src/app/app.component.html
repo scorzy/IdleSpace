@@ -2,7 +2,11 @@
   <!-- Header -->
   <clr-header class="header">
     <div class="header-nav" [clr-nav-level]="1">
-      <a [routerLink]="'home'" class="nav-link" [routerLinkActive]="'active'">
+      <a
+        [routerLink]="ms.lastUnitUrl"
+        class="nav-link"
+        [routerLinkActive]="'active'"
+      >
         <span class="nav-text"> <clr-icon shape="home"></clr-icon> </span>
       </a>
 
@@ -16,7 +20,7 @@
       </a>
 
       <a
-        [routerLink]="'fleet'"
+        [routerLink]="'fleet/design/new'"
         class="nav-link"
         [routerLinkActive]="'active'"
         *ngIf="ms.game.researchManager.corvette.done"

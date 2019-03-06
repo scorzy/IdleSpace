@@ -3,8 +3,11 @@ import { ShipDesign } from "./shipDesign";
 import { ShipType } from "./shipTypes";
 import { Module } from "./module";
 import { ModulesData } from "./moduleData";
+import { Research } from "../research/research";
 
 export class FleetManager implements ISalvable {
+  private static instance: FleetManager;
+
   totalNavalCapacity = new Decimal(20);
   ships = new Array<ShipDesign>();
 
@@ -12,13 +15,20 @@ export class FleetManager implements ISalvable {
   unlockedModules = new Array<Module>();
 
   constructor() {
+    FleetManager.instance = this;
     for (const data of ModulesData) this.allModules.push(Module.fromData(data));
+
+    // const mLaserRes = new Research("m");
 
     this.allModules.forEach(w => (w.unlocked = true));
     this.reload();
   }
+  static getInstance() {
+    return FleetManager.instance;
+  }
 
   reload() {
+    this.allModules.forEach(m => m.reload());
     this.unlockedModules = this.allModules.filter(w => w.unlocked);
   }
   addDesign(name: string, type: ShipType): ShipDesign {
@@ -40,8 +50,19 @@ export class FleetManager implements ISalvable {
   deleteDesign(ds: ShipDesign) {
     this.ships = this.ships.filter(d => d !== ds);
   }
-  getSave() {}
+  getSave() {
+    const data: any = {};
+    data.s = this.ships.map(s => s.getSave());
+    return data;
+  }
   load(data: any): boolean {
+    if ("s" in data) {
+      for (const shipData of data.s) {
+        const ship = new ShipDesign();
+        ship.load(shipData);
+        this.ships.push(ship);
+      }
+    }
     this.reload();
     return true;
   }

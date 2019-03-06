@@ -51,7 +51,7 @@ export class ResourceComponent implements OnInit, OnDestroy {
     if (b instanceof Resource) {
       this.res = b;
       this.res.isNew = false;
-      this.ms.lastUnitUrl = "prod/res/" + b.id;
+      this.ms.lastUnitUrl = "home/res/" + b.id;
     }
     this.cd.markForCheck();
   }
