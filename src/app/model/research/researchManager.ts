@@ -1,5 +1,6 @@
 import { Research } from "./research";
 import { ResourceManager } from "../resource/resourceManager";
+import { ResearchData } from "./researchData";
 
 export class ResearchManager {
   private static instance: ResearchManager;
@@ -24,43 +25,50 @@ export class ResearchManager {
   constructor() {
     const resManager = ResourceManager.getInstance();
     ResearchManager.instance = this;
-    this.betterResearch = new Research("r", 50);
-    this.betterResearch.limit = new Decimal(Number.POSITIVE_INFINITY);
 
-    this.corvette = new Research("c", 200);
-    this.frigate = new Research("f", 200);
-    this.destroyer = new Research("d", 200);
-    this.cruiser = new Research("b", 200);
-    this.battlecruiser = new Research("t", 200);
-    this.battleship = new Research("s", 200);
+    for (const resData of ResearchData) {
+      this.researches.push(Research.fromData(resData));
+    }
+    this.betterResearch = this.researches.find(r => r.id === "r");
+    this.alloy = this.researches.find(r => r.id === "a");
+    this.corvette = this.researches.find(r => r.id === "c");
+    this.frigate = this.researches.find(r => r.id === "f");
+    this.destroyer = this.researches.find(r => r.id === "d");
+    this.cruiser = this.researches.find(r => r.id === "b");
+    this.battlecruiser = this.researches.find(r => r.id === "t");
+    this.battleship = this.researches.find(r => r.id === "s");
 
-    this.corvette.toUnlock = [this.frigate];
-    this.frigate.toUnlock = [this.destroyer];
-    this.destroyer.toUnlock = [this.cruiser];
-    this.cruiser.toUnlock = [this.battlecruiser];
-    this.battlecruiser.toUnlock = [this.battleship];
-
-    this.alloy = new Research("a", 100);
-    this.alloy.toUnlock = [
-      resManager.alloy,
-      resManager.alloyFoundry,
-      resManager.alloyX1,
-      this.corvette
-    ];
-
-    this.toDo = [this.betterResearch, this.alloy];
-    this.researches = [
-      this.alloy,
-      this.betterResearch,
-      this.corvette,
-      this.frigate,
-      this.destroyer,
-      this.cruiser,
-      this.battlecruiser
-    ];
+    this.toDo = [this.researches[0], this.researches[1]];
   }
   static getInstance() {
     return ResearchManager.instance;
+  }
+
+  setUnlocks() {
+    this.researches.forEach(r => {
+      const data = ResearchData.find(rd => rd.id === r.id);
+      if (data.researchToUnlock) {
+        for (const resToUnData of data.researchToUnlock) {
+          const toUnlock = this.researches.find(res => res.id === resToUnData);
+          r.toUnlock.push(toUnlock);
+        }
+      }
+
+      if (data.resourceToUnlock) {
+        for (const resToUnData of data.resourceToUnlock) {
+          const toUnlock = ResourceManager.getInstance().allResources.find(
+            res => res.id === resToUnData
+          );
+          r.toUnlock.push(toUnlock);
+        }
+      }
+
+      if (data.otherToUnlock) {
+        for (const toUnlockFun of data.otherToUnlock) {
+          r.toUnlock.push(toUnlockFun());
+        }
+      }
+    });
   }
 
   update(progress: Decimal) {

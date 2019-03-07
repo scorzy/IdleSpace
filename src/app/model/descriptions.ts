@@ -34,22 +34,5 @@ export const descriptions = {
     f1: ["Super Computer", ""],
     f2: ["Super Computing Center", ""],
     f3: ["Computing 3", ""]
-  },
-  researches: {
-    a: ["Alloy", "alloy", "Unlock alloy foundry"],
-    r: ["Better Researching", "flask", "+20% researching speed"],
-    m: ["Army", "flask", "Unlock Army"],
-    c: ["Corvette", "rank1", "Unlock Corvette"],
-    f: ["Frigate", "rank2", "Unlock frigate"],
-    d: ["Destroyer", "rank3", "Unlock destroyer"],
-    b: ["Cruiser", "rank4", "Unlock cruiser"],
-    t: ["Battlecruiser", "flask", "Unlock battlecruiser"],
-    s: ["Battleship", "flask", "Unlock battleship"]
-  },
-  module: {
-    ls: ["Small Laser"],
-    lm: ["Medium Laser"],
-    ll: ["Large Laser"],
-    lxl: ["Extra Large Laser"]
   }
 };

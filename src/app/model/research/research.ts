@@ -4,9 +4,12 @@ import { ResearchManager } from "./researchManager";
 import { descriptions } from "../descriptions";
 import { RomanPipe } from "src/app/roman.pipe";
 import { ISpendable } from "../base/ISpendable";
+import { IResearchData } from "./iResearchData";
 
 export class Research extends AbstractUnlockable implements ISpendable {
   static romanPipe = new RomanPipe();
+
+  id: string;
 
   a: Decimal;
   c: Decimal;
@@ -26,13 +29,19 @@ export class Research extends AbstractUnlockable implements ISpendable {
   done = false;
   number = "";
 
-  constructor(public id: string, cost: DecimalSource) {
+  private constructor() {
     super();
-    this.name = descriptions.researches[id][0];
-    this.description = descriptions.researches[id][2];
-    this.shape = descriptions.researches[id][1];
-    this.cost = new Decimal(cost);
-    this.total = new Decimal(this.cost);
+  }
+  static fromData(data: IResearchData): Research {
+    const ret = new Research();
+    ret.id = data.id;
+    ret.name = data.name;
+    ret.shape = data.shape;
+    ret.description = data.description;
+    ret.cost = new Decimal(data.price);
+    ret.total = new Decimal(ret.cost);
+    if (data.limit) ret.limit = new Decimal(data.limit);
+    return ret;
   }
 
   addProgress(toAdd: Decimal): Decimal {
