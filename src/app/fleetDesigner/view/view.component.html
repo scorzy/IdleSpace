@@ -77,5 +77,59 @@
         ></app-formatted-quantity>
       </td>
     </tr>
+
+    <tr>
+      <td class="left">Armor Damage</td>
+      <td>
+        <app-formatted-quantity
+          [quantity]="design.armorDamage"
+        ></app-formatted-quantity>
+      </td>
+      <td *ngIf="showDifference">
+        <app-formatted-quantity
+          [quantity]="design.editable.armorDamage"
+          [ngClass]="{
+            green: design.editable.armorDamage.gt(design.armorDamage),
+            notEnough: design.editable.armorDamage.lt(design.armorDamage)
+          }"
+        ></app-formatted-quantity>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="left">Shield Damage</td>
+      <td>
+        <app-formatted-quantity
+          [quantity]="design.shieldDamage"
+        ></app-formatted-quantity>
+      </td>
+      <td *ngIf="showDifference">
+        <app-formatted-quantity
+          [quantity]="design.editable.shieldDamage"
+          [ngClass]="{
+            green: design.editable.shieldDamage.gt(design.shieldDamage),
+            notEnough: design.editable.shieldDamage.lt(design.shieldDamage)
+          }"
+        ></app-formatted-quantity>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="left">Price</td>
+      <td>
+        <app-formatted-quantity
+          [quantity]="design.price"
+        ></app-formatted-quantity>
+      </td>
+      <td *ngIf="showDifference">
+        <app-formatted-quantity
+          [quantity]="design.editable.price"
+          [ngClass]="{
+            green: design.editable.price.gt(design.price),
+            notEnough: design.editable.price.lt(design.price)
+          }"
+        ></app-formatted-quantity>
+      </td>
+    </tr>
   </tbody>
 </table>

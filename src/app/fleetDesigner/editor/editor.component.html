@@ -1,232 +1,245 @@
-<h1>
-  <clr-icon [attr.shape]="design.type.shape" size="48" class="resIcon">
-  </clr-icon>
-  {{ design.name }} -
-  {{ design.type.name }}
-</h1>
 <div class="clr-row">
   <div class="clr-col-sm-12 clr-col-md-8" *ngIf="design.editable">
-    <form clrForm clr-form-compact>
-      <clr-input-container>
-        <label>Name:</label>
-        <input
-          clrInput
-          type="text"
-          [(ngModel)]="design.editable.name"
-          name="name"
-          required
-        />
-        <!-- <clr-control-helper>Design name.</clr-control-helper> -->
-        <clr-control-error>Name is required!</clr-control-error>
-      </clr-input-container>
+    <h1>
+      <clr-icon [attr.shape]="design.type.shape" size="48" class="resIcon">
+      </clr-icon>
+      {{ design.name }} -
+      {{ design.type.name }}
+    </h1>
+    <div *ngIf="editMode; else buyMode">
+      <form clrForm clr-form-compact>
+        <clr-input-container>
+          <label>Name:</label>
+          <input
+            clrInput
+            type="text"
+            [(ngModel)]="design.editable.name"
+            name="name"
+            required
+          />
+          <!-- <clr-control-helper>Design name.</clr-control-helper> -->
+          <clr-control-error>Name is required!</clr-control-error>
+        </clr-input-container>
 
-      <h4>
-        Modules:
-      </h4>
-      <span class="moduleSubTitle"
-        >used:
-        <span
-          class="monospace"
-          [ngClass]="{
-            notEnough: design.editable.modules.length > design.type.moduleCount
-          }"
-          >{{ design.editable.modules.length }}/{{ design.type.moduleCount }}
+        <h4>
+          Modules:
+        </h4>
+        <span class="moduleSubTitle"
+          >used:
+          <span
+            class="monospace"
+            [ngClass]="{
+              notEnough:
+                design.editable.modules.length > design.type.moduleCount
+            }"
+            >{{ design.editable.modules.length }}/{{ design.type.moduleCount }}
+          </span>
         </span>
-      </span>
-      <span class="moduleSubTitle">
-        point:
-        <span
-          class="monospace"
-          [ngClass]="{
-            notEnough: design.editable.usedModulePoint > design.type.modulePoint
-          }"
-          >{{ design.editable.usedModulePoint }}/{{ design.type.modulePoint }}
+        <span class="moduleSubTitle">
+          point:
+          <span
+            class="monospace"
+            [ngClass]="{
+              notEnough:
+                design.editable.usedModulePoint > design.type.modulePoint
+            }"
+            >{{ design.editable.usedModulePoint }}/{{ design.type.modulePoint }}
+          </span>
         </span>
-      </span>
-      <span class="moduleSubTitle">
-        energy:
-        <span
-          class="monospace"
-          [ngClass]="{
-            notEnough: design.editable.totalEnergy.lt(0)
-          }"
-        >
-          <app-formatted-quantity
-            [quantity]="design.editable.totalEnergy"
-            [integer]="true"
-          ></app-formatted-quantity>
-        </span>
-      </span>
-      <br />
-
-      <button
-        class="btn btn-outline btn-sm"
-        (click)="addModule()"
-        [disabled]="design.editable.modules.length >= design.type.moduleCount"
-      >
-        <clr-icon shape="plus"></clr-icon>
-        Add
-      </button>
-
-      <table class="table table-noborder moduleTable">
-        <thead>
-          <tr>
-            <!-- <th>Num.</th> -->
-            <th>Module</th>
-            <th>Size</th>
-            <th>Quantity</th>
-            <!-- <th>Energy</th> -->
-            <th>Remove</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            *ngFor="
-              let w of design.editable.modules;
-              let i = index;
-              trackBy: getModuleId
-            "
-            [attr.data-index]="i"
+        <span class="moduleSubTitle">
+          energy:
+          <span
+            class="monospace"
+            [ngClass]="{
+              notEnough: design.editable.totalEnergy.lt(0)
+            }"
           >
-            <!-- Module -->
-            <td>
-              <div class="clr-select-wrapper">
-                <select
-                  class="clr-select"
-                  [name]="'weap' + i"
-                  [(ngModel)]="w.moduleId"
-                  (ngModelChange)="reload()"
-                >
-                  <option
-                    *ngFor="
-                      let wt of ms.game.fleetManager.unlockedModules;
-                      trackBy: getModuleId
-                    "
-                    [ngValue]="wt.id"
-                    >{{ wt.name }}</option
-                  >
-                </select>
-              </div>
-            </td>
-            <!-- Size -->
-            <td>
-              <div class="clr-select-wrapper">
-                <select
-                  *ngIf="w.module"
-                  class="clr-select"
-                  [name]="'size' + i"
-                  [(ngModel)]="w.size"
-                  (ngModelChange)="reload()"
-                >
-                  <option
-                    *ngFor="
-                      let si of (w.module.sizes
-                        | sizes: design.type.moduleCount);
-                      trackBy: getSizeId
-                    "
-                    [ngValue]="si"
-                    >{{ getSizeName(si) }}
-                    <!-- {{ si }} -->
-                  </option>
-                </select>
-              </div>
-            </td>
-            <!-- Quantity -->
-            <td>
-              <div class="btn-group btn-primary">
-                <button
-                  type="button"
-                  class="btn  btn-sm btn-outline btn-icon"
-                  (click)="w.quantityUi = w.quantityUi - 1; reload()"
-                  [disabled]="w.quantity <= 1"
-                >
-                  <clr-icon shape="minus"></clr-icon>
-                </button>
-                <input
-                  class="clr-input smallInput"
-                  type="number"
-                  [(ngModel)]="w.quantityUi"
-                  [name]="'w' + i"
-                  (ngModelChange)="reload()"
-                  required
-                />
-                <button
-                  type="button"
-                  class="btn  btn-sm btn-outline btn-icon"
-                  (click)="w.quantityUi = w.quantityUi + 1; reload()"
-                  [disabled]="
-                    design.editable.usedModulePoint >= design.type.modulePoint
-                  "
-                >
-                  <clr-icon shape="plus"></clr-icon>
-                </button>
-              </div>
-            </td>
-            <!-- Energy -->
-            <!-- <td
-              [ngClass]="{
-                green: w[1]?.energy?.energy.gt(0),
-                notEnough: w[1]?.energy?.lt(0)
-              }"
-            >
-              {{ w[1]?.energy }}
-            </td> -->
-            <!-- Remove -->
-            <td>
-              <button
-                type="button"
-                class="btn btn-warning btn-sm btn-icon noTopMargin"
-                (click)="removeModule(i)"
-              >
-                <clr-icon shape="trash"></clr-icon>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <button
-        class="btn btn-outline btn-sm"
-        (click)="addModule()"
-        [disabled]="design.editable.modules.length >= design.type.moduleCount"
-      >
-        <clr-icon shape="plus"></clr-icon>
-        Add
-      </button>
-      <br /><br />
-
-      <div *ngIf="!design.editable.isValid">
-        <clr-alert [clrAlertType]="'danger'" [clrAlertClosable]="false">
-          <clr-alert-item>
-            <span class="alert-text">
-              This design is not valid!
-            </span>
-          </clr-alert-item>
-        </clr-alert>
+            <app-formatted-quantity
+              [quantity]="design.editable.totalEnergy"
+              [integer]="true"
+            ></app-formatted-quantity>
+          </span>
+        </span>
         <br />
-      </div>
 
-      <clr-button-group class="btn-primary">
-        <clr-button
-          class="btn btn"
-          [disabled]="!design.editable.isValid"
-          (click)="save()"
-          ><clr-icon shape="floppy"></clr-icon>Save</clr-button
+        <!-- <button
+              class="btn btn-outline btn-sm"
+              (click)="addModule()"
+              [disabled]="design.editable.modules.length >= design.type.moduleCount"
+            >
+              <clr-icon shape="plus"></clr-icon>
+              Add
+            </button> -->
+
+        <table class="table table-noborder table-compact moduleTable">
+          <thead>
+            <tr>
+              <!-- <th>Num.</th> -->
+              <th>Module</th>
+              <th>Size</th>
+              <th>Quantity</th>
+              <!-- <th>Energy</th> -->
+              <th>RM</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="
+                let w of design.editable.modules;
+                let i = index;
+                trackBy: getModuleId
+              "
+              [attr.data-index]="i"
+            >
+              <!-- Module -->
+              <td>
+                <div class="clr-select-wrapper">
+                  <select
+                    class="clr-select"
+                    [name]="'weap' + i"
+                    [(ngModel)]="w.moduleId"
+                    (ngModelChange)="reload()"
+                  >
+                    <option
+                      *ngFor="
+                        let wt of ms.game.fleetManager.unlockedModules;
+                        trackBy: getModuleId
+                      "
+                      [ngValue]="wt.id"
+                      >{{ wt.name }}</option
+                    >
+                  </select>
+                </div>
+              </td>
+              <!-- Size -->
+              <td>
+                <div class="clr-select-wrapper">
+                  <select
+                    *ngIf="w.module"
+                    class="clr-select"
+                    [name]="'size' + i"
+                    [(ngModel)]="w.size"
+                    (ngModelChange)="reload()"
+                  >
+                    <option
+                      *ngFor="
+                        let si of (w.module.sizes
+                          | sizes: design.type.moduleCount);
+                        trackBy: getSizeId
+                      "
+                      [ngValue]="si"
+                      >{{ getSizeName(si) }}
+                      <!-- {{ si }} -->
+                    </option>
+                  </select>
+                </div>
+              </td>
+              <!-- Quantity -->
+              <td>
+                <div class="btn-group btn-primary">
+                  <button
+                    type="button"
+                    class="btn  btn-sm btn-outline btn-icon"
+                    (click)="w.quantityUi = w.quantityUi - 1; reload()"
+                    [disabled]="w.quantity <= 1"
+                  >
+                    <clr-icon shape="minus"></clr-icon>
+                  </button>
+                  <input
+                    class="clr-input smallInput"
+                    type="number"
+                    [(ngModel)]="w.quantityUi"
+                    [name]="'w' + i"
+                    (ngModelChange)="reload()"
+                    required
+                  />
+                  <button
+                    type="button"
+                    class="btn  btn-sm btn-outline btn-icon"
+                    (click)="w.quantityUi = w.quantityUi + 1; reload()"
+                    [disabled]="
+                      design.editable.usedModulePoint >= design.type.modulePoint
+                    "
+                  >
+                    <clr-icon shape="plus"></clr-icon>
+                  </button>
+                </div>
+              </td>
+              <!-- Energy -->
+              <!-- <td
+                    [ngClass]="{
+                      green: w[1]?.energy?.energy.gt(0),
+                      notEnough: w[1]?.energy?.lt(0)
+                    }"
+                  >
+                    {{ w[1]?.energy }}
+                  </td> -->
+              <!-- Remove -->
+              <td>
+                <button
+                  type="button"
+                  class="btn btn-warning btn-sm btn-icon noTopMargin"
+                  (click)="removeModule(i)"
+                >
+                  <clr-icon shape="trash"></clr-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <button
+          class="btn btn-outline btn-sm"
+          (click)="addModule()"
+          [disabled]="design.editable.modules.length >= design.type.moduleCount"
         >
-        <clr-button
-          class="btn btn-success"
-          [disabled]="changed"
-          (click)="revert()"
-          ><clr-icon shape="undo"></clr-icon>Cancel</clr-button
-        >
-        <clr-button class="btn btn-warning" (click)="deleteModal = true"
-          ><clr-icon shape="trash"></clr-icon>Delete</clr-button
-        >
-      </clr-button-group>
-    </form>
+          <clr-icon shape="plus"></clr-icon>
+          Add
+        </button>
+        <br /><br />
+
+        <div *ngIf="!design.editable.isValid">
+          <clr-alert [clrAlertType]="'danger'" [clrAlertClosable]="false">
+            <clr-alert-item>
+              <span class="alert-text">
+                This design is not valid!
+              </span>
+            </clr-alert-item>
+          </clr-alert>
+          <br />
+        </div>
+
+        <clr-button-group class="btn-primary">
+          <clr-button
+            class="btn btn"
+            [disabled]="!design.editable.isValid"
+            (click)="save()"
+            ><clr-icon shape="floppy"></clr-icon>Save</clr-button
+          >
+          <clr-button
+            class="btn btn-success"
+            [disabled]="changed"
+            (click)="revert()"
+            ><clr-icon shape="undo"></clr-icon>Cancel</clr-button
+          >
+          <clr-button class="btn btn-warning" (click)="deleteModal = true"
+            ><clr-icon shape="trash"></clr-icon>Delete</clr-button
+          >
+        </clr-button-group>
+      </form>
+    </div>
   </div>
+  <ng-template #buyMode>
+    <app-action [action]="design.buyAction"></app-action>
+    <br /><br />
+    <button class="btn btn-primary" (click)="edit()">
+      <clr-icon shape="cog"></clr-icon>
+      Edit
+    </button>
+  </ng-template>
+
   <div class="clr-col-sm-12 clr-col-md-4">
-    <app-view [design]="design" [showDifference]="true"></app-view>
+    <app-view [design]="design" [showDifference]="editMode"></app-view>
   </div>
 </div>
 

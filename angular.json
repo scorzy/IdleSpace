@@ -43,7 +43,6 @@
               "src/styles.scss"
             ],
             "scripts": [
-              "src/assets/compressRequest.js",
               "node_modules/break_infinity.js/break_infinity.min.js",
               "node_modules/@webcomponents/custom-elements/custom-elements.min.js",
               "node_modules/@clr/icons/clr-icons.min.js",
@@ -117,7 +116,6 @@
               }
             ],
             "scripts": [
-              "src/assets/compressRequest.js",
               "node_modules/break_infinity.js/break_infinity.min.js",
               "node_modules/@webcomponents/custom-elements/custom-elements.min.js",
               "node_modules/@clr/icons/clr-icons.min.js",

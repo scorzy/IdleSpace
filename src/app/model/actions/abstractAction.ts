@@ -16,6 +16,7 @@ export abstract class AbstractAction extends AbstractUnlockable {
   numWanted = new Decimal(1);
   numWantedUi = 1;
   maxBuy = new Decimal(0);
+  showNum = true;
 
   alertMessage: string;
 
@@ -26,7 +27,7 @@ export abstract class AbstractAction extends AbstractUnlockable {
 
   buy(number: Decimal) {
     this.multiPrice.reload(this.quantity, this.numWanted);
-    if (this.multiPrice.canBuyWanted) {
+    if (this.multiPrice.maxBuy.gte(number)) {
       if (this.multiPrice.buy(number, this.quantity)) {
         this.quantity = this.quantity.plus(number);
         this.onBuy(number);

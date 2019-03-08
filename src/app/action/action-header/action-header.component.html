@@ -1,7 +1,7 @@
 <h6>
   <clr-icon *ngIf="action.shape" [attr.shape]="action.shape"></clr-icon>
   {{ action.name }}
-  <span
+  <span *ngIf="action.showNum"
     >(
     <app-formatted-quantity
       [quantity]="quantity"

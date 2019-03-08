@@ -4,18 +4,21 @@ import { ShipType } from "./shipTypes";
 import { Module } from "./module";
 import { ModulesData } from "./moduleData";
 import { Research } from "../research/research";
+import { Resource } from "../resource/resource";
 
 export class FleetManager implements ISalvable {
   private static instance: FleetManager;
 
   totalNavalCapacity = new Decimal(20);
   ships = new Array<ShipDesign>();
+  freeNavalCapacity: Resource;
 
   allModules = new Array<Module>();
   unlockedModules = new Array<Module>();
 
   constructor() {
     FleetManager.instance = this;
+    this.freeNavalCapacity = new Resource("N");
     for (const data of ModulesData) this.allModules.push(Module.fromData(data));
 
     // const mLaserRes = new Research("m");
@@ -23,13 +26,26 @@ export class FleetManager implements ISalvable {
     this.allModules.forEach(w => (w.unlocked = true));
     this.reload();
   }
-  static getInstance() {
+  static getInstance(): FleetManager {
     return FleetManager.instance;
   }
 
   reload() {
     this.allModules.forEach(m => m.reload());
     this.unlockedModules = this.allModules.filter(w => w.unlocked);
+  }
+  reloadActions() {
+    this.reloadNavalCapacity();
+    this.ships.forEach(s => {
+      s.buyAction.reload();
+    });
+  }
+  reloadNavalCapacity() {
+    this.freeNavalCapacity.quantity = this.totalNavalCapacity.minus(
+      this.ships
+        .map(s => s.quantity.times(s.type.navalCapacity))
+        .reduce((p, c) => p.plus(c), new Decimal(0))
+    );
   }
   addDesign(name: string, type: ShipType): ShipDesign {
     const design = new ShipDesign();
@@ -64,6 +80,7 @@ export class FleetManager implements ISalvable {
       }
     }
     this.reload();
+    this.reloadNavalCapacity();
     return true;
   }
 }

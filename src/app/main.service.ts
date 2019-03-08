@@ -11,7 +11,7 @@ const UP_INTERVAL = 200; // 5 fps
   providedIn: "root"
 })
 export class MainService {
-  zipWorker: ITypedWorker<CompressRequest, CompressRequest>;
+  zipWorker: ITypedWorker<CompressRequest, CompressRequest2>;
   game: Game;
   show = false;
   lastUnitUrl = "/home/res/m";
@@ -28,17 +28,24 @@ export class MainService {
       onError: error => {},
       importScripts: [
         url + "lz-string.min.js",
-        url + "assets/compressRequest.js"
+        url + "assets/compressRequest2.js"
       ]
     });
   }
   start() {
-    this.game = new Game();
-    this.show = true;
+    const savedData = localStorage.getItem("save");
+    if (savedData) {
+      this.load(savedData);
+    } else {
+      this.game = new Game();
+      this.show = true;
+    }
     setInterval(this.update.bind(this), UP_INTERVAL);
   }
 
   update() {
+    if (!this.game) return false;
+
     const now = Date.now();
     const diff = (now - this.last) / 1000;
     this.game.update(diff);
@@ -52,16 +59,19 @@ export class MainService {
   getSave(): any {
     const data: any = {};
     data.g = this.game.save();
+    data.l = this.last;
     return data;
   }
-  load(): any {
+  load(data?: any): any {
     this.zipWorker.postMessage(
       new CompressRequest(localStorage.getItem("save"), "", false, 2)
     );
   }
   load2(data: any): any {
+    this.last = data.l;
     this.game = new Game();
     this.game.load(data.g);
+    this.show = true;
   }
   import(str: string) {
     this.zipWorker.postMessage(new CompressRequest(str, "", false, 2));
@@ -78,7 +88,7 @@ export class MainService {
     window.location.reload();
   }
 
-  comp(input: CompressRequest, cb: (_: CompressRequest) => void): void {
+  comp(input: CompressRequest, cb: (_: CompressRequest2) => void): void {
     if (input.compress) {
       let save = "";
       try {
@@ -86,7 +96,7 @@ export class MainService {
       } catch (ex) {
         save = "";
       }
-      cb(new CompressRequest(null, save, input.compress, input.requestId));
+      cb(new CompressRequest2(null, save, input.compress, input.requestId));
     } else {
       let obj: any = null;
       try {
@@ -94,7 +104,7 @@ export class MainService {
       } catch (ex) {
         obj = "";
       }
-      cb(new CompressRequest(obj, null, input.compress, input.requestId));
+      cb(new CompressRequest2(obj, null, input.compress, input.requestId));
     }
   }
 

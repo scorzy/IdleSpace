@@ -6,6 +6,7 @@ import {
 } from "@angular/core";
 import { MainService } from "../main.service";
 import { ShipDesign } from "../model/fleet/shipDesign";
+import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 
 @Component({
   selector: "app-fleet-designer",
@@ -23,5 +24,12 @@ export class FleetDesignerComponent implements OnInit {
 
   designId(index: number, data: ShipDesign) {
     return data.id;
+  }
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(
+      this.ms.game.fleetManager.ships,
+      event.previousIndex,
+      event.currentIndex
+    );
   }
 }

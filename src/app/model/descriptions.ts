@@ -33,6 +33,8 @@ export const descriptions = {
 
     f1: ["Super Computer", ""],
     f2: ["Super Computing Center", ""],
-    f3: ["Computing 3", ""]
+    f3: ["Computing 3", ""],
+
+    N: ["Naval Capacity", ""]
   }
 };

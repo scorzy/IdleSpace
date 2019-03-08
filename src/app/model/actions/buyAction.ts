@@ -1,9 +1,10 @@
 import { AbstractAction } from "./abstractAction";
-import { Resource } from "../resource/resource";
+
 import { MultiPrice } from "../prices/multiPrice";
+import { IBuyable } from "../base/IBuyable";
 
 export class BuyAction extends AbstractAction {
-  constructor(public buyable: Resource, multiPrice: MultiPrice) {
+  constructor(public buyable: IBuyable, multiPrice: MultiPrice) {
     super("B", multiPrice);
     this.name = "Buy";
     this.showTime = true;

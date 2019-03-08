@@ -1,5 +1,5 @@
 import { AbstractUnlockable } from "../base/AbstractUnlockable";
-import { ISpendable } from "../base/ISpendable";
+import { ISpendable, isISpendable } from "../base/ISpendable";
 import { Production } from "../production";
 import { descriptions } from "../descriptions";
 import { IBuyable } from "../base/IBuyable";
@@ -73,6 +73,7 @@ export class Resource extends AbstractUnlockable
     this.actions.forEach(a => {
       if (
         a instanceof BuyAction &&
+        isISpendable(a.buyable) &&
         a.multiPrice.prices.findIndex(
           p => p.spendable === ResourceManager.getInstance().habitableSpace
         ) > -1
@@ -81,6 +82,7 @@ export class Resource extends AbstractUnlockable
           "ref",
           new MultiPrice([new Price(a.buyable, 1, 1)])
         );
+
         this.refundAction.actionToRefund = a;
         this.refundAction.name = "Refund " + a.name.slice(3);
         this.actions.push(this.refundAction);

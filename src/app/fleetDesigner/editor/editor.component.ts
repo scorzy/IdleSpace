@@ -24,6 +24,7 @@ export class EditorComponent implements OnInit, OnChanges {
   getSizeName = getSizeName;
   deleteModal = false;
   changed = false;
+  editMode = false;
 
   constructor(
     public ms: MainService,
@@ -33,6 +34,7 @@ export class EditorComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (this.design) this.design.copy();
+    this.editMode = this.design.modules.length === 0;
   }
   ngOnInit() {}
 
@@ -71,9 +73,14 @@ export class EditorComponent implements OnInit, OnChanges {
     this.design.saveConfig();
     this.ms.em.designEmitter.emit(5);
     this.cd.markForCheck();
+    this.editMode = false;
   }
   revert() {
     if (this.design) this.design.copy();
     this.reload();
+    this.editMode = false;
+  }
+  edit() {
+    this.editMode = true;
   }
 }

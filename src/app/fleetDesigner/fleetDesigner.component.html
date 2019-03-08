@@ -1,5 +1,10 @@
 <router-outlet></router-outlet>
-<clr-vertical-nav [clrVerticalNavCollapsible]="false" [clr-nav-level]="2">
+<clr-vertical-nav
+  [clrVerticalNavCollapsible]="false"
+  [clr-nav-level]="2"
+  cdkDropList
+  (cdkDropListDropped)="drop($event)"
+>
   <a
     clrVerticalNavLink
     routerLink="/fleet/design/new"
@@ -12,11 +17,16 @@
 
   <a
     clrVerticalNavLink
+    cdkDrag
     *ngFor="let ds of ms.game.fleetManager.ships; trackBy: designId"
     [routerLink]="'/fleet/design/' + ds.id"
     routerLinkActive="active"
+    class="movable"
   >
     <!-- <clr-icon shape="floppy"></clr-icon> -->
     {{ ds.name }}
+
+    <app-formatted-quantity [quantity]="ds.quantity" [integer]="true">
+    </app-formatted-quantity>
   </a>
 </clr-vertical-nav>
