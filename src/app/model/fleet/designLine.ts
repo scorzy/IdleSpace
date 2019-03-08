@@ -14,9 +14,9 @@ export class DesignLine {
     return new DesignLine(
       other.quantity,
       other.module,
-      Sizes.Small,
-      other.quantityUi,
-      other.moduleId
+      other.size,
+      other.quantity,
+      other.module.id
     );
   }
   static CreateFromData(data: any): DesignLine {

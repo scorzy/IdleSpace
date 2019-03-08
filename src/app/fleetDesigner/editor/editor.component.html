@@ -208,10 +208,16 @@
 
       <clr-button-group class="btn-primary">
         <clr-button
-          class="btn btn-success"
+          class="btn btn"
           [disabled]="!design.editable.isValid"
           (click)="save()"
           ><clr-icon shape="floppy"></clr-icon>Save</clr-button
+        >
+        <clr-button
+          class="btn btn-success"
+          [disabled]="changed"
+          (click)="revert()"
+          ><clr-icon shape="undo"></clr-icon>Cancel</clr-button
         >
         <clr-button class="btn btn-warning" (click)="deleteModal = true"
           ><clr-icon shape="trash"></clr-icon>Delete</clr-button

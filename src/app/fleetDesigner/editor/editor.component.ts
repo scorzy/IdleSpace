@@ -23,6 +23,7 @@ export class EditorComponent implements OnInit, OnChanges {
 
   getSizeName = getSizeName;
   deleteModal = false;
+  changed = false;
 
   constructor(
     public ms: MainService,
@@ -70,5 +71,9 @@ export class EditorComponent implements OnInit, OnChanges {
     this.design.saveConfig();
     this.ms.em.designEmitter.emit(5);
     this.cd.markForCheck();
+  }
+  revert() {
+    if (this.design) this.design.copy();
+    this.reload();
   }
 }
