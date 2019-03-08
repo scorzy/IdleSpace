@@ -21,7 +21,11 @@ export class MainService {
   playFabLogged = false;
 
   constructor() {
-    const url = document.location.protocol + "//" + document.location.host + "/";
+    const url =
+      document.location.protocol +
+      "//" +
+      document.location.host +
+      document.location.pathname;
     this.zipWorker = createWorker({
       workerFunction: this.comp,
       onMessage: this.onZip.bind(this),
