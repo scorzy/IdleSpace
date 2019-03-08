@@ -1,8 +1,9 @@
 import { Pipe, PipeTransform } from "@angular/core";
 import { FormatPipe } from "./format.pipe";
 import { OptionsService } from "./options.service";
-import { isValid, distanceInWordsStrict, distanceInWordsToNow } from "date-fns";
-
+import * as distanceInWordsStrict from "date-fns/distance_in_words_strict";
+import * as distanceInWordsToNow from "date-fns/distance_in_words_to_now";
+import * as isValid from "date-fns/is_valid";
 const SECONDS_IN_YEAR = 3.154e7;
 @Pipe({
   name: "endIn"

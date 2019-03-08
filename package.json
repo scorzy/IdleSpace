@@ -13,7 +13,8 @@
     "lint:fix": "ng lint IdleSpace --fix",
     "e2e": "ng e2e",
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
-    "compileCompResult": "tsc  -p myTsconfig.json"
+    "compileCompResult": "tsc  -p myTsconfig.json",
+    "analyze": "ng build --prod --stats-json --build-optimizer=false && webpack-bundle-analyzer dist/IdleSpace/stats.json"
   },
   "private": true,
   "dependencies": {
@@ -50,9 +51,9 @@
     "@angular/cli": "~7.3.4",
     "@angular/compiler-cli": "~7.2.7",
     "@angular/language-service": "~7.2.7",
-    "@types/node": "~8.9.4",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
+    "@types/node": "~8.9.4",
     "codelyzer": "~4.5.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
@@ -64,6 +65,7 @@
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
-    "typescript": "~3.2.2"
+    "typescript": "~3.2.2",
+    "webpack-bundle-analyzer": "^3.1.0"
   }
 }
