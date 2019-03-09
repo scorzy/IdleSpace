@@ -7,13 +7,13 @@ import {
   OnDestroy,
   OnChanges
 } from "@angular/core";
-import { Subscription } from "rxjs/internal/Subscription";
 import { Resource } from "../model/resource/resource";
 import { MainService } from "../main.service";
 import { ActivatedRoute } from "@angular/router";
 import { Production } from "../model/production";
 import { ProductionSorter } from "../model/utility/productionSorter";
 import { TotalProductionSorter } from "../model/utility/totalProductionSorter";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-production-tables",
