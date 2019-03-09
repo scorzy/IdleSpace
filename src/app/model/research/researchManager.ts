@@ -86,6 +86,7 @@ export class ResearchManager {
       };
       const research = Research.fromData(resData);
       research.limit = new Decimal(100);
+      research.toUnlock.push(m);
       m.research = research;
       moduleResearches.push(research);
       this.researches.push(research);

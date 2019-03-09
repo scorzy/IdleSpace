@@ -19,6 +19,8 @@ export class Game {
     this.researchManager.addOtherResearches();
     this.researchManager.setUnlocks();
 
+    this.fleetManager.reload();
+
     this.resourceManager.metal.quantity = new Decimal(100000);
     this.resourceManager.crystal.quantity = new Decimal(100000);
 

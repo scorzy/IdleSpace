@@ -19,11 +19,6 @@ export class FleetManager implements ISalvable {
     FleetManager.instance = this;
     this.freeNavalCapacity = new Resource("N");
     for (const data of ModulesData) this.allModules.push(Module.fromData(data));
-
-    // const mLaserRes = new Research("m");
-
-    this.allModules.forEach(w => (w.unlocked = true));
-    this.reload();
   }
   static getInstance(): FleetManager {
     return FleetManager.instance;

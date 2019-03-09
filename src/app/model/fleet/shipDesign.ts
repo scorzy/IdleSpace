@@ -9,6 +9,8 @@ import { Price } from "../prices/price";
 import { ResourceManager } from "../resource/resourceManager";
 import { FleetManager } from "./fleetManager";
 
+const MODULE_PRICE_INCREASE = 1.1;
+
 export class ShipDesign implements ISalvable, IBuyable {
   id: string;
   type: ShipType;
@@ -49,34 +51,57 @@ export class ShipDesign implements ISalvable, IBuyable {
     this.modules
       .filter(q => q.isValid())
       .forEach(w => {
+        const resLevel = w.module.research
+          ? w.module.research.quantity.toNumber()
+          : 0;
+        const multiPrice = Math.pow(MODULE_PRICE_INCREASE, resLevel);
+        const bonus = resLevel + 1;
+
         this.totalDamage = this.totalDamage.plus(
-          w.module.damage.times(w.size).times(w.quantity)
+          w.module.damage
+            .times(bonus)
+            .times(w.size)
+            .times(w.quantity)
         );
         this.totalEnergy = this.totalEnergy.plus(
-          w.module.energyBalance.times(w.size).times(w.quantity)
+          w.module.energyBalance
+            .times(bonus)
+            .times(w.size)
+            .times(w.quantity)
         );
         this.totalArmor = this.totalArmor.plus(
-          w.module.armor.times(w.size).times(w.quantity)
+          w.module.armor
+            .times(bonus)
+            .times(w.size)
+            .times(w.quantity)
         );
         this.totalShield = this.totalShield.plus(
-          w.module.shield.times(w.size).times(w.quantity)
+          w.module.shield
+            .times(bonus)
+            .times(w.size)
+            .times(w.quantity)
         );
         this.usedModulePoint += w.quantity * w.size;
 
         this.armorDamage = this.armorDamage.plus(
           w.module.damage
+            .times(bonus)
             .times(w.size)
             .times(w.quantity)
             .times(w.module.armorPercent / 100)
         );
         this.shieldDamage = this.shieldDamage.plus(
           w.module.damage
+            .times(bonus)
             .times(w.size)
             .times(w.quantity)
             .times(w.module.shieldPercent / 100)
         );
         this.price = this.price.plus(
-          w.module.alloyPrice.times(w.size).times(w.quantity)
+          w.module.alloyPrice
+            .times(w.size)
+            .times(w.quantity)
+            .times(multiPrice)
         );
       });
 

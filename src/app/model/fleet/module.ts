@@ -1,5 +1,6 @@
 import { AbstractUnlockable } from "../base/AbstractUnlockable";
 import { Research } from "../research/research";
+import { FleetManager } from "./fleetManager";
 
 export enum Sizes {
   Small = 1,
@@ -75,5 +76,9 @@ export class Module extends AbstractUnlockable {
 
   reload() {
     this.unlocked = !this.research || this.research.done;
+  }
+  unlock(): boolean {
+    if (!super.unlock) return false;
+    FleetManager.getInstance().unlockedModules.push(this);
   }
 }
