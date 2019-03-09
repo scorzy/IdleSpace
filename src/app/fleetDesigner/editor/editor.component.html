@@ -173,7 +173,7 @@
                     class="clr-input smallInput"
                     type="number"
                     [(ngModel)]="w.levelUi"
-                    [name]="'w' + i"
+                    [name]="'l' + i"
                     (ngModelChange)="reload()"
                     [min]="1"
                     [attr.max]="w.maxLevel"
@@ -212,9 +212,9 @@
           </tbody>
         </table>
 
-        <br /><br />
+        <br />
 
-        <div *ngIf="!design.editable.isValid">
+        <div *ngIf="!design.editable.isValid; else upgradeAlert">
           <clr-alert [clrAlertType]="'danger'" [clrAlertClosable]="false">
             <clr-alert-item>
               <span class="alert-text">
@@ -224,6 +224,27 @@
           </clr-alert>
           <br />
         </div>
+
+        <ng-template #upgradeAlert>
+          <div *ngIf="design.editable.upgradePrice.gt(0)">
+            <clr-alert
+              [clrAlertType]="canUpgrade ? 'info' : 'warning'"
+              [clrAlertClosable]="false"
+            >
+              <clr-alert-item>
+                <span class="alert-text">
+                  {{ upgradeMessage }}
+                  <app-price-line
+                    [unit]="ms.game.resourceManager.alloy"
+                    [canBuy]="true"
+                    [price]="design.editable.upgradePrice"
+                  ></app-price-line>
+                </span>
+              </clr-alert-item>
+            </clr-alert>
+            <br />
+          </div>
+        </ng-template>
 
         <clr-button-group class="btn-primary">
           <clr-button
@@ -237,11 +258,20 @@
             Add
           </clr-button>
           <clr-button
+            *ngIf="design.quantity.lt(1); else upgradeBtn"
             class="btn btn"
-            [disabled]="!design.editable.isValid"
+            [disabled]="!design.editable.isValid || !canUpgrade"
             (click)="save()"
             ><clr-icon shape="floppy"></clr-icon>Save</clr-button
           >
+          <ng-template #upgradeBtn>
+            <clr-button
+              class="btn btn"
+              [disabled]="!design.editable.isValid || !canUpgrade"
+              (click)="save()"
+              ><clr-icon shape="angle-double"></clr-icon>Upgrade</clr-button
+            >
+          </ng-template>
           <clr-button
             class="btn btn-success"
             [disabled]="changed"

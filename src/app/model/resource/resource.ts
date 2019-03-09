@@ -111,6 +111,7 @@ export class Resource extends AbstractUnlockable
   reloadLimit() {
     if (this.isLimited) {
       this.limit = this.limitStorage.quantity.plus(1).times(this.workerPerMine);
+      this.quantity = this.quantity.min(this.limit);
     }
   }
   unlock(): boolean {

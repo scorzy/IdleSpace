@@ -26,6 +26,7 @@ export class Research extends AbstractUnlockable implements ISpendable {
 
   progressPercent = 0;
   done = false;
+  firstDone = false;
   number = "";
 
   private constructor() {
@@ -52,6 +53,7 @@ export class Research extends AbstractUnlockable implements ISpendable {
     if (this.progress.gte(this.total)) {
       ret = diff;
       this.done = true;
+      this.firstDone = true;
       this.toUnlock.forEach(u => u.unlock());
       this.quantity = this.quantity.plus(1);
       this.progress = new Decimal(0);
@@ -100,6 +102,7 @@ export class Research extends AbstractUnlockable implements ISpendable {
     if (this.quantity.gte(1) && this.limit.gt(1)) {
       this.number = Research.romanPipe.transform(this.quantity.plus(1));
     }
+    this.firstDone = this.quantity.gte(1);
     return true;
   }
 }

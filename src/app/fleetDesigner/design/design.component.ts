@@ -41,22 +41,22 @@ export class DesignComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.unlockedShips = [];
-    if (ResearchManager.getInstance().corvette.done) {
+    if (ResearchManager.getInstance().corvette.firstDone) {
       this.unlockedShips.push(ShipTypes[0]);
     }
-    if (ResearchManager.getInstance().frigate.done) {
+    if (ResearchManager.getInstance().frigate.firstDone) {
       this.unlockedShips.push(ShipTypes[1]);
     }
-    if (ResearchManager.getInstance().destroyer.done) {
+    if (ResearchManager.getInstance().destroyer.firstDone) {
       this.unlockedShips.push(ShipTypes[2]);
     }
-    if (ResearchManager.getInstance().cruiser.done) {
+    if (ResearchManager.getInstance().cruiser.firstDone) {
       this.unlockedShips.push(ShipTypes[3]);
     }
-    if (ResearchManager.getInstance().battlecruiser.done) {
+    if (ResearchManager.getInstance().battlecruiser.firstDone) {
       this.unlockedShips.push(ShipTypes[4]);
     }
-    if (ResearchManager.getInstance().battleship.done) {
+    if (ResearchManager.getInstance().battleship.firstDone) {
       this.unlockedShips.push(ShipTypes[5]);
     }
 

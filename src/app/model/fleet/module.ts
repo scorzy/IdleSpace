@@ -75,10 +75,10 @@ export class Module extends AbstractUnlockable {
   }
 
   reload() {
-    this.unlocked = !this.research || this.research.done;
+    this.unlocked = !this.research || this.research.firstDone;
   }
   unlock(): boolean {
-    if (!super.unlock) return false;
+    if (!super.unlock()) return false;
     FleetManager.getInstance().unlockedModules.push(this);
   }
 }

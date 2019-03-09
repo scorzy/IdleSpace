@@ -339,7 +339,7 @@ export class ResourceManager implements ISalvable {
       ])
     );
     buyFoundry.afterBuy = () => {
-      this.crystalX1.reloadLimit();
+      this.alloyX1.reloadLimit();
     };
     buyFoundry.name = "Buy " + this.alloyFoundry.name;
     this.alloyX1.actions.push(buyFoundry);

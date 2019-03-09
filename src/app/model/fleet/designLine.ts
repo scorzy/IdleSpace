@@ -7,7 +7,7 @@ export class DesignLine {
     public quantity = 1,
     public module: Module = null,
     public size: Sizes = 1,
-    public level = new Decimal(1),
+    public level = 1,
     public quantityUi = 1,
     public moduleId = "",
     public levelUi = 1
@@ -23,7 +23,7 @@ export class DesignLine {
       other.level,
       other.quantity,
       other.module.id,
-      other.level.toNumber()
+      other.level
     );
   }
   static CreateFromData(data: any): DesignLine {

@@ -12,6 +12,7 @@ export class RefundAction extends AbstractAction {
       number
     );
     this.actionToRefund.quantity = this.actionToRefund.quantity.minus(number);
+    this.actionToRefund.afterBuy(number.times(-1));
     this.actionToRefund.reload();
     return true;
   }

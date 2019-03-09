@@ -28,6 +28,7 @@ export class ShipDesign implements ISalvable, IBuyable {
   price: Decimal;
 
   editable: ShipDesign;
+  original: ShipDesign;
   usedModulePoint = 0;
   isValid = true;
 
@@ -37,6 +38,7 @@ export class ShipDesign implements ISalvable, IBuyable {
   isLimited = false;
   limit = new Decimal();
   isCapped = false;
+  upgradePrice = new Decimal();
 
   reload() {
     this.totalDamage = new Decimal(0);
@@ -51,11 +53,8 @@ export class ShipDesign implements ISalvable, IBuyable {
     this.modules
       .filter(q => q.isValid())
       .forEach(w => {
-        const resLevel = w.module.research
-          ? w.module.research.quantity.toNumber()
-          : 0;
-        const multiPrice = Math.pow(MODULE_PRICE_INCREASE, resLevel);
-        const bonus = resLevel + 1;
+        const multiPrice = w.level * Math.pow(MODULE_PRICE_INCREASE, w.level);
+        const bonus = w.level;
 
         this.totalDamage = this.totalDamage.plus(
           w.module.damage
@@ -110,6 +109,13 @@ export class ShipDesign implements ISalvable, IBuyable {
       this.usedModulePoint <= this.type.modulePoint &&
       this.modules.length <= this.type.moduleCount;
 
+    this.upgradePrice = this.original
+      ? this.price
+          .minus(this.original.price)
+          .max(0)
+          .times(this.original.quantity)
+      : new Decimal();
+
     this.generateBuyAction();
   }
   getSave(): any {
@@ -142,6 +148,7 @@ export class ShipDesign implements ISalvable, IBuyable {
   }
   copy() {
     this.editable = new ShipDesign();
+    this.editable.original = this;
     this.editable.name = this.name;
     this.editable.id = this.id;
     this.editable.type = this.type;
@@ -162,7 +169,16 @@ export class ShipDesign implements ISalvable, IBuyable {
   }
 
   saveConfig() {
-    if (this.editable && this.editable.isValid) {
+    const resMan = ResourceManager.getInstance();
+
+    if (
+      this.editable &&
+      this.editable.isValid &&
+      resMan.alloy.quantity.gte(this.editable.upgradePrice)
+    ) {
+      resMan.alloy.quantity = resMan.alloy.quantity.minus(
+        this.editable.upgradePrice
+      );
       this.name = this.editable.name;
       this.modules = this.editable.modules;
       this.reload();
