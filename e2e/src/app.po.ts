@@ -1,3 +1,4 @@
+// tslint:disable-next-line:no-implicit-dependencies
 import { browser, by, element } from 'protractor';
 
 export class AppPage {

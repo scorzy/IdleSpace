@@ -23,7 +23,6 @@ export class ResearchManager {
   //#endregion
 
   constructor() {
-    const resManager = ResourceManager.getInstance();
     ResearchManager.instance = this;
 
     for (const resData of ResearchData) {

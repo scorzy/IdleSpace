@@ -1,7 +1,6 @@
 import { AbstractUnlockable } from "../base/AbstractUnlockable";
 import { IUnlockable } from "../base/IUnlockable";
 import { ResearchManager } from "./researchManager";
-import { descriptions } from "../descriptions";
 import { RomanPipe } from "src/app/roman.pipe";
 import { ISpendable } from "../base/ISpendable";
 import { IResearchData } from "./iResearchData";

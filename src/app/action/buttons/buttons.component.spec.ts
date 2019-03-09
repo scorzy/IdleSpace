@@ -7,9 +7,6 @@ import { ClarityModule } from "@clr/angular";
 import { EndInPipe } from "../../end-in.pipe";
 import { FormatPipe } from "../../format.pipe";
 import { ButtonsComponent } from "./buttons.component";
-import { Resource } from "src/app/model/resource/resource";
-import { MultiPrice } from "src/app/model/prices/multiPrice";
-import { BuyAction } from "src/app/model/actions/buyAction";
 import { getAction } from "src/app/app.component.spec";
 
 describe("ButtonsComponent", () => {

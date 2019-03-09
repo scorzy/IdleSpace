@@ -7,9 +7,6 @@ import { ClarityModule } from "@clr/angular";
 import { EndInPipe } from "../end-in.pipe";
 import { FormatPipe } from "../format.pipe";
 import { ActionComponent } from "./action.component";
-import { BuyAction } from "../model/actions/buyAction";
-import { Resource } from "../model/resource/resource";
-import { MultiPrice } from "../model/prices/multiPrice";
 import { getAction } from "../app.component.spec";
 
 describe("ActionComponent", () => {

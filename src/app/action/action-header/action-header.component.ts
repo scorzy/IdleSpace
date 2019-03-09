@@ -1,9 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
-  OnChanges,
-  SimpleChanges
+  Input
 } from "@angular/core";
 import { AbstractAction } from "../../model/actions/abstractAction";
 

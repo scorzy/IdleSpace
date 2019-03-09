@@ -3,7 +3,6 @@ import { ShipDesign } from "./shipDesign";
 import { ShipType } from "./shipTypes";
 import { Module } from "./module";
 import { ModulesData } from "./moduleData";
-import { Research } from "../research/research";
 import { Resource } from "../resource/resource";
 
 export class FleetManager implements ISalvable {
