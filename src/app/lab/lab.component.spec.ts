@@ -7,7 +7,8 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ActionHeaderComponent } from "../action/action-header/action-header.component";
 import { FormatPipe } from "../format.pipe";
-import { getMainService } from "../app.component.spec";
+import { MainService } from "../main.service";
+import { OptionsService } from "../options.service";
 
 describe("LabComponent", () => {
   let component: LabComponent;
@@ -17,14 +18,15 @@ describe("LabComponent", () => {
     TestBed.configureTestingModule({
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [ClarityModule, RouterTestingModule, BrowserAnimationsModule],
-      declarations: [LabComponent, ActionHeaderComponent, FormatPipe]
+      declarations: [LabComponent, ActionHeaderComponent, FormatPipe],
+      providers: [MainService, OptionsService]
     }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LabComponent);
     component = fixture.componentInstance;
-    component.ms = getMainService();
+    component.ms.start();
     fixture.detectChanges();
   });
 

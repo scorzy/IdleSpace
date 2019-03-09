@@ -5,7 +5,8 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { ClarityModule } from "@clr/angular";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
-import { getMainService } from "../app.component.spec";
+import { MainService } from "../main.service";
+import { OptionsService } from "../options.service";
 
 describe("MaterialListComponent", () => {
   let component: MaterialListComponent;
@@ -15,14 +16,15 @@ describe("MaterialListComponent", () => {
     TestBed.configureTestingModule({
       declarations: [MaterialListComponent, FormatPipe],
       imports: [RouterTestingModule, ClarityModule, BrowserAnimationsModule],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      providers: [MainService, OptionsService]
     }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MaterialListComponent);
     component = fixture.componentInstance;
-    component.ms = getMainService();
+    component.ms.start();
     fixture.detectChanges();
   });
 

@@ -1,9 +1,8 @@
 import { TestBed, async } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { AppComponent } from "./app.component";
-import { CUSTOM_ELEMENTS_SCHEMA, InjectionToken } from "@angular/core";
+import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { ClarityModule } from "@clr/angular";
-import { MainService } from "./main.service";
 import { Game } from "./model/game";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FormatPipe } from "./format.pipe";
@@ -12,14 +11,18 @@ import { BuyAction } from "./model/actions/buyAction";
 import { Resource } from "./model/resource/resource";
 import { MultiPrice } from "./model/prices/multiPrice";
 import { Price } from "./model/prices/price";
-import { OptionsService } from "./options.service";
 
-export function getMainService(): MainService {
-  // const ms = new MainService(new OptionsService());
-  const ms = jasmine.createSpyObj("MainService", ["update"]);
-  ms.game = new Game();
-  return ms;
+// export function getMainService(): MainService {
+//   // const ms = new MainService(new OptionsService());
+//   const ms = jasmine.createSpyObj("MainService", ["update"]);
+//   ms.game = new Game();
+//   return ms;
+// }
+
+export function getGame(): Game {
+  return new Game();
 }
+
 export function getAction(): AbstractAction {
   return new BuyAction(
     new Resource("m"),

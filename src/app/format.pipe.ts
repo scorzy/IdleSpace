@@ -1,6 +1,5 @@
-import { Pipe, PipeTransform, OnDestroy, OnInit } from "@angular/core";
+import { Pipe, PipeTransform } from "@angular/core";
 import { OptionsService } from "./options.service";
-import { Subscription } from "rxjs";
 
 @Pipe({
   name: "format"

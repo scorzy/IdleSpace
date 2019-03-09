@@ -8,7 +8,7 @@ import { OptionsService } from "../../options.service";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FormatPipe } from "../../format.pipe";
 import { Resource } from "../../model/resource/resource";
-import { getMainService } from "src/app/app.component.spec";
+import { MainService } from "src/app/main.service";
 
 describe("ResLineComponent", () => {
   let component: ResLineComponent;
@@ -18,19 +18,20 @@ describe("ResLineComponent", () => {
     TestBed.configureTestingModule({
       declarations: [ResLineComponent, FormatPipe],
       imports: [RouterTestingModule, ClarityModule, BrowserAnimationsModule],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      providers: [MainService, OptionsService]
     }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ResLineComponent);
     component = fixture.componentInstance;
+    component.ms.start();
     component.os = new OptionsService();
     component.c = new Decimal(1);
     component.id = "10";
     component.isEnding = false;
     component.name = "name";
-    component.ms = getMainService();
     component.unit = new Resource("m");
     // component.quantity = new Decimal(1);
     fixture.detectChanges();

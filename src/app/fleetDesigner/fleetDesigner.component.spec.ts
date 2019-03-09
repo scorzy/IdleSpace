@@ -7,7 +7,8 @@ import { ClarityModule } from "@clr/angular";
 import { RouterTestingModule } from "@angular/router/testing";
 import { FormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { getMainService } from "../app.component.spec";
+import { MainService } from "../main.service";
+import { OptionsService } from "../options.service";
 
 describe("FleetDesignerComponent", () => {
   let component: FleetDesignerComponent;
@@ -22,14 +23,15 @@ describe("FleetDesignerComponent", () => {
         FormsModule,
         BrowserAnimationsModule
       ],
-      declarations: [FleetDesignerComponent]
+      declarations: [FleetDesignerComponent],
+      providers: [MainService, OptionsService]
     }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(FleetDesignerComponent);
     component = fixture.componentInstance;
-    component.ms = getMainService();
+    component.ms.start();
     fixture.detectChanges();
   });
 

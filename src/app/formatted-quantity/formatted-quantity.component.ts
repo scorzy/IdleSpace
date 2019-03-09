@@ -8,7 +8,6 @@ import {
 } from "@angular/core";
 import { OptionsService } from "../options.service";
 import { Subscription } from "rxjs";
-import { FormatPipe } from "../format.pipe";
 
 @Component({
   selector: "app-formatted-quantity",

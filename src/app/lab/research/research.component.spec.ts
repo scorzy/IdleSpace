@@ -8,8 +8,9 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ActionHeaderComponent } from "src/app/action/action-header/action-header.component";
 import { FormatPipe } from "src/app/format.pipe";
 import { Research } from "src/app/model/research/research";
-import { getMainService } from "src/app/app.component.spec";
 import { ResearchData } from "src/app/model/research/researchData";
+import { MainService } from "src/app/main.service";
+import { OptionsService } from "src/app/options.service";
 
 describe("ResearchComponent", () => {
   let component: ResearchComponent;
@@ -19,15 +20,16 @@ describe("ResearchComponent", () => {
     TestBed.configureTestingModule({
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [ClarityModule, RouterTestingModule, BrowserAnimationsModule],
-      declarations: [ResearchComponent, ActionHeaderComponent, FormatPipe]
+      declarations: [ResearchComponent, ActionHeaderComponent, FormatPipe],
+      providers: [MainService, OptionsService]
     }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ResearchComponent);
     component = fixture.componentInstance;
+    component.ms.start();
     component.res = Research.fromData(ResearchData[0]);
-    component.ms = getMainService();
     fixture.detectChanges();
   });
 

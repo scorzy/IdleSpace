@@ -1,5 +1,4 @@
 import { EventEmitter, Injectable } from "@angular/core";
-import { FormatPipe } from "./format.pipe";
 declare let numberformat;
 
 @Injectable({

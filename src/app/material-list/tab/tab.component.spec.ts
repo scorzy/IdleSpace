@@ -26,7 +26,6 @@ describe("TabComponent", () => {
     component.name = "name";
     component.quantity = new Decimal(1);
     component.shape = "";
-    // component.ms = getMainService();
     fixture.detectChanges();
   });
 

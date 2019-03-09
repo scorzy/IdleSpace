@@ -37,7 +37,9 @@ export class MainService {
       document.location.protocol +
       "//" +
       document.location.host +
-      document.location.pathname;
+      (document.location.pathname === "/context.html"
+        ? "/"
+        : document.location.pathname);
     this.zipWorker = createWorker({
       workerFunction: this.comp,
       onMessage: this.onZip.bind(this),

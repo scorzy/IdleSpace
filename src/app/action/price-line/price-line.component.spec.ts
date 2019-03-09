@@ -5,7 +5,7 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { ClarityModule } from "@clr/angular";
 import { FormatPipe } from "../../format.pipe";
 import { PriceLineComponent } from "./price-line.component";
-import { getMainService } from "src/app/app.component.spec";
+import { getGame } from "src/app/app.component.spec";
 
 describe("PriceLineComponent", () => {
   let component: PriceLineComponent;
@@ -22,7 +22,7 @@ describe("PriceLineComponent", () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(PriceLineComponent);
     component = fixture.componentInstance;
-    component.unit = getMainService().game.resourceManager.metal;
+    component.unit = getGame().resourceManager.metal;
     fixture.detectChanges();
   });
 
