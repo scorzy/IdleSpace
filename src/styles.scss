@@ -1,36 +1,8 @@
-/* You can add global styles to this file, and also import other style files */
-
-@import "../node_modules/@clr/ui/src/utils/dependencies.clarity"; // Includes light theme
-
-@import "../node_modules/@clr/ui/src/utils/theme.dark.clarity"; // Overwrites with dark theme
-
-@import "./theme.scss";
-
-// Clarity Component SCSS
-@import "../node_modules/@clr/ui/src/utils/components.clarity";
-
 .monospace {
   font-family: RobotoMono, Consolas, Monaco, Courier, monospace !important;
   font-size: 90%;
 }
-.notEnough {
-  color: #c92100;
-  a:link :not(.noRed) {
-    color: #c92100;
-  }
-  a:visited :not(.noRed) {
-    color: #c92100;
-  }
-}
-.green {
-  color: #60b515;
-  a:link :not(.noGreen) {
-    color: #60b515;
-  }
-  a:visited :not(.noGreen) {
-    color: #60b515;
-  }
-}
+
 h5 {
   margin-top: 0.6rem;
 }
@@ -47,46 +19,6 @@ body p {
 clr-icon {
   height: 24px;
   width: 24px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgb(50, 79, 97);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgb(64, 107, 134);
-}
-
-::-webkit-scrollbar-thumb:active {
-  background: #49afd9;
-}
-
-::-webkit-scrollbar-track {
-  background: rgb(15, 23, 28);
-}
-
-::-webkit-scrollbar-track:hover {
-  background: rgb(15, 23, 28);
-}
-
-::-webkit-scrollbar-track:active {
-  background: rgb(15, 23, 28);
-}
-select option {
-  background: #1b2a32 !important;
-  color: #e9ecef !important;
-}
-
-select {
-  color: #e9ecef !important;
-}
-
-.ui-widget-content {
-  border: 1px solid #49afd9 !important;
-}
-
-.nav-group-content {
-  background: #404e60 !important;
 }
 
 ::-webkit-scrollbar {
@@ -112,8 +44,6 @@ select {
 .cdk-drag-preview {
   box-sizing: border-box;
   border-radius: 4px;
-  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
-    0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
 }
 
 .movable {

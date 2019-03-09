@@ -1,4 +1,5 @@
 import { EventEmitter, Injectable } from "@angular/core";
+import { FormatPipe } from "./format.pipe";
 declare let numberformat;
 
 @Injectable({
@@ -8,19 +9,22 @@ export class OptionsService {
   usaFormat = true;
   numFormat = "scientific";
   autosaveNotification = true;
-  dark = false;
+  dark = true;
   header = 6;
   materialPosition = 1;
   showI = true;
   noResourceEndPopUp = false;
   noWarpNotification = true;
   timeFormatDetail = false;
+  headerClass = "";
 
   formatter: any;
   formatEmitter: EventEmitter<number> = new EventEmitter<number>();
   headerEmitter: EventEmitter<number> = new EventEmitter<number>();
+  formatId = 0;
 
   constructor() {
+    this.reloadHeader();
     try {
       const n = 1.1;
       const separator = n.toLocaleString().substring(1, 2);
@@ -30,6 +34,7 @@ export class OptionsService {
     this.generateFormatter();
   }
   generateFormatter() {
+    this.formatId++;
     try {
       this.formatter = new numberformat.Formatter({
         format: this.numFormat,
@@ -38,10 +43,12 @@ export class OptionsService {
     } catch (ex) {
       console.log("Error generateFormatter:" + ex);
     }
-    if (!!this.formatEmitter) this.formatEmitter.emit(1);
+    this.formatEmitter.emit(1);
   }
-
-  // #regin Save and Load
+  reloadHeader() {
+    this.headerClass = "header-" + this.header;
+  }
+  //#region Save and Load
   getSave(): any {
     return {
       u: this.usaFormat,
@@ -68,6 +75,7 @@ export class OptionsService {
     if ("w" in data) this.noWarpNotification = data.w;
     if ("t" in data) this.timeFormatDetail = data.t;
     this.generateFormatter();
+    this.reloadHeader();
   }
   //#endregion
 }

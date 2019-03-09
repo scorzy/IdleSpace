@@ -1,6 +1,6 @@
 <clr-main-container *ngIf="ms.show && ms.game" [@fadeInOut]>
   <!-- Header -->
-  <clr-header class="header">
+  <clr-header class="header" [ngClass]="os.headerClass">
     <div class="header-nav" [clr-nav-level]="1">
       <a
         [routerLink]="ms.lastUnitUrl"

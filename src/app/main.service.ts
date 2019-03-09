@@ -1,11 +1,14 @@
-import { Injectable } from "@angular/core";
+import { Injectable, Inject } from "@angular/core";
 import { createWorker, ITypedWorker } from "typed-web-workers";
 import { Game } from "./model/game";
 import { Emitters } from "./emitters";
+import { DOCUMENT } from "@angular/common";
+import { OptionsService } from "./options.service";
 
 declare let LZString: any;
 
 const UP_INTERVAL = 200; // 5 fps
+// declare let CompressRequest2: any;
 
 @Injectable({
   providedIn: "root"
@@ -19,8 +22,17 @@ export class MainService {
   em = new Emitters();
   kongregate = false;
   playFabLogged = false;
+  theme: HTMLLinkElement;
 
-  constructor() {
+  constructor(
+    public options: OptionsService,
+    @Inject(DOCUMENT) private document: Document
+  ) {
+    this.theme = this.document.createElement("link");
+    this.theme.rel = "stylesheet";
+    this.theme.type = "text/css";
+    this.document.querySelector("head").appendChild(this.theme);
+
     const url =
       document.location.protocol +
       "//" +
@@ -40,8 +52,10 @@ export class MainService {
     const savedData = localStorage.getItem("save");
     if (savedData) {
       this.load(savedData);
+      this.setTheme();
     } else {
       this.game = new Game();
+      this.setTheme();
       this.show = true;
     }
     setInterval(this.update.bind(this), UP_INTERVAL);
@@ -63,6 +77,7 @@ export class MainService {
   getSave(): any {
     const data: any = {};
     data.g = this.game.save();
+    data.o = this.options.getSave();
     data.l = this.last;
     return data;
   }
@@ -75,6 +90,8 @@ export class MainService {
     this.last = data.l;
     this.game = new Game();
     this.game.load(data.g);
+    if ("o" in data) this.options.restore(data.o);
+    this.setTheme();
     this.show = true;
   }
   import(str: string) {
@@ -143,6 +160,12 @@ export class MainService {
   }
   savePlayFab() {
     //  ToDo
+  }
+
+  setTheme() {
+    const myTheme =
+      "assets/" + (this.options.dark ? "theme.dark.css" : "theme.light.css");
+    if (myTheme !== this.theme.href) this.theme.href = myTheme;
   }
 }
 

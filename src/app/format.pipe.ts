@@ -1,28 +1,42 @@
-import { Pipe, PipeTransform, OnDestroy } from "@angular/core";
+import { Pipe, PipeTransform, OnDestroy, OnInit } from "@angular/core";
 import { OptionsService } from "./options.service";
+import { Subscription } from "rxjs";
 
 @Pipe({
   name: "format"
 })
-export class FormatPipe implements PipeTransform, OnDestroy {
-  private map: Map<string, string> = new Map<string, string>();
-  private interval: number;
+export class FormatPipe implements PipeTransform {
+  static map: Map<string, string> = new Map<string, string>();
+  static interval: number;
 
   constructor(public options: OptionsService) {
-    this.interval = window.setInterval(this.clear.bind(this), 2000);
+    if (FormatPipe.interval < 1) {
+      FormatPipe.interval = window.setInterval(this.clear.bind(this), 2000);
+    }
   }
 
-  transform(value1: any, integer?: boolean, formatter?: any): any {
+  transform(
+    value1: any,
+    integer?: boolean,
+    fakeId?: number,
+    formatter?: any
+  ): any {
+    fakeId = fakeId;
     const value = new Decimal(value1);
 
     let index = "";
     if (!formatter) {
-      index = value.toString() + !!integer;
-      const ret1 = this.map.get(index);
+      formatter = this.options.formatter;
+      index =
+        value.toString() +
+        !!integer +
+        this.options.usaFormat +
+        formatter.opts.flavor +
+        formatter.opts.format;
+      // console.log(index);
+      const ret1 = FormatPipe.map.get(index);
       if (ret1 !== undefined) return ret1;
     }
-
-    if (!formatter) formatter = this.options.formatter;
 
     let str = "";
     if (value.abs().lt(100000)) {
@@ -54,16 +68,16 @@ export class FormatPipe implements PipeTransform, OnDestroy {
     const ret = (value.lt(0) ? "-" : "") + str;
 
     if (index !== "") {
-      this.map.set(index, ret);
+      FormatPipe.map.set(index, ret);
     }
 
     return ret;
   }
 
   clear() {
-    if (this.map.entries.length > 100) this.map.clear();
+    if (FormatPipe.map.entries.length > 100) FormatPipe.map.clear();
   }
-  ngOnDestroy(): void {
-    if (this.interval > 0) clearInterval(this.interval);
-  }
+  // ngOnDestroy(): void {
+  //   if (this.interval > 0) clearInterval(this.interval);
+  // }
 }

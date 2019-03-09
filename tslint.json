@@ -6,6 +6,9 @@
     "rxjs-tslint-rules",
     "tslint-etc"
   ],
+  "linterOptions": {
+    "exclude": ["node_modules/**"]
+  },
   "rules": {
     "no-submodule-imports": false,
     "ordered-imports": false,

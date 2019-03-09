@@ -9,6 +9,7 @@ import { ActionHeaderComponent } from "src/app/action/action-header/action-heade
 import { FormatPipe } from "src/app/format.pipe";
 import { Research } from "src/app/model/research/research";
 import { getMainService } from "src/app/app.component.spec";
+import { ResearchData } from "src/app/model/research/researchData";
 
 describe("ResearchComponent", () => {
   let component: ResearchComponent;
@@ -25,7 +26,7 @@ describe("ResearchComponent", () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ResearchComponent);
     component = fixture.componentInstance;
-    component.res = new Research("a", 100);
+    component.res = Research.fromData(ResearchData[0]);
     component.ms = getMainService();
     fixture.detectChanges();
   });

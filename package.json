@@ -14,7 +14,8 @@
     "e2e": "ng e2e",
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
     "compileCompResult": "tsc  -p myTsconfig.json",
-    "analyze": "ng build --prod --stats-json --build-optimizer=false && webpack-bundle-analyzer dist/IdleSpace/stats.json"
+    "analyze": "ng build --prod --stats-json --build-optimizer=false && webpack-bundle-analyzer dist/IdleSpace/stats.json",
+    "make-themes": "node-sass ./src/themes --output ./src/assets --output-style compressed"
   },
   "private": true,
   "dependencies": {

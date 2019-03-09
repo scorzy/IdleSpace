@@ -7,6 +7,7 @@ import { OptionsNavComponent } from "./options-nav/options-nav.component";
 import { SaveComponent } from "./options-nav/save/save.component";
 import { FleetDesignerComponent } from "./fleetDesigner/fleetDesigner.component";
 import { DesignComponent } from "./fleetDesigner/design/design.component";
+import { UiComponent } from "./options-nav/ui/ui.component";
 
 const routes: Routes = [
   {
@@ -38,7 +39,10 @@ const routes: Routes = [
   {
     path: "opt",
     component: OptionsNavComponent,
-    children: [{ path: "save", component: SaveComponent }]
+    children: [
+      { path: "save", component: SaveComponent },
+      { path: "ui", component: UiComponent }
+    ]
   }
 ];
 

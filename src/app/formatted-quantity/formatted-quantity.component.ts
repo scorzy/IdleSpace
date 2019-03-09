@@ -2,8 +2,13 @@ import {
   Component,
   OnInit,
   ChangeDetectionStrategy,
-  Input
+  Input,
+  ChangeDetectorRef,
+  OnDestroy
 } from "@angular/core";
+import { OptionsService } from "../options.service";
+import { Subscription } from "rxjs";
+import { FormatPipe } from "../format.pipe";
 
 @Component({
   selector: "app-formatted-quantity",
@@ -11,12 +16,22 @@ import {
   styleUrls: ["./formatted-quantity.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FormattedQuantityComponent implements OnInit {
+export class FormattedQuantityComponent implements OnInit, OnDestroy {
   @Input() quantity: Decimal;
   @Input() integer = false;
   @Input() monospace = true;
+  private subscriptions: Subscription[] = [];
 
-  constructor() {}
+  constructor(public os: OptionsService, private cd: ChangeDetectorRef) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.subscriptions.push(
+      this.os.formatEmitter.subscribe(() => {
+        this.cd.markForCheck();
+      })
+    );
+  }
+  ngOnDestroy() {
+    this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
+  }
 }
