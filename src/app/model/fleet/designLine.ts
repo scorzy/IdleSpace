@@ -2,21 +2,28 @@ import { Module, Sizes } from "./module";
 import { FleetManager } from "./fleetManager";
 
 export class DesignLine {
+  maxLevel = 1;
   constructor(
     public quantity = 1,
     public module: Module = null,
     public size: Sizes = 1,
+    public level = new Decimal(1),
     public quantityUi = 1,
-    public moduleId = ""
-  ) {}
+    public moduleId = "",
+    public levelUi = 1
+  ) {
+    this.setMaxLevel();
+  }
 
   static copy(other: DesignLine): DesignLine {
     return new DesignLine(
       other.quantity,
       other.module,
       other.size,
+      other.level,
       other.quantity,
-      other.module.id
+      other.module.id,
+      other.level.toNumber()
     );
   }
   static CreateFromData(data: any): DesignLine {
@@ -32,6 +39,12 @@ export class DesignLine {
 
   isValid() {
     return this.module && this.quantity > 0;
+  }
+  setMaxLevel() {
+    this.maxLevel =
+      this.module && this.module.research
+        ? this.module.research.quantity.toNumber()
+        : 1;
   }
 
   getSave(): any {

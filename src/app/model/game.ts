@@ -16,6 +16,7 @@ export class Game {
     this.researchManager = new ResearchManager();
     this.fleetManager = new FleetManager();
 
+    this.researchManager.addOtherResearches();
     this.researchManager.setUnlocks();
 
     this.resourceManager.metal.quantity = new Decimal(100000);

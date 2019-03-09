@@ -1,5 +1,5 @@
 <div class="clr-row">
-  <div class="clr-col-sm-12 clr-col-md-8" *ngIf="design.editable">
+  <div class="clr-col-md-auto col1" *ngIf="design.editable">
     <h1>
       <clr-icon [attr.shape]="design.type.shape" size="48" class="resIcon">
       </clr-icon>
@@ -17,7 +17,6 @@
             name="name"
             required
           />
-          <!-- <clr-control-helper>Design name.</clr-control-helper> -->
           <clr-control-error>Name is required!</clr-control-error>
         </clr-input-container>
 
@@ -62,15 +61,6 @@
         </span>
         <br />
 
-        <!-- <button
-              class="btn btn-outline btn-sm"
-              (click)="addModule()"
-              [disabled]="design.editable.modules.length >= design.type.moduleCount"
-            >
-              <clr-icon shape="plus"></clr-icon>
-              Add
-            </button> -->
-
         <table class="table table-noborder table-compact moduleTable">
           <thead>
             <tr>
@@ -78,8 +68,9 @@
               <th>Module</th>
               <th>Size</th>
               <th>Quantity</th>
+              <th>Level</th>
               <!-- <th>Energy</th> -->
-              <th>RM</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -151,6 +142,8 @@
                     [(ngModel)]="w.quantityUi"
                     [name]="'w' + i"
                     (ngModelChange)="reload()"
+                    [min]="1"
+                    [attr.max]="design.type.modulePoint"
                     required
                   />
                   <button
@@ -160,6 +153,37 @@
                     [disabled]="
                       design.editable.usedModulePoint >= design.type.modulePoint
                     "
+                  >
+                    <clr-icon shape="plus"></clr-icon>
+                  </button>
+                </div>
+              </td>
+              <!-- Level -->
+              <td>
+                <div class="btn-group btn-primary">
+                  <button
+                    type="button"
+                    class="btn  btn-sm btn-outline btn-icon"
+                    (click)="w.levelUi = w.levelUi - 1; reload()"
+                    [disabled]="w.levelUi <= 1"
+                  >
+                    <clr-icon shape="minus"></clr-icon>
+                  </button>
+                  <input
+                    class="clr-input smallInput"
+                    type="number"
+                    [(ngModel)]="w.levelUi"
+                    [name]="'w' + i"
+                    (ngModelChange)="reload()"
+                    [min]="1"
+                    [attr.max]="w.maxLevel"
+                    required
+                  />
+                  <button
+                    type="button"
+                    class="btn  btn-sm btn-outline btn-icon"
+                    (click)="w.levelUi = w.levelUi + 1; reload()"
+                    [disabled]="w.levelUi >= w.maxLevel"
                   >
                     <clr-icon shape="plus"></clr-icon>
                   </button>
@@ -188,14 +212,6 @@
           </tbody>
         </table>
 
-        <button
-          class="btn btn-outline btn-sm"
-          (click)="addModule()"
-          [disabled]="design.editable.modules.length >= design.type.moduleCount"
-        >
-          <clr-icon shape="plus"></clr-icon>
-          Add
-        </button>
         <br /><br />
 
         <div *ngIf="!design.editable.isValid">
@@ -210,6 +226,16 @@
         </div>
 
         <clr-button-group class="btn-primary">
+          <clr-button
+            class="btn btn-outline"
+            (click)="addModule()"
+            [disabled]="
+              design.editable.modules.length >= design.type.moduleCount
+            "
+          >
+            <clr-icon shape="plus"></clr-icon>
+            Add
+          </clr-button>
           <clr-button
             class="btn btn"
             [disabled]="!design.editable.isValid"
@@ -238,7 +264,7 @@
     </button>
   </ng-template>
 
-  <div class="clr-col-sm-12 clr-col-md-4">
+  <div class="clr-col-md-auto col2">
     <app-view [design]="design" [showDifference]="editMode"></app-view>
   </div>
 </div>

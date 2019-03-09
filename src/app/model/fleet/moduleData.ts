@@ -9,7 +9,9 @@ export const ModulesData: IModuleData[] = [
     alloyPrice: 10,
     damage: 10,
     shieldPercent: 50,
-    armorPercent: 200
+    armorPercent: 200,
+    nextToUnlock: ["m"],
+    researchPrice: 100
   },
   {
     id: "m",
@@ -19,7 +21,9 @@ export const ModulesData: IModuleData[] = [
     alloyPrice: 10,
     damage: 10,
     shieldPercent: 20,
-    armorPercent: 300
+    armorPercent: 300,
+    nextToUnlock: ["p"],
+    researchPrice: 100
   },
   {
     id: "p",
@@ -29,7 +33,8 @@ export const ModulesData: IModuleData[] = [
     alloyPrice: 10,
     damage: 10,
     shieldPercent: 5,
-    armorPercent: 400
+    armorPercent: 400,
+    researchPrice: 100
   },
   {
     id: "d",
@@ -39,7 +44,9 @@ export const ModulesData: IModuleData[] = [
     alloyPrice: 10,
     damage: 10,
     shieldPercent: 200,
-    armorPercent: 50
+    armorPercent: 50,
+    nextToUnlock: ["r"],
+    researchPrice: 100
   },
   {
     id: "r",
@@ -49,7 +56,9 @@ export const ModulesData: IModuleData[] = [
     alloyPrice: 10,
     damage: 10,
     shieldPercent: 300,
-    armorPercent: 20
+    armorPercent: 20,
+    nextToUnlock: ["g"],
+    researchPrice: 100
   },
   {
     id: "g",
@@ -59,28 +68,34 @@ export const ModulesData: IModuleData[] = [
     alloyPrice: 10,
     damage: 10,
     shieldPercent: 400,
-    armorPercent: 5
+    armorPercent: 5,
+    researchPrice: 100
   },
   {
     id: "S",
     name: "Solar Panel",
     sizes: ALL_SIZES,
     energyBalance: 4,
-    alloyPrice: 10
+    alloyPrice: 10,
+    nextToUnlock: ["R"],
+    researchPrice: 100
   },
   {
     id: "R",
     name: "RTG",
     sizes: ALL_SIZES,
     energyBalance: 8,
-    alloyPrice: 20
+    alloyPrice: 20,
+    nextToUnlock: ["F"],
+    researchPrice: 100
   },
   {
     id: "F",
     name: "Fusion Reactor",
     sizes: ALL_SIZES,
     energyBalance: 16,
-    alloyPrice: 30
+    alloyPrice: 30,
+    researchPrice: 100
   },
   {
     id: "a",
@@ -88,7 +103,8 @@ export const ModulesData: IModuleData[] = [
     sizes: ALL_SIZES,
     energyBalance: 0,
     alloyPrice: 10,
-    armor: 20
+    armor: 20,
+    researchPrice: 100
   },
   {
     id: "s",
@@ -96,6 +112,7 @@ export const ModulesData: IModuleData[] = [
     sizes: ALL_SIZES,
     energyBalance: -1,
     alloyPrice: 20,
-    shield: 20
+    shield: 20,
+    researchPrice: 100
   }
 ];

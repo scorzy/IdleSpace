@@ -1,6 +1,8 @@
 import { Research } from "./research";
 import { ResourceManager } from "../resource/resourceManager";
 import { ResearchData } from "./researchData";
+import { FleetManager } from "../fleet/fleetManager";
+import { IResearchData } from "./iResearchData";
 
 export class ResearchManager {
   private static instance: ResearchManager;
@@ -46,28 +48,65 @@ export class ResearchManager {
   setUnlocks() {
     this.researches.forEach(r => {
       const data = ResearchData.find(rd => rd.id === r.id);
-      if (data.researchToUnlock) {
-        for (const resToUnData of data.researchToUnlock) {
-          const toUnlock = this.researches.find(res => res.id === resToUnData);
-          r.toUnlock.push(toUnlock);
+      if (data) {
+        if (data.researchToUnlock) {
+          for (const resToUnData of data.researchToUnlock) {
+            const toUnlock = this.researches.find(res => res.id === resToUnData);
+            r.toUnlock.push(toUnlock);
+          }
         }
-      }
 
-      if (data.resourceToUnlock) {
-        for (const resToUnData of data.resourceToUnlock) {
-          const toUnlock = ResourceManager.getInstance().allResources.find(
-            res => res.id === resToUnData
-          );
-          r.toUnlock.push(toUnlock);
+        if (data.resourceToUnlock) {
+          for (const resToUnData of data.resourceToUnlock) {
+            const toUnlock = ResourceManager.getInstance().allResources.find(
+              res => res.id === resToUnData
+            );
+            r.toUnlock.push(toUnlock);
+          }
         }
-      }
 
-      if (data.otherToUnlock) {
-        for (const toUnlockFun of data.otherToUnlock) {
-          r.toUnlock.push(toUnlockFun());
+        if (data.otherToUnlock) {
+          for (const toUnlockFun of data.otherToUnlock) {
+            r.toUnlock.push(toUnlockFun());
+          }
         }
       }
     });
+  }
+  addOtherResearches() {
+    //  Create researches for modules
+    let moduleResearches = new Array<Research>();
+    FleetManager.getInstance().allModules.forEach(m => {
+      const resData: IResearchData = {
+        id: m.id + "-R",
+        name: m.name,
+        shape: "alloy",
+        price: m.researchPrice,
+        description: "Unlock " + m.name
+      };
+      const research = Research.fromData(resData);
+      research.limit = new Decimal(100);
+      m.research = research;
+      moduleResearches.push(research);
+      this.researches.push(research);
+    });
+
+    //  Make research tree
+    FleetManager.getInstance()
+      .allModules.filter(h => h.nextToUnlock)
+      .forEach(m => {
+        m.nextToUnlock
+          .map(n => FleetManager.getInstance().allModules.find(l => l.id === n))
+          .forEach(modToUnlock => {
+            m.research.toUnlock.push(modToUnlock.research);
+            moduleResearches = moduleResearches.filter(
+              p => p !== modToUnlock.research
+            );
+          });
+      });
+
+    //  Add other modules to corvette research
+    this.corvette.toUnlock = this.corvette.toUnlock.concat(moduleResearches);
   }
 
   update(progress: Decimal) {

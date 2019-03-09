@@ -33,9 +33,13 @@ export interface IModuleData {
   shieldPercent?: number;
   shield?: DecimalSource;
   armor?: DecimalSource;
+  nextToUnlock?: string[];
+  researchPrice?: number;
 }
 export class Module extends AbstractUnlockable {
   research: Research;
+  nextToUnlock: string[];
+  researchPrice = 100;
 
   constructor(
     id: string,
@@ -64,6 +68,8 @@ export class Module extends AbstractUnlockable {
     if (data.armor) ret.armor = new Decimal(data.armor);
     if (data.armorPercent) ret.armorPercent = data.armorPercent;
     if (data.shieldPercent) ret.shieldPercent = data.shieldPercent;
+    if (data.nextToUnlock) ret.nextToUnlock = data.nextToUnlock;
+    if (data.researchPrice) ret.researchPrice = data.researchPrice;
     return ret;
   }
 
