@@ -46,6 +46,7 @@ export abstract class AbstractAction extends AbstractUnlockable {
   }
   save(): any {
     const data = super.getSave();
+    if (this.showNum && !this.quantity.eq(0)) data.q = this.quantity;
 
     return data;
   }

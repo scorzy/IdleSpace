@@ -90,10 +90,12 @@ export class ResourceManager implements ISalvable {
     this.energy = new Resource("e");
     this.energy.shape = "energy";
     this.energy.isLimited = true;
-    this.energy.limit = new Decimal(10);
+    this.energy.workerPerMine = new Decimal(100);
 
     this.computing = new Resource("f");
     this.computing.shape = "computing";
+
+    this.battery = new Resource("b");
     //#endregion
     //#region Declarations
     this.metalMine = new Resource("mm");
@@ -188,11 +190,18 @@ export class ResourceManager implements ISalvable {
     ];
     //#endregion
 
-    this.limited = [this.metalX1, this.crystalX1, this.alloyX1, this.energyX1];
+    this.limited = [
+      this.metalX1,
+      this.crystalX1,
+      this.alloyX1,
+      this.energyX1,
+      this.energy
+    ];
     this.metalX1.limitStorage = this.metalMine;
     this.crystalX1.limitStorage = this.crystalMine;
     this.alloyX1.limitStorage = this.alloyFoundry;
     this.energyX1.limitStorage = this.energyPlant;
+    this.energy.limitStorage = this.battery;
 
     this.limited.forEach(rl => {
       rl.isLimited = true;
@@ -312,6 +321,22 @@ export class ResourceManager implements ISalvable {
     };
     buyCrystalMine.name = "Buy " + this.crystalMine.name;
     this.crystalX1.actions.push(buyCrystalMine);
+
+    //  Energy
+    this.battery.unlocked = true;
+    const buyBattery = new BuyAction(
+      this.battery,
+      new MultiPrice([
+        new Price(this.metal, 1500),
+        new Price(this.crystal, 1000),
+        new Price(this.habitableSpace, 1, 1)
+      ])
+    );
+    buyBattery.afterBuy = () => {
+      this.energy.reloadLimit();
+    };
+    buyBattery.name = "Buy " + this.battery.name;
+    this.energy.actions.push(buyBattery);
 
     //  Energy Plant
     this.energyPlant.unlocked = true;

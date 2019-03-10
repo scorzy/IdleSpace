@@ -30,6 +30,7 @@ export class Resource extends AbstractUnlockable
   isEnding = false;
   isNew = false;
   actions = new Array<AbstractAction>();
+  unlockedActions = new Array<AbstractAction>();
 
   products = new Array<Production>();
   generators = new Array<Production>();
@@ -152,8 +153,8 @@ export class Resource extends AbstractUnlockable
   getSave(): any {
     const data = super.getSave();
     if (!this.quantity.eq(0)) data.q = this.quantity;
-    if (this.actions.findIndex(act => act.unlocked) > -1) {
-      data.a = this.actions.filter(a => a.unlocked).map(a => a.getSave());
+    if (this.unlockedActions.length > 0) {
+      data.a = this.unlockedActions.map(a => a.getSave());
     }
     if (this.operativity !== 100) data.o = this.operativity;
     return data;
@@ -171,6 +172,7 @@ export class Resource extends AbstractUnlockable
     }
     if ("o" in data) this.operativity = data.o;
 
+    this.unlockedActions = this.actions.filter(a => a.unlocked);
     return true;
   }
 }

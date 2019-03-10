@@ -24,9 +24,14 @@
     class="movable"
   >
     <!-- <clr-icon shape="floppy"></clr-icon> -->
-    {{ ds.name }}
-
-    <app-formatted-quantity [quantity]="ds.quantity" [integer]="true">
-    </app-formatted-quantity>
+    <div class="clr-row clr-justify-content-between">
+      <span class="resLeft">
+        {{ ds.name }}
+      </span>
+      <span class="resRight">
+        <app-formatted-quantity [quantity]="ds.quantity" [integer]="true">
+        </app-formatted-quantity>
+      </span>
+    </div>
   </a>
 </clr-vertical-nav>

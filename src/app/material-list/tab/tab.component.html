@@ -12,7 +12,12 @@
       *ngIf="isEnding"
     ></clr-icon>
     <!-- <span class="first">{{ res.name }}</span> <br /> -->
-    <app-formatted-quantity [quantity]="quantity"></app-formatted-quantity>
+    <span [class.notEnough]="cap">
+      <app-formatted-quantity
+        *ngIf="showQta"
+        [quantity]="quantity"
+      ></app-formatted-quantity>
+    </span>
   </span>
 
   <span class="perSecTab  monospace clr-col clr-align-self-end">

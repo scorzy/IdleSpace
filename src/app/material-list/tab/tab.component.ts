@@ -13,6 +13,8 @@ export class TabComponent {
   @Input() isEnding: boolean;
   @Input() quantity: Decimal;
   @Input() c: Decimal;
+  @Input() showQta = true;
+  @Input() cap = false;
 
   constructor() {}
 }

@@ -38,7 +38,7 @@
         {{ name }}
       </span>
     </span>
-    <span *ngIf="quantity.abs().gt(0.001)" class="qta">
+    <span *ngIf="quantity.abs().gt(0.001)" class="qta" [class.notEnough]="cap">
       <app-formatted-quantity [quantity]="quantity"> </app-formatted-quantity>
     </span>
     <span class="perSec monospace">

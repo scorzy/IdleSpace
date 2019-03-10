@@ -27,6 +27,7 @@ export class ResLineComponent implements OnInit, OnDestroy {
   quantity: Decimal = new Decimal(0);
   @Input() c: Decimal;
   @Input() unit: Resource;
+  @Input() cap = false;
 
   private subscriptions: Subscription[] = [];
 

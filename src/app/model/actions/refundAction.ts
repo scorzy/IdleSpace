@@ -5,6 +5,7 @@ export class RefundAction extends AbstractAction {
   alertMessage =
     "Habitable space will be refund, other resource will be lost. Continue?";
   showTime = false;
+  showNum = false;
   actionToRefund: AbstractAction;
 
   onBuy(number: Decimal): boolean {
