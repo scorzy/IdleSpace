@@ -5,7 +5,6 @@ import { solveEquation } from "ant-utils";
 import { ResourceGroup } from "./resourceGroup";
 import { MultiPrice } from "../prices/multiPrice";
 import { Price } from "../prices/price";
-import { BuyAction } from "../actions/buyAction";
 import { Action } from "../actions/abstractAction";
 
 const TIER_2_COST_MULTI = 100;

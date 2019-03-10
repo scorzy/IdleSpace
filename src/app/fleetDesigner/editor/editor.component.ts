@@ -12,7 +12,6 @@ import { Module, Sizes, getSizeName } from "src/app/model/fleet/module";
 import { MainService } from "src/app/main.service";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
-import { DesignComponent } from "../design/design.component";
 
 @Component({
   selector: "app-editor",

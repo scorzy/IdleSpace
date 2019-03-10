@@ -1,5 +1,4 @@
 import { IResearchData } from "./iResearchData";
-import { ResourceManager } from "../resource/resourceManager";
 
 export const ResearchData: IResearchData[] = [
   {
@@ -9,8 +8,7 @@ export const ResearchData: IResearchData[] = [
     price: 100,
     description: "Unlock alloy foundry",
     resourceToUnlock: ["a", "a1"],
-    researchToUnlock: ["c"],
-    otherToUnlock: [() => ResourceManager.getInstance().alloyFoundry]
+    researchToUnlock: ["c"]
   },
   {
     id: "r",
