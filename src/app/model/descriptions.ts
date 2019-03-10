@@ -8,11 +8,6 @@ export const descriptions = {
 
     b: ["Battery", "Battery"],
 
-    mm: ["Metal Mine", "Metal Mine"],
-    cm: ["Crystal Mine", "Crystal Mine"],
-    af: ["Alloy Foundry", "Alloy Foundry"],
-    ep: ["Energy Plant", "Energy Plant"],
-
     m1: ["Mining Drone", "Metal Mining Drone"],
     m2: ["Metal 2", ""],
     m3: ["Metal 3", ""],

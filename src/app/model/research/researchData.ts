@@ -8,7 +8,7 @@ export const ResearchData: IResearchData[] = [
     price: 100,
     description: "Unlock alloy foundry",
     resourceToUnlock: ["a", "a1"],
-    researchToUnlock: ["c"]
+    researchToUnlock: ["c", "m2"]
   },
   {
     id: "r",
@@ -16,7 +16,8 @@ export const ResearchData: IResearchData[] = [
     shape: "flask",
     price: 100,
     description: "+20% researching speed",
-    limit: Number.POSITIVE_INFINITY
+    limit: Number.POSITIVE_INFINITY,
+    researchToUnlock: ["B"]
   },
   {
     id: "c",
@@ -71,5 +72,90 @@ export const ResearchData: IResearchData[] = [
     shape: "battery",
     price: 100,
     description: "Unlock batteries"
+  },
+  {
+    id: "m2",
+    name: "Mining Drone Factory",
+    shape: "battery",
+    price: 100,
+    description: "Unlock Mining Drone factories",
+    resourceToUnlock: ["m2"],
+    researchToUnlock: ["c2"]
+  },
+  {
+    id: "c2",
+    name: "Crystal Drone Factory",
+    shape: "battery",
+    price: 100,
+    description: "Unlock Mining Drone factories",
+    resourceToUnlock: ["c2"],
+    researchToUnlock: ["a2", "e2", "f2"]
+  },
+  {
+    id: "a2",
+    name: "Alloy Drone Factory",
+    shape: "battery",
+    price: 100,
+    description: "Unlock Alloy Drone factories",
+    resourceToUnlock: ["a2"]
+  },
+  {
+    id: "e2",
+    name: "Technician Drone Factory",
+    shape: "battery",
+    price: 100,
+    description: "Unlock Technician Drone factories",
+    resourceToUnlock: ["e2"]
+  },
+  {
+    id: "f2",
+    name: "Super Computing Center",
+    shape: "battery",
+    price: 100,
+    description: "Unlock Technician Drone factories",
+    resourceToUnlock: ["f2"],
+    researchToUnlock: ["m3"]
+  },
+  {
+    id: "m3",
+    name: "Mining 3",
+    shape: "battery",
+    price: 100,
+    description: "Unlock Mining Drone factories",
+    resourceToUnlock: ["m3"],
+    researchToUnlock: ["c3"]
+  },
+  {
+    id: "c3",
+    name: "Crystal 3",
+    shape: "battery",
+    price: 100,
+    description: "Unlock Mining Drone factories",
+    resourceToUnlock: ["c3"],
+    researchToUnlock: ["a3", "e3", "f3"]
+  },
+  {
+    id: "a3",
+    name: "Alloy 3",
+    shape: "battery",
+    price: 100,
+    description: "Unlock Alloy Drone factories",
+    resourceToUnlock: ["a3"]
+  },
+  {
+    id: "e3",
+    name: "Technician 3",
+    shape: "battery",
+    price: 100,
+    description: "Unlock Technician Drone factories",
+    resourceToUnlock: ["e3"]
+  },
+  {
+    id: "f3",
+    name: "Super 3",
+    shape: "battery",
+    price: 100,
+    description: "Unlock Technician Drone factories",
+    resourceToUnlock: ["f3"]
   }
 ];

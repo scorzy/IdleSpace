@@ -212,11 +212,13 @@ export class ResourceManager implements ISalvable {
 
       const prices = new Array<Price>();
       let total = new Decimal(0);
-      t1.buyAction.multiPrice.prices.forEach(pr => {
-        const price = pr.cost.times(TIER_2_COST_MULTI);
-        prices.push(new Price(pr.spendable, price));
-        total = total.plus(price);
-      });
+      t1.buyAction.multiPrice.prices
+        .filter(pr => pr.spendable !== this.habitableSpace)
+        .forEach(pr => {
+          const price = pr.cost.times(TIER_2_COST_MULTI);
+          prices.push(new Price(pr.spendable, price));
+          total = total.plus(price);
+        });
       prices.push(new Price(this.alloy, total.times(TIER_2_ALLOY_PERCENT)));
       prices.push(new Price(this.habitableSpace, 1, 1));
       t2.generateBuyAction(new MultiPrice(prices));
@@ -228,7 +230,9 @@ export class ResourceManager implements ISalvable {
       const prices = new Array<Price>();
       let total = new Decimal(0);
       t2.buyAction.multiPrice.prices
-        .filter(p => p.spendable !== this.alloy)
+        .filter(
+          p => p.spendable !== this.alloy && p.spendable !== this.habitableSpace
+        )
         .forEach(pr => {
           const price = pr.cost.times(TIER_3_COST_MULTI);
           prices.push(new Price(pr.spendable, price));
