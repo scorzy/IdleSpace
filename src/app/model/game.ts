@@ -35,7 +35,7 @@ export class Game {
       this.resourceManager.loadPolynomial();
       let max = this.resourceManager.loadEndTime();
       if (max < diff) {
-        max = diff;
+        // max = diff;
         resEnded = true;
       }
       max = Math.min(max, diff);

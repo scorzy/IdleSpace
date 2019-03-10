@@ -462,7 +462,7 @@ export class ResourceManager implements ISalvable {
     //  Load end times
     this.unlockedProdResources.forEach(unit => {
       const d = unit.quantity;
-      if (unit.a.lt(0) || unit.b.lt(0) || unit.c.lt(0) || d.lte(0)) {
+      if (unit.a.lt(0) || unit.b.lt(0) || unit.c.lt(0)) {
         const solution = solveEquation(unit.a, unit.b, unit.c, d).filter(s =>
           s.gte(0)
         );
@@ -507,7 +507,10 @@ export class ResourceManager implements ISalvable {
       });
 
     //  Fix Computing
-    if (this.unitZero === this.computing && this.computing.c.gt(0)) {
+    if (
+      this.unitZero === this.computing &&
+      (this.computing.c.gt(0) || this.unitZero.endIn < 1)
+    ) {
       this.maxTime = Number.POSITIVE_INFINITY;
       this.computing.isEnding = false;
       this.unitZero = null;
