@@ -66,5 +66,12 @@ export const ResearchData: IResearchData[] = [
     shape: "flask",
     price: 100,
     description: "Unlock battleship"
+  },
+  {
+    id: "B",
+    name: "Battery",
+    shape: "battery",
+    price: 100,
+    description: "Unlock batteries"
   }
 ];

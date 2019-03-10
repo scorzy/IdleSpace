@@ -6,7 +6,7 @@ import { ClarityModule } from "@clr/angular";
 import { Game } from "./model/game";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FormatPipe } from "./format.pipe";
-import { AbstractAction } from "./model/actions/abstractAction";
+import { Action } from "./model/actions/abstractAction";
 import { BuyAction } from "./model/actions/buyAction";
 import { Resource } from "./model/resource/resource";
 import { MultiPrice } from "./model/prices/multiPrice";
@@ -23,7 +23,7 @@ export function getGame(): Game {
   return new Game();
 }
 
-export function getAction(): AbstractAction {
+export function getAction(): Action {
   return new BuyAction(
     new Resource("m"),
     new MultiPrice([new Price(new Resource("c"), 10)])

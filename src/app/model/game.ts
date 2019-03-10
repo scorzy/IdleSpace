@@ -28,6 +28,10 @@ export class Game {
     this.researchBonus.multiplicativeBonus.push(
       new Bonus(this.researchManager.betterResearch, new Decimal(0.2))
     );
+
+    this.resourceManager.allResources.forEach(
+      r => (r.unlockedActions = r.actions.filter(a => a.unlocked))
+    );
   }
   update(diff: number): void {
     while (diff > 0) {

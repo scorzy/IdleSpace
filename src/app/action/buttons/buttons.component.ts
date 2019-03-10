@@ -7,7 +7,7 @@ import {
   OnDestroy
 } from "@angular/core";
 import { MainService } from "../../main.service";
-import { AbstractAction } from "../../model/actions/abstractAction";
+import { Action } from "../../model/actions/abstractAction";
 import { Price } from "../../model/prices/price";
 import { Subscription } from "rxjs";
 
@@ -18,7 +18,7 @@ import { Subscription } from "rxjs";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ButtonsComponent implements OnInit, OnDestroy {
-  @Input() action: AbstractAction;
+  @Input() action: Action;
   @Input() buttonsOnly = false;
 
   minuteSkip = 1;

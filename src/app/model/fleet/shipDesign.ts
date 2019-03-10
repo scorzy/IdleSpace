@@ -1,7 +1,7 @@
 import { ShipType, ShipTypes } from "./shipTypes";
 import { ISalvable } from "../base/ISalvable";
 import { DesignLine } from "./designLine";
-import { AbstractAction } from "../actions/abstractAction";
+import { Action } from "../actions/abstractAction";
 import { IBuyable } from "../base/IBuyable";
 import { BuyAction } from "../actions/buyAction";
 import { MultiPrice } from "../prices/multiPrice";
@@ -32,8 +32,8 @@ export class ShipDesign implements ISalvable, IBuyable {
   usedModulePoint = 0;
   isValid = true;
 
-  buyAction: AbstractAction;
-  actions = new Array<AbstractAction>();
+  buyAction: Action;
+  actions = new Array<Action>();
   quantity = new Decimal();
   isLimited = false;
   limit = new Decimal();

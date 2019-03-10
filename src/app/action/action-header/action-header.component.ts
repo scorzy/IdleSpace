@@ -1,9 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input
-} from "@angular/core";
-import { AbstractAction } from "../../model/actions/abstractAction";
+import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
+import { Action } from "../../model/actions/abstractAction";
 
 @Component({
   selector: "app-action-header",
@@ -12,7 +8,7 @@ import { AbstractAction } from "../../model/actions/abstractAction";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ActionHeaderComponent {
-  @Input() action: AbstractAction;
+  @Input() action: Action;
   @Input() quantity: Decimal;
 
   constructor() {

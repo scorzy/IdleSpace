@@ -14,7 +14,7 @@
     </div>
 
     <app-action
-      *ngFor="let act of res.actions; trackBy: getActId"
+      *ngFor="let act of res.unlockedActions; trackBy: getActId"
       [action]="act"
     ></app-action>
   </div>

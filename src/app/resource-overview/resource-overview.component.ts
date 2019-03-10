@@ -11,7 +11,7 @@ import { Resource } from "../model/resource/resource";
 import { Subscription } from "rxjs";
 import { MainService } from "../main.service";
 import { Options } from "ng5-slider";
-import { AbstractAction } from "../model/actions/abstractAction";
+import { Action } from "../model/actions/abstractAction";
 
 @Component({
   selector: "app-resource-overview",
@@ -47,7 +47,7 @@ export class ResourceOverviewComponent
   getResId(index, base: Resource) {
     return base.id;
   }
-  getActId(index, base: AbstractAction) {
+  getActId(index, base: Action) {
     return base.id;
   }
 }

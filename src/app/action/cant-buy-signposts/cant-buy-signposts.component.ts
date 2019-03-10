@@ -7,7 +7,7 @@ import {
   OnInit
 } from "@angular/core";
 import { MainService } from "../../main.service";
-import { AbstractAction } from "src/app/model/actions/abstractAction";
+import { Action } from "src/app/model/actions/abstractAction";
 import { Price } from "src/app/model/prices/price";
 import { Subscription } from "rxjs";
 
@@ -19,7 +19,7 @@ import { Subscription } from "rxjs";
 })
 export class CantBuySignpostsComponent implements OnInit, OnDestroy {
   @Input()
-  action: AbstractAction;
+  action: Action;
 
   private subscriptions: Subscription[] = [];
 

@@ -4,7 +4,7 @@ import {
   Input,
   OnInit
 } from "@angular/core";
-import { AbstractAction } from "../model/actions/abstractAction";
+import { Action } from "../model/actions/abstractAction";
 
 @Component({
   selector: "app-action",
@@ -13,7 +13,7 @@ import { AbstractAction } from "../model/actions/abstractAction";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ActionComponent implements OnInit {
-  @Input() action: AbstractAction;
+  @Input() action: Action;
 
   constructor() {}
   ngOnInit(): void {}

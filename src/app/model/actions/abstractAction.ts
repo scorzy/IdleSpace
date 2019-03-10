@@ -1,7 +1,11 @@
 import { MultiPrice } from "../prices/multiPrice";
 import { AbstractUnlockable } from "../base/AbstractUnlockable";
+import { Research } from "../research/research";
+import { IHasQuantity } from "../base/IHasQuantity";
+import { ISpendable } from "../base/ISpendable";
 
-export abstract class AbstractAction extends AbstractUnlockable {
+export class Action extends AbstractUnlockable
+  implements IHasQuantity, ISpendable {
   quantity = new Decimal(0);
   unlocked = false;
   shape: string;
@@ -17,12 +21,17 @@ export abstract class AbstractAction extends AbstractUnlockable {
   numWantedUi = 1;
   maxBuy = new Decimal(0);
   showNum = true;
+  research: Research;
 
   alertMessage: string;
+  a = new Decimal(0);
+  b = new Decimal(0);
+  c = new Decimal(0);
 
   constructor(id: string, public multiPrice: MultiPrice) {
     super();
     this.id = id;
+    this.setDefaultUnlocked();
   }
 
   buy(number: Decimal) {
@@ -37,14 +46,16 @@ export abstract class AbstractAction extends AbstractUnlockable {
       }
     }
   }
-  abstract onBuy(number: Decimal): boolean;
+  onBuy(number: Decimal): boolean {
+    return true;
+  }
   afterBuy(number: Decimal) {}
 
   unlock(): boolean {
     this.unlocked = true;
     return this.unlocked;
   }
-  save(): any {
+  getSave(): any {
     const data = super.getSave();
     if (this.showNum && !this.quantity.eq(0)) data.q = this.quantity;
 
@@ -52,7 +63,6 @@ export abstract class AbstractAction extends AbstractUnlockable {
   }
   load(data: any): boolean {
     if (super.load(data)) {
-      this.unlocked = true;
       if ("q" in data) this.quantity = Decimal.fromDecimal(data.q);
       return true;
     }
@@ -71,5 +81,10 @@ export abstract class AbstractAction extends AbstractUnlockable {
   }
   isCapped(): boolean {
     return false;
+  }
+  setResearch(res: Research) {
+    this.setDefaultUnlocked(false);
+    this.research = res;
+    this.research.toUnlock.push(this);
   }
 }

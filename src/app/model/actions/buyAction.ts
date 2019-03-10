@@ -1,9 +1,9 @@
-import { AbstractAction } from "./abstractAction";
+import { Action } from "./abstractAction";
 
 import { MultiPrice } from "../prices/multiPrice";
 import { IBuyable } from "../base/IBuyable";
 
-export class BuyAction extends AbstractAction {
+export class BuyAction extends Action {
   constructor(public buyable: IBuyable, multiPrice: MultiPrice) {
     super("B", multiPrice);
     this.name = "Buy";

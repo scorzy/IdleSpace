@@ -7,9 +7,10 @@ import { BuyAction } from "../actions/buyAction";
 import { MultiPrice } from "../prices/multiPrice";
 import { Multiplier } from "../base/multiplier";
 import { ResourceManager } from "./resourceManager";
-import { AbstractAction } from "../actions/abstractAction";
+import { Action } from "../actions/abstractAction";
 import { RefundAction } from "../actions/refundAction";
 import { Price } from "../prices/price";
+import { IHasQuantity } from "../base/IHasQuantity";
 
 export class Resource extends AbstractUnlockable
   implements ISpendable, IBuyable {
@@ -29,8 +30,8 @@ export class Resource extends AbstractUnlockable
   endIn: number = Number.POSITIVE_INFINITY;
   isEnding = false;
   isNew = false;
-  actions = new Array<AbstractAction>();
-  unlockedActions = new Array<AbstractAction>();
+  actions = new Array<Action>();
+  unlockedActions = new Array<Action>();
 
   products = new Array<Production>();
   generators = new Array<Production>();
@@ -43,7 +44,7 @@ export class Resource extends AbstractUnlockable
   isCapped = false;
   fullIn: number = Number.POSITIVE_INFINITY;
   limit = new Decimal(Number.POSITIVE_INFINITY);
-  limitStorage: Resource;
+  limitStorage: IHasQuantity;
   workerPerMine = new Decimal(10);
 
   constructor(public id: string) {
@@ -62,9 +63,7 @@ export class Resource extends AbstractUnlockable
       this.unlocked && this.operativity > Number.EPSILON && this.quantity.gt(0)
     );
   }
-  /**
-   * Generate Buy Action and Refund Action
-   */
+
   generateBuyAction(multiPrice: MultiPrice) {
     this.buyAction = new BuyAction(this, multiPrice);
     this.actions.push(this.buyAction);
@@ -73,20 +72,22 @@ export class Resource extends AbstractUnlockable
   generateRefundActions() {
     this.actions.forEach(a => {
       if (
-        a instanceof BuyAction &&
-        isISpendable(a.buyable) &&
+        a instanceof Action &&
         a.multiPrice.prices.findIndex(
           p => p.spendable === ResourceManager.getInstance().habitableSpace
         ) > -1
       ) {
-        this.refundAction = new RefundAction(
-          "ref",
-          new MultiPrice([new Price(a.buyable, 1, 1)])
-        );
+        const toRefund = a instanceof BuyAction ? a.buyable : a;
+        if (isISpendable(toRefund)) {
+          this.refundAction = new RefundAction(
+            "ref",
+            new MultiPrice([new Price(toRefund, 1, 1)])
+          );
 
-        this.refundAction.actionToRefund = a;
-        this.refundAction.name = "Refund " + a.name.slice(3);
-        this.actions.push(this.refundAction);
+          this.refundAction.actionToRefund = a;
+          this.refundAction.name = "Refund " + a.name.replace("Buy ", "");
+          this.actions.push(this.refundAction);
+        }
       }
     });
   }
@@ -165,7 +166,7 @@ export class Resource extends AbstractUnlockable
     if ("a" in data) {
       for (const actData of data.a) {
         if ("i" in actData) {
-          const act = this.actions.find(a => a.id === actData.id);
+          const act = this.actions.find(a => a.id === actData.i);
           if (act) act.load(actData);
         }
       }

@@ -1,7 +1,7 @@
-import { AbstractAction } from "../actions/abstractAction";
+import { Action } from "../actions/abstractAction";
 
 export interface IBuyable {
-  actions: AbstractAction[];
+  actions: Action[];
   quantity: Decimal;
   isLimited: boolean;
   limit: Decimal;
