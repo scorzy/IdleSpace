@@ -73,6 +73,9 @@ export class ResearchManager {
       }
     });
   }
+  /**
+   * Generate researches for ship modules
+   */
   addOtherResearches() {
     //  Create researches for modules
     let moduleResearches = new Array<Research>();
@@ -80,7 +83,7 @@ export class ResearchManager {
       const resData: IResearchData = {
         id: m.id + "-R",
         name: m.name,
-        shape: "alloy",
+        shape: m.shape,
         price: m.researchPrice,
         description: "Unlock " + m.name
       };

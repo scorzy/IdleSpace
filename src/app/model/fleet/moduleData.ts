@@ -10,20 +10,9 @@ export const ModulesData: IModuleData[] = [
     damage: 10,
     shieldPercent: 50,
     armorPercent: 200,
-    nextToUnlock: ["m"],
-    researchPrice: 100
-  },
-  {
-    id: "m",
-    name: "Mining Laser",
-    sizes: ALL_SIZES,
-    energyBalance: -1,
-    alloyPrice: 10,
-    damage: 10,
-    shieldPercent: 20,
-    armorPercent: 300,
     nextToUnlock: ["p"],
-    researchPrice: 100
+    researchPrice: 100,
+    shape: "laser"
   },
   {
     id: "p",
@@ -34,7 +23,8 @@ export const ModulesData: IModuleData[] = [
     damage: 10,
     shieldPercent: 5,
     armorPercent: 400,
-    researchPrice: 100
+    researchPrice: 100,
+    shape: "plasma"
   },
   {
     id: "d",
@@ -45,18 +35,6 @@ export const ModulesData: IModuleData[] = [
     damage: 10,
     shieldPercent: 200,
     armorPercent: 50,
-    nextToUnlock: ["r"],
-    researchPrice: 100
-  },
-  {
-    id: "r",
-    name: "Railgun",
-    sizes: ALL_SIZES,
-    energyBalance: -1,
-    alloyPrice: 10,
-    damage: 10,
-    shieldPercent: 300,
-    armorPercent: 20,
     nextToUnlock: ["g"],
     researchPrice: 100
   },
@@ -78,7 +56,8 @@ export const ModulesData: IModuleData[] = [
     energyBalance: 4,
     alloyPrice: 10,
     nextToUnlock: ["R"],
-    researchPrice: 100
+    researchPrice: 100,
+    shape: "solar"
   },
   {
     id: "R",
@@ -87,7 +66,8 @@ export const ModulesData: IModuleData[] = [
     energyBalance: 8,
     alloyPrice: 20,
     nextToUnlock: ["F"],
-    researchPrice: 100
+    researchPrice: 100,
+    shape: "radioactive"
   },
   {
     id: "F",
@@ -95,7 +75,8 @@ export const ModulesData: IModuleData[] = [
     sizes: ALL_SIZES,
     energyBalance: 16,
     alloyPrice: 30,
-    researchPrice: 100
+    researchPrice: 100,
+    shape: "reactor"
   },
   {
     id: "a",
@@ -104,7 +85,8 @@ export const ModulesData: IModuleData[] = [
     energyBalance: 0,
     alloyPrice: 10,
     armor: 20,
-    researchPrice: 100
+    researchPrice: 100,
+    shape: "armor"
   },
   {
     id: "s",
@@ -113,6 +95,7 @@ export const ModulesData: IModuleData[] = [
     energyBalance: -1,
     alloyPrice: 20,
     shield: 20,
-    researchPrice: 100
+    researchPrice: 100,
+    shape: "shield"
   }
 ];

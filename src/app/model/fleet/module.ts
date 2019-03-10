@@ -36,11 +36,13 @@ export interface IModuleData {
   armor?: DecimalSource;
   nextToUnlock?: string[];
   researchPrice?: number;
+  shape?: string;
 }
 export class Module extends AbstractUnlockable {
   research: Research;
   nextToUnlock: string[];
   researchPrice = 100;
+  shape?: string;
 
   constructor(
     id: string,
@@ -71,6 +73,7 @@ export class Module extends AbstractUnlockable {
     if (data.shieldPercent) ret.shieldPercent = data.shieldPercent;
     if (data.nextToUnlock) ret.nextToUnlock = data.nextToUnlock;
     if (data.researchPrice) ret.researchPrice = data.researchPrice;
+    ret.shape = data.shape ? data.shape : "flask";
     return ret;
   }
 
@@ -80,5 +83,6 @@ export class Module extends AbstractUnlockable {
   unlock(): boolean {
     if (!super.unlock()) return false;
     FleetManager.getInstance().unlockedModules.push(this);
+    FleetManager.getInstance().reorderModules();
   }
 }

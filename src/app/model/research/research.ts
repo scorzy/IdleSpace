@@ -4,15 +4,12 @@ import { ResearchManager } from "./researchManager";
 import { RomanPipe } from "src/app/roman.pipe";
 import { ISpendable } from "../base/ISpendable";
 import { IResearchData } from "./iResearchData";
+import { IHasQuantity } from "../base/IHasQuantity";
 
-export class Research extends AbstractUnlockable implements ISpendable {
+export class Research extends AbstractUnlockable implements IHasQuantity {
   static romanPipe = new RomanPipe();
 
   id: string;
-
-  a: Decimal;
-  c: Decimal;
-  b: Decimal;
 
   shape: string;
   progress = new Decimal(0);

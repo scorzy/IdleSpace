@@ -77,4 +77,11 @@ export class FleetManager implements ISalvable {
     this.reloadNavalCapacity();
     return true;
   }
+  reorderModules() {
+    this.unlockedModules.sort(
+      (a, b) =>
+        ModulesData.findIndex(q => q.id === a.id) -
+        ModulesData.findIndex(h => h.id === b.id)
+    );
+  }
 }

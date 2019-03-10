@@ -1,7 +1,7 @@
-import { ISpendable } from "./ISpendable";
+import { IHasQuantity } from "./IHasQuantity";
 
 export class Multiplier {
-  constructor(public base: ISpendable, public multi: Decimal) {}
+  constructor(public base: IHasQuantity, public multi: Decimal) {}
   getBonus(asPercent = false): Decimal {
     let bonus = this.base.quantity.times(this.multi);
     if (asPercent) {
