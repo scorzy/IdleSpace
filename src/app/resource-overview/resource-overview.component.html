@@ -2,6 +2,18 @@
   <div class="clr-col-sm-12 clr-col-md-6">
     <h5>{{ res.description }}</h5>
 
+    <clr-alert
+      *ngIf="res.isEnding"
+      [clrAlertClosable]="false"
+      [clrAlertType]="res.endIn < 3600 ? 'danger' : 'warning'"
+    >
+      <clr-alert-item>
+        <span class="alert-text">
+          {{ res.name }} will end in {{ res.endIn | endIn }}
+        </span>
+      </clr-alert-item>
+    </clr-alert>
+
     <div *ngIf="showSlider && res?.products.length > 0">
       <h6>
         Operativity:
