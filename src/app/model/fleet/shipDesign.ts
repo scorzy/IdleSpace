@@ -26,6 +26,7 @@ export class ShipDesign implements ISalvable, IBuyable {
   armorDamage: Decimal;
   shieldDamage: Decimal;
   price: Decimal;
+  totalFleetPower: Decimal;
 
   editable: ShipDesign;
   original: ShipDesign;
@@ -46,6 +47,7 @@ export class ShipDesign implements ISalvable, IBuyable {
     this.totalEnergy = new Decimal(0);
     this.armorDamage = new Decimal(0);
     this.shieldDamage = new Decimal(0);
+    this.totalFleetPower = new Decimal(0);
     this.totalArmor = new Decimal(this.type ? this.type.health : 0);
     this.usedModulePoint = 0;
     this.price = new Decimal(this.type.baseCost);
@@ -103,6 +105,9 @@ export class ShipDesign implements ISalvable, IBuyable {
             .times(multiPrice)
         );
       });
+    this.totalFleetPower = this.totalDamage
+      .plus(this.totalShield)
+      .plus(this.totalArmor);
 
     this.isValid =
       this.totalEnergy.gte(0) &&
