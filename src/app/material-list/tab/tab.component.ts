@@ -8,13 +8,13 @@ import { Component, ChangeDetectionStrategy, Input } from "@angular/core";
 })
 export class TabComponent {
   @Input() id: string;
-  @Input() name: string;
   @Input() shape: string;
   @Input() isEnding: boolean;
   @Input() quantity: Decimal;
   @Input() c: Decimal;
   @Input() showQta = true;
   @Input() cap = false;
+  @Input() limit?: Decimal;
 
   constructor() {}
 }

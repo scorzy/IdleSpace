@@ -8,9 +8,8 @@ export class Game {
   resourceManager: ResourceManager;
   researchManager: ResearchManager;
   fleetManager: FleetManager;
-
   researchBonus: BonusStack;
-
+  isPaused = false;
   constructor() {
     this.resourceManager = new ResourceManager();
     this.researchManager = new ResearchManager();
@@ -34,32 +33,36 @@ export class Game {
     );
   }
   update(diff: number): void {
-    while (diff > 0) {
-      let resEnded = false;
-      this.resourceManager.loadPolynomial();
-      let max = this.resourceManager.loadEndTime();
-      if (max < diff) {
-        // max = diff;
-        resEnded = true;
+    if (!this.isPaused) {
+      while (diff > 0) {
+        let resEnded = false;
+        this.resourceManager.loadPolynomial();
+        let max = this.resourceManager.loadEndTime();
+        if (max < diff) {
+          // max = diff;
+          resEnded = true;
+        }
+        max = Math.min(max, diff);
+        diff -= max;
+        if (max > 0) this.resourceManager.update(max);
+        if (resEnded) {
+          this.resourceManager.stopResource();
+        }
       }
-      max = Math.min(max, diff);
-      diff -= max;
-      if (max > 0) this.resourceManager.update(max);
-      if (resEnded) {
-        this.resourceManager.stopResource();
+
+      //  Convert computing to researches
+      if (this.resourceManager.computing.quantity.gt(0)) {
+        let computing = this.resourceManager.computing.quantity;
+        computing = computing.times(this.researchBonus.getMultiplicativeBonus());
+        this.researchManager.update(computing);
+
+        this.resourceManager.computing.quantity = new Decimal(0);
       }
-    }
-
-    //  Convert computing to researches
-    if (this.resourceManager.computing.quantity.gt(0)) {
-      let computing = this.resourceManager.computing.quantity;
-      computing = computing.times(this.researchBonus.getMultiplicativeBonus());
-      this.researchManager.update(computing);
-
-      this.resourceManager.computing.quantity = new Decimal(0);
     }
 
     this.resourceManager.loadPolynomial();
+    if (this.isPaused) this.resourceManager.loadEndTime();
+
     this.resourceManager.reloadActions();
     this.resourceManager.unlockedResources.forEach(r => r.setABC());
     this.fleetManager.reloadActions();

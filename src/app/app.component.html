@@ -32,6 +32,12 @@
     </div>
 
     <div class="header-actions">
+      <a href="javascript://" class="nav-link nav-icon">
+        <clr-icon
+          [attr.shape]="ms.game.isPaused ? 'play' : 'pause'"
+          (click)="ms.game.isPaused = !ms.game.isPaused"
+        ></clr-icon>
+      </a>
       <a
         [routerLink]="'opt/save/'"
         class="nav-link nav-icon"

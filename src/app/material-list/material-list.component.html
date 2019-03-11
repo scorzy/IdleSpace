@@ -9,7 +9,6 @@
   >
     <app-tab
       [id]="g.id"
-      [name]="g.name"
       [shape]="g.shape"
       [isEnding]="g.isEnding"
       [quantity]="g.quantity"
@@ -18,7 +17,20 @@
       [cap]="g.isCapped"
     ></app-tab>
   </li>
-
+  <li class="nav-item" class="matTab">
+    <app-tab
+      [id]="'naval'"
+      [shape]="'ship'"
+      [isEnding]="false"
+      [quantity]="ms.game.fleetManager.usedNavalCapacity"
+      [limit]="ms.game.fleetManager.totalNavalCapacity"
+      [cap]="
+        ms.game.fleetManager.usedNavalCapacity.gte(
+          ms.game.fleetManager.totalNavalCapacity
+        )
+      "
+    ></app-tab>
+  </li>
   <!-- <li *ngIf="ms.game.firstEndingUnit">
     <clr-alert
       [clrAlertClosable]="false"

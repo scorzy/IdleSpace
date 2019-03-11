@@ -1,34 +1,81 @@
 <div *ngIf="!design; else designEditor">
   <h1>Create new Ship Design</h1>
-  <form clrForm>
-    <clr-input-container>
-      <label>Design Name</label>
-      <input clrInput type="text" [(ngModel)]="name" name="name" required />
-      <clr-control-error>This field is required!</clr-control-error>
-    </clr-input-container>
-
-    <clr-select-container>
-      <label>Ship Type</label>
-      <select clrSelect name="shipType" [(ngModel)]="type" required>
-        <option
-          *ngFor="let tp of unlockedShips; trackBy: typeId"
-          [ngValue]="tp.id"
-          >{{ tp.name }}</option
+  <br />
+  <div class="clr-row">
+    <div class="clr-col-auto">
+      <clr-alert *ngIf="ms.game.fleetManager.ships.length < 1">
+        <clr-alert-item>
+          <span class="alert-text">
+            You don't have any ship design. Create a ship design in order to
+            make ships!
+          </span></clr-alert-item
         >
-      </select>
-      <!-- <clr-control-helper>Helper text</clr-control-helper> -->
-      <clr-control-error>This field is required!</clr-control-error>
-    </clr-select-container>
+      </clr-alert>
 
-    <button
-      class="btn btn-primary"
-      type="submit"
-      (click)="generate()"
-      [disabled]="isDisabled()"
-    >
-      Create
-    </button>
-  </form>
+      <form clrForm>
+        <clr-input-container>
+          <label>Design Name</label>
+          <input clrInput type="text" [(ngModel)]="name" name="name" required />
+          <clr-control-error>This field is required!</clr-control-error>
+        </clr-input-container>
+
+        <clr-select-container>
+          <label>Ship Type</label>
+          <select clrSelect name="shipType" [(ngModel)]="type" required>
+            <option
+              *ngFor="let tp of unlockedShips; trackBy: typeId"
+              [ngValue]="tp.id"
+              >{{ tp.name }}</option
+            >
+          </select>
+          <!-- <clr-control-helper>Helper text</clr-control-helper> -->
+          <clr-control-error>This field is required!</clr-control-error>
+        </clr-select-container>
+
+        <button
+          class="btn btn-primary"
+          type="submit"
+          (click)="generate()"
+          [disabled]="isDisabled()"
+        >
+          Create
+        </button>
+      </form>
+    </div>
+    <div class="clr-col-auto">
+      <table class="table table-vertical">
+        <tbody>
+          <tr>
+            <td class="left">Total Naval capacity:</td>
+            <td>
+              <app-formatted-quantity
+                [quantity]="ms.game.fleetManager.totalNavalCapacity"
+              >
+              </app-formatted-quantity>
+            </td>
+          </tr>
+          <tr>
+            <td class="left">Used Naval capacity:</td>
+            <td>
+              <app-formatted-quantity
+                [quantity]="ms.game.fleetManager.usedNavalCapacity"
+              >
+              </app-formatted-quantity>
+            </td>
+          </tr>
+          <tr>
+            <td class="left">Total Ships:</td>
+            <td>
+              <app-formatted-quantity
+                [quantity]="ms.game.fleetManager.totalShips"
+              >
+              </app-formatted-quantity>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
 
 <ng-template #designEditor>

@@ -11,6 +11,8 @@ export class FleetManager implements ISalvable {
   totalNavalCapacity = new Decimal(20);
   ships = new Array<ShipDesign>();
   freeNavalCapacity: Resource;
+  usedNavalCapacity: Decimal;
+  totalShips: Decimal;
 
   allModules = new Array<Module>();
   unlockedModules = new Array<Module>();
@@ -35,10 +37,15 @@ export class FleetManager implements ISalvable {
     });
   }
   reloadNavalCapacity() {
+    this.totalShips = this.ships
+      .map(s => s.quantity)
+      .reduce((p, c) => p.plus(c), new Decimal(0));
+
+    this.usedNavalCapacity = this.ships
+      .map(s => s.quantity.times(s.type.navalCapacity))
+      .reduce((p, c) => p.plus(c), new Decimal(0));
     this.freeNavalCapacity.quantity = this.totalNavalCapacity.minus(
-      this.ships
-        .map(s => s.quantity.times(s.type.navalCapacity))
-        .reduce((p, c) => p.plus(c), new Decimal(0))
+      this.usedNavalCapacity
     );
   }
   addDesign(name: string, type: ShipType): ShipDesign {

@@ -1,7 +1,8 @@
 <router-outlet></router-outlet>
 <clr-vertical-nav
-  [clrVerticalNavCollapsible]="false"
+  [clrVerticalNavCollapsible]="true"
   [clr-nav-level]="2"
+  class="nav-trigger--bottom"
   cdkDropList
   (cdkDropListDropped)="drop($event)"
 >
