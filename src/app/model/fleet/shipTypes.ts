@@ -27,7 +27,7 @@ export const ShipTypes = [
     new Decimal(100),
     new Decimal(100),
     5,
-    8,
+    6,
     "rank2",
     2
   ),
@@ -37,7 +37,7 @@ export const ShipTypes = [
     new Decimal(200),
     new Decimal(200),
     6,
-    16,
+    8,
     "rank3",
     4
   ),
@@ -47,7 +47,7 @@ export const ShipTypes = [
     new Decimal(400),
     new Decimal(400),
     7,
-    32,
+    10,
     "rank4",
     8
   ),
@@ -57,7 +57,7 @@ export const ShipTypes = [
     new Decimal(800),
     new Decimal(800),
     8,
-    64,
+    12,
     "rank4",
     16
   ),
@@ -67,7 +67,7 @@ export const ShipTypes = [
     new Decimal(1600),
     new Decimal(1600),
     9,
-    128,
+    14,
     "rank4",
     32
   )

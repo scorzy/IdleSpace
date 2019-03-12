@@ -9,6 +9,7 @@ import { Price } from "../prices/price";
 import { ResourceManager } from "../resource/resourceManager";
 import { FleetManager } from "./fleetManager";
 import { Preset } from "../enemy/preset";
+import sample from "lodash-es/sample";
 
 const MODULE_PRICE_INCREASE = 1.1;
 
@@ -46,14 +47,36 @@ export class ShipDesign implements ISalvable, IBuyable {
     const shipDesign = new ShipDesign();
     shipDesign.name = preset.name;
     shipDesign.type = preset.type;
-    shipDesign.modules = preset.modules.map(
-      dm =>
-        new DesignLine(
-          dm.quantity,
-          FleetManager.getInstance().allModules.find(m => m.id === dm.id),
-          dm.size
-        )
-    );
+    shipDesign.modules = preset.modules.map(dm => {
+      const chosen = sample(dm.id);
+      return new DesignLine(
+        dm.quantity,
+        FleetManager.getInstance().allModules.find(m => m.id === chosen),
+        dm.size
+      );
+    });
+    shipDesign.reload();
+
+    //  Complete with armor
+    const availableModules =
+      shipDesign.modules.length - shipDesign.type.moduleCount;
+    const availableModulePoints =
+      shipDesign.usedModulePoint - shipDesign.type.modulePoint;
+
+    if (availableModulePoints > 0) {
+      let armor = shipDesign.modules.find(
+        m => m.module.id === FleetManager.getInstance().armor.id
+      );
+      if (!armor && availableModules > 1) {
+        armor = new DesignLine(0, FleetManager.getInstance().armor);
+        shipDesign.modules.push(armor);
+      }
+      if (armor) {
+        armor.quantity = armor.quantity + availableModulePoints;
+      }
+    }
+
+    shipDesign.reload();
     return shipDesign;
   }
 

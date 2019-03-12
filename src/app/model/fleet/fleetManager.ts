@@ -10,17 +10,19 @@ export class FleetManager implements ISalvable {
 
   totalNavalCapacity = new Decimal(20);
   ships = new Array<ShipDesign>();
-  freeNavalCapacity = new Decimal(0);
+  freeNavalCapacity: Resource;
   usedNavalCapacity = new Decimal(0);
   totalShips = new Decimal(0);
 
   allModules = new Array<Module>();
   unlockedModules = new Array<Module>();
+  armor: Module;
 
   constructor() {
     FleetManager.instance = this;
     this.freeNavalCapacity = new Resource("N");
     for (const data of ModulesData) this.allModules.push(Module.fromData(data));
+    this.armor = this.allModules.find(m => m.id === "a");
   }
   static getInstance(): FleetManager {
     return FleetManager.instance;

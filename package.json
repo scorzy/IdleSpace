@@ -31,6 +31,7 @@
     "@clr/angular": "^1.1.0",
     "@clr/icons": "^1.1.0",
     "@clr/ui": "^1.1.0",
+    "@types/lodash-es": "^4.17.3",
     "@webcomponents/custom-elements": "^1.0.0",
     "ant-utils": "^1.2.0",
     "break_infinity.js": "^1.0.5",

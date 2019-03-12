@@ -6,7 +6,7 @@ export class DesignLine {
   constructor(
     public quantity = 1,
     public module: Module = null,
-    public size: Sizes = 1,
+    public size: Sizes = Sizes.Small,
     public level = 1,
     public quantityUi = 1,
     public moduleId = "",
