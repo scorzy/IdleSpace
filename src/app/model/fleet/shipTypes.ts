@@ -4,8 +4,8 @@ export class ShipType {
     public name: string,
     public baseCost: Decimal,
     public health: Decimal,
-    public modulePoint: number,
     public moduleCount: number,
+    public modulePoint: number,
     public shape: string,
     public navalCapacity: number
   ) {}
@@ -26,7 +26,7 @@ export const ShipTypes = [
     "Frigate",
     new Decimal(100),
     new Decimal(100),
-    6,
+    5,
     8,
     "rank2",
     2
@@ -36,7 +36,7 @@ export const ShipTypes = [
     "Destroyer",
     new Decimal(200),
     new Decimal(200),
-    8,
+    6,
     16,
     "rank3",
     4
@@ -46,7 +46,7 @@ export const ShipTypes = [
     "Cruiser",
     new Decimal(400),
     new Decimal(400),
-    10,
+    7,
     32,
     "rank4",
     8
@@ -56,7 +56,7 @@ export const ShipTypes = [
     "Battlecruiser",
     new Decimal(800),
     new Decimal(800),
-    12,
+    8,
     64,
     "rank4",
     16
@@ -66,7 +66,7 @@ export const ShipTypes = [
     "Battleship",
     new Decimal(1600),
     new Decimal(1600),
-    32,
+    9,
     128,
     "rank4",
     32

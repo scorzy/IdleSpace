@@ -8,6 +8,7 @@ import { MultiPrice } from "../prices/multiPrice";
 import { Price } from "../prices/price";
 import { ResourceManager } from "../resource/resourceManager";
 import { FleetManager } from "./fleetManager";
+import { Preset } from "../enemy/preset";
 
 const MODULE_PRICE_INCREASE = 1.1;
 
@@ -40,6 +41,21 @@ export class ShipDesign implements ISalvable, IBuyable {
   limit = new Decimal();
   isCapped = false;
   upgradePrice = new Decimal();
+
+  static fromPreset(preset: Preset): ShipDesign {
+    const shipDesign = new ShipDesign();
+    shipDesign.name = preset.name;
+    shipDesign.type = preset.type;
+    shipDesign.modules = preset.modules.map(
+      dm =>
+        new DesignLine(
+          dm.quantity,
+          FleetManager.getInstance().allModules.find(m => m.id === dm.id),
+          dm.size
+        )
+    );
+    return shipDesign;
+  }
 
   reload() {
     this.totalDamage = new Decimal(0);

@@ -23,9 +23,9 @@ describe("TabComponent", () => {
     component.c = new Decimal(1);
     component.id = "10";
     component.isEnding = false;
-    component.name = "name";
     component.quantity = new Decimal(1);
     component.shape = "";
+    component.limit = new Decimal(1);
     fixture.detectChanges();
   });
 

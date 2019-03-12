@@ -10,9 +10,9 @@ export class FleetManager implements ISalvable {
 
   totalNavalCapacity = new Decimal(20);
   ships = new Array<ShipDesign>();
-  freeNavalCapacity: Resource;
-  usedNavalCapacity: Decimal;
-  totalShips: Decimal;
+  freeNavalCapacity = new Decimal(0);
+  usedNavalCapacity = new Decimal(0);
+  totalShips = new Decimal(0);
 
   allModules = new Array<Module>();
   unlockedModules = new Array<Module>();
