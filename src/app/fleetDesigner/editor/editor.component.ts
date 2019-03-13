@@ -64,9 +64,7 @@ export class EditorComponent implements OnInit, OnChanges {
       w.module = this.ms.game.fleetManager.unlockedModules.find(
         q => q.id === w.moduleId
       );
-      w.quantityUi = Math.max(w.quantityUi, 1);
-      w.quantityUi = Math.min(w.quantityUi, this.design.type.moduleCount);
-      w.quantity = w.quantityUi;
+
       w.setMaxLevel();
       w.level = Math.max(Math.min(w.levelUi, w.maxLevel), 1);
     });

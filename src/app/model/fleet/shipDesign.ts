@@ -10,8 +10,10 @@ import { ResourceManager } from "../resource/resourceManager";
 import { FleetManager } from "./fleetManager";
 import { Preset } from "../enemy/preset";
 import sample from "lodash-es/sample";
+import { Sizes } from "./module";
 
 const MODULE_PRICE_INCREASE = 1.1;
+const SIZE_MULTI = 0.1;
 
 export class ShipDesign implements ISalvable, IBuyable {
   id: string;
@@ -50,7 +52,6 @@ export class ShipDesign implements ISalvable, IBuyable {
     shipDesign.modules = preset.modules.map(dm => {
       const chosen = sample(dm.id);
       return new DesignLine(
-        dm.quantity,
         FleetManager.getInstance().allModules.find(m => m.id === chosen),
         dm.size
       );
@@ -68,12 +69,13 @@ export class ShipDesign implements ISalvable, IBuyable {
         m => m.module.id === FleetManager.getInstance().armor.id
       );
       if (!armor && availableModules > 1) {
-        armor = new DesignLine(0, FleetManager.getInstance().armor);
+        armor = new DesignLine(FleetManager.getInstance().armor);
         shipDesign.modules.push(armor);
       }
       if (armor) {
-        armor.quantity = armor.quantity + availableModulePoints;
+        armor.size = armor.size + availableModulePoints;
       }
+      armor.size = Math.min(armor.size, Sizes.ExtraLarge);
     }
 
     shipDesign.reload();
@@ -96,52 +98,36 @@ export class ShipDesign implements ISalvable, IBuyable {
       .forEach(w => {
         const multiPrice = w.level * Math.pow(MODULE_PRICE_INCREASE, w.level);
         const bonus = w.level;
+        const sizeFactor = w.size + (w.size - 1) * SIZE_MULTI;
+        this.usedModulePoint += w.size;
 
         this.totalDamage = this.totalDamage.plus(
-          w.module.damage
-            .times(bonus)
-            .times(w.size)
-            .times(w.quantity)
+          w.module.damage.times(bonus).times(sizeFactor)
         );
         this.totalEnergy = this.totalEnergy.plus(
-          w.module.energyBalance
-            .times(bonus)
-            .times(w.size)
-            .times(w.quantity)
+          w.module.energyBalance.times(bonus).times(w.size)
         );
         this.totalArmor = this.totalArmor.plus(
-          w.module.armor
-            .times(bonus)
-            .times(w.size)
-            .times(w.quantity)
+          w.module.armor.times(bonus).times(sizeFactor)
         );
         this.totalShield = this.totalShield.plus(
-          w.module.shield
-            .times(bonus)
-            .times(w.size)
-            .times(w.quantity)
+          w.module.shield.times(bonus).times(sizeFactor)
         );
-        this.usedModulePoint += w.quantity * w.size;
 
         this.armorDamage = this.armorDamage.plus(
           w.module.damage
             .times(bonus)
-            .times(w.size)
-            .times(w.quantity)
+            .times(sizeFactor)
             .times(w.module.armorPercent / 100)
         );
         this.shieldDamage = this.shieldDamage.plus(
           w.module.damage
             .times(bonus)
-            .times(w.size)
-            .times(w.quantity)
+            .times(sizeFactor)
             .times(w.module.shieldPercent / 100)
         );
         this.price = this.price.plus(
-          w.module.alloyPrice
-            .times(w.size)
-            .times(w.quantity)
-            .times(multiPrice)
+          w.module.alloyPrice.times(w.size).times(multiPrice)
         );
       });
     this.totalFleetPower = this.totalDamage

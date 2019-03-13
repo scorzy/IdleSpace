@@ -8,8 +8,9 @@ export class Enemy implements ISalvable {
   zones = new Array<Zone>();
   shipDesign = new Array<ShipDesign>();
 
-  static generate(fleetPowerMulti: Decimal): Enemy {
+  static generate(level: number): Enemy {
     const enemy = new Enemy();
+    enemy.level = level;
 
     return enemy;
   }
