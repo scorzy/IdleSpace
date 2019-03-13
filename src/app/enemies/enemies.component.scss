@@ -5,7 +5,7 @@
   background-color: blue;
 }
 app-enemy-card {
-  cursor: move;
+  cursor: move !important;
 }
 
 .dragList.cdk-drop-list-dragging app-enemy-card {

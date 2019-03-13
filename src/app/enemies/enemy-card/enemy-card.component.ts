@@ -15,7 +15,7 @@ import { Enemy } from "src/app/model/enemy/enemy";
 })
 export class EnemyCardComponent implements OnInit {
   @HostBinding("class")
-  card = "card";
+  card = "card clickable";
 
   @Input() enemy: Enemy;
 
