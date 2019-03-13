@@ -5,6 +5,8 @@ import { Module } from "./module";
 import { ModulesData } from "./moduleData";
 import { Resource } from "../resource/resource";
 
+export const MAX_NAVAL_CAPACITY = 1e4;
+
 export class FleetManager implements ISalvable {
   private static instance: FleetManager;
 

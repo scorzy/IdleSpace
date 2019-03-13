@@ -44,6 +44,7 @@ export class ShipDesign implements ISalvable, IBuyable {
   limit = new Decimal();
   isCapped = false;
   upgradePrice = new Decimal();
+  weight = 1;
 
   static fromPreset(preset: Preset): ShipDesign {
     const shipDesign = new ShipDesign();
@@ -82,7 +83,7 @@ export class ShipDesign implements ISalvable, IBuyable {
     return shipDesign;
   }
 
-  reload() {
+  reload(isPlayer = true) {
     this.totalDamage = new Decimal(0);
     this.totalShield = new Decimal(0);
     this.totalEnergy = new Decimal(0);
@@ -146,7 +147,7 @@ export class ShipDesign implements ISalvable, IBuyable {
           .times(this.original.quantity)
       : new Decimal();
 
-    this.generateBuyAction();
+    if (isPlayer) this.generateBuyAction();
   }
   getSave(): any {
     const data: any = {};
