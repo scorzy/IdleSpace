@@ -3,17 +3,20 @@ import { ResearchManager } from "./research/researchManager";
 import { BonusStack } from "./bonus/bonusStack";
 import { Bonus } from "./bonus/bonus";
 import { FleetManager } from "./fleet/fleetManager";
+import { EnemyManager } from "./enemy/enemyManager";
 
 export class Game {
   resourceManager: ResourceManager;
   researchManager: ResearchManager;
   fleetManager: FleetManager;
+  enemyManager: EnemyManager;
   researchBonus: BonusStack;
   isPaused = false;
   constructor() {
     this.resourceManager = new ResourceManager();
     this.researchManager = new ResearchManager();
     this.fleetManager = new FleetManager();
+    this.enemyManager = new EnemyManager();
 
     this.researchManager.addOtherResearches();
     this.researchManager.setUnlocks();
@@ -71,11 +74,13 @@ export class Game {
     this.resourceManager.loadPolynomial();
     this.resourceManager.loadEndTime();
   }
+
   save(): any {
     const save: any = {};
     save.r = this.resourceManager.getSave();
     save.e = this.researchManager.getSave();
     save.f = this.fleetManager.getSave();
+    save.w = this.enemyManager.getSave();
     return save;
   }
   load(data: any) {
@@ -83,6 +88,7 @@ export class Game {
     this.resourceManager.load(data.r);
     this.researchManager.load(data.e);
     this.fleetManager.load(data.f);
+    if ("w" in data) this.enemyManager.load(data.w);
 
     this.reload();
   }

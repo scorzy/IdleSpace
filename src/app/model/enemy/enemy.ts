@@ -7,15 +7,24 @@ import { Presets, Preset } from "./preset";
 import sample from "lodash-es/sample";
 import random from "lodash-es/random";
 
-export class Enemy implements ISalvable {
+export class Enemy {
+  private static lastId = 0;
+
   name = "";
   level = 0;
   zones = new Array<Zone>();
-  shipDesign = new Array<ShipDesign>();
+  shipsDesign = new Array<ShipDesign>();
   totalFleetPower = new Decimal(0);
+  id = 0;
 
-  constructor(level: number) {
-    this.level = level;
+  constructor() {
+    Enemy.lastId++;
+    this.id = Enemy.lastId;
+  }
+
+  static generate(level: number): Enemy {
+    const enemy = new Enemy();
+    enemy.level = level;
     const moduleLevelMulti = random(1, 5);
     const moduleLevel = level * moduleLevelMulti;
     const navalCap =
@@ -25,18 +34,18 @@ export class Enemy implements ISalvable {
       if (!(maxShipTye > 2 && Math.random() < 0.15)) {
         let presets = Presets.filter(p => p.type === ShipTypes[i]);
         const pres = sample(presets);
-        this.addFromPreset(pres);
-        if (Math.random() < 0.3) {
+        enemy.addFromPreset(pres);
+        if (presets.length > 2 && Math.random() < 0.3) {
           presets = presets.filter(p => p !== pres);
           const pres2 = sample(presets);
-          this.addFromPreset(pres2);
+          enemy.addFromPreset(pres2);
         }
       }
     }
-    const totalWeight = this.shipDesign
+    const totalWeight = enemy.shipsDesign
       .map(s => s.weight)
       .reduce((p, c) => p + c, 0);
-    this.shipDesign.forEach(sd => {
+    enemy.shipsDesign.forEach(sd => {
       const numOfShips = Math.ceil(
         (navalCap * sd.weight) / totalWeight / sd.type.navalCapacity
       );
@@ -45,20 +54,40 @@ export class Enemy implements ISalvable {
         m.level = moduleLevel;
       });
       sd.reload(false);
-      this.totalFleetPower = this.totalFleetPower.plus(sd.totalFleetPower);
+      enemy.totalFleetPower = enemy.totalFleetPower.plus(sd.totalFleetPower);
     });
+    return enemy;
+  }
+  static fromData(data: any): Enemy {
+    const enemy = new Enemy();
+    if ("n" in data) enemy.name = data.n;
+    if ("l" in data) enemy.name = data.l;
+    if ("s" in data) {
+      for (const shipData of data.a) {
+        const ship = new ShipDesign();
+        ship.load(shipData);
+        enemy.shipsDesign.push(ship);
+      }
+    }
+    enemy.shipsDesign.forEach(sd => {
+      enemy.totalFleetPower = enemy.totalFleetPower.plus(sd.totalFleetPower);
+    });
+
+    return enemy;
   }
 
   private addFromPreset(pres: Preset) {
     const design = ShipDesign.fromPreset(pres);
     design.weight = random(1, 5);
-    this.shipDesign.push(design);
+    this.shipsDesign.push(design);
   }
 
   getSave() {
-    throw new Error("Method not implemented.");
-  }
-  load(data: any): boolean {
-    throw new Error("Method not implemented.");
+    const data: any = {};
+    data.n = this.name;
+    data.l = this.level;
+    data.s = this.shipsDesign.map(s => s.getSave());
+
+    return data;
   }
 }

@@ -36,6 +36,9 @@ import { ViewComponent } from './fleetDesigner/view/view.component';
 import { SizesPipe } from './sizes.pipe';
 import { ProductionTablesComponent } from './production-tables/production-tables.component';
 import { UiComponent } from './options-nav/ui/ui.component';
+import { BattleMenuComponent } from './battle-menu/battle-menu.component';
+import { EnemiesComponent } from './enemies/enemies.component';
+import { EnemyCardComponent } from './enemies/enemy-card/enemy-card.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +69,10 @@ import { UiComponent } from './options-nav/ui/ui.component';
     ViewComponent,
     SizesPipe,
     ProductionTablesComponent,
-    UiComponent
+    UiComponent,
+    BattleMenuComponent,
+    EnemiesComponent,
+    EnemyCardComponent
   ],
   imports: [
     BrowserAnimationsModule,

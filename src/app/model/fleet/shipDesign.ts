@@ -160,7 +160,7 @@ export class ShipDesign implements ISalvable, IBuyable {
 
     return data;
   }
-  load(data: any): boolean {
+  load(data: any, isPlayer = true): boolean {
     this.id = data.i;
     if ("q" in data) this.shipQuantity = Decimal.fromDecimal(data.q);
     this.type = ShipTypes.find(t => t.id === data.t);
@@ -174,7 +174,7 @@ export class ShipDesign implements ISalvable, IBuyable {
       this.quantity = Decimal.fromDecimal(data.q);
     }
 
-    this.reload();
+    this.reload(isPlayer);
     return true;
   }
   copy() {

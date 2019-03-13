@@ -8,6 +8,8 @@ import { SaveComponent } from "./options-nav/save/save.component";
 import { FleetDesignerComponent } from "./fleetDesigner/fleetDesigner.component";
 import { DesignComponent } from "./fleetDesigner/design/design.component";
 import { UiComponent } from "./options-nav/ui/ui.component";
+import { BattleMenuComponent } from "./battle-menu/battle-menu.component";
+import { EnemiesComponent } from "./enemies/enemies.component";
 
 const routes: Routes = [
   {
@@ -35,6 +37,11 @@ const routes: Routes = [
       { path: "design", component: DesignComponent },
       { path: "design/:id", component: DesignComponent }
     ]
+  },
+  {
+    path: "battle",
+    component: BattleMenuComponent,
+    children: [{ path: "enemies", component: EnemiesComponent }]
   },
   {
     path: "opt",
