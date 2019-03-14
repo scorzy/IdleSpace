@@ -32,13 +32,15 @@ import { SaveComponent } from "./options-nav/save/save.component";
 import { FleetDesignerComponent } from "./fleetDesigner/fleetDesigner.component";
 import { DesignComponent } from "./fleetDesigner/design/design.component";
 import { EditorComponent } from "./fleetDesigner/editor/editor.component";
-import { ViewComponent } from './fleetDesigner/view/view.component';
-import { SizesPipe } from './sizes.pipe';
-import { ProductionTablesComponent } from './production-tables/production-tables.component';
-import { UiComponent } from './options-nav/ui/ui.component';
-import { BattleMenuComponent } from './battle-menu/battle-menu.component';
-import { EnemiesComponent } from './enemies/enemies.component';
-import { EnemyCardComponent } from './enemies/enemy-card/enemy-card.component';
+import { ViewComponent } from "./fleetDesigner/view/view.component";
+import { SizesPipe } from "./sizes.pipe";
+import { ProductionTablesComponent } from "./production-tables/production-tables.component";
+import { UiComponent } from "./options-nav/ui/ui.component";
+import { BattleMenuComponent } from "./battle-menu/battle-menu.component";
+import { EnemiesComponent } from "./enemies/enemies.component";
+import { EnemyCardComponent } from "./enemies/enemy-card/enemy-card.component";
+import { EnemyViewComponent } from "./enemies/enemy-view/enemy-view.component";
+import { SizeNamePipe } from './size-name.pipe';
 
 @NgModule({
   declarations: [
@@ -72,7 +74,9 @@ import { EnemyCardComponent } from './enemies/enemy-card/enemy-card.component';
     UiComponent,
     BattleMenuComponent,
     EnemiesComponent,
-    EnemyCardComponent
+    EnemyCardComponent,
+    EnemyViewComponent,
+    SizeNamePipe
   ],
   imports: [
     BrowserAnimationsModule,

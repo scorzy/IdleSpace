@@ -1,6 +1,6 @@
 import { ISalvable } from "../base/ISalvable";
 import { Zone } from "./zone";
-import { ShipDesign } from "../fleet/shipDesign";
+import { ShipDesign, SIZE_MULTI } from "../fleet/shipDesign";
 import { MAX_NAVAL_CAPACITY } from "../fleet/fleetManager";
 import { ShipTypes } from "../fleet/shipTypes";
 import { Presets, Preset } from "./preset";
@@ -16,6 +16,7 @@ export class Enemy {
   shipsDesign = new Array<ShipDesign>();
   totalFleetPower = new Decimal(0);
   id = 0;
+  shape = "flask";
 
   constructor() {
     Enemy.lastId++;
@@ -25,8 +26,10 @@ export class Enemy {
   static generate(level: number): Enemy {
     const enemy = new Enemy();
     enemy.level = level;
+    enemy.name = "Enemy " + enemy.id;
     const moduleLevelMulti = random(1, 5);
     const moduleLevel = level * moduleLevelMulti;
+    // moduleLevelMulti = moduleLevelMulti * (1 + SIZE_MULTI);
     const navalCap =
       (MAX_NAVAL_CAPACITY * level) / (level + 20) / moduleLevelMulti;
     const maxShipTye = Math.min(level, ShipTypes.length);
@@ -46,7 +49,7 @@ export class Enemy {
       .map(s => s.weight)
       .reduce((p, c) => p + c, 0);
     enemy.shipsDesign.forEach(sd => {
-      const numOfShips = Math.ceil(
+      const numOfShips = Math.floor(
         (navalCap * sd.weight) / totalWeight / sd.type.navalCapacity
       );
       sd.quantity = new Decimal(numOfShips);
@@ -54,23 +57,27 @@ export class Enemy {
         m.level = moduleLevel;
       });
       sd.reload(false);
-      enemy.totalFleetPower = enemy.totalFleetPower.plus(sd.totalFleetPower);
+      enemy.totalFleetPower = enemy.totalFleetPower.plus(
+        sd.totalFleetPower.times(sd.quantity)
+      );
     });
     return enemy;
   }
   static fromData(data: any): Enemy {
     const enemy = new Enemy();
     if ("n" in data) enemy.name = data.n;
-    if ("l" in data) enemy.name = data.l;
+    if ("l" in data) enemy.level = data.l;
     if ("s" in data) {
-      for (const shipData of data.a) {
+      for (const shipData of data.s) {
         const ship = new ShipDesign();
         ship.load(shipData);
         enemy.shipsDesign.push(ship);
       }
     }
     enemy.shipsDesign.forEach(sd => {
-      enemy.totalFleetPower = enemy.totalFleetPower.plus(sd.totalFleetPower);
+      enemy.totalFleetPower = enemy.totalFleetPower.plus(
+        sd.totalFleetPower.times(sd.quantity)
+      );
     });
 
     return enemy;
@@ -79,6 +86,7 @@ export class Enemy {
   private addFromPreset(pres: Preset) {
     const design = ShipDesign.fromPreset(pres);
     design.weight = random(1, 5);
+    design.id = this.id + "-" + this.shipsDesign.length;
     this.shipsDesign.push(design);
   }
 

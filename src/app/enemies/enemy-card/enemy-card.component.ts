@@ -14,9 +14,6 @@ import { Enemy } from "src/app/model/enemy/enemy";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EnemyCardComponent implements OnInit {
-  @HostBinding("class")
-  card = "card clickable";
-
   @Input() enemy: Enemy;
 
   constructor() {}

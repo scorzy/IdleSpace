@@ -1,0 +1,43 @@
+<div *ngIf="enemy">
+  <h4>{{ enemy.name }}</h4>
+
+  <clr-datagrid>
+    <clr-dg-column>Ship Name</clr-dg-column>
+    <clr-dg-column>Type</clr-dg-column>
+    <clr-dg-column>Quantity</clr-dg-column>
+    <clr-dg-column>Power</clr-dg-column>
+
+    <clr-dg-row *ngFor="let ship of enemy.shipsDesign; trackBy: getDesignId">
+      <clr-dg-cell>{{ ship.name }}</clr-dg-cell>
+      <clr-dg-cell>{{ ship.type.name }}</clr-dg-cell>
+      <clr-dg-cell> {{ ship.quantity | format }}</clr-dg-cell>
+      <clr-dg-cell>{{ ship.modules[0].level }}</clr-dg-cell>
+      <clr-dg-row-detail *clrIfExpanded>
+        <table class="table table-compact table-noborder">
+          <thead>
+            <tr>
+              <th>Module</th>
+              <th>Size</th>
+              <th>Level</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let mod of ship.modules">
+              <td>
+                {{ mod.module.name }}
+              </td>
+              <td>
+                {{ mod.size | sizeName }}
+              </td>
+              <td>
+                {{ mod.level }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </clr-dg-row-detail>
+    </clr-dg-row>
+
+    <!-- <clr-dg-footer>{{users.length}} users</clr-dg-footer> -->
+  </clr-datagrid>
+</div>

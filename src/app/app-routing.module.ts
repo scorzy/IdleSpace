@@ -10,6 +10,8 @@ import { DesignComponent } from "./fleetDesigner/design/design.component";
 import { UiComponent } from "./options-nav/ui/ui.component";
 import { BattleMenuComponent } from "./battle-menu/battle-menu.component";
 import { EnemiesComponent } from "./enemies/enemies.component";
+import { EnemyViewComponent } from "./enemies/enemy-view/enemy-view.component";
+import { ViewComponent } from "./fleetDesigner/view/view.component";
 
 const routes: Routes = [
   {
@@ -41,7 +43,19 @@ const routes: Routes = [
   {
     path: "battle",
     component: BattleMenuComponent,
-    children: [{ path: "enemies", component: EnemiesComponent }]
+    children: [
+      {
+        path: "enemies",
+        component: EnemiesComponent,
+        children: [
+          {
+            path: "view/:id",
+            component: EnemyViewComponent,
+            children: [{ path: "ship/:id", component: ViewComponent }]
+          }
+        ]
+      }
+    ]
   },
   {
     path: "opt",

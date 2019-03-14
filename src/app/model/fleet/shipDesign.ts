@@ -13,7 +13,7 @@ import sample from "lodash-es/sample";
 import { Sizes } from "./module";
 
 const MODULE_PRICE_INCREASE = 1.1;
-const SIZE_MULTI = 0.1;
+export const SIZE_MULTI = 0.1;
 
 export class ShipDesign implements ISalvable, IBuyable {
   id: string;

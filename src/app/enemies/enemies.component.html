@@ -1,38 +1,25 @@
 <h1>Enemies</h1>
 <button class="btn btn-outline" (click)="generate()">Generate</button>
+<br /><br />
 <div class="clr-row">
-  <div class="clr-col-6">
-    <h4>All</h4>
+  <div class="clr-col-4">
+    <!-- <h4>All</h4> -->
     <div
-      class="red dragList"
+      class="dragList"
       cdkDropList
       #todoList="cdkDropList"
       [cdkDropListData]="ms.game.enemyManager.allEnemy"
-      [cdkDropListConnectedTo]="[doneList]"
       (cdkDropListDropped)="drop($event)"
     >
-      <app-enemy-card
+      <a
+        [routerLink]="'/battle/enemies/view/' + en.id"
+        class="card clickable"
         cdkDrag
         *ngFor="let en of ms.game.enemyManager.allEnemy; trackBy: getEnemyId"
-        [enemy]="en"
-      ></app-enemy-card>
+      >
+        <app-enemy-card [enemy]="en"></app-enemy-card>
+      </a>
     </div>
   </div>
-  <div class="clr-col-6">
-    <h4>ToDo</h4>
-    <div
-      class="blue dragList"
-      cdkDropList
-      #doneList="cdkDropList"
-      [cdkDropListData]="ms.game.enemyManager.chosenEnemy"
-      [cdkDropListConnectedTo]="[todoList]"
-      (cdkDropListDropped)="drop($event)"
-    >
-      <app-enemy-card
-        cdkDrag
-        *ngFor="let en of ms.game.enemyManager.chosenEnemy; trackBy: getEnemyId"
-        [enemy]="en"
-      ></app-enemy-card>
-    </div>
-  </div>
+  <div class="clr-col-8"><router-outlet></router-outlet></div>
 </div>

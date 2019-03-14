@@ -31,20 +31,28 @@ export class EnemiesComponent implements OnInit {
   getEnemyId(index: number, enemy: Enemy) {
     return enemy.id;
   }
-  drop(event: CdkDragDrop<Enemy[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    }
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(
+      this.ms.game.researchManager.toDo,
+      event.previousIndex,
+      event.currentIndex
+    );
   }
+
+  // drop(event: CdkDragDrop<Enemy[]>) {
+  //   if (event.previousContainer === event.container) {
+  //     moveItemInArray(
+  //       event.container.data,
+  //       event.previousIndex,
+  //       event.currentIndex
+  //     );
+  //   } else {
+  //     transferArrayItem(
+  //       event.previousContainer.data,
+  //       event.container.data,
+  //       event.previousIndex,
+  //       event.currentIndex
+  //     );
+  //   }
+  // }
 }

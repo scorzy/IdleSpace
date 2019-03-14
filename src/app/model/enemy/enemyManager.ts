@@ -31,7 +31,7 @@ export class EnemyManager implements ISalvable {
       }
     }
     if ("o" in data) {
-      for (const enemyData of data.a) {
+      for (const enemyData of data.o) {
         this.chosenEnemy.push(Enemy.fromData(enemyData));
       }
     }
