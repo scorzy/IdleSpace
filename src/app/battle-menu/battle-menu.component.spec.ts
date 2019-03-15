@@ -1,16 +1,17 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { BattleMenuComponent } from './battle-menu.component';
+import { BattleMenuComponent } from "./battle-menu.component";
+import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 
-describe('BattleMenuComponent', () => {
+describe("BattleMenuComponent", () => {
   let component: BattleMenuComponent;
   let fixture: ComponentFixture<BattleMenuComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BattleMenuComponent ]
-    })
-    .compileComponents();
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      declarations: [BattleMenuComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +20,7 @@ describe('BattleMenuComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

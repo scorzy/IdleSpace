@@ -11,6 +11,7 @@ import {
   moveItemInArray,
   transferArrayItem
 } from "@angular/cdk/drag-drop";
+import { OptionsService } from "../options.service";
 
 @Component({
   selector: "app-enemies",
@@ -20,14 +21,12 @@ import {
 })
 export class EnemiesComponent implements OnInit {
   @HostBinding("class")
-  contentArea = "content-area";
+  contentContainer = "content-container";
 
-  constructor(public ms: MainService) {}
+  constructor(public ms: MainService, public os: OptionsService) {}
 
   ngOnInit() {}
-  generate() {
-    this.ms.game.enemyManager.generate();
-  }
+
   getEnemyId(index: number, enemy: Enemy) {
     return enemy.id;
   }
@@ -38,21 +37,4 @@ export class EnemiesComponent implements OnInit {
       event.currentIndex
     );
   }
-
-  // drop(event: CdkDragDrop<Enemy[]>) {
-  //   if (event.previousContainer === event.container) {
-  //     moveItemInArray(
-  //       event.container.data,
-  //       event.previousIndex,
-  //       event.currentIndex
-  //     );
-  //   } else {
-  //     transferArrayItem(
-  //       event.previousContainer.data,
-  //       event.container.data,
-  //       event.previousIndex,
-  //       event.currentIndex
-  //     );
-  //   }
-  // }
 }

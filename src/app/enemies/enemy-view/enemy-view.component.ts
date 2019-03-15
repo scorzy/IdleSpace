@@ -4,7 +4,8 @@ import {
   ChangeDetectionStrategy,
   Input,
   OnDestroy,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  HostBinding
 } from "@angular/core";
 import { Enemy } from "src/app/model/enemy/enemy";
 import { Subscription } from "rxjs";
@@ -20,6 +21,9 @@ import { Module } from "src/app/model/fleet/module";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EnemyViewComponent implements OnInit, OnDestroy {
+  @HostBinding("class")
+  contentArea = "content-area";
+
   enemy: Enemy;
   private subscriptions: Subscription[] = [];
 

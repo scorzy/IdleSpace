@@ -38,9 +38,9 @@ import { ProductionTablesComponent } from "./production-tables/production-tables
 import { UiComponent } from "./options-nav/ui/ui.component";
 import { BattleMenuComponent } from "./battle-menu/battle-menu.component";
 import { EnemiesComponent } from "./enemies/enemies.component";
-import { EnemyCardComponent } from "./enemies/enemy-card/enemy-card.component";
 import { EnemyViewComponent } from "./enemies/enemy-view/enemy-view.component";
-import { SizeNamePipe } from './size-name.pipe';
+import { SizeNamePipe } from "./size-name.pipe";
+import { SearchComponent } from "./enemies/search/search.component";
 
 @NgModule({
   declarations: [
@@ -74,9 +74,9 @@ import { SizeNamePipe } from './size-name.pipe';
     UiComponent,
     BattleMenuComponent,
     EnemiesComponent,
-    EnemyCardComponent,
     EnemyViewComponent,
-    SizeNamePipe
+    SizeNamePipe,
+    SearchComponent
   ],
   imports: [
     BrowserAnimationsModule,

@@ -1,19 +1,17 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { EnemyViewComponent } from "./enemy-view.component";
+import { SearchComponent } from "./search.component";
 import { ClarityModule } from "@clr/angular";
 import { RouterTestingModule } from "@angular/router/testing";
 import { FormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FormatPipe } from "src/app/format.pipe";
 import { EndInPipe } from "src/app/end-in.pipe";
-import { Enemy } from "src/app/model/enemy/enemy";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
-import { SizeNamePipe } from "src/app/size-name.pipe";
 
-describe("EnemyViewComponent", () => {
-  let component: EnemyViewComponent;
-  let fixture: ComponentFixture<EnemyViewComponent>;
+describe("SearchComponent", () => {
+  let component: SearchComponent;
+  let fixture: ComponentFixture<SearchComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -24,15 +22,14 @@ describe("EnemyViewComponent", () => {
         FormsModule,
         BrowserAnimationsModule
       ],
-      declarations: [EnemyViewComponent, FormatPipe, EndInPipe, SizeNamePipe]
+      declarations: [SearchComponent, FormatPipe, EndInPipe]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EnemyViewComponent);
+    fixture = TestBed.createComponent(SearchComponent);
     component = fixture.componentInstance;
     component.ms.start();
-    component.enemy = Enemy.generate(1);
     fixture.detectChanges();
   });
 

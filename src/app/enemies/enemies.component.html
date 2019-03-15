@@ -1,25 +1,26 @@
-<h1>Enemies</h1>
-<button class="btn btn-outline" (click)="generate()">Generate</button>
-<br /><br />
-<div class="clr-row">
-  <div class="clr-col-4">
-    <!-- <h4>All</h4> -->
-    <div
-      class="dragList"
-      cdkDropList
-      #todoList="cdkDropList"
-      [cdkDropListData]="ms.game.enemyManager.allEnemy"
-      (cdkDropListDropped)="drop($event)"
-    >
-      <a
-        [routerLink]="'/battle/enemies/view/' + en.id"
-        class="card clickable"
-        cdkDrag
-        *ngFor="let en of ms.game.enemyManager.allEnemy; trackBy: getEnemyId"
-      >
-        <app-enemy-card [enemy]="en"></app-enemy-card>
-      </a>
-    </div>
-  </div>
-  <div class="clr-col-8"><router-outlet></router-outlet></div>
-</div>
+<router-outlet></router-outlet>
+<clr-vertical-nav
+  [clrVerticalNavCollapsible]="true"
+  [clr-nav-level]="2"
+  class="nav-trigger--bottom"
+  cdkDropList
+  [cdkDropListData]="ms.game.enemyManager.allEnemy"
+  (cdkDropListDropped)="drop($event)"
+>
+  <a clrVerticalNavLink routerLink="./search" routerLinkActive="active">
+    <clr-icon shape="plus"></clr-icon> Search</a
+  >
+  <a
+    cdkDrag
+    clrVerticalNavLink
+    [routerLink]="'./view/' + en.id"
+    routerLinkActive="active"
+    class="movable"
+    *ngFor="let en of ms.game.enemyManager.allEnemy; trackBy: getEnemyId"
+  >
+    <clr-icon [attr.shape]="en.shape"></clr-icon>
+    {{ en.name }}
+  </a>
+</clr-vertical-nav>
+
+<!-- [ngStyle]="{ 'background-color': os.dark ? '#324f61' : '#324f61' }" -->
