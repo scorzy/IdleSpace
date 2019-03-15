@@ -40,6 +40,17 @@
           <clr-icon shape="world"></clr-icon>
         </span>
       </a>
+
+      <a
+        [routerLink]="'battle'"
+        class="nav-link"
+        [routerLinkActive]="'active'"
+        *ngIf="ms.game.researchManager.corvette.firstDone"
+      >
+        <span class="nav-text">
+          <clr-icon shape="sun"></clr-icon>
+        </span>
+      </a>
     </div>
 
     <div class="header-actions">

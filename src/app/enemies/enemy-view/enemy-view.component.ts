@@ -13,6 +13,7 @@ import { MainService } from "src/app/main.service";
 import { ActivatedRoute } from "@angular/router";
 import { ShipDesign } from "src/app/model/fleet/shipDesign";
 import { Module } from "src/app/model/fleet/module";
+import { moveItemInArray } from "@angular/cdk/drag-drop";
 
 @Component({
   selector: "app-enemy-view",
@@ -55,5 +56,12 @@ export class EnemyViewComponent implements OnInit, OnDestroy {
   }
   getModId(index: number, mod: Module) {
     return (this.enemy ? this.enemy.id : "") + "-" + mod.id;
+  }
+  attack() {
+    this.ms.game.enemyManager.attack(this.enemy);
+  }
+  move(up = 1) {
+    const index = this.ms.game.enemyManager.allEnemy.indexOf(this.enemy);
+    moveItemInArray(this.ms.game.enemyManager.allEnemy, index, index + up);
   }
 }

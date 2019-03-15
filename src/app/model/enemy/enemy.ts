@@ -8,6 +8,10 @@ import sample from "lodash-es/sample";
 import random from "lodash-es/random";
 
 export class Enemy {
+  constructor() {
+    Enemy.lastId++;
+    this.id = Enemy.lastId;
+  }
   private static lastId = 0;
 
   name = "";
@@ -17,11 +21,6 @@ export class Enemy {
   totalFleetPower = new Decimal(0);
   id = 0;
   shape = "flask";
-
-  constructor() {
-    Enemy.lastId++;
-    this.id = Enemy.lastId;
-  }
 
   static generate(level: number): Enemy {
     const enemy = new Enemy();
@@ -81,6 +80,11 @@ export class Enemy {
     });
 
     return enemy;
+  }
+  generateZones() {
+    for (let i = 0; i < 100; i++) {
+      this.zones.push(new Zone());
+    }
   }
 
   private addFromPreset(pres: Preset) {

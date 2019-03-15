@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { BattleMenuComponent } from "./battle-menu.component";
+import { BattleMenuComponent } from "./battle.component";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 
 describe("BattleMenuComponent", () => {

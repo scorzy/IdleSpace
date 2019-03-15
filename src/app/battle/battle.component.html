@@ -1,0 +1,24 @@
+<div class="content-area">
+  <h1>
+    <clr-icon
+      [attr.shape]="ms.game.enemyManager.currentEnemy?.shape"
+      *ngIf="ms.game.enemyManager.currentEnemy?.shape"
+      size="48"
+      class="resIcon"
+    ></clr-icon>
+    {{ ms.game.enemyManager.currentEnemy?.name }}
+  </h1>
+  <div class="clr-row" *ngIf="ms.game.enemyManager.currentEnemy">
+    <div class="clr-col-6">
+      <button class="btn btn-outline" (click)="fight()">
+        <clr-icon shape="floppy"></clr-icon>
+        Fight
+      </button>
+    </div>
+    <div class="clr-col-6">
+      <app-battlefield
+        [enemy]="ms.game.enemyManager.currentEnemy"
+      ></app-battlefield>
+    </div>
+  </div>
+</div>

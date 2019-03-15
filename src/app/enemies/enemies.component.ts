@@ -32,7 +32,7 @@ export class EnemiesComponent implements OnInit {
   }
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(
-      this.ms.game.researchManager.toDo,
+      this.ms.game.enemyManager.allEnemy,
       event.previousIndex,
       event.currentIndex
     );

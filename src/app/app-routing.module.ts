@@ -8,7 +8,7 @@ import { SaveComponent } from "./options-nav/save/save.component";
 import { FleetDesignerComponent } from "./fleetDesigner/fleetDesigner.component";
 import { DesignComponent } from "./fleetDesigner/design/design.component";
 import { UiComponent } from "./options-nav/ui/ui.component";
-import { BattleMenuComponent } from "./battle-menu/battle-menu.component";
+import { BattleMenuComponent } from "./battle/battle.component";
 import { EnemiesComponent } from "./enemies/enemies.component";
 import { EnemyViewComponent } from "./enemies/enemy-view/enemy-view.component";
 import { ViewComponent } from "./fleetDesigner/view/view.component";

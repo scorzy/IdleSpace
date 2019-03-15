@@ -4,17 +4,20 @@ import {
   ChangeDetectionStrategy,
   HostBinding
 } from "@angular/core";
+import { MainService } from "../main.service";
 
 @Component({
-  selector: "app-battle-menu",
-  templateUrl: "./battle-menu.component.html",
-  styleUrls: ["./battle-menu.component.scss"],
+  selector: "app-battle",
+  templateUrl: "./battle.component.html",
+  styleUrls: ["./battle.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BattleMenuComponent implements OnInit {
   @HostBinding("class")
   contentContainer = "content-container";
-  constructor() {}
+  constructor(public ms: MainService) {}
 
   ngOnInit() {}
+
+  fight() {}
 }

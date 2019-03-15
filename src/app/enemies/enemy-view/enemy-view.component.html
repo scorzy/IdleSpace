@@ -15,6 +15,12 @@
         [quantity]="enemy.totalFleetPower"
       ></app-formatted-quantity>
     </p>
+    <div class="btn-group btn-primary">
+      <button class="btn btn-success" (click)="attack()">Attack</button>
+      <button class="btn" (click)="move(-1)">Move Up</button>
+      <button class="btn" (click)="move(1)">Move Down</button>
+      <button class="btn btn-danger">Delete</button>
+    </div>
   </div>
   <div class="clr-col-6">
     <h4>Ships:</h4>
