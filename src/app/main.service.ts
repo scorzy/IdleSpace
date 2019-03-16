@@ -136,7 +136,7 @@ export class MainService {
     }
   }
 
-  onZip(result: CompressRequest): void {
+  onZip(result: CompressRequest2): void {
     if (result.compress) {
       if (result.zipped !== "") {
         if (result.requestId === 0) {

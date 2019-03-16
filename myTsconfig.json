@@ -13,5 +13,9 @@
     "typeRoots": ["node_modules/@types", "src/break_infinity.d.ts"],
     "lib": ["es2018", "dom"]
   },
-  "files": ["./src/app/compressRequest2.ts"]
+  "files": [
+    "./src/break_infinity.d.ts",
+    "./src/app/workers/compressRequest2.ts",
+    "./src/app/workers/ship.ts"
+  ]
 }
