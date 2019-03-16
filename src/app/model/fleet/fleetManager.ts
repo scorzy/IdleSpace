@@ -45,9 +45,7 @@ export class FleetManager implements ISalvable {
       .map(s => s.quantity)
       .reduce((p, c) => p.plus(c), new Decimal(0));
 
-    this.usedNavalCapacity = this.ships
-      .map(s => s.quantity.times(s.type.navalCapacity))
-      .reduce((p, c) => p.plus(c), new Decimal(0));
+    this.usedNavalCapacity = ShipDesign.GetTotalNavalCap(this.ships);
     this.freeNavalCapacity.quantity = this.totalNavalCapacity.minus(
       this.usedNavalCapacity
     );

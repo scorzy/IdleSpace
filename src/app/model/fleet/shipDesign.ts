@@ -83,6 +83,12 @@ export class ShipDesign implements ISalvable, IBuyable {
     return shipDesign;
   }
 
+  static GetTotalNavalCap(ships: ShipDesign[]): Decimal {
+    return ships
+      .map(s => s.quantity.times(s.type.navalCapacity))
+      .reduce((p, c) => p.plus(c), new Decimal(0));
+  }
+
   reload(isPlayer = true) {
     this.totalDamage = new Decimal(0);
     this.totalShield = new Decimal(0);
@@ -131,6 +137,7 @@ export class ShipDesign implements ISalvable, IBuyable {
           w.module.alloyPrice.times(w.size).times(multiPrice)
         );
       });
+
     this.totalFleetPower = this.totalDamage
       .plus(this.totalShield)
       .plus(this.totalArmor);

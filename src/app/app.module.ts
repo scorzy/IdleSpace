@@ -41,7 +41,9 @@ import { EnemiesComponent } from "./enemies/enemies.component";
 import { EnemyViewComponent } from "./enemies/enemy-view/enemy-view.component";
 import { SizeNamePipe } from "./size-name.pipe";
 import { SearchComponent } from "./enemies/search/search.component";
-import { BattlefieldComponent } from './battle/battlefield/battlefield.component';
+import { BattlefieldComponent } from "./battle/battlefield/battlefield.component";
+import { ZoneComponent } from "./battle/zone/zone.component";
+import { BattleService } from "./battle.service";
 
 @NgModule({
   declarations: [
@@ -78,7 +80,8 @@ import { BattlefieldComponent } from './battle/battlefield/battlefield.component
     EnemyViewComponent,
     SizeNamePipe,
     SearchComponent,
-    BattlefieldComponent
+    BattlefieldComponent,
+    ZoneComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -89,7 +92,7 @@ import { BattlefieldComponent } from './battle/battlefield/battlefield.component
     FormsModule,
     DragDropModule
   ],
-  providers: [MainService, OptionsService],
+  providers: [MainService, OptionsService, BattleService],
   bootstrap: [AppComponent],
   exports: [PolynomComponent]
 })

@@ -4,7 +4,6 @@ import { ISalvable } from "../base/ISalvable";
 export class EnemyManager implements ISalvable {
   currentEnemy: Enemy;
   allEnemy = new Array<Enemy>();
-  chosenEnemy = new Array<Enemy>();
   maxLevel = 1;
 
   generate() {
@@ -22,9 +21,6 @@ export class EnemyManager implements ISalvable {
     if (this.maxLevel > 1) data.l = this.maxLevel;
     if (!!this.currentEnemy) data.c = this.currentEnemy.getSave();
     if (this.allEnemy.length > 0) data.a = this.allEnemy.map(e => e.getSave());
-    if (this.chosenEnemy.length > 0) {
-      data.o = this.chosenEnemy.map(e => e.getSave());
-    }
 
     return data;
   }
@@ -36,12 +32,12 @@ export class EnemyManager implements ISalvable {
         this.allEnemy.push(Enemy.fromData(enemyData));
       }
     }
-    if ("o" in data) {
-      for (const enemyData of data.o) {
-        this.chosenEnemy.push(Enemy.fromData(enemyData));
-      }
+    if (
+      this.currentEnemy &&
+      (!this.currentEnemy.zones || this.currentEnemy.zones.length !== 100)
+    ) {
+      this.currentEnemy.generateZones();
     }
-
     return true;
   }
 }

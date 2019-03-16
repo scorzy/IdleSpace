@@ -21,6 +21,8 @@ export class Enemy {
   totalFleetPower = new Decimal(0);
   id = 0;
   shape = "flask";
+  currentZone: Zone;
+  totalNavalCap = new Decimal(0);
 
   static generate(level: number): Enemy {
     const enemy = new Enemy();
@@ -56,10 +58,8 @@ export class Enemy {
         m.level = moduleLevel;
       });
       sd.reload(false);
-      enemy.totalFleetPower = enemy.totalFleetPower.plus(
-        sd.totalFleetPower.times(sd.quantity)
-      );
     });
+    enemy.reload();
     return enemy;
   }
   static fromData(data: any): Enemy {
@@ -73,32 +73,52 @@ export class Enemy {
         enemy.shipsDesign.push(ship);
       }
     }
-    enemy.shipsDesign.forEach(sd => {
-      enemy.totalFleetPower = enemy.totalFleetPower.plus(
+    if ("z" in data) {
+      enemy.generateZones(true);
+      for (let i = 0; i++; i < data.z.length) {
+        enemy.zones[i].load(data.z[i]);
+      }
+    }
+    enemy.reload();
+    return enemy;
+  }
+
+  reload() {
+    this.totalNavalCap = new Decimal(0);
+    this.totalFleetPower = new Decimal(0);
+    this.shipsDesign.forEach(sd => {
+      this.totalFleetPower = this.totalFleetPower.plus(
         sd.totalFleetPower.times(sd.quantity)
       );
     });
-
-    return enemy;
+    this.totalNavalCap = ShipDesign.GetTotalNavalCap(this.shipsDesign);
+    this.zones.forEach(z => {
+      z.enemy = this;
+    });
   }
-  generateZones() {
+  generateZones(empty = false) {
     for (let i = 0; i < 100; i++) {
-      this.zones.push(new Zone());
+      const zone = new Zone();
+      zone.number = i;
+      this.zones.push(zone);
     }
+    this.currentZone = this.zones[0];
+    this.zones.forEach(z => {
+      z.enemy = this;
+    });
   }
-
   private addFromPreset(pres: Preset) {
     const design = ShipDesign.fromPreset(pres);
     design.weight = random(1, 5);
     design.id = this.id + "-" + this.shipsDesign.length;
     this.shipsDesign.push(design);
   }
-
   getSave() {
     const data: any = {};
     data.n = this.name;
     data.l = this.level;
     data.s = this.shipsDesign.map(s => s.getSave());
+    if (this.zones.length > 0) data.z = this.zones.map(z => z.getSave());
 
     return data;
   }

@@ -19,6 +19,7 @@
   </li>
   <li class="nav-item" class="matTab">
     <app-tab
+      *ngIf="ms.game.researchManager.corvette.firstDone"
       [id]="'naval'"
       [shape]="'ship'"
       [isEnding]="false"

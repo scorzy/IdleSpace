@@ -10,6 +10,16 @@ declare let LZString: any;
 const UP_INTERVAL = 200; // 5 fps
 // declare let CompressRequest2: any;
 
+export function getUrl() {
+  return (
+    document.location.protocol +
+    "//" +
+    document.location.host +
+    (document.location.pathname === "/context.html"
+      ? "/"
+      : document.location.pathname)
+  );
+}
 @Injectable({
   providedIn: "root"
 })
@@ -33,13 +43,7 @@ export class MainService {
     this.theme.type = "text/css";
     this.document.querySelector("head").appendChild(this.theme);
 
-    const url =
-      document.location.protocol +
-      "//" +
-      document.location.host +
-      (document.location.pathname === "/context.html"
-        ? "/"
-        : document.location.pathname);
+    const url = getUrl();
     this.zipWorker = createWorker({
       workerFunction: this.comp,
       onMessage: this.onZip.bind(this),
