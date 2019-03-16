@@ -1,4 +1,3 @@
-// tslint:disable-next-line: no-unused-declaration
 class CompressRequest2 {
   constructor(
     public obj: any,

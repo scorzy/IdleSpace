@@ -11,6 +11,7 @@ import { FleetManager } from "./fleetManager";
 import { Preset } from "../enemy/preset";
 import sample from "lodash-es/sample";
 import { Sizes } from "./module";
+import { ShipData } from "src/app/workers/battleRequest";
 
 const MODULE_PRICE_INCREASE = 1.1;
 export const SIZE_MULTI = 0.1;
@@ -235,5 +236,27 @@ export class ShipDesign implements ISalvable, IBuyable {
     );
     this.buyAction.showNum = false;
     this.buyAction.reload();
+  }
+  getShipData(): ShipData {
+    const shipData = new ShipData();
+    shipData.id = this.id;
+    shipData.quantity = this.quantity;
+    shipData.totalArmor = this.totalArmor;
+    shipData.totalShield = this.totalShield;
+    shipData.modules = new Array<{
+      computedDamage: Decimal
+      shieldPercent: number
+      armorPercent: number
+    }>();
+
+    this.modules.forEach(m => {
+      const weapon = {
+        computedDamage: m.computedDamage,
+        shieldPercent: m.module.shieldPercent,
+        armorPercent: m.module.armorPercent
+      };
+      shipData.modules.push(weapon);
+    });
+    return shipData;
   }
 }

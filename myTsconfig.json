@@ -16,6 +16,7 @@
   "files": [
     "./src/break_infinity.d.ts",
     "./src/app/workers/compressRequest2.ts",
-    "./src/app/workers/ship.ts"
+    "./src/app/workers/ship.ts",
+    "./src/app/workers/battleResult.ts"
   ]
 }

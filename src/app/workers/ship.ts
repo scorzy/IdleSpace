@@ -2,11 +2,11 @@ class Ship {
   id: string;
   armor: Decimal;
   shield: Decimal;
-  modules: Array<{
+  modules = new Array<{
     damage: Decimal
     shieldPercent: number
     armorPercent: number
-  }>;
+  }>();
 
   getCopy(): Ship {
     const ret = new Ship();

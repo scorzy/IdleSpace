@@ -1,9 +1,8 @@
 import { Enemy } from "./enemy";
 import { ISalvable } from "../base/ISalvable";
 import { BattleService } from "src/app/battle.service";
-import { BattleRequest } from "src/app/workers/battleRequest";
 import { FleetManager } from "../fleet/fleetManager";
-import { BattleResult } from "src/app/workers/battleResult";
+import { BattleRequest } from "src/app/workers/battleRequest";
 
 export class EnemyManager implements ISalvable {
   private static instance: EnemyManager;
@@ -59,8 +58,13 @@ export class EnemyManager implements ISalvable {
     this.currentEnemy.currentZone.reload();
 
     const battleRequest = new BattleRequest();
-    battleRequest.playerFleet = FleetManager.getInstance().ships;
-    battleRequest.enemyFleet = this.currentEnemy.currentZone.ships;
+    battleRequest.playerFleet = FleetManager.getInstance().ships.map(s =>
+      s.getShipData()
+    );
+    battleRequest.enemyFleet = this.currentEnemy.currentZone.ships.map(s =>
+      s.getShipData()
+    );
+
     this.battleService.battleWorker.postMessage(battleRequest);
   }
   onBattleEnd(result: BattleResult) {
@@ -84,5 +88,7 @@ export class EnemyManager implements ISalvable {
         ];
       }
     }
+
+    this.inBattle = false;
   }
 }

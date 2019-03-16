@@ -19,5 +19,7 @@ export class BattleMenuComponent implements OnInit {
 
   ngOnInit() {}
 
-  startBattle() {}
+  startBattle() {
+    this.ms.game.enemyManager.startBattle();
+  }
 }

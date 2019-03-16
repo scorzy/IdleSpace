@@ -1,10 +1,8 @@
 import { Injectable } from "@angular/core";
 import { createWorker, ITypedWorker } from "typed-web-workers";
 import { getUrl } from "./main.service";
-import { BattleRequest } from "./workers/battleRequest";
-import { BattleResult } from "./workers/battleResult";
 import { EnemyManager } from "./model/enemy/enemyManager";
-import { ShipDesign } from "./model/fleet/shipDesign";
+import { BattleRequest, ShipData } from "./workers/battleRequest";
 
 @Injectable({
   providedIn: "root"
@@ -18,7 +16,11 @@ export class BattleService {
       workerFunction: this.doBattle,
       onMessage: this.onBattleEnd.bind(this),
       onError: error => {},
-      importScripts: [url + "break_infinity.min.js"]
+      importScripts: [
+        url + "break_infinity.min.js",
+        url + "assets/ship.js",
+        url + "assets/battleResult.js"
+      ]
     });
   }
   doBattle(input: BattleRequest, cb: (_: BattleResult) => void): void {
@@ -26,7 +28,7 @@ export class BattleService {
     let enemyShip = new Array<Ship>();
 
     //#region Initialize Fleets
-    const fleets: Array<[Ship[], ShipDesign[]]> = [
+    const fleets: Array<[Ship[], ShipData[]]> = [
       [enemyShip, input.enemyFleet],
       [playerShips, input.playerFleet]
     ];
@@ -42,12 +44,12 @@ export class BattleService {
           if (Decimal.fromDecimal(dl.computedDamage).gt(0)) {
             ship.modules.push({
               damage: Decimal.fromDecimal(dl.computedDamage),
-              shieldPercent: dl.module.shieldPercent,
-              armorPercent: dl.module.armorPercent
+              shieldPercent: dl.shieldPercent,
+              armorPercent: dl.armorPercent
             });
           }
         });
-        const qta = ds.quantity.toNumber();
+        const qta = Decimal.fromDecimal(ds.quantity).toNumber();
         for (let num = 0; num < qta; num++) {
           ships.push(ship.getCopy());
         }
@@ -96,6 +98,23 @@ export class BattleService {
       battleFleets = [playerShips, enemyShip]; //  just to be sure
     }
     //#endregion
+
+    const ret = new BattleResult();
+    if (enemyShip.length < 1) ret.result = "1";
+    const retArr: Array<[ShipData[], Ship[], Array<[string, Decimal]>]> = [
+      [input.playerFleet, playerShips, ret.playerLost],
+      [input.enemyFleet, enemyShip, ret.enemyLost]
+    ];
+    retArr.forEach(arr => {
+      arr[0].forEach(fl => {
+        const alive = arr[1].filter(s => s.id === fl.id).length;
+        if (Decimal.fromDecimal(fl.quantity).gt(alive)) {
+          arr[2].push([fl.id, fl.quantity.minus(alive)]);
+        }
+      });
+    });
+
+    cb(ret);
   }
   onBattleEnd(result: BattleResult): void {
     EnemyManager.GetInstance().onBattleEnd(result);
