@@ -19,5 +19,5 @@ export class BattleMenuComponent implements OnInit {
 
   ngOnInit() {}
 
-  fight() {}
+  startBattle() {}
 }

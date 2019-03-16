@@ -108,9 +108,8 @@ export class ShipDesign implements ISalvable, IBuyable {
         const sizeFactor = w.size + (w.size - 1) * SIZE_MULTI;
         this.usedModulePoint += w.size;
 
-        this.totalDamage = this.totalDamage.plus(
-          w.module.damage.times(bonus).times(sizeFactor)
-        );
+        w.computedDamage = w.module.damage.times(bonus).times(sizeFactor);
+        this.totalDamage = this.totalDamage.plus(w.computedDamage);
         this.totalEnergy = this.totalEnergy.plus(
           w.module.energyBalance.times(bonus).times(w.size)
         );

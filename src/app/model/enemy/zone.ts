@@ -15,6 +15,7 @@ export class Zone implements ISalvable {
   color = "rgb(245, 79, 71)";
 
   reload() {
+    this.ships.forEach(s => s.reload(false));
     const totalNav = ShipDesign.GetTotalNavalCap(this.ships);
     const originalNavCap = this.enemy.totalNavalCap;
     this.percentCompleted =

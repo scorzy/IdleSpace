@@ -3,6 +3,7 @@ import { FleetManager } from "./fleetManager";
 
 export class DesignLine {
   maxLevel = 1;
+  computedDamage = new Decimal(0);
   constructor(
     public module: Module = null,
     public size: Sizes = Sizes.Small,

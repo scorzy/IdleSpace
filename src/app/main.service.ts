@@ -4,6 +4,7 @@ import { Game } from "./model/game";
 import { Emitters } from "./emitters";
 import { DOCUMENT } from "@angular/common";
 import { OptionsService } from "./options.service";
+import { BattleService } from "./battle.service";
 
 declare let LZString: any;
 
@@ -36,6 +37,7 @@ export class MainService {
 
   constructor(
     public options: OptionsService,
+    public battleService: BattleService,
     @Inject(DOCUMENT) private document: Document
   ) {
     this.theme = this.document.createElement("link");
@@ -61,6 +63,7 @@ export class MainService {
       this.setTheme();
     } else {
       this.game = new Game();
+      this.game.enemyManager.battleService = this.battleService;
       this.setTheme();
       this.show = true;
     }
@@ -96,6 +99,7 @@ export class MainService {
   load2(data: any): any {
     this.last = data.l;
     this.game = new Game();
+    this.game.enemyManager.battleService = this.battleService;
     this.game.load(data.g);
     if ("o" in data) this.options.restore(data.o);
     this.setTheme();
