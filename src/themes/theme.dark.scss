@@ -10,12 +10,12 @@
 @import "../../node_modules/@clr/ui/src/utils/components.clarity";
 
 .notEnough {
-  color: #c92100;
+  color: #f54f47;
   a:link :not(.noRed) {
-    color: #c92100;
+    color: #f54f47;
   }
   a:visited :not(.noRed) {
-    color: #c92100;
+    color: #f54f47;
   }
 }
 .green {
@@ -73,6 +73,12 @@ select {
     0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
 }
 
-// .movableBg {
-//   // background-color: #324f61 !important;
-// }
+// clr-vertical-nav-group-children {
+.nav-content {
+  a.nav-link {
+    border-left: 3px solid #404e60;
+    &.active {
+      border-color: #49afd9 !important;
+    }
+  }
+}

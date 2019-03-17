@@ -6,3 +6,68 @@
 
 // Clarity Component SCSS
 @import "../../node_modules/@clr/ui/src/utils/components.clarity";
+
+.notEnough {
+  color: #c92100;
+  a:link :not(.noRed) {
+    color: #c92100;
+  }
+  a:visited :not(.noRed) {
+    color: #c92100;
+  }
+}
+.green {
+  color: #2f8400;
+  a:link :not(.noGreen) {
+    color: #2f8400;
+  }
+  a:visited :not(.noGreen) {
+    color: #2f8400;
+  }
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(217, 228, 234);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #8dc3d8;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: #007cbb;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(250, 250, 250);
+}
+
+::-webkit-scrollbar-track:hover {
+  background: rgb(250, 250, 250);
+}
+
+::-webkit-scrollbar-track:active {
+  background: rgb(250, 250, 250);
+}
+
+.ui-widget-content {
+  border: 1px solid #0077b7 !important;
+}
+
+.nav-group-content {
+  background: #fff !important;
+}
+
+.cdk-drag-preview {
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.nav-content {
+  a.nav-link {
+    border-left: 3px solid #fff;
+    &.active {
+      border-color: #0079b8 !important;
+    }
+  }
+}

@@ -3,9 +3,10 @@
   <clr-header class="header" [ngClass]="os.headerClass">
     <div class="header-nav" [clr-nav-level]="1">
       <a
-        [routerLink]="ms.lastUnitUrl"
+        routerLink="/home"
         class="nav-link"
         [routerLinkActive]="'active'"
+        (click)="navigateLast()"
       >
         <span class="nav-text"> <clr-icon shape="home"></clr-icon> </span>
       </a>
@@ -20,7 +21,7 @@
       </a>
 
       <a
-        [routerLink]="'fleet/design/new'"
+        [routerLink]="'fleet/design'"
         class="nav-link"
         [routerLinkActive]="'active'"
         *ngIf="ms.game.researchManager.corvette.firstDone"
