@@ -37,7 +37,7 @@ export class EnemyManager implements ISalvable {
   }
   load(data: any): boolean {
     if ("l" in data) this.maxLevel = data.l;
-    if ("c" in data) this.currentEnemy = Enemy.fromData(data.c);
+    if ("c" in data) this.currentEnemy = Enemy.fromData(data.c, true);
     if ("a" in data) {
       for (const enemyData of data.a) {
         this.allEnemy.push(Enemy.fromData(enemyData));
@@ -64,21 +64,25 @@ export class EnemyManager implements ISalvable {
     battleRequest.enemyFleet = this.currentEnemy.currentZone.ships.map(s =>
       s.getShipData()
     );
-
     this.battleService.battleWorker.postMessage(battleRequest);
   }
   onBattleEnd(result: BattleResult) {
+    console.log("On Battle End");
     result.enemyLost.forEach(e => {
       const ship = this.currentEnemy.currentZone.ships.find(s => s.id === e[0]);
-      ship.quantity = ship.quantity.minus(e[1]);
+      ship.quantity = ship.quantity.minus(Decimal.fromDecimal(e[1]));
     });
     result.playerLost.forEach(e => {
       const ship = FleetManager.getInstance().ships.find(s => s.id === e[0]);
-      ship.quantity = ship.quantity.minus(e[1]);
+      ship.quantity = ship.quantity.minus(Decimal.fromDecimal(e[1]));
     });
+    this.currentEnemy.currentZone.reload();
 
     // Win
     if (result.result === "1") {
+      this.currentEnemy.currentZone.ships = null;
+      this.currentEnemy.currentZone.originalNavCap = null;
+
       //  ToDo add reward
       if (this.currentEnemy.currentZone.number >= 99) {
         this.currentEnemy = null;
@@ -86,6 +90,10 @@ export class EnemyManager implements ISalvable {
         this.currentEnemy.currentZone = this.currentEnemy.zones[
           this.currentEnemy.currentZone.number + 1
         ];
+        this.currentEnemy.currentZone.generateShips(
+          this.currentEnemy.shipsDesign
+        );
+        this.currentEnemy.currentZone.reload();
       }
     }
 

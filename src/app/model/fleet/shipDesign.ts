@@ -197,6 +197,15 @@ export class ShipDesign implements ISalvable, IBuyable {
 
     this.editable.reload();
   }
+  getCopy(): ShipDesign {
+    const ret = new ShipDesign();
+    ret.id = this.id;
+    ret.type = this.type;
+    ret.name = this.name;
+    ret.modules = this.modules;
+    ret.reload(false);
+    return ret;
+  }
   addModule() {
     this.editable.modules.push(new DesignLine());
     this.editable.reload();

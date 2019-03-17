@@ -5,4 +5,5 @@ export class Emitters {
   saveEmitter: EventEmitter<string> = new EventEmitter<string>();
   zipEmitter: EventEmitter<string> = new EventEmitter<string>();
   designEmitter: EventEmitter<number> = new EventEmitter<number>();
+  battleEndEmitter: EventEmitter<number> = new EventEmitter<number>();
 }

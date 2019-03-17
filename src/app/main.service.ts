@@ -40,6 +40,7 @@ export class MainService {
     public battleService: BattleService,
     @Inject(DOCUMENT) private document: Document
   ) {
+    this.battleService.em = this.em;
     this.theme = this.document.createElement("link");
     this.theme.rel = "stylesheet";
     this.theme.type = "text/css";

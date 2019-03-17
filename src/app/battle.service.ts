@@ -3,12 +3,14 @@ import { createWorker, ITypedWorker } from "typed-web-workers";
 import { getUrl } from "./main.service";
 import { EnemyManager } from "./model/enemy/enemyManager";
 import { BattleRequest, ShipData } from "./workers/battleRequest";
+import { Emitters } from "./emitters";
 
 @Injectable({
   providedIn: "root"
 })
 export class BattleService {
   battleWorker: ITypedWorker<BattleRequest, BattleResult>;
+  em: Emitters;
 
   constructor() {
     const url = getUrl();
@@ -55,6 +57,8 @@ export class BattleService {
         }
       });
     });
+    console.log("player ships: " + playerShips.length);
+    console.log("enemy ships: " + enemyShip.length);
     //#endregion
     //#region Battle
     //  Up to 5 rounds
@@ -98,7 +102,6 @@ export class BattleService {
       battleFleets = [playerShips, enemyShip]; //  just to be sure
     }
     //#endregion
-
     const ret = new BattleResult();
     if (enemyShip.length < 1) ret.result = "1";
     const retArr: Array<[ShipData[], Ship[], Array<[string, Decimal]>]> = [
@@ -109,7 +112,7 @@ export class BattleService {
       arr[0].forEach(fl => {
         const alive = arr[1].filter(s => s.id === fl.id).length;
         if (Decimal.fromDecimal(fl.quantity).gt(alive)) {
-          arr[2].push([fl.id, fl.quantity.minus(alive)]);
+          arr[2].push([fl.id, Decimal.fromDecimal(fl.quantity).minus(alive)]);
         }
       });
     });
@@ -118,5 +121,9 @@ export class BattleService {
   }
   onBattleEnd(result: BattleResult): void {
     EnemyManager.GetInstance().onBattleEnd(result);
+    if (this.em) {
+      this.em.updateEmitter.emit(2);
+      this.em.battleEndEmitter.emit(1);
+    }
   }
 }

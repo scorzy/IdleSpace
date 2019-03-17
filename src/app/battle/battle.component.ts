@@ -2,9 +2,12 @@ import {
   Component,
   OnInit,
   ChangeDetectionStrategy,
-  HostBinding
+  HostBinding,
+  OnDestroy,
+  ChangeDetectorRef
 } from "@angular/core";
 import { MainService } from "../main.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-battle",
@@ -12,13 +15,22 @@ import { MainService } from "../main.service";
   styleUrls: ["./battle.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BattleMenuComponent implements OnInit {
+export class BattleMenuComponent implements OnInit, OnDestroy {
   @HostBinding("class")
   contentContainer = "content-container";
-  constructor(public ms: MainService) {}
+  constructor(public ms: MainService, private cd: ChangeDetectorRef) {}
+  private subscriptions: Subscription[] = [];
 
-  ngOnInit() {}
-
+  ngOnInit() {
+    this.subscriptions.push(
+      this.ms.em.battleEndEmitter.subscribe(() => {
+        this.cd.markForCheck();
+      })
+    );
+  }
+  ngOnDestroy() {
+    this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
+  }
   startBattle() {
     this.ms.game.enemyManager.startBattle();
   }

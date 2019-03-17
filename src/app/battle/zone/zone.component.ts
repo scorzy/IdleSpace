@@ -2,9 +2,13 @@ import {
   Component,
   OnInit,
   ChangeDetectionStrategy,
-  Input
+  Input,
+  OnDestroy,
+  ChangeDetectorRef
 } from "@angular/core";
 import { Zone } from "src/app/model/enemy/zone";
+import { MainService } from "src/app/main.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-zone",
@@ -12,10 +16,20 @@ import { Zone } from "src/app/model/enemy/zone";
   styleUrls: ["./zone.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ZoneComponent implements OnInit {
+export class ZoneComponent implements OnInit, OnDestroy {
   @Input() zone: Zone;
 
-  constructor() {}
+  constructor(public ms: MainService, private cd: ChangeDetectorRef) {}
+  private subscriptions: Subscription[] = [];
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.subscriptions.push(
+      this.ms.em.battleEndEmitter.subscribe(() => {
+        this.cd.markForCheck();
+      })
+    );
+  }
+  ngOnDestroy() {
+    this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
+  }
 }

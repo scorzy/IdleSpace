@@ -8,10 +8,6 @@ import sample from "lodash-es/sample";
 import random from "lodash-es/random";
 
 export class Enemy {
-  constructor() {
-    Enemy.lastId++;
-    this.id = Enemy.lastId;
-  }
   private static lastId = 0;
 
   name = "";
@@ -24,6 +20,11 @@ export class Enemy {
   currentZone: Zone;
   totalNavalCap = new Decimal(0);
 
+  constructor() {
+    Enemy.lastId++;
+    this.id = Enemy.lastId;
+  }
+
   static generate(level: number): Enemy {
     const enemy = new Enemy();
     enemy.level = level;
@@ -32,7 +33,7 @@ export class Enemy {
     const moduleLevel = level * moduleLevelMulti;
     // moduleLevelMulti = moduleLevelMulti * (1 + SIZE_MULTI);
     const navalCap =
-      (MAX_NAVAL_CAPACITY * level) / (level + 20) / moduleLevelMulti;
+      (MAX_NAVAL_CAPACITY * level) / (level + 500) / moduleLevelMulti;
     const maxShipTye = Math.min(level, ShipTypes.length);
     for (let i = 0; i < maxShipTye; i++) {
       if (!(maxShipTye > 2 && Math.random() < 0.15)) {
@@ -62,7 +63,7 @@ export class Enemy {
     enemy.reload();
     return enemy;
   }
-  static fromData(data: any): Enemy {
+  static fromData(data: any, zone = false): Enemy {
     const enemy = new Enemy();
     if ("n" in data) enemy.name = data.n;
     if ("l" in data) enemy.level = data.l;
@@ -73,10 +74,18 @@ export class Enemy {
         enemy.shipsDesign.push(ship);
       }
     }
-    if ("z" in data) {
-      enemy.generateZones(true);
-      for (let i = 0; i++; i < data.z.length) {
-        enemy.zones[i].load(data.z[i]);
+    if (zone) {
+      enemy.generateZones("z" in data);
+      if ("z" in data) {
+        for (let i = 0; i++; i < data.z.length) {
+          enemy.zones[i].load(data.z[i]);
+        }
+      }
+      if ("c" in data) {
+        enemy.currentZone = enemy.zones[data.c];
+        if (enemy.currentZone.ships.length < 1) {
+          enemy.currentZone.generateShips(enemy.shipsDesign);
+        }
       }
     }
     enemy.reload();
@@ -106,6 +115,9 @@ export class Enemy {
     this.zones.forEach(z => {
       z.enemy = this;
     });
+    if (!empty) {
+      this.currentZone.generateShips(this.shipsDesign);
+    }
   }
   private addFromPreset(pres: Preset) {
     const design = ShipDesign.fromPreset(pres);
@@ -119,6 +131,7 @@ export class Enemy {
     data.l = this.level;
     data.s = this.shipsDesign.map(s => s.getSave());
     if (this.zones.length > 0) data.z = this.zones.map(z => z.getSave());
+    if (this.currentZone) data.c = this.currentZone.number;
 
     return data;
   }
