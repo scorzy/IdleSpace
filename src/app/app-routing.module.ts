@@ -43,6 +43,11 @@ const routes: Routes = [
   },
   {
     path: "enemies",
+    redirectTo: "enemies/search",
+    pathMatch: "full"
+  },
+  {
+    path: "enemies",
     component: EnemiesComponent,
     children: [
       {

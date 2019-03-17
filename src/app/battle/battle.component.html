@@ -10,10 +10,19 @@
   </h1>
   <div class="clr-row" *ngIf="ms.game.enemyManager.currentEnemy">
     <div class="clr-col-6">
-      <button class="btn btn-outline" (click)="startBattle()">
-        <clr-icon shape="floppy"></clr-icon>
-        Fight
-      </button>
+      <br />
+      <div class="btn-group btn-primary">
+        <button class="btn" (click)="startBattle()">
+          <clr-icon shape="floppy"></clr-icon>
+          Fight
+        </button>
+        <button class="btn btn-danger" (click)="surrenderModal = true">
+          <clr-icon shape="trash"></clr-icon>
+          Surrender
+        </button>
+      </div>
+      <br />
+      <br />
       <app-battlefield
         [enemy]="ms.game.enemyManager.currentEnemy"
       ></app-battlefield>
@@ -26,3 +35,26 @@
     </div>
   </div>
 </div>
+
+<!-- Surrender enemy modal -->
+<clr-modal [(clrModalOpen)]="surrenderModal">
+  <h3 class="modal-title">Surrender</h3>
+  <div class="modal-body">
+    <p>
+      {{ ms.game.enemyManager.currentEnemy?.name }} will be deleted. You will be
+      able to attack other enemies. There are no penalties.
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline"
+      (click)="surrenderModal = false"
+    >
+      Cancel
+    </button>
+    <button type="button" class="btn btn-danger" (click)="surrender()">
+      Surrender
+    </button>
+  </div>
+</clr-modal>

@@ -18,6 +18,7 @@ import { Subscription } from "rxjs";
 export class BattleMenuComponent implements OnInit, OnDestroy {
   @HostBinding("class")
   contentContainer = "content-container";
+  surrenderModal = false;
   constructor(public ms: MainService, private cd: ChangeDetectorRef) {}
   private subscriptions: Subscription[] = [];
 
@@ -33,5 +34,9 @@ export class BattleMenuComponent implements OnInit, OnDestroy {
   }
   startBattle() {
     this.ms.game.enemyManager.startBattle();
+  }
+  surrender() {
+    this.ms.game.enemyManager.surrender();
+    this.surrenderModal = false;
   }
 }

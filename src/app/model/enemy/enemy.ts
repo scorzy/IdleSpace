@@ -6,6 +6,7 @@ import { ShipTypes } from "../fleet/shipTypes";
 import { Presets, Preset } from "./preset";
 import sample from "lodash-es/sample";
 import random from "lodash-es/random";
+import { Reward } from "./reward";
 
 export class Enemy {
   private static lastId = 0;
@@ -77,7 +78,7 @@ export class Enemy {
     if (zone) {
       enemy.generateZones("z" in data);
       if ("z" in data) {
-        for (let i = 0; i++; i < data.z.length) {
+        for (let i = 0; i < data.z.length; i++) {
           enemy.zones[i].load(data.z[i]);
         }
       }
@@ -117,6 +118,12 @@ export class Enemy {
     });
     if (!empty) {
       this.currentZone.generateShips(this.shipsDesign);
+      //  Planet Reward for last row zones
+      for (let i = 9; i < 100; i += 10) {
+        this.zones[i].reward = Reward.HabitableSpace;
+      }
+
+      this.zones.forEach(z => z.reload());
     }
   }
   private addFromPreset(pres: Preset) {

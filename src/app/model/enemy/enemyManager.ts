@@ -99,4 +99,10 @@ export class EnemyManager implements ISalvable {
 
     this.inBattle = false;
   }
+  delete(enemy: Enemy) {
+    this.allEnemy = this.allEnemy.filter(e => e !== enemy);
+  }
+  surrender() {
+    this.currentEnemy = null;
+  }
 }

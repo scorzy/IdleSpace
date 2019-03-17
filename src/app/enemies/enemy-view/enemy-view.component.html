@@ -19,7 +19,9 @@
       <button class="btn btn-success" (click)="attack()">Attack</button>
       <button class="btn" (click)="move(-1)">Move Up</button>
       <button class="btn" (click)="move(1)">Move Down</button>
-      <button class="btn btn-danger">Delete</button>
+      <button class="btn btn-danger" (click)="deleteModal = true">
+        Delete
+      </button>
     </div>
   </div>
   <div class="clr-col-6">
@@ -27,3 +29,19 @@
     <app-fleet-table [fleet]="enemy.shipsDesign"></app-fleet-table>
   </div>
 </div>
+
+<!-- Delete enemy modal -->
+<clr-modal [(clrModalOpen)]="deleteModal">
+  <h3 class="modal-title">Delete {{ enemy?.name }}</h3>
+  <div class="modal-body">
+    <p>This cannot be undone</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="deleteModal = false">
+      Cancel
+    </button>
+    <button type="button" class="btn btn-danger" (click)="delete()">
+      Delete
+    </button>
+  </div>
+</clr-modal>

@@ -1,5 +1,7 @@
-<app-formatted-quantity
+<!-- <app-formatted-quantity
   [quantity]="zone.percentCompleted * 100"
   [integer]="true"
 ></app-formatted-quantity>
-%
+% -->
+
+<clr-icon [attr.shape]="zone.shape" *ngIf="zone?.shape"></clr-icon>

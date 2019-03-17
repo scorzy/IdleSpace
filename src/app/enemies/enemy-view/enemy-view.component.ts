@@ -10,10 +10,11 @@ import {
 import { Enemy } from "src/app/model/enemy/enemy";
 import { Subscription } from "rxjs";
 import { MainService } from "src/app/main.service";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { ShipDesign } from "src/app/model/fleet/shipDesign";
 import { Module } from "src/app/model/fleet/module";
 import { moveItemInArray } from "@angular/cdk/drag-drop";
+import { Route } from "@angular/compiler/src/core";
 
 @Component({
   selector: "app-enemy-view",
@@ -24,14 +25,15 @@ import { moveItemInArray } from "@angular/cdk/drag-drop";
 export class EnemyViewComponent implements OnInit, OnDestroy {
   @HostBinding("class")
   contentArea = "content-area";
-
   enemy: Enemy;
   private subscriptions: Subscription[] = [];
+  deleteModal = false;
 
   constructor(
     public ms: MainService,
     private route: ActivatedRoute,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -63,5 +65,10 @@ export class EnemyViewComponent implements OnInit, OnDestroy {
   move(up = 1) {
     const index = this.ms.game.enemyManager.allEnemy.indexOf(this.enemy);
     moveItemInArray(this.ms.game.enemyManager.allEnemy, index, index + up);
+  }
+  delete() {
+    this.ms.game.enemyManager.delete(this.enemy);
+    this.deleteModal = false;
+    this.router.navigateByUrl("/enemies");
   }
 }
