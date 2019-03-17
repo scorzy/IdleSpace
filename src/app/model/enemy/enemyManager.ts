@@ -3,6 +3,8 @@ import { ISalvable } from "../base/ISalvable";
 import { BattleService } from "src/app/battle.service";
 import { FleetManager } from "../fleet/fleetManager";
 import { BattleRequest } from "src/app/workers/battleRequest";
+import { Reward } from "./reward";
+import { ResourceManager } from "../resource/resourceManager";
 
 export class EnemyManager implements ISalvable {
   private static instance: EnemyManager;
@@ -82,8 +84,19 @@ export class EnemyManager implements ISalvable {
     if (result.result === "1") {
       this.currentEnemy.currentZone.ships = null;
       this.currentEnemy.currentZone.originalNavCap = null;
-
-      //  ToDo add reward
+      //#region Reward
+      const currentZone = this.currentEnemy.currentZone;
+      const resMan = ResourceManager.getInstance();
+      if (currentZone.reward) {
+        switch (currentZone.reward) {
+          case Reward.HabitableSpace:
+            resMan.habitableSpace.quantity = resMan.habitableSpace.quantity.plus(
+              this.currentEnemy.level
+            );
+            break;
+        }
+      }
+      //#endregion
       if (this.currentEnemy.currentZone.number >= 99) {
         this.currentEnemy = null;
       } else {
