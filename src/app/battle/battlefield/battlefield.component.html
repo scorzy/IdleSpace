@@ -2,7 +2,7 @@
   <tr *ngFor="let i of numbers">
     <td
       *ngFor="let k of numbers"
-      [ngStyle]="{ 'background-color': enemy.zones[i * 10 + k].color }"
+      [ngStyle]="{ 'background-color': getColor(enemy.zones[i * 10 + k]) }"
     >
       <app-zone [zone]="enemy.zones[i * 10 + k]"></app-zone>
     </td>

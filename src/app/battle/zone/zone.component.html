@@ -1,1 +1,5 @@
-{{ zone.number }} / {{ zone.percentCompleted }}
+<app-formatted-quantity
+  [quantity]="zone.percentCompleted * 100"
+  [integer]="true"
+></app-formatted-quantity>
+%

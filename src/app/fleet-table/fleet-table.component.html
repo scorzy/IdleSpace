@@ -1,0 +1,44 @@
+<clr-datagrid class="datagrid-compact">
+  <clr-dg-column [clrDgField]="'ship.name'">Ship Name</clr-dg-column>
+  <clr-dg-column [clrDgSortBy]="shipTypeSorter">Type</clr-dg-column>
+  <clr-dg-column [clrDgSortBy]="shipQuantitySorter">Quantity</clr-dg-column>
+  <clr-dg-column>Level</clr-dg-column>
+
+  <clr-dg-row *ngFor="let ship of fleet; trackBy: getDesignId">
+    <clr-dg-cell>{{ ship.name }}</clr-dg-cell>
+    <clr-dg-cell>{{ ship.type.name }}</clr-dg-cell>
+    <clr-dg-cell>
+      <app-formatted-quantity
+        [quantity]="ship.quantity"
+        [integer]="true"
+      ></app-formatted-quantity>
+    </clr-dg-cell>
+    <clr-dg-cell>{{ ship.modules[0].level }}</clr-dg-cell>
+    <clr-dg-row-detail *clrIfExpanded>
+      <table class="table table-compact table-noborder">
+        <thead>
+          <tr>
+            <th>Module</th>
+            <th>Size</th>
+            <th>Level</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let mod of ship.modules">
+            <td>
+              {{ mod.module.name }}
+            </td>
+            <td>
+              {{ mod.size | sizeName }}
+            </td>
+            <td>
+              {{ mod.level }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </clr-dg-row-detail>
+  </clr-dg-row>
+
+  <!-- <clr-dg-footer>{{users.length}} users</clr-dg-footer> -->
+</clr-datagrid>

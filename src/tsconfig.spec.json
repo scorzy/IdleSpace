@@ -8,7 +8,8 @@
     "test.ts",
     "polyfills.ts",
     "app/workers/compressRequest2.ts",
-    "app/workers/ship.ts"
+    "app/workers/ship.ts",
+    "app/workers/battleResult.ts"
   ],
   "include": ["**/*.spec.ts", "**/*.d.ts"]
 }

@@ -21,7 +21,8 @@ export class Zone implements ISalvable {
     this.ships = new Array<ShipDesign>();
     design.forEach(d => {
       const newDesign = d.getCopy();
-      newDesign.quantity = d.quantity.times(multi);
+      newDesign.id = newDesign.id + "#" + this.number;
+      newDesign.quantity = d.quantity.times(multi).floor();
       this.ships.push(newDesign);
     });
     this.originalNavCap = ShipDesign.GetTotalNavalCap(this.ships);

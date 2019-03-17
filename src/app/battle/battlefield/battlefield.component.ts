@@ -5,6 +5,7 @@ import {
   Input
 } from "@angular/core";
 import { Enemy } from "src/app/model/enemy/enemy";
+import { Zone } from "src/app/model/enemy/zone";
 
 @Component({
   selector: "app-battlefield",
@@ -19,4 +20,8 @@ export class BattlefieldComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
+
+  getColor(zone: Zone) {
+    return zone.number <= this.enemy.currentZone.number ? zone.color : "";
+  }
 }

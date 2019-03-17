@@ -44,6 +44,7 @@ import { SearchComponent } from "./enemies/search/search.component";
 import { BattlefieldComponent } from "./battle/battlefield/battlefield.component";
 import { ZoneComponent } from "./battle/zone/zone.component";
 import { BattleService } from "./battle.service";
+import { FleetTableComponent } from './fleet-table/fleet-table.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import { BattleService } from "./battle.service";
     SizeNamePipe,
     SearchComponent,
     BattlefieldComponent,
-    ZoneComponent
+    ZoneComponent,
+    FleetTableComponent
   ],
   imports: [
     BrowserAnimationsModule,

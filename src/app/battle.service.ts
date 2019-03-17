@@ -26,6 +26,7 @@ export class BattleService {
     });
   }
   doBattle(input: BattleRequest, cb: (_: BattleResult) => void): void {
+    const initial = Date.now();
     let playerShips = new Array<Ship>();
     let enemyShip = new Array<Ship>();
 
@@ -117,7 +118,13 @@ export class BattleService {
       });
     });
 
-    cb(ret);
+    const diff = 1000 - Date.now() + initial;
+    if (diff > 0) {
+      console.log("wait:" + diff);
+      setTimeout(() => cb(ret), diff);
+    } else {
+      cb(ret);
+    }
   }
   onBattleEnd(result: BattleResult): void {
     EnemyManager.GetInstance().onBattleEnd(result);

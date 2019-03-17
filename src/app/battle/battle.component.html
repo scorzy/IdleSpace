@@ -18,6 +18,11 @@
         [enemy]="ms.game.enemyManager.currentEnemy"
       ></app-battlefield>
     </div>
-    <div class="clr-col-6"></div>
+    <div class="clr-col-6">
+      <h4>Ships:</h4>
+      <app-fleet-table
+        [fleet]="ms.game.enemyManager.currentEnemy.currentZone.ships"
+      ></app-fleet-table>
+    </div>
   </div>
 </div>
