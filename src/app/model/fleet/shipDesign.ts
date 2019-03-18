@@ -268,4 +268,14 @@ export class ShipDesign implements ISalvable, IBuyable {
     });
     return shipData;
   }
+  /**
+   * Upgrade to a new Design
+   */
+  upgrade(newDesign: ShipDesign) {
+    //  newDesign should be always true
+    this.modules = newDesign.modules;
+    this.name = newDesign.name;
+
+    this.reload();
+  }
 }

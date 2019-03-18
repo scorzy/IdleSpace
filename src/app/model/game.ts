@@ -4,6 +4,7 @@ import { BonusStack } from "./bonus/bonusStack";
 import { Bonus } from "./bonus/bonus";
 import { FleetManager } from "./fleet/fleetManager";
 import { EnemyManager } from "./enemy/enemyManager";
+import { Shipyard } from "./shipyard/shipyard";
 
 export class Game {
   resourceManager: ResourceManager;
@@ -11,12 +12,14 @@ export class Game {
   fleetManager: FleetManager;
   enemyManager: EnemyManager;
   researchBonus: BonusStack;
+  shipyard: Shipyard;
   isPaused = false;
   constructor() {
     this.resourceManager = new ResourceManager();
     this.researchManager = new ResearchManager();
     this.fleetManager = new FleetManager();
     this.enemyManager = new EnemyManager();
+    this.shipyard = new Shipyard();
 
     this.researchManager.addOtherResearches();
     this.researchManager.setUnlocks();
@@ -61,6 +64,10 @@ export class Game {
 
         this.resourceManager.computing.quantity = new Decimal(0);
       }
+
+      //  Convert ShipyardProgress to actual progress
+      this.shipyard.addProgress(this.resourceManager.shipyardProgress.quantity);
+      this.resourceManager.shipyardProgress.quantity = new Decimal(0);
     }
 
     this.resourceManager.loadPolynomial();
@@ -81,6 +88,7 @@ export class Game {
     save.e = this.researchManager.getSave();
     save.f = this.fleetManager.getSave();
     save.w = this.enemyManager.getSave();
+    save.s = this.shipyard.getSave();
     return save;
   }
   load(data: any) {
@@ -89,6 +97,7 @@ export class Game {
     this.researchManager.load(data.e);
     this.fleetManager.load(data.f);
     if ("w" in data) this.enemyManager.load(data.w);
+    if ("s" in data) this.shipyard.load(data.s);
 
     this.reload();
   }

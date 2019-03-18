@@ -69,7 +69,7 @@ export class EnemyManager implements ISalvable {
     this.battleService.battleWorker.postMessage(battleRequest);
   }
   onBattleEnd(result: BattleResult) {
-    console.log("On Battle End");
+    // console.log("On Battle End");
     result.enemyLost.forEach(e => {
       const ship = this.currentEnemy.currentZone.ships.find(s => s.id === e[0]);
       ship.quantity = ship.quantity.minus(Decimal.fromDecimal(e[1]));
@@ -82,6 +82,7 @@ export class EnemyManager implements ISalvable {
 
     // Win
     if (result.result === "1") {
+      this.maxLevel = Math.max(this.maxLevel, this.currentEnemy.level + 1);
       this.currentEnemy.currentZone.ships = null;
       this.currentEnemy.currentZone.originalNavCap = null;
       //#region Reward
@@ -91,6 +92,16 @@ export class EnemyManager implements ISalvable {
         switch (currentZone.reward) {
           case Reward.HabitableSpace:
             resMan.habitableSpace.quantity = resMan.habitableSpace.quantity.plus(
+              this.currentEnemy.level
+            );
+            break;
+          case Reward.MetalMine:
+            resMan.habitableSpace.quantity = resMan.miningDistrict.quantity.plus(
+              this.currentEnemy.level
+            );
+            break;
+          case Reward.CrystalMine:
+            resMan.habitableSpace.quantity = resMan.crystalDistrict.quantity.plus(
               this.currentEnemy.level
             );
             break;

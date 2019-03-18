@@ -1,6 +1,8 @@
 import { IResearchData } from "./iResearchData";
 
 export const ResearchData: IResearchData[] = [
+  //  First two research are unlocked by default
+  //  Dont Move !
   {
     id: "a",
     name: "Alloy",
@@ -8,7 +10,7 @@ export const ResearchData: IResearchData[] = [
     price: 100,
     description: "Unlock alloy foundry",
     resourceToUnlock: ["a", "a1"],
-    researchToUnlock: ["c", "m2"]
+    researchToUnlock: ["S"]
   },
   {
     id: "r",
@@ -18,6 +20,16 @@ export const ResearchData: IResearchData[] = [
     description: "+20% researching speed",
     limit: Number.POSITIVE_INFINITY,
     researchToUnlock: ["B"]
+  },
+  //    End of starting researches  ---------------
+  {
+    id: "S",
+    name: "Shipyard",
+    shape: "alloy",
+    price: 100,
+    description: "Unlock Shipyard",
+    resourceToUnlock: ["S", "SP"],
+    researchToUnlock: ["c", "m2"]
   },
   {
     id: "c",

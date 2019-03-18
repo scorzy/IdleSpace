@@ -32,6 +32,9 @@ export const descriptions = {
     f2: ["Super Computing Center", ""],
     f3: ["Computing 3", ""],
 
-    N: ["Naval Capacity", ""]
+    N: ["Naval Capacity", ""],
+
+    S: ["Shipyard", "Shipyard is used to make and upgrade your fleet"],
+    SP: ["Shipyard Progress", "This represent work done by your Shipyard"]
   }
 };

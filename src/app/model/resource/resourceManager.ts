@@ -51,6 +51,9 @@ export class ResourceManager implements ISalvable {
   computingX1: Resource;
   computingX2: Resource;
   computingX3: Resource;
+
+  shipyard: Resource;
+  shipyardProgress: Resource;
   // #endregion
   //#region group
   materials: Resource[];
@@ -59,6 +62,7 @@ export class ResourceManager implements ISalvable {
   tier1: Resource[];
   tier2: Resource[];
   tier3: Resource[];
+  special: Resource[];
 
   limited: Resource[];
   //#endregion
@@ -89,6 +93,9 @@ export class ResourceManager implements ISalvable {
     this.computing = new Resource("f");
     this.computing.shape = "computing";
 
+    this.shipyard = new Resource("S");
+    this.shipyardProgress = new Resource("SP");
+    this.shipyardProgress.addGenerator(this.shipyard);
     //#endregion
     //#region Declarations
 
@@ -177,6 +184,7 @@ export class ResourceManager implements ISalvable {
       this.energyX3,
       this.computingX3
     ];
+    this.special = [this.shipyard];
     //#endregion
 
     //#region Actions
@@ -200,6 +208,12 @@ export class ResourceManager implements ISalvable {
       new MultiPrice([
         new Price(this.metal, 100),
         new Price(this.crystal, 200),
+        new Price(this.habitableSpace, 1, 1)
+      ])
+    );
+    this.shipyard.generateBuyAction(
+      new MultiPrice([
+        new Price(this.alloy, 100),
         new Price(this.habitableSpace, 1, 1)
       ])
     );
@@ -385,7 +399,9 @@ export class ResourceManager implements ISalvable {
       this.computingX3,
       this.habitableSpace,
       this.miningDistrict,
-      this.crystalDistrict
+      this.crystalDistrict,
+      this.shipyard,
+      this.shipyardProgress
     ];
     this.allResources.forEach(r => r.generateRefundActions());
     // this.allResources.forEach(r => {
@@ -397,6 +413,7 @@ export class ResourceManager implements ISalvable {
       new ResourceGroup("1", "Tier 1", "", this.tier1),
       new ResourceGroup("2", "Tier 2", "", this.tier2),
       new ResourceGroup("3", "Tier 3", "", this.tier3),
+      new ResourceGroup("5", "Special", "", this.special),
       new ResourceGroup("4", "Districts", "", this.districts)
     ];
 
