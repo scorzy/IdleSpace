@@ -34,7 +34,9 @@ export const descriptions = {
 
     N: ["Naval Capacity", ""],
 
-    S: ["Shipyard", "Shipyard is used to make and upgrade your fleet"],
+    S1: ["Worker Drone", ""],
+    S2: ["S 2", ""],
+    S3: ["S 3", ""],
     SP: ["Shipyard Progress", "This represent work done by your Shipyard"]
   }
 };

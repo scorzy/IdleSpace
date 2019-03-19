@@ -2,10 +2,7 @@
   <li
     class="nav-item"
     class="matTab"
-    *ngFor="
-      let g of ms.game.resourceManager.matGroup.unlockedResources;
-      trackBy: getResId
-    "
+    *ngFor="let g of ms.game.resourceManager.matNav; trackBy: getResId"
   >
     <app-tab
       [id]="g.id"

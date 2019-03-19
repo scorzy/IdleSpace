@@ -12,6 +12,8 @@ import { Preset } from "../enemy/preset";
 import sample from "lodash-es/sample";
 import { Sizes } from "./module";
 import { ShipData } from "src/app/workers/battleRequest";
+import { Job } from "../shipyard/job";
+import { Shipyard } from "../shipyard/shipyard";
 
 const MODULE_PRICE_INCREASE = 1.1;
 export const SIZE_MULTI = 0.1;
@@ -232,10 +234,10 @@ export class ShipDesign implements ISalvable, IBuyable {
     }
   }
   generateBuyAction() {
-    this.buyAction = new BuyAction(
-      this,
+    this.buyAction = new Action(
+      "Q",
       new MultiPrice([
-        new Price(ResourceManager.getInstance().alloy, this.price, 1),
+        // new Price(ResourceManager.getInstance().alloy, this.price, 1),
         new Price(
           FleetManager.getInstance().freeNavalCapacity,
           this.type.navalCapacity,
@@ -244,6 +246,13 @@ export class ShipDesign implements ISalvable, IBuyable {
       ])
     );
     this.buyAction.showNum = false;
+    this.buyAction.afterBuy = (number: Decimal) => {
+      const job = new Job();
+      job.total = this.price.times(number);
+      job.design = this;
+      job.quantity = number;
+      Shipyard.getInstance().jobs.push(job);
+    };
     this.buyAction.reload();
   }
   getShipData(): ShipData {

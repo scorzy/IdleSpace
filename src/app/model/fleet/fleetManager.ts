@@ -4,6 +4,7 @@ import { ShipType } from "./shipTypes";
 import { Module } from "./module";
 import { ModulesData } from "./moduleData";
 import { Resource } from "../resource/resource";
+import { Shipyard } from "../shipyard/shipyard";
 
 export const MAX_NAVAL_CAPACITY = 1e4;
 
@@ -45,7 +46,9 @@ export class FleetManager implements ISalvable {
       .map(s => s.quantity)
       .reduce((p, c) => p.plus(c), new Decimal(0));
 
-    this.usedNavalCapacity = ShipDesign.GetTotalNavalCap(this.ships);
+    this.usedNavalCapacity = ShipDesign.GetTotalNavalCap(this.ships).plus(
+      Shipyard.getInstance().getTotalNavalCapacity()
+    );
     this.freeNavalCapacity.quantity = this.totalNavalCapacity.minus(
       this.usedNavalCapacity
     );

@@ -6,6 +6,7 @@ import { ResourceGroup } from "./resourceGroup";
 import { MultiPrice } from "../prices/multiPrice";
 import { Price } from "../prices/price";
 import { Action } from "../actions/abstractAction";
+import { Shipyard } from "../shipyard/shipyard";
 
 const TIER_2_COST_MULTI = 100;
 const TIER_3_COST_MULTI = 1000;
@@ -52,7 +53,9 @@ export class ResourceManager implements ISalvable {
   computingX2: Resource;
   computingX3: Resource;
 
-  shipyard: Resource;
+  shipyardX1: Resource;
+  shipyardX2: Resource;
+  shipyardX3: Resource;
   shipyardProgress: Resource;
   // #endregion
   //#region group
@@ -62,7 +65,7 @@ export class ResourceManager implements ISalvable {
   tier1: Resource[];
   tier2: Resource[];
   tier3: Resource[];
-  special: Resource[];
+  matNav: Resource[];
 
   limited: Resource[];
   //#endregion
@@ -93,9 +96,7 @@ export class ResourceManager implements ISalvable {
     this.computing = new Resource("f");
     this.computing.shape = "computing";
 
-    this.shipyard = new Resource("S");
     this.shipyardProgress = new Resource("SP");
-    this.shipyardProgress.addGenerator(this.shipyard);
     //#endregion
     //#region Declarations
 
@@ -141,6 +142,14 @@ export class ResourceManager implements ISalvable {
     this.computing.addGenerator(this.computingX1);
     this.energy.addGenerator(this.computingX1, -2);
 
+    //      Shipyard
+    this.shipyardX1 = new Resource("S1");
+    this.shipyardX2 = new Resource("S2");
+    this.shipyardX3 = new Resource("S3");
+    this.shipyardProgress.addGenerator(this.shipyardX1);
+    this.alloy.addGenerator(this.shipyardX1, -1);
+    this.energy.addGenerator(this.shipyardX1, -1);
+
     //      Space
     this.habitableSpace = new Resource("hs");
     this.miningDistrict = new Resource("md");
@@ -161,30 +170,33 @@ export class ResourceManager implements ISalvable {
       this.crystal,
       this.alloy,
       this.energy,
-      this.computing
+      this.computing,
+      this.shipyardProgress
     ];
     this.tier1 = [
       this.metalX1,
       this.crystalX1,
       this.alloyX1,
       this.energyX1,
-      this.computingX1
+      this.computingX1,
+      this.shipyardX1
     ];
     this.tier2 = [
       this.metalX2,
       this.crystalX2,
       this.alloyX2,
       this.energyX2,
-      this.computingX2
+      this.computingX2,
+      this.shipyardX2
     ];
     this.tier3 = [
       this.metalX3,
       this.crystalX3,
       this.alloyX3,
       this.energyX3,
-      this.computingX3
+      this.computingX3,
+      this.shipyardX3
     ];
-    this.special = [this.shipyard];
     //#endregion
 
     //#region Actions
@@ -211,11 +223,8 @@ export class ResourceManager implements ISalvable {
         new Price(this.habitableSpace, 1, 1)
       ])
     );
-    this.shipyard.generateBuyAction(
-      new MultiPrice([
-        new Price(this.alloy, 100),
-        new Price(this.habitableSpace, 1, 1)
-      ])
+    this.shipyardX1.generateBuyAction(
+      new MultiPrice([new Price(this.alloy, 100)])
     );
     //#endregion
     //#region Mine
@@ -361,6 +370,32 @@ export class ResourceManager implements ISalvable {
     buyFoundry.name = "Alloy Foundry";
     this.alloyX1.actions.push(buyFoundry);
     this.alloyX1.limitStorage = buyFoundry;
+
+    //  Shipyard
+    const buyShipyard = new Action(
+      "L",
+      new MultiPrice([
+        new Price(this.metal, 1000),
+        new Price(this.crystal, 1000),
+        new Price(this.habitableSpace, 1, 1)
+      ])
+    );
+    buyShipyard.afterBuy = () => {
+      this.shipyardX1.reloadLimit();
+    };
+    buyShipyard.name = "Shipyard";
+    this.shipyardX1.actions.push(buyShipyard);
+    this.shipyardX1.limitStorage = buyShipyard;
+    this.shipyardProgress.reloadLimit = () => {
+      const shipyard = Shipyard.getInstance();
+      if (shipyard) {
+        this.shipyardProgress.limit = shipyard.getTotalToDo();
+        this.shipyardProgress.quantity = this.shipyardProgress.quantity.min(
+          this.shipyardProgress.limit
+        );
+      }
+      this.shipyardProgress.isCapped = this.shipyardProgress.limit.lte(0);
+    };
     //#endregion
 
     this.limited = [
@@ -368,7 +403,9 @@ export class ResourceManager implements ISalvable {
       this.crystalX1,
       this.alloyX1,
       this.energyX1,
-      this.energy
+      this.energy,
+      this.shipyardProgress,
+      this.shipyardX1
     ];
 
     this.limited.forEach(rl => {
@@ -400,7 +437,9 @@ export class ResourceManager implements ISalvable {
       this.habitableSpace,
       this.miningDistrict,
       this.crystalDistrict,
-      this.shipyard,
+      this.shipyardX1,
+      this.shipyardX2,
+      this.shipyardX3,
       this.shipyardProgress
     ];
     this.allResources.forEach(r => r.generateRefundActions());
@@ -413,16 +452,17 @@ export class ResourceManager implements ISalvable {
       new ResourceGroup("1", "Tier 1", "", this.tier1),
       new ResourceGroup("2", "Tier 2", "", this.tier2),
       new ResourceGroup("3", "Tier 3", "", this.tier3),
-      new ResourceGroup("5", "Special", "", this.special),
       new ResourceGroup("4", "Districts", "", this.districts)
     ];
 
     this.reloadList();
   }
-
   static getInstance() {
     return ResourceManager.instance;
   }
+  /**
+   *  Reload lists of unlocked resources
+   */
   reloadList(): void {
     this.unlockedResources = this.allResources.filter(r => r.unlocked);
     this.unlockedProdResources = this.unlockedResources.filter(
@@ -433,8 +473,15 @@ export class ResourceManager implements ISalvable {
     this.unlockedTierGroups = this.tierGroups.filter(
       u => u.unlockedResources.length > 0
     );
+    this.matNav = this.materials.filter(
+      m => m.unlocked && m !== this.shipyardProgress
+    );
   }
+  /**
+   *  Calculate polynomial grow
+   */
   loadPolynomial(): void {
+    this.shipyardProgress.reloadLimit();
     this.unlockedProdResources.forEach(res => {
       res.reloadProd();
     });
@@ -482,6 +529,9 @@ export class ResourceManager implements ISalvable {
       this.energy.isCapped = true;
     }
   }
+  /**
+   *  Calculate times to end
+   */
   loadEndTime(): number {
     this.maxTime = Number.POSITIVE_INFINITY;
     this.unitZero = null;
@@ -572,6 +622,9 @@ export class ResourceManager implements ISalvable {
       });
     this.energy.quantity = this.energy.quantity.min(this.energy.limit);
   }
+  /**
+   * Stop consumers and producers of consumers of resource that have been ended
+   */
   stopResource() {
     if (this.unitZero && this.unitZero.isEnding) {
       //  Stop consumers
@@ -596,12 +649,18 @@ export class ResourceManager implements ISalvable {
       this.unitZero.isCapped = true;
     }
   }
+  /**
+   *  Reload prices and what player can buy
+   */
   reloadActions() {
     this.unlockedResources.forEach(res => {
       res.actions.forEach(act => act.reload());
     });
   }
 
+  /**
+   *  Unlock computing if metalX1 and crystalX1 are >=5
+   */
   unlockComputing() {
     if (
       !this.computing.unlocked &&
@@ -612,7 +671,7 @@ export class ResourceManager implements ISalvable {
       this.computingX1.unlock();
     }
   }
-
+  //#region Save and load
   getSave(): any {
     const data: any = {};
     data.r = this.unlockedResources.map(r => r.getSave());
@@ -633,4 +692,5 @@ export class ResourceManager implements ISalvable {
     });
     return true;
   }
+  //#endregion
 }

@@ -60,7 +60,10 @@ export class Resource extends AbstractUnlockable
   }
   isActive(): boolean {
     return (
-      this.unlocked && this.operativity > Number.EPSILON && this.quantity.gt(0)
+      this.unlocked &&
+      this.operativity > Number.EPSILON &&
+      this.quantity.gt(0) &&
+      !this.products.find(p => p.product.isCapped && p.ratio.gt(0))
     );
   }
 

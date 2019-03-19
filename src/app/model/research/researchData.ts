@@ -10,7 +10,7 @@ export const ResearchData: IResearchData[] = [
     price: 100,
     description: "Unlock alloy foundry",
     resourceToUnlock: ["a", "a1"],
-    researchToUnlock: ["S"]
+    researchToUnlock: ["S1"]
   },
   {
     id: "r",
@@ -23,12 +23,12 @@ export const ResearchData: IResearchData[] = [
   },
   //    End of starting researches  ---------------
   {
-    id: "S",
+    id: "S1",
     name: "Shipyard",
     shape: "alloy",
     price: 100,
     description: "Unlock Shipyard",
-    resourceToUnlock: ["S", "SP"],
+    resourceToUnlock: ["S1", "SP"],
     researchToUnlock: ["c", "m2"]
   },
   {
@@ -109,7 +109,16 @@ export const ResearchData: IResearchData[] = [
     shape: "battery",
     price: 100,
     description: "Unlock Alloy Drone factories",
+    researchToUnlock: ["S2"],
     resourceToUnlock: ["a2"]
+  },
+  {
+    id: "S2",
+    name: "Shipyard 2",
+    shape: "battery",
+    price: 100,
+    description: "Unlock Alloy Drone factories",
+    resourceToUnlock: ["S2"]
   },
   {
     id: "e2",
@@ -152,7 +161,16 @@ export const ResearchData: IResearchData[] = [
     shape: "battery",
     price: 100,
     description: "Unlock Alloy Drone factories",
+    researchToUnlock: ["S3"],
     resourceToUnlock: ["a3"]
+  },
+  {
+    id: "S3",
+    name: "Shipyard 3",
+    shape: "battery",
+    price: 100,
+    description: "Unlock Alloy Drone factories",
+    resourceToUnlock: ["S3"]
   },
   {
     id: "e3",
