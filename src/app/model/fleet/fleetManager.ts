@@ -96,4 +96,9 @@ export class FleetManager implements ISalvable {
         ModulesData.findIndex(h => h.id === b.id)
     );
   }
+  upgradingCheck() {
+    this.ships.forEach(s => {
+      s.isUpgrading = Shipyard.getInstance().isUpgrading(s);
+    });
+  }
 }

@@ -19,7 +19,7 @@ import { Subscription } from "rxjs";
 })
 export class ResearchComponent implements OnInit, OnDestroy {
   @HostBinding("class")
-  card = "card";
+  card = "card drag-item";
 
   @Input() res: Research;
   private subscriptions: Subscription[] = [];

@@ -99,6 +99,7 @@ export class Game {
     if ("w" in data) this.enemyManager.load(data.w);
     if ("s" in data) this.shipyard.load(data.s);
 
+    this.fleetManager.upgradingCheck();
     this.reload();
   }
 }

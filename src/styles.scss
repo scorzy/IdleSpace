@@ -67,16 +67,14 @@ h4 {
     margin-top: 0;
     margin-bottom: 0.5rem;
   }
-}
 
-.drag-list {
   max-width: 100%;
   min-height: 30vh;
   display: block;
   border-radius: 4px;
   overflow: hidden;
   margin-top: 0.5rem;
-  max-height: calc(100vh - 8.5rem);
+  max-height: calc(100vh - 9rem);
   overflow-y: auto;
   height: 100%;
   padding-top: 0.5rem;

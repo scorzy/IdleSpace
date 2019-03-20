@@ -32,9 +32,7 @@
     "*.{md,html}": [
       "prettier --write",
       "git add"
-    ],
-    "*.css": "stylelint",
-    "*.scss": "stylelint --syntax=scss"
+    ]
   },
   "stylelint":{"extends": "stylelint-config-recommended"},
   "dependencies": {

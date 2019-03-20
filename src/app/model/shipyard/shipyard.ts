@@ -1,5 +1,6 @@
 import { ISalvable } from "../base/ISalvable";
 import { Job } from "./job";
+import { ShipDesign } from "../fleet/shipDesign";
 
 export class Shipyard implements ISalvable {
   private static instance: Shipyard;
@@ -18,7 +19,7 @@ export class Shipyard implements ISalvable {
   addProgress(progress: Decimal) {
     while (this.jobs.length > 0 && progress.gt(0)) {
       progress = this.jobs[0].addProgress(progress);
-      if (progress.gt(0)) this.jobs.shift();
+      if (this.jobs[0].done) this.jobs.shift();
     }
   }
   /**
@@ -34,6 +35,15 @@ export class Shipyard implements ISalvable {
       .filter(j => j.quantity && j.quantity.gt(0))
       .map(j => j.quantity.times(j.design.type.navalCapacity))
       .reduce((p, c) => p.plus(c), new Decimal(0));
+  }
+  getTotalShips(design: ShipDesign): Decimal {
+    return this.jobs
+      .filter(j => (j.design = design))
+      .map(j => j.quantity)
+      .reduce((p, c) => p.plus(c), new Decimal(0));
+  }
+  isUpgrading(design: ShipDesign): boolean {
+    return this.jobs.findIndex(j => j.newDesign && j.design === design) > -1;
   }
   //#region Save and Load
   getSave(): any {

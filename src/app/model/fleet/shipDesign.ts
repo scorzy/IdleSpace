@@ -5,7 +5,6 @@ import { Action } from "../actions/abstractAction";
 import { IBuyable } from "../base/IBuyable";
 import { MultiPrice } from "../prices/multiPrice";
 import { Price } from "../prices/price";
-import { ResourceManager } from "../resource/resourceManager";
 import { FleetManager } from "./fleetManager";
 import { Preset } from "../enemy/preset";
 import sample from "lodash-es/sample";
@@ -47,6 +46,7 @@ export class ShipDesign implements ISalvable, IBuyable {
   isCapped = false;
   upgradePrice = new Decimal();
   weight = 1;
+  isUpgrading = false;
 
   static fromPreset(preset: Preset): ShipDesign {
     const shipDesign = new ShipDesign();
@@ -150,9 +150,13 @@ export class ShipDesign implements ISalvable, IBuyable {
 
     this.upgradePrice = this.original
       ? this.price
-          .minus(this.original.price)
+          .minus(this.original.price.div(2))
           .max(0)
-          .times(this.original.quantity)
+          .times(
+            this.original.quantity.plus(
+              Shipyard.getInstance().getTotalShips(this)
+            )
+          )
       : new Decimal();
 
     if (isPlayer) this.generateBuyAction();
@@ -215,21 +219,20 @@ export class ShipDesign implements ISalvable, IBuyable {
     this.editable.modules.splice(i, 1);
     this.editable.reload();
   }
-
   saveConfig() {
-    const resMan = ResourceManager.getInstance();
+    if (!(this.editable && this.editable.isValid && !this.isUpgrading)) {
+      return false;
+    }
 
-    if (
-      this.editable &&
-      this.editable.isValid &&
-      resMan.alloy.quantity.gte(this.editable.upgradePrice)
-    ) {
-      resMan.alloy.quantity = resMan.alloy.quantity.minus(
-        this.editable.upgradePrice
-      );
-      this.name = this.editable.name;
-      this.modules = this.editable.modules;
-      this.reload();
+    if (this.editable.upgradePrice.gt(0)) {
+      const job = new Job();
+      job.design = this;
+      job.newDesign = this.editable;
+      job.total = this.editable.upgradePrice;
+      Shipyard.getInstance().jobs.push(job);
+      this.isUpgrading = true;
+    } else {
+      this.upgrade(this.editable);
     }
   }
   generateBuyAction() {
@@ -283,6 +286,7 @@ export class ShipDesign implements ISalvable, IBuyable {
     //  newDesign should be always true
     this.modules = newDesign.modules;
     this.name = newDesign.name;
+    this.isUpgrading = false;
 
     this.reload();
   }

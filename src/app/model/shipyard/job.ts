@@ -16,7 +16,8 @@ export class Job {
    */
   newDesign: ShipDesign;
   progressPercent = 0;
-  shape = "flask";
+  done = false;
+
   constructor() {
     this.id = Job.lastId + 1;
     Job.lastId = this.id;
@@ -51,6 +52,7 @@ export class Job {
     let ret = new Decimal(0);
     if (this.progress.gte(this.total)) {
       //  Done
+      this.done = true;
       ret = this.progress.minus(this.total);
       if (this.design) {
         if (this.quantity) {

@@ -37,10 +37,15 @@ export class EditorComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnChanges(changes: SimpleChanges) {
-    if (this.design) this.design.copy();
-    this.editMode = this.design.modules.length === 0;
+    // if (this.design) this.design.copy();
+    if (this.design.modules.length === 0) {
+      this.edit();
+    }
   }
   ngOnInit() {
+    if (this.design.modules.length === 0) {
+      this.edit();
+    }
     this.subscriptions.push(
       this.ms.em.updateEmitter.subscribe(() => {
         if (this.editMode) {
@@ -94,7 +99,7 @@ export class EditorComponent implements OnInit, OnChanges {
     return size;
   }
   save() {
-    if (!this.canUpgrade) return false;
+    // if (!this.canUpgrade) return false;
 
     this.design.saveConfig();
     this.ms.em.designEmitter.emit(5);
@@ -107,6 +112,8 @@ export class EditorComponent implements OnInit, OnChanges {
     this.editMode = false;
   }
   edit() {
+    if (this.design) this.design.copy();
     this.editMode = true;
+    this.reloadCanBuy();
   }
 }

@@ -1,5 +1,5 @@
 <div class="clr-row">
-  <div class="clr-col-md-auto col1" *ngIf="design.editable">
+  <div class="clr-col-md-auto col1">
     <h1>
       <clr-icon [attr.shape]="design.type.shape" size="48" class="resIcon">
       </clr-icon>
@@ -288,7 +288,24 @@
   <ng-template #buyMode>
     <app-action [action]="design.buyAction"></app-action>
     <br /><br />
-    <button class="btn btn-primary" (click)="edit()">
+
+    <clr-alert
+      [clrAlertClosable]="false"
+      [clrAlertType]="'warning'"
+      *ngIf="design.isUpgrading"
+    >
+      <clr-alert-item>
+        <span class="alert-text">
+          This design is already upgrading!
+        </span>
+      </clr-alert-item>
+    </clr-alert>
+
+    <button
+      class="btn btn-primary"
+      (click)="edit()"
+      [disabled]="design.isUpgrading"
+    >
       <clr-icon shape="cog"></clr-icon>
       Edit
     </button>
