@@ -7,7 +7,11 @@ import {
   OnDestroy
 } from "@angular/core";
 import { MainService } from "../main.service";
-import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem
+} from "@angular/cdk/drag-drop";
 import { Research } from "../model/research/research";
 import { Subscription } from "rxjs";
 
@@ -43,11 +47,20 @@ export class LabComponent implements OnInit, OnDestroy {
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(
-      this.ms.game.researchManager.toDo,
-      event.previousIndex,
-      event.currentIndex
-    );
+    if (event.previousContainer === event.container) {
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    }
   }
   getResId(index: number, res: Research) {
     return res.id;

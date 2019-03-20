@@ -4,7 +4,12 @@
   display: block;
   border-radius: 4px;
   overflow: hidden;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
+  // max-height: 65vh;
+  max-height: calc(100vh - 8.5rem);
+  overflow-y: auto;
+  height: 100%;
+  padding-top: 0.5rem;
 }
 app-research {
   cursor: move;
@@ -13,7 +18,14 @@ app-research {
 .researches-list.cdk-drop-list-dragging app-research {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
 .card {
   margin-top: 0;
   margin-bottom: 0.5rem;
+}
+h4 {
+  margin-top: 0.5rem;
 }

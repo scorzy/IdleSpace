@@ -2,21 +2,58 @@
   <h1>Laboratory</h1>
 
   <div class="clr-row">
-    <div class="clr-col-12	clr-col-sm-12	clr-col-md-7	clr-col-lg-6	clr-col-xl-5">
-      <div
-        cdkDropList
-        class="researches-list"
-        (cdkDropListDropped)="drop($event)"
-      >
-        <app-research
-          *ngFor="let res of ms.game.researchManager.toDo; trackBy: getResId"
-          [res]="res"
-          cdkDrag
+    <div class="clr-col-12	clr-col-sm-12	clr-col-md-12	clr-col-lg-9	clr-col-xl-8">
+      <div class="clr-row">
+        <div
+          class="clr-col-12	clr-col-sm-12	clr-col-md-6	clr-col-lg-6	clr-col-xl-6"
         >
-        </app-research>
+          <h4>Backlog</h4>
+          <div
+            cdkDropList
+            #backLogList="cdkDropList"
+            [cdkDropListData]="ms.game.researchManager.backLog"
+            [cdkDropListConnectedTo]="[todoList]"
+            class="researches-list myBg"
+            (cdkDropListDropped)="drop($event)"
+          >
+            <app-research
+              *ngFor="
+                let res of ms.game.researchManager.backLog;
+                trackBy: getResId
+              "
+              [res]="res"
+              cdkDrag
+            >
+            </app-research>
+          </div>
+        </div>
+        <div
+          class="clr-col-12	clr-col-sm-12	clr-col-md-6	clr-col-lg-6	clr-col-xl-6"
+        >
+          <h4>In progress</h4>
+          <div
+            cdkDropList
+            #todoList="cdkDropList"
+            [cdkDropListData]="ms.game.researchManager.toDo"
+            [cdkDropListConnectedTo]="[backLogList]"
+            class="researches-list myBg"
+            (cdkDropListDropped)="drop($event)"
+          >
+            <app-research
+              *ngFor="
+                let res of ms.game.researchManager.toDo;
+                trackBy: getResId
+              "
+              [res]="res"
+              cdkDrag
+            >
+            </app-research>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="clr-col-12	clr-col-sm-12	clr-col-md-5	clr-col-lg-5	clr-col-xl-5">
+
+    <div class="clr-col-12	clr-col-sm-12	clr-col-md-12	clr-col-lg-3	clr-col-xl-4">
       <p>
         Unused Computing are converted to research.<br />
         Research multiplier:

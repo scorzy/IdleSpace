@@ -9,6 +9,7 @@ export class ResearchManager {
 
   researches = new Array<Research>();
   toDo = new Array<Research>();
+  backLog = new Array<Research>();
   completed = new Array<Research>();
 
   //#region Researches
@@ -133,11 +134,13 @@ export class ResearchManager {
   getSave(): any {
     const save: any = {};
     save.t = this.toDo.map(r => r.getSave());
+    save.b = this.backLog.map(r => r.getSave());
     save.c = this.completed.map(r => r.getSave());
     return save;
   }
   load(data: any): boolean {
     this.toDo = [];
+    this.backLog = [];
     this.completed = [];
 
     if ("t" in data) {
@@ -146,6 +149,16 @@ export class ResearchManager {
         if (research) {
           research.load(res);
           this.toDo.push(research);
+        }
+      }
+    }
+
+    if ("b" in data) {
+      for (const res of data.b) {
+        const research = this.researches.find(u => u.id === res.i);
+        if (research) {
+          research.load(res);
+          this.backLog.push(research);
         }
       }
     }
