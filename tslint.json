@@ -1,6 +1,11 @@
 {
   "rulesDirectory": ["codelyzer"],
-  "extends": ["tslint:latest", "tslint-config-prettier", "rxjs-tslint-rules"],
+  "extends": [
+    "tslint:latest",
+    "tslint-config-prettier",
+    "rxjs-tslint-rules",
+    "tslint-etc"
+  ],
   "linterOptions": {
     "exclude": ["node_modules/**"]
   },
@@ -66,6 +71,7 @@
     "component-class-suffix": true,
     "directive-class-suffix": true,
     "semicolon": [true, "always", "ignore-bound-class-methods"],
-    "rxjs-no-internal": true
+    "rxjs-no-internal": true,
+    "no-unused-declaration": true
   }
 }

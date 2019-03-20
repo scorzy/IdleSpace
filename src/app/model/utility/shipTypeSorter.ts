@@ -1,6 +1,4 @@
 import { ClrDatagridComparatorInterface } from "@clr/angular";
-
-import { Production } from "../production";
 import { ShipDesign } from "../fleet/shipDesign";
 
 export class ShipTypeSorter

@@ -11,7 +11,6 @@ import { UiComponent } from "./options-nav/ui/ui.component";
 import { BattleMenuComponent } from "./battle/battle.component";
 import { EnemiesComponent } from "./enemies/enemies.component";
 import { EnemyViewComponent } from "./enemies/enemy-view/enemy-view.component";
-import { ViewComponent } from "./fleetDesigner/view/view.component";
 import { SearchComponent } from "./enemies/search/search.component";
 import { ShipyardComponent } from "./fleetDesigner/shipyard/shipyard.component";
 

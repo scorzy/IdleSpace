@@ -2,7 +2,6 @@ import {
   Component,
   OnInit,
   ChangeDetectionStrategy,
-  Input,
   OnDestroy,
   ChangeDetectorRef,
   HostBinding
@@ -14,7 +13,6 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { ShipDesign } from "src/app/model/fleet/shipDesign";
 import { Module } from "src/app/model/fleet/module";
 import { moveItemInArray } from "@angular/cdk/drag-drop";
-import { Route } from "@angular/compiler/src/core";
 
 @Component({
   selector: "app-enemy-view",

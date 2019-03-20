@@ -1,6 +1,6 @@
-import { ISalvable } from "../base/ISalvable";
+
 import { Zone } from "./zone";
-import { ShipDesign, SIZE_MULTI } from "../fleet/shipDesign";
+import { ShipDesign } from "../fleet/shipDesign";
 import { MAX_NAVAL_CAPACITY } from "../fleet/fleetManager";
 import { ShipTypes } from "../fleet/shipTypes";
 import { Presets, Preset } from "./preset";

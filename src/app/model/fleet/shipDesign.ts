@@ -3,7 +3,6 @@ import { ISalvable } from "../base/ISalvable";
 import { DesignLine } from "./designLine";
 import { Action } from "../actions/abstractAction";
 import { IBuyable } from "../base/IBuyable";
-import { BuyAction } from "../actions/buyAction";
 import { MultiPrice } from "../prices/multiPrice";
 import { Price } from "../prices/price";
 import { ResourceManager } from "../resource/resourceManager";

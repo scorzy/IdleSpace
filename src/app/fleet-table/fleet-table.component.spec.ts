@@ -10,7 +10,6 @@ import { EndInPipe } from "../end-in.pipe";
 import { MainService } from "../main.service";
 import { OptionsService } from "../options.service";
 import { ShipDesign } from "../model/fleet/shipDesign";
-import { SizesPipe } from "../sizes.pipe";
 import { SizeNamePipe } from "../size-name.pipe";
 
 describe("FleetTableComponent", () => {

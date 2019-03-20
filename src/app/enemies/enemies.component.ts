@@ -8,8 +8,7 @@ import { MainService } from "../main.service";
 import { Enemy } from "../model/enemy/enemy";
 import {
   CdkDragDrop,
-  moveItemInArray,
-  transferArrayItem
+  moveItemInArray
 } from "@angular/cdk/drag-drop";
 import { OptionsService } from "../options.service";
 
