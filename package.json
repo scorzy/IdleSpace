@@ -15,7 +15,8 @@
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
     "compileCompResult": "tsc  -p myTsconfig.json",
     "analyze": "ng build --prod --stats-json --build-optimizer=false && webpack-bundle-analyzer dist/IdleSpace/stats.json",
-    "make-themes": "node-sass ./src/themes --output ./src/assets --output-style compressed"
+    "make-themes": "node-sass ./src/themes --output ./src/assets --output-style compressed",
+    "stylelint": "stylelint 'src/**/*.scss' --fix"
   },
   "private": true,
   "husky": {
@@ -24,9 +25,18 @@
     }
   },
   "lint-staged": {
-    "*.{js,json,css,md}": ["prettier --write", "git add"],
-    "*.{md,html}": ["prettier --write", "git add"]
+    "*.{js,json,css,md}": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.{md,html}": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.css": "stylelint",
+    "*.scss": "stylelint --syntax=scss"
   },
+  "stylelint":{"extends": "stylelint-config-recommended"},
   "dependencies": {
     "@angular/animations": "~7.2.7",
     "@angular/cdk": "^7.3.3",
@@ -78,6 +88,8 @@
     "prettier": "^1.16.4",
     "protractor": "~5.4.0",
     "rxjs-tslint-rules": "^4.18.2",
+    "stylelint": "^9.10.1",
+    "stylelint-config-recommended": "^2.1.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
     "tslint-etc": "^1.3.2",
