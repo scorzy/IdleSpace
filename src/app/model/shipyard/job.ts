@@ -2,6 +2,8 @@ import { ShipDesign } from "../fleet/shipDesign";
 import { FleetManager } from "../fleet/fleetManager";
 
 export class Job {
+  private static lastId = 1;
+  id = 1;
   total = new Decimal(0);
   progress = new Decimal(0);
   design: ShipDesign;
@@ -14,7 +16,11 @@ export class Job {
    */
   newDesign: ShipDesign;
   progressPercent = 0;
-
+  shape = "flask";
+  constructor() {
+    this.id = Job.lastId + 1;
+    Job.lastId = this.id;
+  }
   static FromData(data: any): Job {
     const job = new Job();
     if ("p" in data) job.progress = Decimal.fromDecimal(data.p);

@@ -13,6 +13,7 @@ import { EnemiesComponent } from "./enemies/enemies.component";
 import { EnemyViewComponent } from "./enemies/enemy-view/enemy-view.component";
 import { ViewComponent } from "./fleetDesigner/view/view.component";
 import { SearchComponent } from "./enemies/search/search.component";
+import { ShipyardComponent } from "./fleetDesigner/shipyard/shipyard.component";
 
 const routes: Routes = [
   {
@@ -35,8 +36,14 @@ const routes: Routes = [
   },
   {
     path: "fleet",
+    redirectTo: "fleet/shipyard",
+    pathMatch: "full"
+  },
+  {
+    path: "fleet",
     component: FleetDesignerComponent,
     children: [
+      { path: "shipyard", component: ShipyardComponent },
       { path: "design", component: DesignComponent },
       { path: "design/:id", component: DesignComponent }
     ]

@@ -41,6 +41,10 @@ clr-icon {
 .cdk-drag-animating {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
+.drag-list.cdk-drop-list-dragging .drag-item {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
 .cdk-drag-preview {
   box-sizing: border-box;
   border-radius: 4px;
@@ -53,4 +57,27 @@ clr-icon {
   float: left;
   margin-right: 0.4rem;
   margin-left: 0.4rem;
+}
+h4 {
+  margin-top: 0.5rem;
+}
+
+.drag-list {
+  .card {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.drag-list {
+  max-width: 100%;
+  min-height: 30vh;
+  display: block;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 0.5rem;
+  max-height: calc(100vh - 8.5rem);
+  overflow-y: auto;
+  height: 100%;
+  padding-top: 0.5rem;
 }

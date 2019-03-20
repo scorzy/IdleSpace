@@ -1,0 +1,20 @@
+<h1>
+  <clr-icon shape="flask" size="48" class="resIcon"></clr-icon>
+  Shipyard
+</h1>
+
+<div class="clr-row">
+  <div
+    class="clr-col-12	clr-col-sm-12	clr-col-md-12	clr-col-lg-6 clr-col-xl-6"
+  ></div>
+  <div class="clr-col-12	clr-col-sm-12	clr-col-md-12	clr-col-lg-6 clr-col-xl-6">
+    <h4>Jobs:</h4>
+    <div cdkDropList (cdkDropListDropped)="drop($event)" class="myBg drag-list">
+      <app-job
+        cdkDrag
+        *ngFor="let job of ms.game.shipyard.jobs; trackBy: getJobId"
+        [job]="job"
+      ></app-job>
+    </div>
+  </div>
+</div>

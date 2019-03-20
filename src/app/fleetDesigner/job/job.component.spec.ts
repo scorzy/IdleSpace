@@ -1,19 +1,17 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { LabComponent } from "./lab.component";
+import { JobComponent } from "./job.component";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { ClarityModule } from "@clr/angular";
 import { RouterTestingModule } from "@angular/router/testing";
+import { FormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { ActionHeaderComponent } from "../action/action-header/action-header.component";
-import { FormatPipe } from "../format.pipe";
-import { MainService } from "../main.service";
-import { OptionsService } from "../options.service";
-import { DragDropModule } from "@angular/cdk/drag-drop";
+import { MainService } from "src/app/main.service";
+import { OptionsService } from "src/app/options.service";
 
-describe("LabComponent", () => {
-  let component: LabComponent;
-  let fixture: ComponentFixture<LabComponent>;
+describe("JobComponent", () => {
+  let component: JobComponent;
+  let fixture: ComponentFixture<JobComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -21,18 +19,17 @@ describe("LabComponent", () => {
       imports: [
         ClarityModule,
         RouterTestingModule,
-        BrowserAnimationsModule,
-        DragDropModule
+        FormsModule,
+        BrowserAnimationsModule
       ],
-      declarations: [LabComponent, ActionHeaderComponent, FormatPipe],
+      declarations: [JobComponent],
       providers: [MainService, OptionsService]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LabComponent);
+    fixture = TestBed.createComponent(JobComponent);
     component = fixture.componentInstance;
-    component.ms.start();
     fixture.detectChanges();
   });
 

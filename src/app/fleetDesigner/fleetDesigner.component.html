@@ -6,13 +6,17 @@
   cdkDropList
   (cdkDropListDropped)="drop($event)"
 >
+  <a clrVerticalNavLink routerLink="/fleet/shipyard" routerLinkActive="active">
+    <clr-icon shape="plus"></clr-icon>
+    Shipyard
+  </a>
+
   <a
     clrVerticalNavLink
     routerLink="/fleet/design/new"
     routerLinkActive="active"
   >
     <clr-icon shape="plus"></clr-icon>
-
     Add Design
   </a>
 

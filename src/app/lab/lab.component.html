@@ -1,5 +1,7 @@
 <div class="content-area">
-  <h1>Laboratory</h1>
+  <h1>
+    <clr-icon shape="lightbulb" size="48" class="resIcon"></clr-icon>Laboratory
+  </h1>
 
   <div class="clr-row">
     <div class="clr-col-12	clr-col-sm-12	clr-col-md-12	clr-col-lg-9	clr-col-xl-8">
@@ -13,7 +15,7 @@
             #backLogList="cdkDropList"
             [cdkDropListData]="ms.game.researchManager.backLog"
             [cdkDropListConnectedTo]="[todoList]"
-            class="researches-list myBg"
+            class="drag-list myBg"
             (cdkDropListDropped)="drop($event)"
           >
             <app-research
@@ -36,7 +38,7 @@
             #todoList="cdkDropList"
             [cdkDropListData]="ms.game.researchManager.toDo"
             [cdkDropListConnectedTo]="[backLogList]"
-            class="researches-list myBg"
+            class="drag-list myBg"
             (cdkDropListDropped)="drop($event)"
           >
             <app-research
