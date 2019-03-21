@@ -12,6 +12,7 @@ import { Sizes } from "./module";
 import { ShipData } from "src/app/workers/battleRequest";
 import { Job } from "../shipyard/job";
 import { Shipyard } from "../shipyard/shipyard";
+import { Options } from "ng5-slider/options";
 
 const MODULE_PRICE_INCREASE = 1.1;
 export const SIZE_MULTI = 0.1;
@@ -41,12 +42,19 @@ export class ShipDesign implements ISalvable, IBuyable {
   buyAction: Action;
   actions = new Array<Action>();
   quantity = new Decimal();
+  wantQuantity = new Decimal();
   isLimited = false;
   limit = new Decimal();
   isCapped = false;
   upgradePrice = new Decimal();
   weight = 1;
   isUpgrading = false;
+
+  wantQuantityTemp = 0;
+  sliderOptions: Options = {
+    floor: 0,
+    ceil: 100
+  };
 
   static fromPreset(preset: Preset): ShipDesign {
     const shipDesign = new ShipDesign();
@@ -169,6 +177,7 @@ export class ShipDesign implements ISalvable, IBuyable {
     data.n = this.name;
     data.m = this.modules.map(m => m.getSave());
     if (this.quantity.gt(0)) data.q = this.quantity;
+    if (this.wantQuantity.gt(0)) data.w = this.wantQuantity;
 
     return data;
   }
@@ -184,6 +193,9 @@ export class ShipDesign implements ISalvable, IBuyable {
     }
     if ("q" in data) {
       this.quantity = Decimal.fromDecimal(data.q);
+    }
+    if ("w" in data) {
+      this.wantQuantity = Decimal.fromDecimal(data.w);
     }
 
     this.reload(isPlayer);

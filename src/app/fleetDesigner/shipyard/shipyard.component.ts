@@ -10,6 +10,7 @@ import { Subscription } from "rxjs";
 import { MainService } from "src/app/main.service";
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 import { Job } from "src/app/model/shipyard/job";
+import { ShipDesign } from "src/app/model/fleet/shipDesign";
 
 @Component({
   selector: "app-shipyard",
@@ -26,6 +27,9 @@ export class ShipyardComponent implements OnInit, OnDestroy {
   constructor(public ms: MainService, private cd: ChangeDetectorRef) {}
 
   ngOnInit() {
+    this.ms.game.fleetManager.reloadSliders();
+    this.ms.game.fleetManager.resetSliders();
+
     this.subscriptions.push(
       this.ms.em.updateEmitter.subscribe(() => {
         this.cd.markForCheck();
@@ -44,5 +48,17 @@ export class ShipyardComponent implements OnInit, OnDestroy {
       event.previousIndex,
       event.currentIndex
     );
+  }
+  designId(index: number, data: ShipDesign) {
+    return data.id;
+  }
+  onSliderChange() {
+    this.ms.game.fleetManager.sliderChange();
+  }
+  save() {
+    this.ms.game.fleetManager.save();
+  }
+  make() {
+    this.ms.game.fleetManager.make();
   }
 }

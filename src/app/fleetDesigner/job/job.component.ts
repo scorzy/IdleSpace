@@ -37,4 +37,7 @@ export class JobComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
+  delete() {
+    this.ms.game.shipyard.deleteJob(this.job);
+  }
 }

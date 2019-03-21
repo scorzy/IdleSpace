@@ -5,6 +5,7 @@ import { Module } from "./module";
 import { ModulesData } from "./moduleData";
 import { Resource } from "../resource/resource";
 import { Shipyard } from "../shipyard/shipyard";
+import { Job } from "../shipyard/job";
 
 export const MAX_NAVAL_CAPACITY = 1e4;
 
@@ -20,6 +21,9 @@ export class FleetManager implements ISalvable {
   allModules = new Array<Module>();
   unlockedModules = new Array<Module>();
   armor: Module;
+
+  totalWantedNavalCap = 0;
+  configurationValid = true;
 
   constructor() {
     FleetManager.instance = this;
@@ -52,6 +56,7 @@ export class FleetManager implements ISalvable {
     this.freeNavalCapacity.quantity = this.totalNavalCapacity.minus(
       this.usedNavalCapacity
     );
+    this.reloadSliders();
   }
   addDesign(name: string, type: ShipType): ShipDesign {
     const design = new ShipDesign();
@@ -100,5 +105,56 @@ export class FleetManager implements ISalvable {
     this.ships.forEach(s => {
       s.isUpgrading = Shipyard.getInstance().isUpgrading(s);
     });
+  }
+
+  resetSliders() {
+    this.ships.forEach(s => {
+      s.wantQuantityTemp = s.wantQuantity.toNumber();
+    });
+  }
+  reloadSliders() {
+    const av = this.totalNavalCapacity.toNumber();
+    this.ships.forEach(s => {
+      s.sliderOptions.ceil = av;
+      s.sliderOptions.step = s.type.navalCapacity;
+    });
+  }
+  sliderChange() {
+    this.totalWantedNavalCap = this.ships
+      .map(s => s.wantQuantityTemp)
+      .reduce((p, c) => p + c, 0);
+    this.configurationValid = this.totalNavalCapacity.gte(
+      this.totalWantedNavalCap
+    );
+  }
+  save(): boolean {
+    this.sliderChange();
+    if (!this.configurationValid) return false;
+    this.ships.forEach(s => {
+      s.wantQuantity = new Decimal(s.wantQuantityTemp);
+    });
+    return true;
+  }
+  make() {
+    if (this.save()) {
+      this.ships.forEach(s => {
+        let qta = s.quantity.plus(Shipyard.getInstance().getTotalShips(s));
+        let diff = s.wantQuantity.minus(qta);
+        if (diff.lt(0)) {
+          Shipyard.getInstance().delete(s);
+        }
+        qta = s.quantity.plus(Shipyard.getInstance().getTotalShips(s));
+        diff = s.wantQuantity.minus(qta);
+        if (diff.gt(0)) {
+          const job = new Job();
+          job.design = s;
+          job.quantity = diff;
+          job.total = diff.times(s.price);
+          Shipyard.getInstance().jobs.push(job);
+        } else {
+          s.quantity = s.quantity.plus(diff);
+        }
+      });
+    }
   }
 }

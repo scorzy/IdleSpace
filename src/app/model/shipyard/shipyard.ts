@@ -38,12 +38,18 @@ export class Shipyard implements ISalvable {
   }
   getTotalShips(design: ShipDesign): Decimal {
     return this.jobs
-      .filter(j => (j.design = design))
+      .filter(j => j.design === design)
       .map(j => j.quantity)
       .reduce((p, c) => p.plus(c), new Decimal(0));
   }
   isUpgrading(design: ShipDesign): boolean {
     return this.jobs.findIndex(j => j.newDesign && j.design === design) > -1;
+  }
+  delete(design: ShipDesign) {
+    this.jobs = this.jobs.filter(j => j.design !== design);
+  }
+  deleteJob(job: Job) {
+    this.jobs = this.jobs.filter(j => j !== job);
   }
   //#region Save and Load
   getSave(): any {
@@ -54,8 +60,10 @@ export class Shipyard implements ISalvable {
   load(data: any): boolean {
     if ("j" in data) {
       for (const jobData of data.j) {
-        const job = Job.FromData(jobData);
-        this.jobs.push(job);
+        if (jobData) {
+          const job = Job.FromData(jobData);
+          this.jobs.push(job);
+        }
       }
     }
     return true;

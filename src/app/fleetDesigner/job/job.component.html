@@ -27,18 +27,24 @@
           ></app-formatted-quantity>
         </span>
       </h4>
-      <p class="card-text">
-        <ng-container *ngIf="job.quantity?.gt(0)">
-          +
-          <app-formatted-quantity
-            [quantity]="job.quantity"
-            [integer]="true"
-          ></app-formatted-quantity>
-        </ng-container>
-        <ng-container *ngIf="job.newDesign">
-          design Upgrade
-        </ng-container>
-      </p>
+      <div class="clr-row clr-justify-content-between">
+        <p class="card-text">
+          <ng-container *ngIf="job.quantity?.gt(0)">
+            +
+            <app-formatted-quantity
+              [quantity]="job.quantity"
+              [integer]="true"
+            ></app-formatted-quantity>
+          </ng-container>
+          <ng-container *ngIf="job.newDesign">
+            design Upgrade
+          </ng-container>
+        </p>
+
+        <button class="btn btn-sm btn-link btn-danger" (click)="delete()">
+          Delete
+        </button>
+      </div>
     </div>
   </div>
 </div>

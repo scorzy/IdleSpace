@@ -4,9 +4,63 @@
 </h1>
 
 <div class="clr-row">
-  <div
-    class="clr-col-12	clr-col-sm-12	clr-col-md-12	clr-col-lg-6 clr-col-xl-6"
-  ></div>
+  <div class="clr-col-12	clr-col-sm-12	clr-col-md-12	clr-col-lg-6 clr-col-xl-6">
+    <p>
+      Naval Capacity:
+      <app-formatted-quantity
+        [quantity]="ms.game.fleetManager.totalWantedNavalCap"
+        [integer]="true"
+        [class.notEnough]="!ms.game.fleetManager.configurationValid"
+      >
+      </app-formatted-quantity>
+      /
+      <app-formatted-quantity
+        [quantity]="ms.game.fleetManager.totalNavalCapacity"
+        [integer]="true"
+      >
+      </app-formatted-quantity>
+    </p>
+
+    <!-- <clr-alert
+      *ngIf="!ms.game.fleetManager.configurationValid; else buy"
+      [clrAlertClosable]="false"
+      clrAlertType="warning"
+    >
+      <clr-alert-item>
+        <span class="alert-text">
+          Not enough naval capacity.
+        </span>
+      </clr-alert-item>
+    </clr-alert> -->
+
+    <div class="btn-group btn-primary">
+      <button
+        class="btn"
+        [disabled]="!ms.game.fleetManager.configurationValid"
+        (click)="save()"
+      >
+        Save
+      </button>
+      <button
+        class="btn btn-success"
+        [disabled]="!ms.game.fleetManager.configurationValid"
+        (click)="make()"
+      >
+        Reinforce fleet
+      </button>
+    </div>
+
+    <ng-container
+      *ngFor="let ds of ms.game.fleetManager.ships; trackBy: designId"
+    >
+      <h4>{{ ds.name }}</h4>
+      <ng5-slider
+        [(value)]="ds.wantQuantityTemp"
+        [options]="ds.sliderOptions"
+        (valueChange)="onSliderChange()"
+      ></ng5-slider>
+    </ng-container>
+  </div>
   <div class="clr-col-12	clr-col-sm-12	clr-col-md-12	clr-col-lg-6 clr-col-xl-6">
     <h4>Jobs:</h4>
     <div cdkDropList (cdkDropListDropped)="drop($event)" class="myBg drag-list">
