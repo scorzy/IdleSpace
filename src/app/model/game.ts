@@ -76,6 +76,7 @@ export class Game {
     this.resourceManager.reloadActions();
     this.resourceManager.unlockedResources.forEach(r => r.setABC());
     this.fleetManager.reloadActions();
+    this.fleetManager.isBuildingCheckAll();
   }
   reload() {
     this.resourceManager.loadPolynomial();

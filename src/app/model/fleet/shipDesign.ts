@@ -49,6 +49,7 @@ export class ShipDesign implements ISalvable, IBuyable {
   upgradePrice = new Decimal();
   weight = 1;
   isUpgrading = false;
+  isBuilding = false;
 
   wantQuantityTemp = 0;
   sliderOptions: SliderOptions = {
@@ -162,7 +163,7 @@ export class ShipDesign implements ISalvable, IBuyable {
           .max(0)
           .times(
             this.original.quantity.plus(
-              Shipyard.getInstance().getTotalShips(this)
+              Shipyard.getInstance().getTotalShips(this.original)
             )
           )
       : new Decimal();
@@ -301,5 +302,11 @@ export class ShipDesign implements ISalvable, IBuyable {
     this.isUpgrading = false;
 
     this.reload();
+    Shipyard.getInstance().adjust(this);
+  }
+  isBuildingCheck() {
+    this.isBuilding = Shipyard.getInstance()
+      .getTotalShips(this)
+      .gt(0);
   }
 }

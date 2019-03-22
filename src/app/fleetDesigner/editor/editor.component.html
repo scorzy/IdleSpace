@@ -6,7 +6,19 @@
       {{ design.name }} -
       {{ design.type.name }}
     </h1>
-    <div *ngIf="editMode; else buyMode">
+    <div *ngIf="design.editable">
+      <clr-alert
+        [clrAlertClosable]="false"
+        [clrAlertType]="'warning'"
+        *ngIf="design.isUpgrading"
+      >
+        <clr-alert-item>
+          <span class="alert-text">
+            This design is already upgrading!
+          </span>
+        </clr-alert-item>
+      </clr-alert>
+
       <form clrForm clr-form-compact>
         <clr-input-container>
           <label>Name:</label>
@@ -260,14 +272,14 @@
           <clr-button
             *ngIf="design.quantity.lt(1); else upgradeBtn"
             class="btn btn"
-            [disabled]="!design.editable.isValid || !canUpgrade"
+            [disabled]="!design.editable.isValid || design.isUpgrading"
             (click)="save()"
             ><clr-icon shape="floppy"></clr-icon>Save</clr-button
           >
           <ng-template #upgradeBtn>
             <clr-button
               class="btn btn"
-              [disabled]="!design.editable.isValid || !canUpgrade"
+              [disabled]="!design.editable.isValid || design.isUpgrading"
               (click)="save()"
               ><clr-icon shape="angle-double"></clr-icon>Upgrade</clr-button
             >
@@ -285,34 +297,9 @@
       </form>
     </div>
   </div>
-  <ng-template #buyMode>
-    <app-action [action]="design.buyAction"></app-action>
-    <br /><br />
-
-    <clr-alert
-      [clrAlertClosable]="false"
-      [clrAlertType]="'warning'"
-      *ngIf="design.isUpgrading"
-    >
-      <clr-alert-item>
-        <span class="alert-text">
-          This design is already upgrading!
-        </span>
-      </clr-alert-item>
-    </clr-alert>
-
-    <button
-      class="btn btn-primary"
-      (click)="edit()"
-      [disabled]="design.isUpgrading"
-    >
-      <clr-icon shape="cog"></clr-icon>
-      Edit
-    </button>
-  </ng-template>
 
   <div class="clr-col-md-auto col2">
-    <app-view [design]="design" [showDifference]="editMode"></app-view>
+    <app-view [design]="design" [showDifference]="true"></app-view>
   </div>
 </div>
 

@@ -76,6 +76,7 @@ export class FleetManager implements ISalvable {
   }
   deleteDesign(ds: ShipDesign) {
     this.ships = this.ships.filter(d => d !== ds);
+    Shipyard.getInstance().delete(ds);
   }
   getSave() {
     const data: any = {};
@@ -106,7 +107,9 @@ export class FleetManager implements ISalvable {
       s.isUpgrading = Shipyard.getInstance().isUpgrading(s);
     });
   }
-
+  isBuildingCheckAll() {
+    this.ships.forEach(s => s.isBuildingCheck());
+  }
   resetSliders() {
     this.ships.forEach(s => {
       s.wantQuantityTemp = s.wantQuantity.toNumber();

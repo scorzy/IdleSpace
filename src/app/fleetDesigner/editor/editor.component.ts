@@ -25,7 +25,6 @@ export class EditorComponent implements OnInit, OnChanges {
   getSizeName = getSizeName;
   deleteModal = false;
   changed = false;
-  editMode = false;
   canUpgrade = false;
   upgradeMessage = "";
   private subscriptions: Subscription[] = [];
@@ -37,7 +36,7 @@ export class EditorComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnChanges(changes: SimpleChanges) {
-     if (this.design) this.design.copy();
+    if (this.design) this.design.copy();
     if (this.design.modules.length === 0) {
       this.edit();
     }
@@ -46,12 +45,11 @@ export class EditorComponent implements OnInit, OnChanges {
     if (this.design.modules.length === 0) {
       this.edit();
     }
+    this.reloadCanBuy();
     this.subscriptions.push(
       this.ms.em.updateEmitter.subscribe(() => {
-        if (this.editMode) {
-          this.reloadCanBuy();
-          this.cd.markForCheck();
-        }
+        this.reloadCanBuy();
+        this.cd.markForCheck();
       })
     );
   }
@@ -104,16 +102,12 @@ export class EditorComponent implements OnInit, OnChanges {
     this.design.saveConfig();
     this.ms.em.designEmitter.emit(5);
     this.cd.markForCheck();
-    this.editMode = false;
   }
   revert() {
     if (this.design) this.design.copy();
     this.reload();
-    this.editMode = false;
   }
   edit() {
     if (this.design) this.design.copy();
-    this.editMode = true;
-    this.reloadCanBuy();
   }
 }

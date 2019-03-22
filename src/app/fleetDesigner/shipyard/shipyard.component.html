@@ -39,6 +39,7 @@
         [disabled]="!ms.game.fleetManager.configurationValid"
         (click)="save()"
       >
+        <clr-icon shape="floppy"></clr-icon>
         Save
       </button>
       <button
@@ -46,12 +47,18 @@
         [disabled]="!ms.game.fleetManager.configurationValid"
         (click)="make()"
       >
+        <clr-icon shape="cog"></clr-icon>
         Reinforce fleet
       </button>
     </div>
 
     <div *ngFor="let ds of ms.game.fleetManager.ships; trackBy: designId">
       <h4>
+        <clr-icon shape="angle-double" *ngIf="ds.isUpgrading"></clr-icon>
+        <clr-icon shape="cog" *ngIf="ds.isBuilding"></clr-icon>
+
+        <clr-icon [attr.shape]="ds.type.shape"></clr-icon>
+
         {{ ds.name }}
 
         <app-formatted-quantity

@@ -1,6 +1,7 @@
 import { ISalvable } from "../base/ISalvable";
 import { Job } from "./job";
 import { ShipDesign } from "../fleet/shipDesign";
+import { FleetManager } from "../fleet/fleetManager";
 
 export class Shipyard implements ISalvable {
   private static instance: Shipyard;
@@ -38,18 +39,29 @@ export class Shipyard implements ISalvable {
   }
   getTotalShips(design: ShipDesign): Decimal {
     return this.jobs
-      .filter(j => j.design === design)
+      .filter(j => j.design.id === design.id)
       .map(j => j.quantity)
       .reduce((p, c) => p.plus(c), new Decimal(0));
   }
   isUpgrading(design: ShipDesign): boolean {
-    return this.jobs.findIndex(j => j.newDesign && j.design === design) > -1;
+    return (
+      this.jobs.findIndex(j => j.newDesign && j.design.id === design.id) > -1
+    );
   }
   delete(design: ShipDesign) {
-    this.jobs = this.jobs.filter(j => j.design !== design);
+    this.jobs = this.jobs.filter(j => j.design.id !== design.id);
+    design.isUpgrading = this.isUpgrading(design);
   }
   deleteJob(job: Job) {
-    this.jobs = this.jobs.filter(j => j !== job);
+    this.jobs = this.jobs.filter(j => j.id !== job.id);
+    FleetManager.getInstance().upgradingCheck();
+  }
+  adjust(ds: ShipDesign) {
+    this.jobs
+      .filter(j => j.design.id === ds.id && j.quantity && j.quantity.gt(0))
+      .forEach(j => {
+        j.total = j.quantity.times(ds.price);
+      });
   }
   //#region Save and Load
   getSave(): any {
