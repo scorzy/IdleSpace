@@ -1,6 +1,5 @@
 import { ShipDesign } from "../fleet/shipDesign";
 import { FleetManager } from "../fleet/fleetManager";
-import { SaveComponent } from "src/app/options-nav/save/save.component";
 
 export class Job {
   private static lastId = 1;

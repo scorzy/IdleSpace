@@ -32,6 +32,7 @@ export class ShipyardComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(
       this.ms.em.updateEmitter.subscribe(() => {
+        this.onSliderChange();
         this.cd.markForCheck();
       })
     );

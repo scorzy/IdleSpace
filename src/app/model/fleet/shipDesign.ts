@@ -12,7 +12,7 @@ import { Sizes } from "./module";
 import { ShipData } from "src/app/workers/battleRequest";
 import { Job } from "../shipyard/job";
 import { Shipyard } from "../shipyard/shipyard";
-import { Options } from "ng5-slider/options";
+import { SliderOptions } from "../utility/sliderOptions";
 
 const MODULE_PRICE_INCREASE = 1.1;
 export const SIZE_MULTI = 0.1;
@@ -25,14 +25,14 @@ export class ShipDesign implements ISalvable, IBuyable {
 
   modules = new Array<DesignLine>();
 
-  totalDamage: Decimal;
-  totalArmor: Decimal;
-  totalShield: Decimal;
-  totalEnergy: Decimal;
-  armorDamage: Decimal;
-  shieldDamage: Decimal;
-  price: Decimal;
-  totalFleetPower: Decimal;
+  totalDamage = new Decimal();
+  totalArmor = new Decimal();
+  totalShield = new Decimal();
+  totalEnergy = new Decimal();
+  armorDamage = new Decimal();
+  shieldDamage = new Decimal();
+  price = new Decimal();
+  totalFleetPower = new Decimal();
 
   editable: ShipDesign;
   original: ShipDesign;
@@ -51,7 +51,7 @@ export class ShipDesign implements ISalvable, IBuyable {
   isUpgrading = false;
 
   wantQuantityTemp = 0;
-  sliderOptions: Options = {
+  sliderOptions: SliderOptions = {
     floor: 0,
     ceil: 100
   };
@@ -156,7 +156,7 @@ export class ShipDesign implements ISalvable, IBuyable {
       this.usedModulePoint <= this.type.modulePoint &&
       this.modules.length <= this.type.moduleCount;
 
-    this.upgradePrice = this.original
+    this.upgradePrice = !!this.original
       ? this.price
           .minus(this.original.price.div(2))
           .max(0)

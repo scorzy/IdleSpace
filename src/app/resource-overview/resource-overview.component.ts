@@ -10,7 +10,6 @@ import {
 import { Resource } from "../model/resource/resource";
 import { Subscription } from "rxjs";
 import { MainService } from "../main.service";
-import { Options } from "ng5-slider";
 import { Action } from "../model/actions/abstractAction";
 
 @Component({
@@ -23,10 +22,6 @@ export class ResourceOverviewComponent
   implements OnInit, OnDestroy, AfterViewInit {
   @Input() res: Resource;
   showSlider = false;
-  sliderOptions: Options = {
-    floor: 0,
-    ceil: 100
-  };
   private subscriptions: Subscription[] = [];
 
   constructor(public ms: MainService, private cd: ChangeDetectorRef) {}

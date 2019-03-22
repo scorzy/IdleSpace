@@ -50,16 +50,30 @@
       </button>
     </div>
 
-    <ng-container
-      *ngFor="let ds of ms.game.fleetManager.ships; trackBy: designId"
-    >
-      <h4>{{ ds.name }}</h4>
-      <ng5-slider
+    <div *ngFor="let ds of ms.game.fleetManager.ships; trackBy: designId">
+      <h4>
+        {{ ds.name }}
+
+        <app-formatted-quantity
+          [quantity]="ds.wantQuantityTemp"
+          [integer]="true"
+        ></app-formatted-quantity>
+      </h4>
+      <!-- <ng5-slider
         [(value)]="ds.wantQuantityTemp"
         [options]="ds.sliderOptions"
         (valueChange)="onSliderChange()"
-      ></ng5-slider>
-    </ng-container>
+      ></ng5-slider> -->
+      <input
+        type="range"
+        [name]="'sl' + ds.id"
+        [min]="ds.sliderOptions.floor"
+        [max]="ds.sliderOptions.ceil"
+        [step]="ds.sliderOptions.step"
+        [(ngModel)]="ds.wantQuantityTemp"
+        (change)="onSliderChange()"
+      />
+    </div>
   </div>
   <div class="clr-col-12	clr-col-sm-12	clr-col-md-12	clr-col-lg-6 clr-col-xl-6">
     <h4>Jobs:</h4>

@@ -37,7 +37,7 @@ export class EditorComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnChanges(changes: SimpleChanges) {
-    // if (this.design) this.design.copy();
+     if (this.design) this.design.copy();
     if (this.design.modules.length === 0) {
       this.edit();
     }

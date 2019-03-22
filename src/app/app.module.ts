@@ -12,7 +12,6 @@ import { ResourceComponent } from "./resource/resource.component";
 import { ResourceOverviewComponent } from "./resource-overview/resource-overview.component";
 import { MaterialListComponent } from "./material-list/material-list.component";
 import { TabComponent } from "./material-list/tab/tab.component";
-import { Ng5SliderModule } from "ng5-slider";
 import { ActionComponent } from "./action/action.component";
 import { ActionHeaderComponent } from "./action/action-header/action-header.component";
 import { ButtonsComponent } from "./action/buttons/buttons.component";
@@ -44,9 +43,9 @@ import { SearchComponent } from "./enemies/search/search.component";
 import { BattlefieldComponent } from "./battle/battlefield/battlefield.component";
 import { ZoneComponent } from "./battle/zone/zone.component";
 import { BattleService } from "./battle.service";
-import { FleetTableComponent } from './fleet-table/fleet-table.component';
-import { ShipyardComponent } from './fleetDesigner/shipyard/shipyard.component';
-import { JobComponent } from './fleetDesigner/job/job.component';
+import { FleetTableComponent } from "./fleet-table/fleet-table.component";
+import { ShipyardComponent } from "./fleetDesigner/shipyard/shipyard.component";
+import { JobComponent } from "./fleetDesigner/job/job.component";
 
 @NgModule({
   declarations: [
@@ -94,7 +93,6 @@ import { JobComponent } from './fleetDesigner/job/job.component';
     BrowserModule,
     AppRoutingModule,
     ClarityModule,
-    Ng5SliderModule,
     FormsModule,
     DragDropModule
   ],

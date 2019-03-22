@@ -19,10 +19,19 @@
         Operativity:
         <span class="monospace"> {{ res.operativity }}</span> %
       </h6>
-      <ng5-slider
+      <!-- <ng5-slider
         [(value)]="res.operativity"
         [options]="sliderOptions"
-      ></ng5-slider>
+      ></ng5-slider> -->
+
+      <input
+        type="range"
+        [name]="'slr' + res.id"
+        min="0"
+        max="100"
+        step="1"
+        [(ngModel)]="res.operativity"
+      />
     </div>
 
     <app-action
