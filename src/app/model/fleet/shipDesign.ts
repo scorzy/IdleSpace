@@ -302,7 +302,6 @@ export class ShipDesign implements ISalvable, IBuyable {
     this.isUpgrading = false;
 
     this.reload();
-    Shipyard.getInstance().adjust(this);
   }
   isBuildingCheck() {
     this.isBuilding = Shipyard.getInstance()

@@ -37,9 +37,12 @@ export class Shipyard implements ISalvable {
       .map(j => j.quantity.times(j.design.type.navalCapacity))
       .reduce((p, c) => p.plus(c), new Decimal(0));
   }
-  getTotalShips(design: ShipDesign): Decimal {
+  getTotalShips(
+    design: ShipDesign,
+    maxIndex = Number.POSITIVE_INFINITY
+  ): Decimal {
     return this.jobs
-      .filter(j => j.design.id === design.id)
+      .filter(j => j.design.id === design.id && this.jobs.indexOf(j) < maxIndex)
       .map(j => j.quantity)
       .reduce((p, c) => p.plus(c), new Decimal(0));
   }
@@ -56,12 +59,27 @@ export class Shipyard implements ISalvable {
     this.jobs = this.jobs.filter(j => j.id !== job.id);
     FleetManager.getInstance().upgradingCheck();
   }
-  adjust(ds: ShipDesign) {
-    this.jobs
-      .filter(j => j.design.id === ds.id && j.quantity && j.quantity.gt(0))
-      .forEach(j => {
-        j.total = j.quantity.times(ds.price);
-      });
+  /**
+   *  Reload total price
+   */
+  adjust() {
+    this.jobs.forEach(j => {
+      const index = this.jobs.indexOf(j);
+      if (j.quantity) {
+        const newDesign = this.jobs.find(
+          j2 => j2.newDesign && this.jobs.indexOf(j2) < index
+        );
+        const price = newDesign ? newDesign.newDesign.price : j.design.price;
+        j.total = j.quantity.times(price);
+      }
+      if (j.newDesign) {
+        const num = j.design.quantity.plus(this.getTotalShips(j.design, index));
+        j.total = j.newDesign.price
+          .minus(j.design.price.div(2))
+          .max(1)
+          .times(num);
+      }
+    });
   }
   //#region Save and Load
   getSave(): any {
