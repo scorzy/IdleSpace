@@ -26,6 +26,7 @@ export class BattleService {
     });
   }
   doBattle(input: BattleRequest, cb: (_: BattleResult) => void): void {
+    // console.log(input);
     const initial = Date.now();
     let playerShips = new Array<Ship>();
     let enemyShip = new Array<Ship>();
@@ -42,6 +43,8 @@ export class BattleService {
         const ship = new Ship();
         ship.id = ds.id;
         ship.armor = Decimal.fromDecimal(ds.totalArmor);
+        ship.originalArmor = new Decimal(ship.armor);
+        ship.explosionLevel = ds.explosionLevel;
         ship.shield = Decimal.fromDecimal(ds.totalShield);
         ds.modules.forEach(dl => {
           if (Decimal.fromDecimal(dl.computedDamage).gt(0)) {
@@ -58,8 +61,9 @@ export class BattleService {
         }
       });
     });
-    console.log("player ships: " + playerShips.length);
-    console.log("enemy ships: " + enemyShip.length);
+    // console.log("player ships: " + playerShips.length);
+    // console.log("enemy ships: " + enemyShip.length);
+
     //#endregion
     //#region Battle
     //  Up to 5 rounds
@@ -80,19 +84,53 @@ export class BattleService {
             if (target.shield.gt(0)) {
               const shieldPercent = weapon.shieldPercent / 100;
               const maxShieldDamage = damageToDo.times(shieldPercent);
-              target.shield = target.shield.minus(maxShieldDamage);
-              if (target.shield.lt(0)) {
-                const toDo = damageToDo.plus(target.shield);
-                damageToDo = toDo.div(shieldPercent);
+              //  Skip if damage <1% shield
+              if (maxShieldDamage.gte(target.shield.div(100))) {
+                target.shield = target.shield.minus(maxShieldDamage);
+                if (target.shield.lt(0)) {
+                  const toDo = damageToDo.plus(target.shield);
+                  damageToDo = toDo.div(shieldPercent);
+                } else {
+                  damageToDo = new Decimal(0);
+                }
               } else {
                 damageToDo = new Decimal(0);
               }
             }
             //  Damage to Armor
             if (damageToDo.gt(0)) {
-              target.armor = target.armor.minus(
-                damageToDo.times(weapon.armorPercent / 100)
-              );
+              const maxArmorDamage = damageToDo.times(weapon.armorPercent / 100);
+              //  Skip if damage < 1% armor
+              if (maxArmorDamage.gte(target.armor.div(100))) {
+                target.armor = target.armor.minus(maxArmorDamage);
+                //  Check explosion
+                // console.log(
+                //   target.armor.div(target.originalArmor).toNumber() +
+                //     " - " +
+                //     target.explosionLevel
+                // );
+                if (
+                  target.armor.gt(0) &&
+                  target.armor.div(target.originalArmor).toNumber() <
+                    target.explosionLevel / 100
+                ) {
+                  const prob =
+                    target.armor.div(target.originalArmor).toNumber() /
+                    (target.explosionLevel / 100);
+                  // console.log(
+                  //   "Expl:" +
+                  //     target.armor.toNumber() +
+                  //     " " +
+                  //     target.originalArmor.toNumber() +
+                  //     " " +
+                  //     prob
+                  // );
+                  if (Math.random() < prob) {
+                    //  Explode
+                    target.armor = new Decimal(-1);
+                  }
+                }
+              }
             }
           });
         });
@@ -103,6 +141,7 @@ export class BattleService {
       battleFleets = [playerShips, enemyShip]; //  just to be sure
     }
     //#endregion
+    //#region Return
     const ret = new BattleResult();
     if (enemyShip.length < 1) ret.result = "1";
     const retArr: Array<[ShipData[], Ship[], Array<[string, Decimal]>]> = [
@@ -120,11 +159,12 @@ export class BattleService {
 
     const diff = 1000 - Date.now() + initial;
     if (diff > 0) {
-      console.log("wait:" + diff);
+      // console.log("wait:" + diff);
       setTimeout(() => cb(ret), diff);
     } else {
       cb(ret);
     }
+    //#endregion
   }
   onBattleEnd(result: BattleResult): void {
     EnemyManager.GetInstance().onBattleEnd(result);

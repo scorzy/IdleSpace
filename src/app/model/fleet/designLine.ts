@@ -29,6 +29,7 @@ export class DesignLine {
       m => m.id === data.m
     );
     ret.size = data.s;
+    if ("l" in data) ret.level = data.l;
 
     return ret;
   }
@@ -47,6 +48,7 @@ export class DesignLine {
     const data: any = {};
     data.m = this.module.id;
     data.s = this.size;
+    data.l = this.level;
     return data;
   }
 }

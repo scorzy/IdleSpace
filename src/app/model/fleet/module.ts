@@ -37,6 +37,7 @@ export interface IModuleData {
   nextToUnlock?: string[];
   researchPrice?: number;
   shape?: string;
+  explosionChance?: number;
 }
 export class Module extends AbstractUnlockable {
   research: Research;
@@ -54,7 +55,8 @@ export class Module extends AbstractUnlockable {
     public armorPercent = 100,
     public shieldPercent = 100,
     public shield: Decimal = new Decimal(0),
-    public armor: Decimal = new Decimal(0)
+    public armor: Decimal = new Decimal(0),
+    public explosionChance = 0
   ) {
     super();
 
@@ -73,6 +75,7 @@ export class Module extends AbstractUnlockable {
     if (data.shieldPercent) ret.shieldPercent = data.shieldPercent;
     if (data.nextToUnlock) ret.nextToUnlock = data.nextToUnlock;
     if (data.researchPrice) ret.researchPrice = data.researchPrice;
+    if (data.explosionChance) ret.explosionChance = data.explosionChance;
     ret.shape = data.shape ? data.shape : "flask";
     return ret;
   }

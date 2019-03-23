@@ -79,6 +79,24 @@
     </tr>
 
     <tr>
+      <td class="left">Explosion Chance</td>
+      <td>
+        <app-formatted-quantity
+          [quantity]="design.explosionChance"
+        ></app-formatted-quantity>
+      </td>
+      <td *ngIf="showDifference">
+        <app-formatted-quantity
+          [quantity]="design.editable.explosionChance"
+          [ngClass]="{
+            notEnough: design.editable.explosionChance > design.explosionChance,
+            green: design.editable.explosionChance < design.explosionChance
+          }"
+        ></app-formatted-quantity>
+      </td>
+    </tr>
+
+    <tr>
       <td class="left">Armor Damage</td>
       <td>
         <app-formatted-quantity

@@ -1,6 +1,8 @@
 class Ship {
   id: string;
   armor: Decimal;
+  originalArmor: Decimal;
+  explosionLevel: number;
   shield: Decimal;
   modules = new Array<{
     damage: Decimal
@@ -12,8 +14,10 @@ class Ship {
     const ret = new Ship();
     ret.id = this.id;
     ret.armor = new Decimal(this.armor);
+    ret.originalArmor = new Decimal(this.armor);
     ret.shield = new Decimal(this.shield);
     ret.modules = this.modules;
+    ret.explosionLevel = this.explosionLevel;
 
     return ret;
   }

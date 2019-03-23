@@ -9,6 +9,7 @@ export class ShipData {
   totalArmor: Decimal;
   totalShield: Decimal;
   modules: IWeapon[];
+  explosionLevel = 30;
 }
 
 // tslint:disable-next-line: max-classes-per-file
