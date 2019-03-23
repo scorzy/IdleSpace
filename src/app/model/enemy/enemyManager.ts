@@ -23,11 +23,12 @@ export class EnemyManager implements ISalvable {
   generate() {
     this.allEnemy.push(Enemy.generate(1));
   }
-  attack(enemy: Enemy) {
+  attack(enemy: Enemy): boolean {
     if (this.currentEnemy) return false;
     this.currentEnemy = enemy;
     this.allEnemy = this.allEnemy.filter(e => e !== enemy);
     this.currentEnemy.generateZones();
+    return true;
   }
   getSave(): any {
     const data: any = {};

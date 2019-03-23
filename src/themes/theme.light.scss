@@ -65,9 +65,10 @@
 
 .nav-content {
   a.nav-link {
-    border-left: 3px solid #fff;
+    // border-left: 3px solid #fff;
     &.active {
-      border-color: #0079b8 !important;
+      // border-color: #0079b8 !important;
+      box-shadow: inset 3px 0 0 #0079b8;
     }
   }
 }

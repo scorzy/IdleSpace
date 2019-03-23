@@ -1,4 +1,3 @@
-
 import { Zone } from "./zone";
 import { ShipDesign } from "../fleet/shipDesign";
 import { MAX_NAVAL_CAPACITY } from "../fleet/fleetManager";
@@ -30,7 +29,7 @@ export class Enemy {
     const enemy = new Enemy();
     enemy.level = level;
     enemy.name = "Enemy " + enemy.id;
-    const moduleLevelMulti = random(1, 5);
+    const moduleLevelMulti = sample([1, 1.5, 2, 2.5, 3]);
     const moduleLevel = level * moduleLevelMulti;
     // moduleLevelMulti = moduleLevelMulti * (1 + SIZE_MULTI);
     const navalCap =

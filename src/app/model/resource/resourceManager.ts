@@ -155,11 +155,13 @@ export class ResourceManager implements ISalvable {
     this.habitableSpace = new Resource("hs");
     this.habitableSpace.shape = "world";
     this.miningDistrict = new Resource("md");
+    this.miningDistrict.shape = "miningD";
     this.crystalDistrict = new Resource("cd");
+    this.crystalDistrict.shape = "crystalD";
     this.districts = [
+      this.habitableSpace,
       this.miningDistrict,
-      this.crystalDistrict,
-      this.habitableSpace
+      this.crystalDistrict
     ];
     this.districts.forEach(d => {
       d.unlocked = true;

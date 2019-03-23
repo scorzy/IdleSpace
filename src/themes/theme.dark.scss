@@ -76,9 +76,9 @@ select {
 // clr-vertical-nav-group-children {
 .nav-content {
   a.nav-link {
-    border-left: 3px solid #404e60;
+    // border-left: 3px solid #404e60;
     &.active {
-      border-color: #49afd9 !important;
+      box-shadow: inset 3px 0 0 #49afd9;
     }
   }
 }

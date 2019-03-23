@@ -58,7 +58,10 @@ export class EnemyViewComponent implements OnInit, OnDestroy {
     return (this.enemy ? this.enemy.id : "") + "-" + mod.id;
   }
   attack() {
-    this.ms.game.enemyManager.attack(this.enemy);
+    const ret = this.ms.game.enemyManager.attack(this.enemy);
+    if (ret) {
+      this.router.navigateByUrl("/battle");
+    }
   }
   move(up = 1) {
     const index = this.ms.game.enemyManager.allEnemy.indexOf(this.enemy);
