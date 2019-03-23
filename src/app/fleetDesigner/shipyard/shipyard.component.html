@@ -19,21 +19,32 @@
         [integer]="true"
       >
       </app-formatted-quantity>
+      <br />
+      <!-- Progress:
+      <app-polynom
+        [a]="ms.game.resourceManager.shipyardProgress.a"
+        [b]="ms.game.resourceManager.shipyardProgress.b"
+        [c]="ms.game.resourceManager.shipyardProgress.c"
+      ></app-polynom>
+      <br /> -->
     </p>
 
-    <!-- <clr-alert
-      *ngIf="!ms.game.fleetManager.configurationValid; else buy"
-      [clrAlertClosable]="false"
-      clrAlertType="warning"
-    >
-      <clr-alert-item>
-        <span class="alert-text">
-          Not enough naval capacity.
-        </span>
-      </clr-alert-item>
-    </clr-alert> -->
+    <ng-container *ngIf="ms.game.resourceManager.shipyardX1.quantity.lte(0)">
+      <clr-alert [clrAlertType]="'warning'" [clrAlertClosable]="false">
+        <clr-alert-item>
+          <span class="alert-text">
+            You don't have any
+            <a [routerLink]="'/home/res/S1'">Worker Drone </a>
+          </span>
+        </clr-alert-item>
+      </clr-alert>
+      <br />
+    </ng-container>
 
-    <div class="btn-group btn-primary">
+    <div
+      *ngIf="ms.game.fleetManager.ships.length > 0; else noDesignAlert"
+      class="btn-group btn-primary"
+    >
       <button
         class="btn"
         [disabled]="!ms.game.fleetManager.configurationValid"
@@ -52,6 +63,17 @@
       </button>
     </div>
 
+    <ng-template #noDesignAlert>
+      <clr-alert [clrAlertClosable]="false">
+        <clr-alert-item>
+          <span class="alert-text">
+            You dont have any ship design. Make one
+            <a routerLink="/fleet/design/new">here</a>
+          </span>
+        </clr-alert-item>
+      </clr-alert>
+    </ng-template>
+
     <div *ngFor="let ds of ms.game.fleetManager.ships; trackBy: designId">
       <h4>
         <clr-icon shape="angle-double" *ngIf="ds.isUpgrading"></clr-icon>
@@ -66,11 +88,6 @@
           [integer]="true"
         ></app-formatted-quantity>
       </h4>
-      <!-- <ng5-slider
-        [(value)]="ds.wantQuantityTemp"
-        [options]="ds.sliderOptions"
-        (valueChange)="onSliderChange()"
-      ></ng5-slider> -->
       <input
         type="range"
         [name]="'sl' + ds.id"

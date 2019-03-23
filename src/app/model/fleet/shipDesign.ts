@@ -252,7 +252,6 @@ export class ShipDesign implements ISalvable, IBuyable {
     this.buyAction = new Action(
       "Q",
       new MultiPrice([
-        // new Price(ResourceManager.getInstance().alloy, this.price, 1),
         new Price(
           FleetManager.getInstance().freeNavalCapacity,
           this.type.navalCapacity,

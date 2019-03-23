@@ -97,6 +97,7 @@ export class ResourceManager implements ISalvable {
     this.computing.shape = "computing";
 
     this.shipyardProgress = new Resource("SP");
+    this.shipyardProgress.shape = "cog";
     //#endregion
     //#region Declarations
 
@@ -152,6 +153,7 @@ export class ResourceManager implements ISalvable {
 
     //      Space
     this.habitableSpace = new Resource("hs");
+    this.habitableSpace.shape = "world";
     this.miningDistrict = new Resource("md");
     this.crystalDistrict = new Resource("cd");
     this.districts = [
