@@ -15,28 +15,41 @@
     </clr-dg-cell>
     <clr-dg-cell>{{ ship.modules[0].level }}</clr-dg-cell>
     <clr-dg-row-detail *clrIfExpanded>
-      <table class="table table-compact table-noborder">
-        <thead>
-          <tr>
-            <th>Module</th>
-            <th>Size</th>
-            <th>Level</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let mod of ship.modules">
-            <td>
-              {{ mod.module.name }}
-            </td>
-            <td>
-              {{ mod.size | sizeName }}
-            </td>
-            <td>
-              {{ mod.level }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <clr-tabs>
+        <clr-tab>
+          <button clrTabLink id="link1">Info</button>
+          <clr-tab-content id="content1" *clrIfActive>
+            <app-view [design]="ship" [showDifference]="false"></app-view>
+          </clr-tab-content>
+        </clr-tab>
+        <clr-tab>
+          <button clrTabLink id="link1">Modules</button>
+          <clr-tab-content id="content1" *clrIfActive>
+            <table class="table table-compact table-noborder">
+              <thead>
+                <tr>
+                  <th>Module</th>
+                  <th>Size</th>
+                  <th>Level</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let mod of ship.modules">
+                  <td>
+                    {{ mod.module.name }}
+                  </td>
+                  <td>
+                    {{ mod.size | sizeName }}
+                  </td>
+                  <td>
+                    {{ mod.level }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </clr-tab-content>
+        </clr-tab>
+      </clr-tabs>
     </clr-dg-row-detail>
   </clr-dg-row>
 
