@@ -103,9 +103,10 @@ export class Resource extends AbstractUnlockable
       const effMulti = this.efficiencyMultiplier.getMultiplicativeBonus();
 
       this.products.forEach(prod => {
-        prod.prodPerSec = prod.ratio.plus(prodAdd);
-        if (prod.ratio.gt(0)) prod.ratio.plus(effAdd);
-        const totalMulti = prodMulti.times(prod.ratio.gt(0) ? effMulti : 1);
+        const positive = prod.ratio.gt(0);
+        prod.prodPerSec = prod.ratio.plus(prodAdd.times(positive ? 1 : -1));
+        if (positive) prod.ratio.plus(effAdd);
+        const totalMulti = prodMulti.times(positive ? effMulti : 1);
         prod.prodPerSec = prod.prodPerSec.times(totalMulti);
 
         //  Operativity

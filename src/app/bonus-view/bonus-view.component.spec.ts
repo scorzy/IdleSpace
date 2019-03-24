@@ -8,7 +8,6 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { MainService } from "../main.service";
 import { OptionsService } from "../options.service";
-import { Production } from "../model/production";
 import { getGame } from "../app.component.spec";
 
 describe("BonusViewComponent", () => {

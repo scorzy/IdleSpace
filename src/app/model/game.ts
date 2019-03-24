@@ -70,6 +70,9 @@ export class Game {
       this.resourceManager.shipyardProgress.quantity = new Decimal(0);
     }
 
+    this.resourceManager.limitedResources.forEach(r => {
+      r.quantity = r.quantity.min(r.limit);
+    });
     this.resourceManager.loadPolynomial();
     if (this.isPaused) this.resourceManager.loadEndTime();
 
@@ -100,6 +103,10 @@ export class Game {
     this.fleetManager.load(data.f);
     if ("w" in data) this.enemyManager.load(data.w);
     if ("s" in data) this.shipyard.load(data.s);
+
+    // this.resourceManager.habitableSpace.quantity = new Decimal(1e20);
+    // this.resourceManager.miningDistrict.quantity = new Decimal(1e20);
+    // this.resourceManager.crystalDistrict.quantity = new Decimal(1e20);
 
     this.fleetManager.upgradingCheck();
     this.reload();

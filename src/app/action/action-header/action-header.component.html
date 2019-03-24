@@ -1,6 +1,7 @@
 <h6>
   <clr-icon *ngIf="action.shape" [attr.shape]="action.shape"></clr-icon>
   {{ action.name }}
+  <app-cant-buy-signposts [action]="action"></app-cant-buy-signposts>
   <span *ngIf="action.showNum"
     >(
     <app-formatted-quantity
@@ -11,3 +12,4 @@
     )</span
   >
 </h6>
+<!-- *ngIf="action.showTime && !action.canBuy" -->

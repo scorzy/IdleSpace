@@ -26,7 +26,8 @@
     class="btn btn-sm w-100"
     disabled
   >
-    Can't buy.
+    {{ this.action.alertMessage ? "Nothing to Refund" : "Can't buy" }}
+
     <span *ngIf="action.showTime && !action.isCapped()">
       Available in {{ action.availableIn | endIn }}
     </span>
@@ -47,10 +48,6 @@
   >
     Can't buy. Skip {{ minuteSkip }} minutes
   </button>
-  <app-cant-buy-signposts
-    *ngIf="action.showTime && !action.canBuy"
-    [action]="action"
-  ></app-cant-buy-signposts>
 
   <button
     *ngIf="action.canBuy"
@@ -58,7 +55,7 @@
     (click)="buyOrModal(action.numWanted)"
     [disabled]="!action.canBuyWanted"
   >
-    Get
+    {{ this.action.alertMessage ? "Refund" : "Get" }}
     <app-formatted-quantity
       *ngIf="!action.isLimited || action.limit.gte(2)"
       [quantity]="action.numWanted"
@@ -71,7 +68,7 @@
     class="btn btn-sm w-100"
     (click)="buyOrModal(action.maxBuy.div(2).floor())"
   >
-    Get
+    {{ this.action.alertMessage ? "Refund" : "Get" }}
     <app-formatted-quantity
       [quantity]="getHalfBuy()"
       [integer]="true"
@@ -83,7 +80,7 @@
     class="btn btn-sm w-100"
     (click)="buyOrModal(action.maxBuy)"
   >
-    Get
+    {{ this.action.alertMessage ? "Refund" : "Get" }}
     <app-formatted-quantity
       [quantity]="getMaxBuy()"
       [integer]="true"

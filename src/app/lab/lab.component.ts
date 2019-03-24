@@ -66,6 +66,6 @@ export class LabComponent implements OnInit, OnDestroy {
     return res.id;
   }
   sortPrice(){
-    this.ms.game.researchManager.toDo.sort( (a,b)=> a.total.minus(b.total).toNumber() )
+    this.ms.game.researchManager.toDo.sort( (a,b)=> a.total.minus(b.total).toNumber() );
   }
 }

@@ -14,15 +14,19 @@
       </clr-alert-item>
     </clr-alert>
 
+    <clr-alert *ngIf="isFinite(res.fullIn)" [clrAlertClosable]="false">
+      <clr-alert-item>
+        <span class="alert-text">
+          {{ res.name }} full in {{ res.fullIn | endIn }}
+        </span>
+      </clr-alert-item>
+    </clr-alert>
+
     <div *ngIf="showSlider && res?.products.length > 0">
       <h6>
         Operativity:
         <span class="monospace"> {{ res.operativity }}</span> %
       </h6>
-      <!-- <ng5-slider
-        [(value)]="res.operativity"
-        [options]="sliderOptions"
-      ></ng5-slider> -->
 
       <input
         type="range"

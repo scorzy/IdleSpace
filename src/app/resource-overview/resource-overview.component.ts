@@ -23,6 +23,7 @@ export class ResourceOverviewComponent
   @Input() res: Resource;
   showSlider = false;
   private subscriptions: Subscription[] = [];
+  isFinite = Number.isFinite;
 
   constructor(public ms: MainService, private cd: ChangeDetectorRef) {}
   ngOnInit() {

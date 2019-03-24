@@ -7,6 +7,7 @@ import { MultiPrice } from "../prices/multiPrice";
 import { Price } from "../prices/price";
 import { Action } from "../actions/abstractAction";
 import { Shipyard } from "../shipyard/shipyard";
+import { Bonus } from "../bonus/bonus";
 
 const TIER_2_COST_MULTI = 100;
 const TIER_3_COST_MULTI = 1000;
@@ -109,6 +110,9 @@ export class ResourceManager implements ISalvable {
     this.metalX3 = new Resource("m3");
     this.metal.addGenerator(this.metalX1);
     this.energy.addGenerator(this.metalX1, -1);
+    this.metalX1.productionMultiplier.additiveBonus.push(
+      new Bonus(this.metalX2, 0.1)
+    );
 
     //      Crystal
     this.crystalX1 = new Resource("c1");
@@ -118,6 +122,9 @@ export class ResourceManager implements ISalvable {
     this.crystalX3 = new Resource("c3");
     this.crystal.addGenerator(this.crystalX1);
     this.energy.addGenerator(this.crystalX1, -1);
+    this.crystalX1.productionMultiplier.additiveBonus.push(
+      new Bonus(this.crystalX2, 0.1)
+    );
 
     //      Alloy
     this.alloyX1 = new Resource("a1");
@@ -125,6 +132,9 @@ export class ResourceManager implements ISalvable {
     this.alloyX3 = new Resource("a3");
     this.alloy.addGenerator(this.alloyX1);
     this.energy.addGenerator(this.alloyX1, -1);
+    this.alloyX1.productionMultiplier.additiveBonus.push(
+      new Bonus(this.alloyX2, 0.1)
+    );
 
     //      Energy
     this.energy.unlocked = true;
@@ -135,6 +145,9 @@ export class ResourceManager implements ISalvable {
     this.energyX1.unlocked = true;
     this.energyX1.quantity = new Decimal(3);
     this.energy.addGenerator(this.energyX1);
+    this.energyX1.productionMultiplier.additiveBonus.push(
+      new Bonus(this.energyX2, 0.1)
+    );
 
     //      Computing
     this.computingX1 = new Resource("f1");
@@ -150,6 +163,9 @@ export class ResourceManager implements ISalvable {
     this.shipyardProgress.addGenerator(this.shipyardX1);
     this.alloy.addGenerator(this.shipyardX1, -1);
     this.energy.addGenerator(this.shipyardX1, -1);
+    this.shipyardX1.productionMultiplier.additiveBonus.push(
+      new Bonus(this.shipyardX2, 0.1)
+    );
 
     //      Space
     this.habitableSpace = new Resource("hs");
