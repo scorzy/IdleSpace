@@ -1,0 +1,104 @@
+<table class="table table-compact">
+  <thead>
+    <tr>
+      <th class="left">Bonus</th>
+      <th>Effect</th>
+      <th>Quantity</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Base -->
+    <tr>
+      <td class="left">Base</td>
+      <td></td>
+      <td></td>
+      <td>
+        <app-formatted-quantity
+          [class.notEnough]="production.ratio.lt(0)"
+          [quantity]="production.ratio"
+        ></app-formatted-quantity>
+      </td>
+    </tr>
+    <!-- Additive Bonus -->
+    <tr
+      *ngIf="production.producer.productionMultiplier.additiveBonus.length > 0"
+    >
+      <th colspan="4">Additive bonus</th>
+    </tr>
+    <tr
+      *ngFor="
+        let item of production.producer.productionMultiplier.additiveBonus.concat(
+          production.ratio.lt(0)
+            ? production.producer.efficiencyMultiplier.additiveBonus
+            : []
+        );
+        trackBy: bonusAddId
+      "
+    >
+      <td class="left">{{ item.base.name }}</td>
+      <td>
+        <app-formatted-quantity
+          [quantity]="item.base.quantity"
+        ></app-formatted-quantity>
+      </td>
+      <td>
+        <app-formatted-quantity
+          [quantity]="item.quantity"
+        ></app-formatted-quantity>
+      </td>
+      <td>
+        <app-formatted-quantity
+          [quantity]="item.quantity.times(item.base.quantity)"
+        ></app-formatted-quantity>
+      </td>
+    </tr>
+
+    <!-- Multiplicative Bonus -->
+    <tr>
+      <th colspan="4">Multiplicative Bonus</th>
+    </tr>
+    <tr
+      *ngFor="
+        let item of production.producer.productionMultiplier.multiplicativeBonus.concat(
+          production.ratio.lt(0)
+            ? production.producer.efficiencyMultiplier.multiplicativeBonus
+            : []
+        );
+        trackBy: bonusMulId
+      "
+    >
+      <td class="left">{{ item.base.name }}</td>
+      <td>
+        <app-formatted-quantity
+          [quantity]="item.base.quantity"
+        ></app-formatted-quantity>
+      </td>
+      <td>
+        <app-formatted-quantity
+          [quantity]="item.quantity"
+        ></app-formatted-quantity>
+      </td>
+      <td>
+        <app-formatted-quantity
+          [quantity]="item.quantity.times(item.base.quantity)"
+        ></app-formatted-quantity>
+      </td>
+    </tr>
+
+    <!-- Operativity -->
+    <tr>
+      <td class="left">
+        Operativity
+      </td>
+      <td></td>
+      <td></td>
+      <td>
+        <app-formatted-quantity
+          [quantity]="production.producer.operativity"
+        ></app-formatted-quantity>
+        %
+      </td>
+    </tr>
+  </tbody>
+</table>

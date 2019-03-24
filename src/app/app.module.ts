@@ -46,6 +46,7 @@ import { BattleService } from "./battle.service";
 import { FleetTableComponent } from "./fleet-table/fleet-table.component";
 import { ShipyardComponent } from "./fleetDesigner/shipyard/shipyard.component";
 import { JobComponent } from "./fleetDesigner/job/job.component";
+import { BonusViewComponent } from './bonus-view/bonus-view.component';
 
 @NgModule({
   declarations: [
@@ -86,7 +87,8 @@ import { JobComponent } from "./fleetDesigner/job/job.component";
     ZoneComponent,
     FleetTableComponent,
     ShipyardComponent,
-    JobComponent
+    JobComponent,
+    BonusViewComponent
   ],
   imports: [
     BrowserAnimationsModule,

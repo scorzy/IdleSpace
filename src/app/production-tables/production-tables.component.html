@@ -25,9 +25,7 @@
         </span>
       </clr-dg-cell>
       <clr-dg-row-detail *clrIfExpanded>
-        <!-- <app-production-signposts
-          [production]="product"
-        ></app-production-signposts> -->
+        <app-bonus-view [production]="product"></app-bonus-view>
       </clr-dg-row-detail>
     </clr-dg-row>
 
@@ -69,6 +67,10 @@
           </app-formatted-quantity>
         </span>
       </clr-dg-cell>
+
+      <clr-dg-row-detail *clrIfExpanded>
+        <app-bonus-view [production]="producer"></app-bonus-view>
+      </clr-dg-row-detail>
     </clr-dg-row>
 
     <clr-dg-footer>

@@ -5,12 +5,12 @@ import { descriptions } from "../descriptions";
 import { IBuyable } from "../base/IBuyable";
 import { BuyAction } from "../actions/buyAction";
 import { MultiPrice } from "../prices/multiPrice";
-import { Multiplier } from "../base/multiplier";
 import { ResourceManager } from "./resourceManager";
 import { Action } from "../actions/abstractAction";
 import { RefundAction } from "../actions/refundAction";
 import { Price } from "../prices/price";
 import { IHasQuantity } from "../base/IHasQuantity";
+import { BonusStack } from "../bonus/bonusStack";
 
 export class Resource extends AbstractUnlockable
   implements ISpendable, IBuyable {
@@ -38,14 +38,15 @@ export class Resource extends AbstractUnlockable
   buyAction: BuyAction;
   refundAction: RefundAction;
 
-  efficiencyMulti = new Array<Multiplier>();
-
   isLimited = false;
   isCapped = false;
   fullIn: number = Number.POSITIVE_INFINITY;
   limit = new Decimal(Number.POSITIVE_INFINITY);
   limitStorage: IHasQuantity;
   workerPerMine = new Decimal(10);
+
+  productionMultiplier = new BonusStack();
+  efficiencyMultiplier = new BonusStack();
 
   constructor(public id: string) {
     super();
@@ -96,13 +97,18 @@ export class Resource extends AbstractUnlockable
   }
   reloadProd() {
     if (this.operativity > 0) {
-      let prodMulti = new Decimal(1);
-      this.efficiencyMulti.forEach(eff => {
-        prodMulti = prodMulti.plus(eff.getBonus());
-      });
+      const prodAdd = this.productionMultiplier.getAdditiveBonus();
+      const prodMulti = this.productionMultiplier.getMultiplicativeBonus();
+      const effAdd = this.efficiencyMultiplier.getAdditiveBonus();
+      const effMulti = this.efficiencyMultiplier.getMultiplicativeBonus();
 
       this.products.forEach(prod => {
-        prod.prodPerSec = prod.ratio.times(prodMulti);
+        prod.prodPerSec = prod.ratio.plus(prodAdd);
+        if (prod.ratio.gt(0)) prod.ratio.plus(effAdd);
+        const totalMulti = prodMulti.times(prod.ratio.gt(0) ? effMulti : 1);
+        prod.prodPerSec = prod.prodPerSec.times(totalMulti);
+
+        //  Operativity
         prod.prodPerSec = prod.prodPerSec.times(this.operativity / 100);
       });
     } else {
@@ -154,6 +160,7 @@ export class Resource extends AbstractUnlockable
     this.b = new Decimal(0);
     this.c = new Decimal(0);
   }
+  //#region Save and Load
   getSave(): any {
     const data = super.getSave();
     if (!this.quantity.eq(0)) data.q = this.quantity;
@@ -179,4 +186,5 @@ export class Resource extends AbstractUnlockable
     this.unlockedActions = this.actions.filter(a => a.unlocked);
     return true;
   }
+  //#endregion
 }

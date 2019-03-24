@@ -1,6 +1,5 @@
-
-import { IHasQuantity } from "../base/IHasQuantity";
+import { IResource } from "../base/iResource";
 
 export class Bonus {
-  constructor(public base: IHasQuantity, public quantity: Decimal) {}
+  constructor(public base: IResource, public quantity: Decimal) {}
 }

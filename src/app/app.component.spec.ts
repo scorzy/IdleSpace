@@ -12,13 +12,6 @@ import { Resource } from "./model/resource/resource";
 import { MultiPrice } from "./model/prices/multiPrice";
 import { Price } from "./model/prices/price";
 
-// export function getMainService(): MainService {
-//   // const ms = new MainService(new OptionsService());
-//   const ms = jasmine.createSpyObj("MainService", ["update"]);
-//   ms.game = new Game();
-//   return ms;
-// }
-
 export function getGame(): Game {
   return new Game();
 }
