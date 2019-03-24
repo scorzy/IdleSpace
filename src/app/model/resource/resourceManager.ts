@@ -24,7 +24,7 @@ export class ResourceManager implements ISalvable {
   tierGroups: ResourceGroup[];
   unlockedTierGroups: ResourceGroup[];
 
-  // #region Resources
+  //#region Resources
   metal: Resource;
   crystal: Resource;
   alloy: Resource;
@@ -110,9 +110,6 @@ export class ResourceManager implements ISalvable {
     this.metalX3 = new Resource("m3");
     this.metal.addGenerator(this.metalX1);
     this.energy.addGenerator(this.metalX1, -1);
-    this.metalX1.productionMultiplier.additiveBonus.push(
-      new Bonus(this.metalX2, 0.1)
-    );
 
     //      Crystal
     this.crystalX1 = new Resource("c1");
@@ -122,9 +119,6 @@ export class ResourceManager implements ISalvable {
     this.crystalX3 = new Resource("c3");
     this.crystal.addGenerator(this.crystalX1);
     this.energy.addGenerator(this.crystalX1, -1);
-    this.crystalX1.productionMultiplier.additiveBonus.push(
-      new Bonus(this.crystalX2, 0.1)
-    );
 
     //      Alloy
     this.alloyX1 = new Resource("a1");
@@ -145,9 +139,6 @@ export class ResourceManager implements ISalvable {
     this.energyX1.unlocked = true;
     this.energyX1.quantity = new Decimal(3);
     this.energy.addGenerator(this.energyX1);
-    this.energyX1.productionMultiplier.additiveBonus.push(
-      new Bonus(this.energyX2, 0.1)
-    );
 
     //      Computing
     this.computingX1 = new Resource("f1");
@@ -163,9 +154,6 @@ export class ResourceManager implements ISalvable {
     this.shipyardProgress.addGenerator(this.shipyardX1);
     this.alloy.addGenerator(this.shipyardX1, -1);
     this.energy.addGenerator(this.shipyardX1, -1);
-    this.shipyardX1.productionMultiplier.additiveBonus.push(
-      new Bonus(this.shipyardX2, 0.1)
-    );
 
     //      Space
     this.habitableSpace = new Resource("hs");
@@ -237,11 +225,7 @@ export class ResourceManager implements ISalvable {
       new MultiPrice([new Price(this.metal, 100), new Price(this.crystal, 100)])
     );
     this.computingX1.generateBuyAction(
-      new MultiPrice([
-        new Price(this.metal, 100),
-        new Price(this.crystal, 200),
-        new Price(this.habitableSpace, 1, 1)
-      ])
+      new MultiPrice([new Price(this.metal, 100), new Price(this.crystal, 200)])
     );
     this.shipyardX1.generateBuyAction(
       new MultiPrice([new Price(this.alloy, 100)])
@@ -290,8 +274,16 @@ export class ResourceManager implements ISalvable {
       const t2 = this.tier2[i];
       const t3 = this.tier3[i];
 
+      //  Add Bonus
+      // t1.productionMultiplier.additiveBonus.push(new Bonus(t2, 0.1));
+      t1.efficiencyMultiplier.additiveBonus.push(new Bonus(t3, 0.1));
+
       t1.addGenerator(t2);
       t2.addGenerator(t3);
+
+      this.energy.addGenerator(t2, -10);
+      this.energy.addGenerator(t3, -100);
+
       const ba = t1.buyAction;
       if (ba) {
         ba.multiPrice.prices.forEach(p => {
@@ -344,7 +336,7 @@ export class ResourceManager implements ISalvable {
     this.crystalX1.actions.push(buyCrystalMine);
     this.crystalX1.limitStorage = buyCrystalMine;
 
-    //  Energy
+    //  Energy Battery
     const buyBattery = new Action(
       "P",
       new MultiPrice([
@@ -374,6 +366,22 @@ export class ResourceManager implements ISalvable {
     buyEnergyPlant.name = "Energy Plant";
     this.energyX1.actions.push(buyEnergyPlant);
     this.energyX1.limitStorage = buyEnergyPlant;
+
+    //  Supercomputer
+    const buySuperComputer = new Action(
+      "L",
+      new MultiPrice([
+        new Price(this.metal, 1500),
+        new Price(this.crystal, 1000),
+        new Price(this.habitableSpace, 1, 1)
+      ])
+    );
+    buySuperComputer.afterBuy = () => {
+      this.computingX1.reloadLimit();
+    };
+    buySuperComputer.name = "Super Computer";
+    this.computingX1.actions.push(buySuperComputer);
+    this.computingX1.limitStorage = buySuperComputer;
 
     //  Alloy Foundry
     const buyFoundry = new Action(
@@ -416,6 +424,7 @@ export class ResourceManager implements ISalvable {
       }
       this.shipyardProgress.isCapped = this.shipyardProgress.limit.lte(0);
     };
+
     //#endregion
 
     this.limited = [
@@ -423,6 +432,7 @@ export class ResourceManager implements ISalvable {
       this.crystalX1,
       this.alloyX1,
       this.energyX1,
+      this.computingX1,
       this.energy,
       this.shipyardProgress,
       this.shipyardX1

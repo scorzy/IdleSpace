@@ -28,7 +28,7 @@ export const descriptions = {
     md: ["Mining District", ""],
     cd: ["Crystal District", ""],
 
-    f1: ["Super Computer", ""],
+    f1: ["CPU", ""],
     f2: ["Super Computing Center", ""],
     f3: ["Computing 3", ""],
 

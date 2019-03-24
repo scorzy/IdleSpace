@@ -71,7 +71,16 @@ export class Game {
     }
 
     this.resourceManager.limitedResources.forEach(r => {
-      r.quantity = r.quantity.min(r.limit);
+      if (r.quantity.gt(r.limit)) {
+        const diff = r.limit.minus(r.quantity);
+        r.generators[0].producer.products.forEach(ref => {
+          ref.product.quantity = ref.product.quantity.minus(
+            diff.times(ref.prodPerSec)
+          );
+        });
+
+        r.quantity = r.limit;
+      }
     });
     this.resourceManager.loadPolynomial();
     if (this.isPaused) this.resourceManager.loadEndTime();
@@ -104,9 +113,13 @@ export class Game {
     if ("w" in data) this.enemyManager.load(data.w);
     if ("s" in data) this.shipyard.load(data.s);
 
-    // this.resourceManager.habitableSpace.quantity = new Decimal(1e20);
-    // this.resourceManager.miningDistrict.quantity = new Decimal(1e20);
-    // this.resourceManager.crystalDistrict.quantity = new Decimal(1e20);
+    this.resourceManager.habitableSpace.quantity = new Decimal(100);
+    this.resourceManager.miningDistrict.quantity = new Decimal(100);
+    this.resourceManager.crystalDistrict.quantity = new Decimal(100);
+
+    this.resourceManager.materials.forEach(m => {
+      m.quantity = new Decimal(1e20);
+    });
 
     this.fleetManager.upgradingCheck();
     this.reload();

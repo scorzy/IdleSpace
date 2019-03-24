@@ -105,7 +105,7 @@ export class Resource extends AbstractUnlockable
       this.products.forEach(prod => {
         const positive = prod.ratio.gt(0);
         prod.prodPerSec = prod.ratio.plus(prodAdd.times(positive ? 1 : -1));
-        if (positive) prod.ratio.plus(effAdd);
+        if (positive) prod.prodPerSec = prod.prodPerSec.plus(effAdd);
         const totalMulti = prodMulti.times(positive ? effMulti : 1);
         prod.prodPerSec = prod.prodPerSec.times(totalMulti);
 

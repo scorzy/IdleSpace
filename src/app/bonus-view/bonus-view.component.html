@@ -1,9 +1,9 @@
-<table class="table table-compact">
+<table class="table table-compact table-noborder">
   <thead>
     <tr>
       <th class="left">Bonus</th>
-      <th>Effect</th>
       <th>Quantity</th>
+      <th>Effect</th>
       <th>Total</th>
     </tr>
   </thead>
@@ -29,7 +29,7 @@
     <tr
       *ngFor="
         let item of production.producer.productionMultiplier.additiveBonus.concat(
-          production.ratio.lt(0)
+          production.ratio.gt(0)
             ? production.producer.efficiencyMultiplier.additiveBonus
             : []
         );
@@ -61,7 +61,7 @@
     <tr
       *ngFor="
         let item of production.producer.productionMultiplier.multiplicativeBonus.concat(
-          production.ratio.lt(0)
+          production.ratio.gt(0)
             ? production.producer.efficiencyMultiplier.multiplicativeBonus
             : []
         );

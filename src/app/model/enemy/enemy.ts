@@ -120,6 +120,18 @@ export class Enemy {
       //  Planet Reward for last row zones
       for (let i = 9; i < 100; i += 10) {
         this.zones[i].reward = Reward.HabitableSpace;
+        let otherZones = new Array<Zone>();
+        for (let k = 1; k < 10; k++) otherZones.push(this.zones[i - k]);
+        for (let j = 0; j < 2; j++) {
+          const rand = sample(otherZones);
+          rand.reward = Reward.MetalMine;
+          otherZones = otherZones.filter(z => !z.reward);
+        }
+        for (let j = 0; j < 2; j++) {
+          const rand = sample(otherZones);
+          rand.reward = Reward.CrystalMine;
+          otherZones = otherZones.filter(z => !z.reward);
+        }
       }
 
       this.zones.forEach(z => z.reload());
