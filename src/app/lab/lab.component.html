@@ -61,17 +61,20 @@
         Research multiplier:
         <app-formatted-quantity [quantity]="resMulti"></app-formatted-quantity
         ><br />
+        <span>Computing is increasing at: </span>
+        <app-polynom
+          [a]="ms.game.resourceManager.computing.a"
+          [b]="ms.game.resourceManager.computing.b"
+          [c]="ms.game.resourceManager.computing.c"
+        >
+        </app-polynom>
+        <br />
         Research /s:
         <app-formatted-quantity [quantity]="resPerSec"></app-formatted-quantity>
       </p>
-
-      <!-- <span>Your Computing is increasing at: </span>
-      <app-polynom
-        [a]="ms.game.resourceManager.computing.a"
-        [b]="ms.game.resourceManager.computing.b"
-        [c]="ms.game.resourceManager.computing.c"
-      >
-      </app-polynom> -->
+      <button class="btn btn-outline" (click)="sortPrice()">
+        Sort by price
+      </button>
     </div>
   </div>
 </div>

@@ -65,4 +65,7 @@ export class LabComponent implements OnInit, OnDestroy {
   getResId(index: number, res: Research) {
     return res.id;
   }
+  sortPrice(){
+    this.ms.game.researchManager.toDo.sort( (a,b)=> a.total.minus(b.total).toNumber() )
+  }
 }
