@@ -29,7 +29,16 @@ export const ResearchData: IResearchData[] = [
     price: 100,
     description: "Unlock Shipyard",
     resourceToUnlock: ["S1", "SP"],
-    researchToUnlock: ["c", "m2"]
+    researchToUnlock: ["c", "X1"]
+  },
+  {
+    id: "X1",
+    name: "Telescope",
+    shape: "radar",
+    price: 100,
+    description: "Unlock Telescope",
+    resourceToUnlock: ["X1", "XP"],
+    researchToUnlock: ["m2"]
   },
   {
     id: "c",
@@ -101,7 +110,7 @@ export const ResearchData: IResearchData[] = [
     price: 100,
     description: "Unlock Mining Drone factories",
     resourceToUnlock: ["c2"],
-    researchToUnlock: ["a2", "e2", "f2"]
+    researchToUnlock: ["a2", "e2", "f2", "X2"]
   },
   {
     id: "a2",
@@ -119,6 +128,14 @@ export const ResearchData: IResearchData[] = [
     price: 100,
     description: "Unlock Alloy Drone factories",
     resourceToUnlock: ["S2"]
+  },
+  {
+    id: "X2",
+    name: "Telescope 2",
+    shape: "radar",
+    price: 100,
+    description: "Unlock Telescope 2",
+    resourceToUnlock: ["X2"]
   },
   {
     id: "e2",
@@ -153,7 +170,7 @@ export const ResearchData: IResearchData[] = [
     price: 100,
     description: "Unlock Mining Drone factories",
     resourceToUnlock: ["c3"],
-    researchToUnlock: ["a3", "e3", "f3"]
+    researchToUnlock: ["a3", "e3", "f3", "X3"]
   },
   {
     id: "a3",
@@ -171,6 +188,14 @@ export const ResearchData: IResearchData[] = [
     price: 100,
     description: "Unlock Alloy Drone factories",
     resourceToUnlock: ["S3"]
+  },
+  {
+    id: "X3",
+    name: "Telescope 3",
+    shape: "radar",
+    price: 100,
+    description: "Unlock Telescope 3",
+    resourceToUnlock: ["X3"]
   },
   {
     id: "e3",

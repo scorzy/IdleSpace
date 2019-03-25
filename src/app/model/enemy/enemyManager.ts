@@ -15,14 +15,19 @@ export class EnemyManager implements ISalvable {
   battleService: BattleService;
   inBattle = false;
 
+  currentSearch = new Decimal(0);
+  totalSearch = new Decimal(0);
+  requestedLevel = 1;
+  isSearching = false;
+
   static GetInstance(): EnemyManager {
     return EnemyManager.instance;
   }
   constructor() {
     EnemyManager.instance = this;
   }
-  generate() {
-    this.allEnemy.push(Enemy.generate(1));
+  generate(level = 1) {
+    this.allEnemy.push(Enemy.generate(level));
   }
   attack(enemy: Enemy): boolean {
     if (this.currentEnemy) return false;
@@ -31,36 +36,7 @@ export class EnemyManager implements ISalvable {
     this.currentEnemy.generateZones();
     return true;
   }
-  getSave(): any {
-    const data: any = {};
-    if (this.maxLevel > 1) data.l = this.maxLevel;
-    if (!!this.currentEnemy) data.c = this.currentEnemy.getSave();
-    if (this.allEnemy.length > 0) data.a = this.allEnemy.map(e => e.getSave());
 
-    return data;
-  }
-  load(data: any): boolean {
-    if ("l" in data) this.maxLevel = data.l;
-    if ("c" in data) this.currentEnemy = Enemy.fromData(data.c, true);
-    if ("a" in data) {
-      for (const enemyData of data.a) {
-        this.allEnemy.push(Enemy.fromData(enemyData));
-      }
-    }
-    if (
-      this.currentEnemy &&
-      (!this.currentEnemy.zones || this.currentEnemy.zones.length !== 100)
-    ) {
-      this.currentEnemy.generateZones();
-    }
-    if (this.currentEnemy && this.currentEnemy.zones) {
-      for (let i = 0; i < this.currentEnemy.currentZone.number; i++) {
-        this.currentEnemy.zones[i].completed = true;
-        this.currentEnemy.zones[i].reload();
-      }
-    }
-    return true;
-  }
   startBattle() {
     if (this.inBattle || !this.currentEnemy) return false;
 
@@ -141,4 +117,81 @@ export class EnemyManager implements ISalvable {
   surrender() {
     this.currentEnemy = null;
   }
+  /**
+   * Start searching a new enemy
+   */
+  startSearching(level: number) {
+    if (this.isSearching) return false;
+    this.isSearching = true;
+    this.isSearching = true;
+    this.currentSearch = new Decimal(0);
+    this.totalSearch = new Decimal(level).times(Decimal.pow(1.1, level));
+  }
+  /**
+   * Add progress, return
+   * @return unused progress
+   */
+  addProgress(progress: Decimal): Decimal {
+    this.currentSearch = this.currentSearch.plus(progress);
+    if (this.currentSearch.gte(this.totalSearch)) {
+      const ret = new Decimal(this.currentSearch.minus(this.totalSearch));
+      this.stopSearching();
+      this.generate(this.requestedLevel);
+      return ret;
+    } else {
+      return new Decimal(0);
+    }
+  }
+  /**
+   * Stop Searching
+   */
+  stopSearching() {
+    this.isSearching = false;
+
+    //  not really needed, but why not?
+    this.currentSearch = new Decimal(0);
+    this.totalSearch = new Decimal(0);
+    this.requestedLevel = 1;
+  }
+  /**
+   *  Get sum of ToDo progress
+   */
+  getTotalToDo(): Decimal {
+    return this.isSearching
+      ? this.totalSearch.minus(this.currentSearch).max(1)
+      : new Decimal(0);
+  }
+
+  //#region Save and Load
+  getSave(): any {
+    const data: any = {};
+    if (this.maxLevel > 1) data.l = this.maxLevel;
+    if (!!this.currentEnemy) data.c = this.currentEnemy.getSave();
+    if (this.allEnemy.length > 0) data.a = this.allEnemy.map(e => e.getSave());
+
+    return data;
+  }
+  load(data: any): boolean {
+    if ("l" in data) this.maxLevel = data.l;
+    if ("c" in data) this.currentEnemy = Enemy.fromData(data.c, true);
+    if ("a" in data) {
+      for (const enemyData of data.a) {
+        this.allEnemy.push(Enemy.fromData(enemyData));
+      }
+    }
+    if (
+      this.currentEnemy &&
+      (!this.currentEnemy.zones || this.currentEnemy.zones.length !== 100)
+    ) {
+      this.currentEnemy.generateZones();
+    }
+    if (this.currentEnemy && this.currentEnemy.zones) {
+      for (let i = 0; i < this.currentEnemy.currentZone.number; i++) {
+        this.currentEnemy.zones[i].completed = true;
+        this.currentEnemy.zones[i].reload();
+      }
+    }
+    return true;
+  }
+  //#endregion
 }
