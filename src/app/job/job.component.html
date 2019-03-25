@@ -1,0 +1,44 @@
+<div class="card-block" *ngIf="job">
+  <div class="progress-static">
+    <div
+      class="progress-meter"
+      [attr.data-value]="job.getProgressPercent()"
+    ></div>
+  </div>
+  <div class="clr-row clr-align-items-center">
+    <div class="researchIcon">
+      <clr-icon [attr.shape]="job.getShape()" size="36"></clr-icon>
+    </div>
+
+    <div class="clr-col">
+      <h4 class="card-title">
+        {{ job.getName() }}
+
+        <span class="res-progress">
+          <app-formatted-quantity
+            [quantity]="job.getProgress()"
+            [integer]="true"
+          ></app-formatted-quantity>
+          /
+          <app-formatted-quantity
+            [quantity]="job.getTotal()"
+            [integer]="true"
+          ></app-formatted-quantity>
+        </span>
+      </h4>
+      <div class="clr-row clr-justify-content-between no-margin-left">
+        <p class="card-text">
+          {{ job.getDescription() }}
+        </p>
+
+        <button
+          class="btn btn-sm btn-link btn-danger"
+          *ngIf="job.deleteFun"
+          (click)="delete()"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

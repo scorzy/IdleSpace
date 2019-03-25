@@ -4,8 +4,12 @@ import { ResearchManager } from "./researchManager";
 import { RomanPipe } from "src/app/roman.pipe";
 import { IResearchData } from "./iResearchData";
 import { IHasQuantity } from "../base/IHasQuantity";
+import { IJob } from "../base/IJob";
 
-export class Research extends AbstractUnlockable implements IHasQuantity {
+export class Research extends AbstractUnlockable implements IHasQuantity, IJob {
+  private constructor() {
+    super();
+  }
   static romanPipe = new RomanPipe();
 
   id: string;
@@ -25,9 +29,6 @@ export class Research extends AbstractUnlockable implements IHasQuantity {
   firstDone = false;
   number = "";
 
-  private constructor() {
-    super();
-  }
   static fromData(data: IResearchData): Research {
     const ret = new Research();
     ret.id = data.id;
@@ -65,7 +66,6 @@ export class Research extends AbstractUnlockable implements IHasQuantity {
 
     return ret;
   }
-
   reloadNum() {
     if (this.quantity.gte(this.limit)) {
       this.completed = true;
@@ -74,7 +74,6 @@ export class Research extends AbstractUnlockable implements IHasQuantity {
       this.number = Research.romanPipe.transform(this.quantity.plus(1));
     }
   }
-
   unlock(): boolean {
     if (super.unlock()) {
       ResearchManager.getInstance().addAvailable(this);
@@ -82,7 +81,28 @@ export class Research extends AbstractUnlockable implements IHasQuantity {
     }
     return false;
   }
+  //#region IJob
+  getName(): string {
+    return this.name + " " + this.number;
+  }
+  getDescription?(): string {
+    return this.description;
+  }
+  getShape?(): string {
+    return this.shape;
+  }
+  getTotal(): Decimal {
+    return this.total;
+  }
+  getProgress(): Decimal {
+    return this.progress;
+  }
+  getProgressPercent(): number {
+    return this.progressPercent;
+  }
+  //#endregion
 
+  //#region Save and Load
   getSave(): any {
     const save = super.getSave();
     if (this.progress.gt(0)) save.p = this.progress;
@@ -101,4 +121,5 @@ export class Research extends AbstractUnlockable implements IHasQuantity {
     this.firstDone = this.quantity.gte(1);
     return true;
   }
+  //#endregion
 }

@@ -5,6 +5,7 @@ import { Emitters } from "./emitters";
 import { DOCUMENT } from "@angular/common";
 import { OptionsService } from "./options.service";
 import { BattleService } from "./battle.service";
+import { FormatPipe } from "./format.pipe";
 
 declare let LZString: any;
 
@@ -25,6 +26,8 @@ export function getUrl() {
   providedIn: "root"
 })
 export class MainService {
+  static formatPipe: FormatPipe;
+
   zipWorker: ITypedWorker<CompressRequest, CompressRequest2>;
   game: Game;
   show = false;
@@ -56,6 +59,8 @@ export class MainService {
         url + "assets/compressRequest2.js"
       ]
     });
+
+    MainService.formatPipe = new FormatPipe(this.options);
   }
   start() {
     const savedData = localStorage.getItem("save");

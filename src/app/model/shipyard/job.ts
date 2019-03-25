@@ -1,7 +1,10 @@
 import { ShipDesign } from "../fleet/shipDesign";
 import { FleetManager } from "../fleet/fleetManager";
+import { IJob } from "../base/IJob";
+import { Shipyard } from "./shipyard";
+import { MainService } from "src/app/main.service";
 
-export class Job {
+export class Job implements IJob {
   private static lastId = 1;
   id = 1;
   total = new Decimal(0);
@@ -17,6 +20,7 @@ export class Job {
   newDesign: ShipDesign;
   progressPercent = 0;
   done = false;
+  name: {};
 
   constructor() {
     this.id = Job.lastId + 1;
@@ -70,6 +74,33 @@ export class Job {
     this.reload();
     return ret;
   }
+  //#region IJob
+  getName(): string {
+    return this.design.name;
+  }
+  getDescription?(): string {
+    return this.quantity.gt(0)
+      ? "+ " + MainService.formatPipe.transform(this.quantity)
+      : "Design Upgrade";
+  }
+  getShape?(): string {
+    return this.design.type.shape;
+  }
+  getTotal(): Decimal {
+    return this.total;
+  }
+  getProgress(): Decimal {
+    return this.progress;
+  }
+  getProgressPercent(): number {
+    return this.progressPercent;
+  }
+  deleteFun?(): boolean {
+    Shipyard.getInstance().deleteJob(this);
+    return true;
+  }
+  //#endregion
+
   getSave(): any {
     const data: any = {};
     data.p = this.progress;

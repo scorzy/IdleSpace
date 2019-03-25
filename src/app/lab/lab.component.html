@@ -18,15 +18,15 @@
             class="drag-list myBg"
             (cdkDropListDropped)="drop($event)"
           >
-            <app-research
+            <app-job
               *ngFor="
                 let res of ms.game.researchManager.backLog;
                 trackBy: getResId
               "
-              [res]="res"
+              [job]="res"
               cdkDrag
             >
-            </app-research>
+            </app-job>
           </div>
         </div>
         <div
@@ -41,15 +41,15 @@
             class="drag-list myBg"
             (cdkDropListDropped)="drop($event)"
           >
-            <app-research
+            <app-job
               *ngFor="
                 let res of ms.game.researchManager.toDo;
                 trackBy: getResId
               "
-              [res]="res"
+              [job]="res"
               cdkDrag
             >
-            </app-research>
+            </app-job>
           </div>
         </div>
       </div>

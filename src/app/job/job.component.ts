@@ -4,12 +4,12 @@ import {
   ChangeDetectionStrategy,
   Input,
   HostBinding,
-  OnDestroy,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  OnDestroy
 } from "@angular/core";
-import { Job } from "src/app/model/shipyard/job";
+import { IJob } from "../model/base/IJob";
 import { Subscription } from "rxjs";
-import { MainService } from "src/app/main.service";
+import { MainService } from "../main.service";
 
 @Component({
   selector: "app-job",
@@ -21,7 +21,7 @@ export class JobComponent implements OnInit, OnDestroy {
   @HostBinding("class")
   card = "card drag-item";
 
-  @Input() job: Job;
+  @Input() job: IJob;
 
   private subscriptions: Subscription[] = [];
 
@@ -38,6 +38,6 @@ export class JobComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
   delete() {
-    this.ms.game.shipyard.deleteJob(this.job);
+    if (this.job.deleteFun) this.job.deleteFun();
   }
 }

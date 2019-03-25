@@ -76,7 +76,4 @@ export class FormatPipe implements PipeTransform {
   clear() {
     if (FormatPipe.map.entries.length > 100) FormatPipe.map.clear();
   }
-  // ngOnDestroy(): void {
-  //   if (this.interval > 0) clearInterval(this.interval);
-  // }
 }

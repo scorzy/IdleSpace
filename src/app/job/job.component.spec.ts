@@ -4,10 +4,11 @@ import { JobComponent } from "./job.component";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { ClarityModule } from "@clr/angular";
 import { RouterTestingModule } from "@angular/router/testing";
-import { FormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { MainService } from "src/app/main.service";
-import { OptionsService } from "src/app/options.service";
+import { ActionHeaderComponent } from "../action/action-header/action-header.component";
+import { FormatPipe } from "../format.pipe";
+import { MainService } from "../main.service";
+import { OptionsService } from "../options.service";
 
 describe("JobComponent", () => {
   let component: JobComponent;
@@ -16,13 +17,8 @@ describe("JobComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [
-        ClarityModule,
-        RouterTestingModule,
-        FormsModule,
-        BrowserAnimationsModule
-      ],
-      declarations: [JobComponent],
+      imports: [ClarityModule, RouterTestingModule, BrowserAnimationsModule],
+      declarations: [JobComponent, ActionHeaderComponent, FormatPipe],
       providers: [MainService, OptionsService]
     }).compileComponents();
   }));
