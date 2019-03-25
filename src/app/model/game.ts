@@ -72,10 +72,10 @@ export class Game {
 
     this.resourceManager.limitedResources.forEach(r => {
       if (r.quantity.gt(r.limit)) {
-        const diff = r.limit.minus(r.quantity);
+        const difference = r.limit.minus(r.quantity);
         r.generators[0].producer.products.forEach(ref => {
           ref.product.quantity = ref.product.quantity.minus(
-            diff.times(ref.prodPerSec)
+            difference.times(ref.prodPerSec)
           );
         });
 
@@ -89,6 +89,7 @@ export class Game {
     this.resourceManager.unlockedResources.forEach(r => r.setABC());
     this.fleetManager.reloadActions();
     this.fleetManager.isBuildingCheckAll();
+    this.fleetManager.doAutoFight();
     this.shipyard.adjust();
   }
   reload() {

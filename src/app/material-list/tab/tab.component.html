@@ -5,12 +5,18 @@
   [ngClass]="{ red: isEnding }"
 >
   <span>
-    <clr-icon [attr.shape]="shape" *ngIf="shape" class="resIcon"></clr-icon>
     <clr-icon
+      [attr.shape]="shape"
+      *ngIf="shape"
+      class="resIcon"
+      [ngClass]="{ 'is-error': isEnding, 'is-info': cog }"
+    ></clr-icon>
+    <!-- <clr-icon
       class="is-error is-solid"
       shape="exclamation-triangle"
       *ngIf="isEnding"
     ></clr-icon>
+    <clr-icon class="is-info is-solid" shape="cog" *ngIf="cog"></clr-icon> -->
     <span [class.notEnough]="cap">
       <app-formatted-quantity
         *ngIf="showQta"

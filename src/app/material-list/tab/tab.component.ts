@@ -15,6 +15,7 @@ export class TabComponent {
   @Input() showQta = true;
   @Input() cap = false;
   @Input() limit?: Decimal;
+  @Input() cog = false;
 
   constructor() {}
 }

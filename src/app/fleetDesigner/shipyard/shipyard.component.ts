@@ -60,6 +60,6 @@ export class ShipyardComponent implements OnInit, OnDestroy {
     this.ms.game.fleetManager.save();
   }
   make() {
-    this.ms.game.fleetManager.make();
+    if (this.ms.game.fleetManager.save()) this.ms.game.fleetManager.make();
   }
 }

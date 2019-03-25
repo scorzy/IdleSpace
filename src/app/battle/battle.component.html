@@ -11,16 +11,40 @@
   <div class="clr-row" *ngIf="ms.game.enemyManager.currentEnemy">
     <div class="clr-col-6">
       <br />
-      <div class="btn-group btn-primary">
-        <button class="btn" (click)="startBattle()">
+      <div class="btn-group btn-success">
+        <button
+          class="btn"
+          (click)="startBattle()"
+          [disabled]="ms.game.enemyManager.inBattle"
+        >
           <clr-icon shape="floppy"></clr-icon>
           Fight
         </button>
-        <button class="btn btn-danger" (click)="surrenderModal = true">
+        <button class="btn btn-warning" (click)="surrenderModal = true">
           <clr-icon shape="trash"></clr-icon>
           Surrender
         </button>
       </div>
+
+      <div class="btn-group">
+        <div class="checkbox btn">
+          <input
+            type="checkbox"
+            id="btn-demo-check-1"
+            [(ngModel)]="ms.game.fleetManager.autoFight"
+          />
+          <label for="btn-demo-check-1">Auto Fight</label>
+        </div>
+        <div class="checkbox btn">
+          <input
+            type="checkbox"
+            id="btn-demo-check-2"
+            [(ngModel)]="ms.game.fleetManager.autoReinforce"
+          />
+          <label for="btn-demo-check-2">Auto Reinforce</label>
+        </div>
+      </div>
+
       <br />
       <br />
       <app-battlefield

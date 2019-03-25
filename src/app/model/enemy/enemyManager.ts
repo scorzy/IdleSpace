@@ -57,6 +57,7 @@ export class EnemyManager implements ISalvable {
   startBattle() {
     if (this.inBattle || !this.currentEnemy) return false;
 
+    this.inBattle = true;
     FleetManager.getInstance().reload();
     this.currentEnemy.currentZone.reload();
 
@@ -97,12 +98,12 @@ export class EnemyManager implements ISalvable {
             );
             break;
           case Reward.MetalMine:
-            resMan.habitableSpace.quantity = resMan.miningDistrict.quantity.plus(
+            resMan.miningDistrict.quantity = resMan.miningDistrict.quantity.plus(
               this.currentEnemy.level
             );
             break;
           case Reward.CrystalMine:
-            resMan.habitableSpace.quantity = resMan.crystalDistrict.quantity.plus(
+            resMan.crystalDistrict.quantity = resMan.crystalDistrict.quantity.plus(
               this.currentEnemy.level
             );
             break;

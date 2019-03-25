@@ -6,6 +6,7 @@ import { ModulesData } from "./moduleData";
 import { Resource } from "../resource/resource";
 import { Shipyard } from "../shipyard/shipyard";
 import { Job } from "../shipyard/job";
+import { EnemyManager } from "../enemy/enemyManager";
 
 export const MAX_NAVAL_CAPACITY = 1e4;
 
@@ -24,6 +25,10 @@ export class FleetManager implements ISalvable {
 
   totalWantedNavalCap = 0;
   configurationValid = true;
+
+  autoFight = false;
+  autoReinforce = false;
+  fullStrength = false;
 
   constructor() {
     FleetManager.instance = this;
@@ -81,6 +86,8 @@ export class FleetManager implements ISalvable {
   getSave() {
     const data: any = {};
     data.s = this.ships.map(s => s.getSave());
+    if (this.autoFight) data.f = this.autoFight;
+    if (this.autoReinforce) data.r = this.autoReinforce;
     return data;
   }
   load(data: any): boolean {
@@ -91,6 +98,8 @@ export class FleetManager implements ISalvable {
         this.ships.push(ship);
       }
     }
+    if ("f" in data) this.autoFight = data.f;
+    if ("r" in data) this.autoReinforce = data.r;
     this.reload();
     this.reloadNavalCapacity();
     return true;
@@ -139,25 +148,43 @@ export class FleetManager implements ISalvable {
     return true;
   }
   make() {
-    if (this.save()) {
-      this.ships.forEach(s => {
-        let qta = s.quantity.plus(Shipyard.getInstance().getTotalShips(s));
-        let diff = s.wantQuantity.minus(qta);
-        if (diff.lt(0)) {
-          Shipyard.getInstance().delete(s);
-        }
-        qta = s.quantity.plus(Shipyard.getInstance().getTotalShips(s));
-        diff = s.wantQuantity.minus(qta);
-        if (diff.gt(0)) {
-          const job = new Job();
-          job.design = s;
-          job.quantity = diff;
-          job.total = diff.times(s.price);
-          Shipyard.getInstance().jobs.push(job);
-        } else {
-          s.quantity = s.quantity.plus(diff);
-        }
-      });
+    this.ships.forEach(s => {
+      let qta = s.quantity.plus(Shipyard.getInstance().getTotalShips(s));
+      let diff = s.wantQuantity.minus(qta);
+      if (diff.lt(0)) {
+        Shipyard.getInstance().delete(s);
+      }
+      qta = s.quantity.plus(Shipyard.getInstance().getTotalShips(s));
+      diff = s.wantQuantity.minus(qta);
+      if (diff.gt(0)) {
+        const job = new Job();
+        job.design = s;
+        job.quantity = diff;
+        job.total = diff.times(s.price);
+        Shipyard.getInstance().jobs.push(job);
+      } else {
+        s.quantity = s.quantity.plus(diff);
+      }
+    });
+  }
+
+  checkStatus() {
+    this.fullStrength =
+      this.ships.findIndex(s => s.quantity.lt(s.wantQuantity)) === -1;
+  }
+  doAutoFight() {
+    this.checkStatus();
+    if (this.autoReinforce && !this.fullStrength) {
+      this.make();
+    }
+
+    const enemyManager = EnemyManager.GetInstance();
+    if (
+      !enemyManager.inBattle &&
+      this.autoFight &&
+      (this.fullStrength || !this.autoReinforce)
+    ) {
+      enemyManager.startBattle();
     }
   }
 }
