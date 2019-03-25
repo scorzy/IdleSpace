@@ -28,7 +28,7 @@ export class Shipyard implements ISalvable {
    */
   getTotalToDo(): Decimal {
     return this.jobs
-      .map(j => j.total.minus(j.progress))
+      .map(j => j.total.minus(j.progress).max(1))
       .reduce((p, c) => p.plus(c), new Decimal(0));
   }
   getTotalNavalCapacity(): Decimal {

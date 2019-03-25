@@ -422,7 +422,7 @@ export class ResourceManager implements ISalvable {
           this.shipyardProgress.limit
         );
       }
-      this.shipyardProgress.isCapped = this.shipyardProgress.limit.lte(0);
+      this.shipyardProgress.isCapped = this.shipyardProgress.limit.lt(0);
     };
 
     //#endregion

@@ -31,26 +31,31 @@ export class Zone implements ISalvable {
     this.originalNavCap = ShipDesign.GetTotalNavalCap(this.ships);
   }
   reload() {
-    if (this.ships && this.ships.length > 0) {
-      this.ships.forEach(s => s.reload(false));
-      const totalNav = ShipDesign.GetTotalNavalCap(this.ships);
-      this.percentCompleted = 1 - totalNav.div(this.originalNavCap).toNumber();
-      this.color = "rgb(";
-      for (let i = 0; i < 3; i++) {
-        const col =
-          TO_DO_COLOR[i] +
-          (DONE_COLOR[i] - TO_DO_COLOR[i]) * this.percentCompleted;
-        this.color += col + (i < 2 ? "," : "");
+    if (this.completed) {
+      this.color = "rgb(96, 181, 21)";
+    } else {
+      if (this.ships && this.ships.length > 0) {
+        this.ships.forEach(s => s.reload(false));
+        const totalNav = ShipDesign.GetTotalNavalCap(this.ships);
+        this.percentCompleted = 1 - totalNav.div(this.originalNavCap).toNumber();
+        this.color = "rgb(";
+        for (let i = 0; i < 3; i++) {
+          const col =
+            TO_DO_COLOR[i] +
+            (DONE_COLOR[i] - TO_DO_COLOR[i]) * this.percentCompleted;
+          this.color += col + (i < 2 ? "," : "");
+        }
+        this.color += ")";
       }
-      this.color += ")";
     }
+
     this.setShape();
   }
   getSave() {
     const data: any = {};
     data.c = this.completed;
     data.r = this.reward;
-    if (this.ships.length && this.ships.length > 0) {
+    if (this.ships && this.ships.length > 0) {
       data.s = this.ships.map(s => s.getSave());
     }
     if (this.originalNavCap && this.originalNavCap.gt(0)) {

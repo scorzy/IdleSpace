@@ -5,6 +5,7 @@ import { FleetManager } from "../fleet/fleetManager";
 import { BattleRequest } from "src/app/workers/battleRequest";
 import { Reward } from "./reward";
 import { ResourceManager } from "../resource/resourceManager";
+import { Emitters } from "src/app/emitters";
 
 export class EnemyManager implements ISalvable {
   private static instance: EnemyManager;
@@ -52,11 +53,18 @@ export class EnemyManager implements ISalvable {
     ) {
       this.currentEnemy.generateZones();
     }
+    if (this.currentEnemy && this.currentEnemy.zones) {
+      for (let i = 0; i < this.currentEnemy.currentZone.number; i++) {
+        this.currentEnemy.zones[i].completed = true;
+        this.currentEnemy.zones[i].reload();
+      }
+    }
     return true;
   }
   startBattle() {
     if (this.inBattle || !this.currentEnemy) return false;
 
+    Emitters.getInstance().battleEndEmitter.emit(1);
     this.inBattle = true;
     FleetManager.getInstance().reload();
     this.currentEnemy.currentZone.reload();
@@ -82,7 +90,7 @@ export class EnemyManager implements ISalvable {
     });
     this.currentEnemy.currentZone.reload();
 
-    // Win
+    //#region Win
     if (result.result === "1") {
       this.maxLevel = Math.max(this.maxLevel, this.currentEnemy.level + 1);
       this.currentEnemy.currentZone.ships = null;
@@ -112,6 +120,7 @@ export class EnemyManager implements ISalvable {
       //#endregion
       if (this.currentEnemy.currentZone.number >= 99) {
         this.currentEnemy = null;
+        if (this.allEnemy.length > 0) this.attack(this.allEnemy[0]);
       } else {
         this.currentEnemy.currentZone = this.currentEnemy.zones[
           this.currentEnemy.currentZone.number + 1
@@ -122,6 +131,7 @@ export class EnemyManager implements ISalvable {
         this.currentEnemy.currentZone.reload();
       }
     }
+    //#endregion
 
     this.inBattle = false;
   }

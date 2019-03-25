@@ -30,7 +30,7 @@ export class MainService {
   show = false;
   lastUnitUrl = "/home/res/m";
   last: number;
-  em = new Emitters();
+  em = Emitters.getInstance();
   kongregate = false;
   playFabLogged = false;
   theme: HTMLLinkElement;

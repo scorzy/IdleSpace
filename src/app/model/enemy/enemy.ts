@@ -147,7 +147,9 @@ export class Enemy {
     data.n = this.name;
     data.l = this.level;
     data.s = this.shipsDesign.map(s => s.getSave());
-    if (this.zones.length > 0) data.z = this.zones.map(z => z.getSave());
+    if (this.zones && this.zones.length > 0) {
+      data.z = this.zones.map(z => z.getSave());
+    }
     if (this.currentZone) data.c = this.currentZone.number;
 
     return data;
