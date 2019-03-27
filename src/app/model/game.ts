@@ -68,6 +68,12 @@ export class Game {
       //  Convert ShipyardProgress to actual progress
       this.shipyard.addProgress(this.resourceManager.shipyardProgress.quantity);
       this.resourceManager.shipyardProgress.quantity = new Decimal(0);
+
+      //  Convert SearchProgress to actual searching
+      this.enemyManager.addProgress(
+        this.resourceManager.searchProgress.quantity
+      );
+      this.resourceManager.searchProgress.quantity = new Decimal(0);
     }
 
     this.resourceManager.limitedResources.forEach(r => {
@@ -118,9 +124,9 @@ export class Game {
     this.resourceManager.miningDistrict.quantity = new Decimal(100);
     this.resourceManager.crystalDistrict.quantity = new Decimal(100);
 
-    this.resourceManager.materials.forEach(m => {
-      m.quantity = new Decimal(1e20);
-    });
+    // this.resourceManager.materials.forEach(m => {
+    //   m.quantity = new Decimal(1e20);
+    // });
 
     this.fleetManager.upgradingCheck();
     this.reload();

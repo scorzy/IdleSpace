@@ -465,7 +465,7 @@ export class ResourceManager implements ISalvable {
     this.searchX1.actions.push(buyTelescope);
     this.searchX1.limitStorage = buyTelescope;
     this.searchProgress.reloadLimit = () => {
-      const enemy = EnemyManager.GetInstance();
+      const enemy = EnemyManager.getInstance();
       if (enemy) {
         this.searchProgress.limit = enemy.getTotalToDo();
         this.searchProgress.quantity = this.searchProgress.quantity.min(

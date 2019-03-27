@@ -6,29 +6,31 @@ import { BattleRequest } from "src/app/workers/battleRequest";
 import { Reward } from "./reward";
 import { ResourceManager } from "../resource/resourceManager";
 import { Emitters } from "src/app/emitters";
+import { SearchJob } from "./searchJob";
+import { RomanPipe } from "src/app/roman.pipe";
 
 export class EnemyManager implements ISalvable {
   private static instance: EnemyManager;
+  static romanPipe = new RomanPipe();
+
   currentEnemy: Enemy;
   allEnemy = new Array<Enemy>();
   maxLevel = 1;
   battleService: BattleService;
   inBattle = false;
 
-  currentSearch = new Decimal(0);
-  totalSearch = new Decimal(0);
-  requestedLevel = 1;
-  isSearching = false;
+  searchJobs = new Array<SearchJob>();
 
-  static GetInstance(): EnemyManager {
+  static getInstance(): EnemyManager {
     return EnemyManager.instance;
   }
   constructor() {
     EnemyManager.instance = this;
   }
-  generate(level = 1) {
-    this.allEnemy.push(Enemy.generate(level));
+  generate(searchJob: SearchJob) {
+    this.allEnemy.push(Enemy.generate(searchJob.level));
   }
+
   attack(enemy: Enemy): boolean {
     if (this.currentEnemy) return false;
     this.currentEnemy = enemy;
@@ -121,45 +123,31 @@ export class EnemyManager implements ISalvable {
    * Start searching a new enemy
    */
   startSearching(level: number) {
-    if (this.isSearching) return false;
-    this.isSearching = true;
-    this.isSearching = true;
-    this.currentSearch = new Decimal(0);
-    this.totalSearch = new Decimal(level).times(Decimal.pow(1.1, level));
+    const searchJob = new SearchJob();
+    searchJob.level = level;
+    searchJob.total = new Decimal(level * 100).times(
+      Decimal.pow(1.1, level - 1)
+    );
+    searchJob.generateNameDescription();
+    this.searchJobs.push(searchJob);
   }
   /**
    * Add progress, return
    * @return unused progress
    */
-  addProgress(progress: Decimal): Decimal {
-    this.currentSearch = this.currentSearch.plus(progress);
-    if (this.currentSearch.gte(this.totalSearch)) {
-      const ret = new Decimal(this.currentSearch.minus(this.totalSearch));
-      this.stopSearching();
-      this.generate(this.requestedLevel);
-      return ret;
-    } else {
-      return new Decimal(0);
+  addProgress(progress: Decimal) {
+    while (this.searchJobs.length > 0 && progress.gt(0)) {
+      progress = this.searchJobs[0].addProgress(progress);
+      if (this.searchJobs[0].done) this.searchJobs.shift();
     }
-  }
-  /**
-   * Stop Searching
-   */
-  stopSearching() {
-    this.isSearching = false;
-
-    //  not really needed, but why not?
-    this.currentSearch = new Decimal(0);
-    this.totalSearch = new Decimal(0);
-    this.requestedLevel = 1;
   }
   /**
    *  Get sum of ToDo progress
    */
   getTotalToDo(): Decimal {
-    return this.isSearching
-      ? this.totalSearch.minus(this.currentSearch).max(1)
-      : new Decimal(0);
+    return this.searchJobs
+      .map(s => s.total.minus(s.progress))
+      .reduce((p, c) => p.plus(c), new Decimal(1));
   }
 
   //#region Save and Load
@@ -168,6 +156,9 @@ export class EnemyManager implements ISalvable {
     if (this.maxLevel > 1) data.l = this.maxLevel;
     if (!!this.currentEnemy) data.c = this.currentEnemy.getSave();
     if (this.allEnemy.length > 0) data.a = this.allEnemy.map(e => e.getSave());
+    if (this.searchJobs.length > 0) {
+      data.j = this.searchJobs.map(j => j.getSave());
+    }
 
     return data;
   }
@@ -189,6 +180,14 @@ export class EnemyManager implements ISalvable {
       for (let i = 0; i < this.currentEnemy.currentZone.number; i++) {
         this.currentEnemy.zones[i].completed = true;
         this.currentEnemy.zones[i].reload();
+      }
+    }
+    if ("j" in data) {
+      for (const jobData of data.j) {
+        if (jobData) {
+          const job = SearchJob.FromData(jobData);
+          this.searchJobs.push(job);
+        }
       }
     }
     return true;

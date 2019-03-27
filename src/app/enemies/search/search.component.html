@@ -1,5 +1,20 @@
 <h1>Search new worlds</h1>
-<p>
-  Here you can search for new worlds.
-</p>
-<button class="btn btn-outline" (click)="generate()">Search</button>
+<div class="clr-row">
+  <div class="clr-col-12	clr-col-sm-12	clr-col-md-12	clr-col-lg-6 clr-col-xl-6">
+    <p>
+      Here you can search for new worlds.
+    </p>
+    <button class="btn btn-outline" (click)="generate()">Search</button>
+  </div>
+
+  <div class="clr-col-12	clr-col-sm-12	clr-col-md-12	clr-col-lg-6 clr-col-xl-6">
+    <h4>Jobs:</h4>
+    <div cdkDropList (cdkDropListDropped)="drop($event)" class="myBg drag-list">
+      <app-job
+        cdkDrag
+        *ngFor="let job of ms.game.enemyManager.searchJobs; trackBy: getJobId"
+        [job]="job"
+      ></app-job>
+    </div>
+  </div>
+</div>

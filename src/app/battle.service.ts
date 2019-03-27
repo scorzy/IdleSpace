@@ -167,7 +167,7 @@ export class BattleService {
     //#endregion
   }
   onBattleEnd(result: BattleResult): void {
-    EnemyManager.GetInstance().onBattleEnd(result);
+    EnemyManager.getInstance().onBattleEnd(result);
     if (this.em) {
       this.em.updateEmitter.emit(2);
       this.em.battleEndEmitter.emit(1);

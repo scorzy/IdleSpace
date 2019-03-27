@@ -178,7 +178,7 @@ export class FleetManager implements ISalvable {
       this.make();
     }
 
-    const enemyManager = EnemyManager.GetInstance();
+    const enemyManager = EnemyManager.getInstance();
     if (
       !enemyManager.inBattle &&
       this.autoFight &&
