@@ -14,6 +14,20 @@
       </clr-alert-item>
     </clr-alert>
 
+    <ng-container *ngIf="res?.alerts">
+      <clr-alert
+        *ngFor="let alert of alerts; trackBy: getAlertId"
+        [clrAlertClosable]="false"
+        [clrAlertType]="alert.getType()"
+      >
+        <clr-alert-item>
+          <span class="alert-text">
+            {{ alert.getMessage() }}
+          </span>
+        </clr-alert-item>
+      </clr-alert>
+    </ng-container>
+
     <clr-alert *ngIf="isFinite(res.fullIn)" [clrAlertClosable]="false">
       <clr-alert-item>
         <span class="alert-text">

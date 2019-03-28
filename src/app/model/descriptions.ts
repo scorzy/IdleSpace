@@ -42,6 +42,10 @@ export const descriptions = {
     X1: ["Searching Drone", ""],
     X2: ["X 2", ""],
     X3: ["X 3", ""],
-    XP: ["Searching progress", ""]
+    XP: ["Searching progress", ""],
+
+    W1: ["Warrior Drone", ""],
+    W2: ["W 2", ""],
+    W3: ["W 3", ""]
   }
 };

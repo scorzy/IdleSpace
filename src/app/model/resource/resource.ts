@@ -11,6 +11,7 @@ import { RefundAction } from "../actions/refundAction";
 import { Price } from "../prices/price";
 import { IHasQuantity } from "../base/IHasQuantity";
 import { BonusStack } from "../bonus/bonusStack";
+import { IAlert } from "../base/IAlert";
 
 export class Resource extends AbstractUnlockable
   implements ISpendable, IBuyable {
@@ -47,6 +48,8 @@ export class Resource extends AbstractUnlockable
 
   productionMultiplier = new BonusStack();
   efficiencyMultiplier = new BonusStack();
+
+  alerts: IAlert[];
 
   constructor(public id: string) {
     super();

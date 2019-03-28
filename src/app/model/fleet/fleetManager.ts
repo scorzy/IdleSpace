@@ -7,6 +7,7 @@ import { Resource } from "../resource/resource";
 import { Shipyard } from "../shipyard/shipyard";
 import { Job } from "../shipyard/job";
 import { EnemyManager } from "../enemy/enemyManager";
+import { ResourceManager } from "../resource/resourceManager";
 
 export const MAX_NAVAL_CAPACITY = 1e4;
 
@@ -50,7 +51,15 @@ export class FleetManager implements ISalvable {
       s.buyAction.reload();
     });
   }
+  getNavalCapacityFromDrones(): Decimal {
+    const warriorX1 = ResourceManager.getInstance().warriorX1;
+    return warriorX1.quantity.times(warriorX1.operativity / 100);
+  }
   reloadNavalCapacity() {
+    this.totalNavalCapacity = new Decimal(20).plus(
+      this.getNavalCapacityFromDrones()
+    );
+
     this.totalShips = this.ships
       .map(s => s.quantity)
       .reduce((p, c) => p.plus(c), new Decimal(0));

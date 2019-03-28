@@ -11,6 +11,7 @@ import { Resource } from "../model/resource/resource";
 import { Subscription } from "rxjs";
 import { MainService } from "../main.service";
 import { Action } from "../model/actions/abstractAction";
+import { IAlert } from "../model/base/IAlert";
 
 @Component({
   selector: "app-resource-overview",
@@ -23,13 +24,16 @@ export class ResourceOverviewComponent
   @Input() res: Resource;
   showSlider = false;
   private subscriptions: Subscription[] = [];
+  alerts: IAlert[];
   isFinite = Number.isFinite;
 
   constructor(public ms: MainService, private cd: ChangeDetectorRef) {}
   ngOnInit() {
+    this.setAlerts();
     this.subscriptions.push(
       this.ms.em.updateEmitter.subscribe(() => {
         this.cd.markForCheck();
+        this.setAlerts();
       })
     );
   }
@@ -39,11 +43,20 @@ export class ResourceOverviewComponent
   ngOnDestroy() {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
+  setAlerts() {
+    this.alerts =
+      this.res && this.res.alerts
+        ? this.res.alerts.filter(a => a.getCondition())
+        : [];
+  }
 
   getResId(index, base: Resource) {
     return base.id;
   }
   getActId(index, base: Action) {
     return base.id;
+  }
+  getAlertId(index: number, alert: IAlert) {
+    return alert.id;
   }
 }

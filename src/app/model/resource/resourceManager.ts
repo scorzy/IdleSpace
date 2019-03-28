@@ -9,6 +9,8 @@ import { Action } from "../actions/abstractAction";
 import { Shipyard } from "../shipyard/shipyard";
 import { Bonus } from "../bonus/bonus";
 import { EnemyManager } from "../enemy/enemyManager";
+import { MainService } from "src/app/main.service";
+import { FleetManager } from "../fleet/fleetManager";
 
 const TIER_2_COST_MULTI = 100;
 const TIER_3_COST_MULTI = 1000;
@@ -64,6 +66,10 @@ export class ResourceManager implements ISalvable {
   searchX2: Resource;
   searchX3: Resource;
   searchProgress: Resource;
+
+  warriorX1: Resource;
+  warriorX2: Resource;
+  warriorX3: Resource;
   // #endregion
   //#region group
   materials: Resource[];
@@ -172,6 +178,13 @@ export class ResourceManager implements ISalvable {
     this.energy.addGenerator(this.searchX1, -1);
     this.computing.addGenerator(this.searchX1, -1);
 
+    //      Warrior
+    this.warriorX1 = new Resource("W1");
+    this.warriorX2 = new Resource("W2");
+    this.warriorX3 = new Resource("W3");
+    this.energy.addGenerator(this.warriorX1, -1);
+    this.computing.addGenerator(this.warriorX1, -1);
+
     //      Space
     this.habitableSpace = new Resource("hs");
     this.habitableSpace.shape = "world";
@@ -206,7 +219,8 @@ export class ResourceManager implements ISalvable {
       this.energyX1,
       this.computingX1,
       this.shipyardX1,
-      this.searchX1
+      this.searchX1,
+      this.warriorX1
     ];
     this.tier2 = [
       this.metalX2,
@@ -215,7 +229,8 @@ export class ResourceManager implements ISalvable {
       this.energyX2,
       this.computingX2,
       this.shipyardX2,
-      this.searchX2
+      this.searchX2,
+      this.warriorX2
     ];
     this.tier3 = [
       this.metalX3,
@@ -224,7 +239,8 @@ export class ResourceManager implements ISalvable {
       this.energyX3,
       this.computingX3,
       this.shipyardX3,
-      this.searchX3
+      this.searchX3,
+      this.warriorX3
     ];
     //#endregion
 
@@ -252,6 +268,9 @@ export class ResourceManager implements ISalvable {
       new MultiPrice([new Price(this.alloy, 100)])
     );
     this.searchX1.generateBuyAction(
+      new MultiPrice([new Price(this.alloy, 100)])
+    );
+    this.warriorX1.generateBuyAction(
       new MultiPrice([new Price(this.alloy, 100)])
     );
     //#endregion
@@ -327,7 +346,7 @@ export class ResourceManager implements ISalvable {
       }
     }
     //#endregion
-    //#region Limits
+    //#region Mine
     //  Metal Mine
     const buyMetalMine = new Action(
       "L",
@@ -475,8 +494,24 @@ export class ResourceManager implements ISalvable {
       this.searchProgress.isCapped = this.searchProgress.limit.lt(0);
     };
 
-    //#endregion
+    //  Warrior
+    const buyStronghold = new Action(
+      "L",
+      new MultiPrice([
+        new Price(this.metal, 1000),
+        new Price(this.crystal, 1000),
+        new Price(this.habitableSpace, 1, 1)
+      ])
+    );
+    buyStronghold.afterBuy = () => {
+      this.warriorX1.reloadLimit();
+    };
+    buyStronghold.name = "Stronghold";
+    this.warriorX1.actions.push(buyStronghold);
+    this.warriorX1.limitStorage = buyStronghold;
 
+    //#endregion
+    //#region Arrays
     this.limited = [
       this.metalX1,
       this.crystalX1,
@@ -487,7 +522,8 @@ export class ResourceManager implements ISalvable {
       this.shipyardProgress,
       this.shipyardX1,
       this.searchX1,
-      this.searchProgress
+      this.searchProgress,
+      this.warriorX1
     ];
 
     this.limited.forEach(rl => {
@@ -526,7 +562,10 @@ export class ResourceManager implements ISalvable {
       this.searchX1,
       this.searchX2,
       this.searchX3,
-      this.searchProgress
+      this.searchProgress,
+      this.warriorX1,
+      this.warriorX2,
+      this.warriorX3
     ];
     this.allResources.forEach(r => r.generateRefundActions());
     // this.allResources.forEach(r => {
@@ -542,6 +581,42 @@ export class ResourceManager implements ISalvable {
     ];
 
     this.reloadList();
+    //#endregion
+    //#region Info Messages
+    this.metalX1.alerts = [
+      {
+        id: "1",
+        getType: () => "info",
+        getMessage: () => "Buy five or more to unlock new stuff",
+        getCondition: () => ResourceManager.getInstance().metalX1.quantity.lt(5)
+      }
+    ];
+    this.crystalX1.alerts = [
+      {
+        id: "2",
+        getType: () => "info",
+        getMessage: () => "Buy five or more to unlock new stuff",
+        getCondition: () =>
+          ResourceManager.getInstance().crystalX1.quantity.lt(5)
+      }
+    ];
+    this.warriorX1.alerts = [
+      {
+        id: "3",
+        getType: () => "info",
+        getMessage: () =>
+          ResourceManager.getInstance().warriorX1.name +
+          " are granting + " +
+          MainService.formatPipe.transform(
+            FleetManager.getInstance().getNavalCapacityFromDrones(),
+            true
+          ) +
+          " naval capacity",
+        getCondition: () =>
+          ResourceManager.getInstance().warriorX1.quantity.gte(1)
+      }
+    ];
+    //#endregion
   }
   static getInstance() {
     return ResourceManager.instance;
@@ -679,10 +754,7 @@ export class ResourceManager implements ISalvable {
       });
 
     //  Fix Computing
-    if (
-      this.unitZero === this.computing &&
-      (this.computing.c.gt(0) || this.unitZero.endIn < 1)
-    ) {
+    if (this.unitZero === this.computing && this.computing.c.gte(0)) {
       this.maxTime = Number.POSITIVE_INFINITY;
       this.computing.isEnding = false;
       this.unitZero = null;
