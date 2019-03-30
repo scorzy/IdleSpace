@@ -16,5 +16,13 @@ export const enemyIcons = [
   "map-marker",
   "underline",
   "shield",
-  "atom"
+  "atom",
+  "wing",
+  "fleur",
+  "all",
+  "freedom",
+  "skull",
+  "griffin",
+  "air",
+  "double"
 ];
