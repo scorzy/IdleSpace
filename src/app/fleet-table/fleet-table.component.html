@@ -1,12 +1,14 @@
 <clr-datagrid class="datagrid-compact">
-  <clr-dg-column [clrDgField]="'ship.name'">Ship Name</clr-dg-column>
-  <clr-dg-column [clrDgSortBy]="shipTypeSorter">Type</clr-dg-column>
+  <clr-dg-column [clrDgSortBy]="shipOrderSorter">Order</clr-dg-column>
+  <clr-dg-column [clrDgField]="'name'">Ship Name</clr-dg-column>
+  <!-- <clr-dg-column [clrDgSortBy]="shipTypeSorter">Type</clr-dg-column> -->
   <clr-dg-column [clrDgSortBy]="shipQuantitySorter">Quantity</clr-dg-column>
   <clr-dg-column>Level</clr-dg-column>
 
-  <clr-dg-row *ngFor="let ship of fleet; trackBy: getDesignId">
+  <clr-dg-row *clrDgItems="let ship of fleet; trackBy: getDesignId">
+    <clr-dg-cell>{{ ship.order }}</clr-dg-cell>
     <clr-dg-cell>{{ ship.name }}</clr-dg-cell>
-    <clr-dg-cell>{{ ship.type.name }}</clr-dg-cell>
+    <!-- <clr-dg-cell>{{ ship.type.name }}</clr-dg-cell> -->
     <clr-dg-cell>
       <app-formatted-quantity
         [quantity]="ship.quantity"

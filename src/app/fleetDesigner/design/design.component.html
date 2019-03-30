@@ -66,6 +66,7 @@
             <td>
               <app-formatted-quantity
                 [quantity]="ms.game.fleetManager.totalNavalCapacity"
+                [integer]="true"
               >
               </app-formatted-quantity>
             </td>
@@ -75,6 +76,7 @@
             <td>
               <app-formatted-quantity
                 [quantity]="ms.game.fleetManager.usedNavalCapacity"
+                [integer]="true"
               >
               </app-formatted-quantity>
             </td>
@@ -84,6 +86,7 @@
             <td>
               <app-formatted-quantity
                 [quantity]="ms.game.fleetManager.totalShips"
+                [integer]="true"
               >
               </app-formatted-quantity>
             </td>

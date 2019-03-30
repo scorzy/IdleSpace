@@ -34,15 +34,17 @@ export class Enemy {
     const navalCap =
       (MAX_NAVAL_CAPACITY * level) / (level + 500) / moduleLevelMulti;
     const maxShipTye = Math.min(level, ShipTypes.length);
-    for (let i = 0; i < maxShipTye; i++) {
-      if (!(maxShipTye > 2 && Math.random() < 0.15)) {
-        let presets = Presets.filter(p => p.type === ShipTypes[i]);
-        const pres = sample(presets);
-        enemy.addFromPreset(pres);
-        if (presets.length > 2 && Math.random() < 0.3) {
-          presets = presets.filter(p => p !== pres);
-          const pres2 = sample(presets);
-          enemy.addFromPreset(pres2);
+    for (let k = 0; k < 2; k++) {
+      for (let i = 0; i < maxShipTye; i++) {
+        if (!(maxShipTye > 2 && Math.random() < 0.15)) {
+          let presets = Presets.filter(p => p.type === ShipTypes[i]);
+          const pres = sample(presets);
+          enemy.addFromPreset(pres);
+          if (presets.length > 2 && Math.random() < 0.3) {
+            presets = presets.filter(p => p !== pres);
+            const pres2 = sample(presets);
+            enemy.addFromPreset(pres2);
+          }
         }
       }
     }
@@ -50,14 +52,27 @@ export class Enemy {
       .map(s => s.weight)
       .reduce((p, c) => p + c, 0);
     enemy.shipsDesign.forEach(sd => {
-      const numOfShips = Math.floor(
-        (navalCap * sd.weight) / totalWeight / sd.type.navalCapacity
+      const numOfShips = Math.max(
+        Math.floor(
+          (navalCap * sd.weight) / totalWeight / sd.type.navalCapacity
+        ),
+        1
       );
       sd.quantity = new Decimal(numOfShips);
       sd.modules.forEach(m => {
         m.level = moduleLevel;
       });
       sd.reload(false);
+    });
+    enemy.shipsDesign.sort((a, b) => {
+      const a2 = a.armorDamage.div(a.shieldDamage);
+      const b2 = b.armorDamage.div(b.shieldDamage);
+      return a2.cmp(b2);
+    });
+    let n = 1;
+    enemy.shipsDesign.forEach(s => {
+      s.order = n;
+      n++;
     });
     enemy.reload();
     return enemy;
@@ -87,6 +102,11 @@ export class Enemy {
         }
       }
     }
+    let n = 1;
+    enemy.shipsDesign.forEach(s => {
+      s.order = n;
+      n++;
+    });
     enemy.reload();
     return enemy;
   }

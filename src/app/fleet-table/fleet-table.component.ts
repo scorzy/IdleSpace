@@ -11,6 +11,7 @@ import { ShipTypeSorter } from "../model/utility/shipTypeSorter";
 import { ShipQuantitySorter } from "../model/utility/shipQuantitySorter";
 import { Subscription } from "rxjs";
 import { MainService } from "../main.service";
+import { ShipOrderSorter } from "../model/utility/shipOrderSorter";
 
 @Component({
   selector: "app-fleet-table",
@@ -22,6 +23,7 @@ export class FleetTableComponent implements OnInit, OnDestroy {
   @Input() fleet: ShipDesign[];
   shipTypeSorter = new ShipTypeSorter();
   shipQuantitySorter = new ShipQuantitySorter();
+  shipOrderSorter = new ShipOrderSorter();
 
   constructor(public ms: MainService, private cd: ChangeDetectorRef) {}
 

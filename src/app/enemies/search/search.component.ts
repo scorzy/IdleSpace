@@ -8,9 +8,8 @@ import {
 import { MainService } from "src/app/main.service";
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 import { SearchJob } from "src/app/model/enemy/searchJob";
-import { isNumber } from "util";
 import { MAX_ENEMY_LIST_SIZE } from "src/app/model/enemy/enemyManager";
-import { from, Subscription } from "rxjs";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-search",

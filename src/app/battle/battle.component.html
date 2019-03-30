@@ -10,7 +10,8 @@
   </h1>
   <div class="clr-row" *ngIf="ms.game.enemyManager.currentEnemy">
     <div class="clr-col-6">
-      <br />
+      <p>Level: {{ ms.game.enemyManager.currentEnemy.level }}</p>
+
       <div class="btn-group btn-success">
         <button
           class="btn"

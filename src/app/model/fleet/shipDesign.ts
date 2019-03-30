@@ -57,6 +57,7 @@ export class ShipDesign implements ISalvable, IBuyable {
     floor: 0,
     ceil: 100
   };
+  order = 0;
 
   static fromPreset(preset: Preset): ShipDesign {
     const shipDesign = new ShipDesign();
