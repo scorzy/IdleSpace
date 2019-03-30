@@ -4,7 +4,85 @@
     <p>
       Here you can search for new worlds.
     </p>
-    <button class="btn btn-outline" (click)="generate()">Search</button>
+
+    <clr-alert
+      *ngIf="ms.game.resourceManager.searchX1.quantity.lte(0)"
+      [clrAlertType]="'warning'"
+      [clrAlertClosable]="false"
+    >
+      <clr-alert-item>
+        <span class="alert-text">
+          You don't have any
+          <a [routerLink]="'/home/res/X1'"
+            >{{ ms.game.resourceManager.searchX1.name }}
+          </a>
+        </span>
+      </clr-alert-item>
+    </clr-alert>
+
+    <form clrForm>
+      <clr-input-container>
+        <label
+          >Level
+          <span> (max:{{ ms.game.enemyManager.maxLevel }}) </span>
+          :</label
+        >
+        <input
+          clrInput
+          type="number"
+          [(ngModel)]="userLevel"
+          name="level"
+          required
+          [max]="ms.game.enemyManager.maxLevel"
+          min="1"
+        />
+        <clr-control-error
+          >Must be a number (1 -
+          {{ ms.game.enemyManager.maxLevel }})</clr-control-error
+        ></clr-input-container
+      >
+      <input
+        type="range"
+        [name]="'sln'"
+        min="1"
+        [max]="ms.game.enemyManager.maxLevel"
+        step="1"
+        [(ngModel)]="userLevel"
+      />
+    </form>
+
+    <clr-alert
+      *ngIf="!limited"
+      [clrAlertType]="'warning'"
+      [clrAlertClosable]="false"
+    >
+      <clr-alert-item>
+        <span class="alert-text">
+          Limit reached, you can have a maximum of 20 enemy at time.
+        </span>
+      </clr-alert-item>
+    </clr-alert>
+
+    <clr-alert *ngIf="valid" [clrAlertType]="'info'" [clrAlertClosable]="false">
+      <clr-alert-item>
+        <span class="alert-text">
+          Searching will cost:
+          <app-price-line
+            [canBuy]="true"
+            [unit]="ms.game.resourceManager.searchProgress"
+            [price]="ms.game.enemyManager.getRequiredSearch(this.userLevel)"
+          ></app-price-line>
+        </span>
+      </clr-alert-item>
+    </clr-alert>
+
+    <button
+      class="btn btn-primary"
+      (click)="generate()"
+      [disabled]="!this.isValid()"
+    >
+      Search
+    </button>
   </div>
 
   <div class="clr-col-12	clr-col-sm-12	clr-col-md-12	clr-col-lg-6 clr-col-xl-6">

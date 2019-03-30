@@ -9,8 +9,11 @@ import { Emitters } from "src/app/emitters";
 import { SearchJob } from "./searchJob";
 import { RomanPipe } from "src/app/roman.pipe";
 
+export const MAX_ENEMY_LIST_SIZE = 20;
+
 export class EnemyManager implements ISalvable {
   private static instance: EnemyManager;
+
   static romanPipe = new RomanPipe();
 
   currentEnemy: Enemy;
@@ -119,15 +122,17 @@ export class EnemyManager implements ISalvable {
   surrender() {
     this.currentEnemy = null;
   }
+
+  getRequiredSearch(level: number): Decimal {
+    return new Decimal(level * 100).times(Decimal.pow(1.1, level - 1));
+  }
   /**
    * Start searching a new enemy
    */
   startSearching(level: number) {
     const searchJob = new SearchJob();
     searchJob.level = level;
-    searchJob.total = new Decimal(level * 100).times(
-      Decimal.pow(1.1, level - 1)
-    );
+    searchJob.total = this.getRequiredSearch(level);
     searchJob.generateNameDescription();
     this.searchJobs.push(searchJob);
   }
@@ -148,6 +153,9 @@ export class EnemyManager implements ISalvable {
     return this.searchJobs
       .map(s => s.total.minus(s.progress))
       .reduce((p, c) => p.plus(c), new Decimal(1));
+  }
+  getTotalEnemy(): number {
+    return this.allEnemy.length + this.searchJobs.length;
   }
 
   //#region Save and Load

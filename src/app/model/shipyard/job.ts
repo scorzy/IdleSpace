@@ -79,8 +79,8 @@ export class Job implements IJob {
     return this.design.name;
   }
   getDescription?(): string {
-    return this.quantity.gt(0)
-      ? "+ " + MainService.formatPipe.transform(this.quantity)
+    return this.quantity && this.quantity.gt(0)
+      ? "+ " + MainService.formatPipe.transform(this.quantity, true)
       : "Design Upgrade";
   }
   getShape?(): string {
