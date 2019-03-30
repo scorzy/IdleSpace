@@ -71,7 +71,9 @@ export class Research extends AbstractUnlockable implements IHasQuantity, IJob {
       this.completed = true;
     } else {
       this.total = Decimal.pow(this.ratio, this.quantity).times(this.cost);
-      this.number = Research.romanPipe.transform(this.quantity.plus(1));
+      if (this.limit.gt(1)) {
+        this.number = Research.romanPipe.transform(this.quantity.plus(1));
+      }
     }
   }
   unlock(): boolean {
@@ -114,11 +116,8 @@ export class Research extends AbstractUnlockable implements IHasQuantity, IJob {
     if ("p" in data) this.progress = Decimal.fromDecimal(data.p);
     if ("q" in data) this.quantity = Decimal.fromDecimal(data.q);
 
-    this.total = Decimal.pow(this.ratio, this.quantity).times(this.cost);
-    if (this.quantity.gte(1) && this.limit.gt(1)) {
-      this.number = Research.romanPipe.transform(this.quantity.plus(1));
-    }
     this.firstDone = this.quantity.gte(1);
+    this.reloadNum();
     return true;
   }
   //#endregion

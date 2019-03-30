@@ -1,6 +1,6 @@
 import { ISalvable } from "../base/ISalvable";
 import { ShipDesign } from "./shipDesign";
-import { ShipType } from "./shipTypes";
+import { ShipType, ShipTypes } from "./shipTypes";
 import { Module } from "./module";
 import { ModulesData } from "./moduleData";
 import { Resource } from "../resource/resource";
@@ -8,6 +8,7 @@ import { Shipyard } from "../shipyard/shipyard";
 import { Job } from "../shipyard/job";
 import { EnemyManager } from "../enemy/enemyManager";
 import { ResourceManager } from "../resource/resourceManager";
+import { ResearchManager } from "../research/researchManager";
 
 export const MAX_NAVAL_CAPACITY = 1e4;
 export const MAX_DESIGN = 20;
@@ -60,6 +61,32 @@ export class FleetManager implements ISalvable {
     this.totalNavalCapacity = new Decimal(20).plus(
       this.getNavalCapacityFromDrones()
     );
+    const resMan = ResearchManager.getInstance();
+    if (resMan.frigate.firstDone) {
+      this.totalNavalCapacity = this.totalNavalCapacity.plus(
+        ShipTypes[1].navalCapacity * 5
+      );
+    }
+    if (resMan.destroyer.firstDone) {
+      this.totalNavalCapacity = this.totalNavalCapacity.plus(
+        ShipTypes[2].navalCapacity * 5
+      );
+    }
+    if (resMan.cruiser.firstDone) {
+      this.totalNavalCapacity = this.totalNavalCapacity.plus(
+        ShipTypes[3].navalCapacity * 5
+      );
+    }
+    if (resMan.battlecruiser.firstDone) {
+      this.totalNavalCapacity = this.totalNavalCapacity.plus(
+        ShipTypes[4].navalCapacity * 5
+      );
+    }
+    if (resMan.battleship.firstDone) {
+      this.totalNavalCapacity = this.totalNavalCapacity.plus(
+        ShipTypes[5].navalCapacity * 5
+      );
+    }
 
     this.totalShips = this.ships
       .map(s => s.quantity)
