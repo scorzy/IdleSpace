@@ -6,4 +6,5 @@ export interface IJob {
   getProgress(): Decimal;
   getProgressPercent(): number;
   deleteFun?(): boolean;
+  getTime?(): number;
 }

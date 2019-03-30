@@ -20,6 +20,7 @@ import { MainService } from "../main.service";
 export class JobComponent implements OnInit, OnDestroy {
   @HostBinding("class")
   card = "card drag-item";
+  time = 0;
 
   @Input() job: IJob;
 
@@ -28,8 +29,10 @@ export class JobComponent implements OnInit, OnDestroy {
   constructor(public ms: MainService, private cd: ChangeDetectorRef) {}
 
   ngOnInit() {
+    if (this.job.getTime) this.time = this.job.getTime();
     this.subscriptions.push(
       this.ms.em.updateEmitter.subscribe(() => {
+        if (this.job.getTime) this.time = this.job.getTime();
         this.cd.markForCheck();
       })
     );

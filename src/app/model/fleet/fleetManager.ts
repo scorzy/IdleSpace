@@ -164,13 +164,13 @@ export class FleetManager implements ISalvable {
   reloadSliders() {
     const av = this.totalNavalCapacity.toNumber();
     this.ships.forEach(s => {
-      s.sliderOptions.ceil = av;
-      s.sliderOptions.step = s.type.navalCapacity;
+      s.sliderOptions.ceil = Math.floor(av / s.type.navalCapacity);
+      s.sliderOptions.step = 1;
     });
   }
   sliderChange() {
     this.totalWantedNavalCap = this.ships
-      .map(s => s.wantQuantityTemp)
+      .map(s => s.type.navalCapacity * s.wantQuantityTemp)
       .reduce((p, c) => p + c, 0);
     this.configurationValid = this.totalNavalCapacity.gte(
       this.totalWantedNavalCap
