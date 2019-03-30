@@ -6,6 +6,9 @@ import { Presets, Preset } from "./preset";
 import sample from "lodash-es/sample";
 import random from "lodash-es/random";
 import { Reward } from "./reward";
+import { enemyNames } from "./enemyNames";
+import { enemySuffixes } from "./enemySuffixes";
+import { enemyIcons } from "./enemyIcons";
 
 export class Enemy {
   private static lastId = 0;
@@ -28,7 +31,8 @@ export class Enemy {
   static generate(level: number): Enemy {
     const enemy = new Enemy();
     enemy.level = level;
-    enemy.name = "Enemy " + enemy.id;
+    enemy.name = sample(enemyNames) + " " + sample(enemySuffixes);
+    enemy.generateIcon();
     const moduleLevelMulti = sample([1, 1.5, 2, 2.5, 3]);
     const moduleLevel = level * moduleLevelMulti;
     const navalCap =
@@ -123,6 +127,17 @@ export class Enemy {
     this.zones.forEach(z => {
       z.enemy = this;
     });
+  }
+  generateIcon() {
+    if (this.name.includes("Paperclip")) {
+      this.shape = "paperclip";
+      return true;
+    }
+    if (this.name.includes("Printer")) {
+      this.shape = "printer";
+      return true;
+    }
+    this.shape = sample(enemyIcons);
   }
   generateZones(empty = false) {
     for (let i = 0; i < 100; i++) {
