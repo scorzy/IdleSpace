@@ -10,11 +10,14 @@
 <div *ngIf="enemy" class="clr-row">
   <div class="clr-col-6">
     <p>
+      Level: {{ enemy.level }}
+      <br />
       Fleet Power:
       <app-formatted-quantity
         [quantity]="enemy.totalFleetPower"
       ></app-formatted-quantity>
     </p>
+    <br />
     <div class="btn-group btn-primary">
       <button class="btn btn-success" (click)="attack()">Attack</button>
       <button class="btn" (click)="move(-1)">Move Up</button>

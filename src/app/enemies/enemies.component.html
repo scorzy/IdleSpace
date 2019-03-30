@@ -15,11 +15,15 @@
     clrVerticalNavLink
     [routerLink]="'./view/' + en.id"
     routerLinkActive="active"
-    class="movable"
+    class="movable enemyLine"
     *ngFor="let en of ms.game.enemyManager.allEnemy; trackBy: getEnemyId"
   >
     <clr-icon [attr.shape]="en.shape"></clr-icon>
+
     {{ en.name }}
+    <span class="level">
+      {{ en.level }}
+    </span>
   </a>
 </clr-vertical-nav>
 

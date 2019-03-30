@@ -22,7 +22,17 @@ clr-vertical-nav.cdk-drop-list-dragging a {
   line-height: 1.5rem;
   outline-offset: -5px;
 }
-
+.level {
+  float: right;
+}
+.enemyLine {
+  min-width: 10rem;
+}
 // .cdk-drag-preview {
 //   background-color: #324f61 !important;
 // }
+@media only screen and (min-width: 768px) {
+  .clr-vertical-nav {
+    width: 300px;
+  }
+}
