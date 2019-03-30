@@ -1,5 +1,5 @@
 <a
-  [routerLink]="id !== 'naval' ? ['/home/res/' + id] : ['/fleet/design']"
+  [routerLink]="id !== 'naval' ? ['/home/res/' + id] : ['/fleet/shipyard']"
   class="nav-link matLink clr-row clr-justify-content-between"
   routerLinkActive="active"
   [ngClass]="{ red: isEnding }"
@@ -21,19 +21,24 @@
       <app-formatted-quantity
         *ngIf="showQta"
         [quantity]="quantity"
+        [integer]="integer"
       ></app-formatted-quantity>
     </span>
   </span>
 
   <span *ngIf="c" class="perSecTab  monospace clr-col clr-align-self-end">
     <span *ngIf="c && c.abs().gt(0.001)" [ngClass]="{ notEnough: c.lt(0) }">
-      <app-formatted-quantity [quantity]="c"> </app-formatted-quantity>/s
+      <app-formatted-quantity [quantity]="c" [integer]="integer">
+      </app-formatted-quantity
+      >/s
     </span>
   </span>
 
   <span *ngIf="limit" class="perSecTab  monospace clr-col clr-align-self-end">
     <span>
-      / <app-formatted-quantity [quantity]="limit"> </app-formatted-quantity>
+      /
+      <app-formatted-quantity [quantity]="limit" [integer]="integer">
+      </app-formatted-quantity>
     </span>
   </span>
 </a>

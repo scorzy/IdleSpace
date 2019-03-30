@@ -16,6 +16,7 @@ export class TabComponent {
   @Input() cap = false;
   @Input() limit?: Decimal;
   @Input() cog = false;
+  @Input() integer = false;
 
   constructor() {}
 }
