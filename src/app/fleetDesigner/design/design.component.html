@@ -4,6 +4,19 @@
     Create new Ship Design
   </h1>
   <br />
+
+  <clr-alert
+    [clrAlertType]="'warning'"
+    [clrAlertClosable]="false"
+    *ngIf="ms.game.fleetManager.ships.length >= 20"
+  >
+    <clr-alert-item>
+      <span class="alert-text">
+        Design limit reached, you can have 20 at max.
+      </span></clr-alert-item
+    >
+  </clr-alert>
+
   <div class="clr-row">
     <div class="clr-col-auto">
       <!-- <clr-alert *ngIf="ms.game.fleetManager.ships.length < 1">

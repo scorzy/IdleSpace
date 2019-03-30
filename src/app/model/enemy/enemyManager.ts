@@ -152,7 +152,7 @@ export class EnemyManager implements ISalvable {
   getTotalToDo(): Decimal {
     return this.searchJobs
       .map(s => s.total.minus(s.progress))
-      .reduce((p, c) => p.plus(c), new Decimal(1));
+      .reduce((p, c) => p.plus(c.min(1)), new Decimal(0));
   }
   getTotalEnemy(): number {
     return this.allEnemy.length + this.searchJobs.length;

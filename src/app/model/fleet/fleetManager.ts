@@ -10,6 +10,7 @@ import { EnemyManager } from "../enemy/enemyManager";
 import { ResourceManager } from "../resource/resourceManager";
 
 export const MAX_NAVAL_CAPACITY = 1e4;
+export const MAX_DESIGN = 20;
 
 export class FleetManager implements ISalvable {
   private static instance: FleetManager;

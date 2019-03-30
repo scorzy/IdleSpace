@@ -31,6 +31,8 @@ export class SearchComponent implements OnInit {
 
   ngOnInit() {
     this.userLevel = this.ms.game.enemyManager.maxLevel;
+    this.validate();
+
     this.subscriptions.push(
       this.ms.em.updateEmitter.subscribe(() => {
         this.validate();

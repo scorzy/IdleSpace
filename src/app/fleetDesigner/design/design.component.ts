@@ -12,6 +12,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { ShipDesign } from "src/app/model/fleet/shipDesign";
 import { ShipTypes, ShipType } from "src/app/model/fleet/shipTypes";
 import { ResearchManager } from "src/app/model/research/researchManager";
+import { MAX_DESIGN } from "src/app/model/fleet/fleetManager";
 
 @Component({
   selector: "app-design",
@@ -95,6 +96,9 @@ export class DesignComponent implements OnInit, OnDestroy {
     return shipType.id;
   }
   isDisabled(): boolean {
-    return !(this.name.trim() !== "" && this.type.length > 0);
+    return (
+      this.ms.game.fleetManager.ships.length >= MAX_DESIGN ||
+      !(this.name.trim() !== "" && this.type.length > 0)
+    );
   }
 }

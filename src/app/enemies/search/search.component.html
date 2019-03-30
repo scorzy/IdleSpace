@@ -6,7 +6,7 @@
     </p>
 
     <clr-alert
-      *ngIf="ms.game.resourceManager.searchX1.quantity.lte(0)"
+      *ngIf="ms.game.resourceManager.searchX1.quantity.lte(0); else progress"
       [clrAlertType]="'warning'"
       [clrAlertClosable]="false"
     >
@@ -19,6 +19,16 @@
         </span>
       </clr-alert-item>
     </clr-alert>
+
+    <ng-template #progress>
+      Progress:
+      <app-polynom
+        [a]="ms.game.resourceManager.searchProgress.a"
+        [b]="ms.game.resourceManager.searchProgress.b"
+        [c]="ms.game.resourceManager.searchProgress.c"
+      ></app-polynom>
+      <br />
+    </ng-template>
 
     <form clrForm>
       <clr-input-container>
