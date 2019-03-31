@@ -5,6 +5,7 @@ import { Bonus } from "./bonus/bonus";
 import { FleetManager } from "./fleet/fleetManager";
 import { EnemyManager } from "./enemy/enemyManager";
 import { Shipyard } from "./shipyard/shipyard";
+import { PrestigeManager } from "./prestige/prestigeManager";
 
 export class Game {
   resourceManager: ResourceManager;
@@ -13,13 +14,16 @@ export class Game {
   enemyManager: EnemyManager;
   researchBonus: BonusStack;
   shipyard: Shipyard;
+  prestigeManager: PrestigeManager;
   isPaused = false;
+
   constructor() {
     this.resourceManager = new ResourceManager();
     this.researchManager = new ResearchManager();
     this.fleetManager = new FleetManager();
     this.enemyManager = new EnemyManager();
     this.shipyard = new Shipyard();
+    this.prestigeManager = new PrestigeManager();
 
     this.researchManager.addOtherResearches();
     this.researchManager.setUnlocks();
@@ -110,6 +114,7 @@ export class Game {
     save.f = this.fleetManager.getSave();
     save.w = this.enemyManager.getSave();
     save.s = this.shipyard.getSave();
+    save.p = this.prestigeManager.getSave();
     return save;
   }
   load(data: any) {
@@ -119,6 +124,7 @@ export class Game {
     this.fleetManager.load(data.f);
     if ("w" in data) this.enemyManager.load(data.w);
     if ("s" in data) this.shipyard.load(data.s);
+    if ("p" in data) this.prestigeManager.load(data.p);
 
     this.resourceManager.habitableSpace.quantity = new Decimal(100);
     this.resourceManager.miningDistrict.quantity = new Decimal(100);

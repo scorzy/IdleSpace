@@ -1,0 +1,20 @@
+<div class="content-area">
+  <h1>Prestige</h1>
+  <br />
+
+  <table class="">
+    <tr *ngFor="let row of ms.game.prestigeManager.skills; trackByRow">
+      <td *ngFor="let skill of row; trackByCell">
+        <button
+          class="btn btn-icon noMargin"
+          [disabled]="!skill.buyable"
+          [ngClass]="{ 'btn-success-outline': skill.owned }"
+          [title]="skill.effect.getDescription()"
+          (click)="openBuyModal(skill)"
+        >
+          <clr-icon [attr.shape]="skill.effect.shape" size="24"></clr-icon>
+        </button>
+      </td>
+    </tr>
+  </table>
+</div>

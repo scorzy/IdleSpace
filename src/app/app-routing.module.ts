@@ -13,6 +13,7 @@ import { EnemiesComponent } from "./enemies/enemies.component";
 import { EnemyViewComponent } from "./enemies/enemy-view/enemy-view.component";
 import { SearchComponent } from "./enemies/search/search.component";
 import { ShipyardComponent } from "./fleetDesigner/shipyard/shipyard.component";
+import { PrestigeComponent } from "./prestige/prestige.component";
 
 const routes: Routes = [
   {
@@ -77,6 +78,10 @@ const routes: Routes = [
       { path: "save", component: SaveComponent },
       { path: "ui", component: UiComponent }
     ]
+  },
+  {
+    path: "prestige",
+    component: PrestigeComponent
   }
 ];
 

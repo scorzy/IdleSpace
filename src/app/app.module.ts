@@ -47,6 +47,7 @@ import { FleetTableComponent } from "./fleet-table/fleet-table.component";
 import { ShipyardComponent } from "./fleetDesigner/shipyard/shipyard.component";
 import { BonusViewComponent } from "./bonus-view/bonus-view.component";
 import { JobComponent } from "./job/job.component";
+import { PrestigeComponent } from './prestige/prestige.component';
 
 @NgModule({
   declarations: [
@@ -88,7 +89,8 @@ import { JobComponent } from "./job/job.component";
     FleetTableComponent,
     ShipyardComponent,
     BonusViewComponent,
-    JobComponent
+    JobComponent,
+    PrestigeComponent
   ],
   imports: [
     BrowserAnimationsModule,
