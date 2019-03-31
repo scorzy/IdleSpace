@@ -110,4 +110,8 @@ export class EditorComponent implements OnInit, OnChanges {
   edit() {
     if (this.design) this.design.copy();
   }
+  maxAll() {
+    this.design.maxAll();
+    this.reload();
+  }
 }

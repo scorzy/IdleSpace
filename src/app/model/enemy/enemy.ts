@@ -33,7 +33,7 @@ export class Enemy {
     enemy.level = level;
     enemy.name = sample(enemyNames) + " " + sample(enemySuffixes);
     enemy.generateIcon();
-    const moduleLevelMulti = sample([1, 1.5, 2, 2.5, 3]);
+    const moduleLevelMulti = sample([1, 1.5, 2]);
     const moduleLevel = level * moduleLevelMulti;
     const navalCap =
       (MAX_NAVAL_CAPACITY * level) / (level + 500) / moduleLevelMulti;
@@ -85,6 +85,7 @@ export class Enemy {
     const enemy = new Enemy();
     if ("n" in data) enemy.name = data.n;
     if ("l" in data) enemy.level = data.l;
+    if ("h" in data) enemy.shape = data.h;
     if ("s" in data) {
       for (const shipData of data.s) {
         const ship = new ShipDesign();
@@ -179,6 +180,7 @@ export class Enemy {
   }
   getSave() {
     const data: any = {};
+    data.h = this.shape;
     data.n = this.name;
     data.l = this.level;
     data.s = this.shipsDesign.map(s => s.getSave());

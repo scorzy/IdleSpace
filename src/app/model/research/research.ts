@@ -5,6 +5,7 @@ import { RomanPipe } from "src/app/roman.pipe";
 import { IResearchData } from "./iResearchData";
 import { IHasQuantity } from "../base/IHasQuantity";
 import { IJob } from "../base/IJob";
+import { solveEquation } from "ant-utils";
 
 export class Research extends AbstractUnlockable implements IHasQuantity, IJob {
   private constructor() {

@@ -236,6 +236,13 @@ export class ShipDesign implements ISalvable, IBuyable {
     this.editable.modules.splice(i, 1);
     this.editable.reload();
   }
+  maxAll() {
+    this.editable.modules.forEach(m => {
+      m.level = m.module.research.quantity.toNumber();
+      m.levelUi = m.level;
+    });
+    this.editable.reload();
+  }
   saveConfig() {
     if (!(this.editable && this.editable.isValid && !this.isUpgrading)) {
       return false;

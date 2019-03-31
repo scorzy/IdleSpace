@@ -269,6 +269,10 @@
             <clr-icon shape="plus"></clr-icon>
             Add
           </clr-button>
+          <clr-button class="btn btn-outline" (click)="maxAll()">
+            <clr-icon shape="angle"></clr-icon>
+            Max All
+          </clr-button>
           <clr-button
             *ngIf="design.quantity.lt(1); else upgradeBtn"
             class="btn btn"
