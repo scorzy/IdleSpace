@@ -137,6 +137,7 @@ export class Game {
       m.quantity = new Decimal(1e20);
     });
     this.enemyManager.maxLevel = 50;
+    this.prestigeManager.totalPrestige = 100;
 
     this.fleetManager.upgradingCheck();
     this.resourceManager.limitedResources.forEach(r => r.reloadLimit());

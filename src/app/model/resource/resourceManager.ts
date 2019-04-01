@@ -396,6 +396,8 @@ export class ResourceManager implements ISalvable {
     buyBattery.name = "Batteries";
     this.energy.actions.push(buyBattery);
     this.energy.limitStorage = buyBattery;
+    this.energy.prestigeLimit = AllSkillEffects.PLUS_BATTERY;
+    this.energy.prestigeLimitIncrease = 100;
 
     //  Energy Plant
     const buyEnergyPlant = new Action(
@@ -519,6 +521,7 @@ export class ResourceManager implements ISalvable {
     buyStronghold.name = "Stronghold";
     this.warriorX1.actions.push(buyStronghold);
     this.warriorX1.limitStorage = buyStronghold;
+    this.warriorX1.prestigeLimit = AllSkillEffects.PLUS_WARRIOR;
 
     //#endregion
     //#region Arrays

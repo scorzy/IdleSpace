@@ -48,6 +48,7 @@ export class Resource extends AbstractUnlockable
   limitStorage: IHasQuantity;
   workerPerMine = new Decimal(10);
   prestigeLimit: SkillEffect;
+  prestigeLimitIncrease: number;
 
   productionMultiplier = new BonusStack();
   efficiencyMultiplier = new BonusStack();
@@ -130,7 +131,10 @@ export class Resource extends AbstractUnlockable
     if (this.isLimited) {
       let worker = this.workerPerMine;
       if (this.prestigeLimit) {
-        worker = worker.plus(this.prestigeLimit.numOwned * PLUS_ADD);
+        const toAdd = this.prestigeLimitIncrease
+          ? this.prestigeLimitIncrease
+          : PLUS_ADD;
+        worker = worker.plus(this.prestigeLimit.numOwned * toAdd);
       }
       this.limit = this.limitStorage.quantity.plus(1).times(worker);
       this.quantity = this.quantity.min(this.limit);

@@ -11,7 +11,7 @@ export const skillsData: SkillEffect[][] = [
     AllSkillEffects.PLUS_CPU,
     AllSkillEffects.PLUS_WORKER,
     AllSkillEffects.PLUS_SEARCH,
-    AllSkillEffects.PLUS_METAL_MINER,
+    AllSkillEffects.PLUS_WARRIOR,
     AllSkillEffects.PLUS_CRYSTAL_MINER,
     AllSkillEffects.PLUS_ALLOY
   ],
@@ -37,7 +37,7 @@ export const skillsData: SkillEffect[][] = [
     AllSkillEffects.PLUS_CPU,
     AllSkillEffects.PLUS_WORKER,
     AllSkillEffects.PLUS_SEARCH,
-    AllSkillEffects.PLUS_METAL_MINER,
+    AllSkillEffects.PLUS_WARRIOR,
     AllSkillEffects.PLUS_CRYSTAL_MINER,
     AllSkillEffects.PLUS_ALLOY
   ],
@@ -102,7 +102,7 @@ export const skillsData: SkillEffect[][] = [
     AllSkillEffects.PLUS_CPU,
     AllSkillEffects.PLUS_WORKER,
     AllSkillEffects.PLUS_SEARCH,
-    AllSkillEffects.PLUS_METAL_MINER,
+    AllSkillEffects.PLUS_BATTERY,
     AllSkillEffects.PLUS_CRYSTAL_MINER,
     AllSkillEffects.PLUS_ALLOY
   ],

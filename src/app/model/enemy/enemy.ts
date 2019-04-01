@@ -34,7 +34,8 @@ export class Enemy {
     enemy.name = sample(enemyNames) + " " + sample(enemySuffixes);
     enemy.generateIcon();
     const moduleLevelMulti = sample([1, 1.5, 2]);
-    const moduleLevel = level * moduleLevelMulti;
+    const moduleLevel =
+      Math.floor(level * Math.pow(1.003, level)) * moduleLevelMulti;
     const navalCap =
       (MAX_NAVAL_CAPACITY * level) / (level + 500) / moduleLevelMulti;
     const maxShipTye = Math.min(level, ShipTypes.length);

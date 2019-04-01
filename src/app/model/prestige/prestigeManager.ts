@@ -26,9 +26,6 @@ export class PrestigeManager implements ISalvable {
     this.skills[2][7].buyable = true;
     this.skills[7][2].buyable = true;
     this.skills[7][7].buyable = true;
-
-    this.skills[2][2].owned = true;
-    this.skills[2][2].effect.numOwned = 1;
   }
   static getInstance(): PrestigeManager {
     return PrestigeManager.instance;
@@ -54,10 +51,12 @@ export class PrestigeManager implements ISalvable {
   //#region Save and Load
   getSave(): any {
     const save: any = {};
+    save.t = this.totalPrestige;
     save.o = this.allSkills.filter(s => s.owned).map(s => s.id);
     return save;
   }
   load(data: any): boolean {
+    if ("t" in data) this.totalPrestige = data.t;
     if ("o" in data) {
       for (const id of data.o) {
         const skill = this.allSkills.find(s => s.id === id);
