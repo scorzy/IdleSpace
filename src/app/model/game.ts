@@ -139,6 +139,7 @@ export class Game {
     this.enemyManager.maxLevel = 50;
 
     this.fleetManager.upgradingCheck();
+    this.resourceManager.limitedResources.forEach(r => r.reloadLimit());
     this.reload();
   }
 
@@ -148,5 +149,6 @@ export class Game {
       this.enemyManager.maxLevel
     );
     this.init(true);
+    this.resourceManager.limitedResources.forEach(r => r.reloadLimit());
   }
 }

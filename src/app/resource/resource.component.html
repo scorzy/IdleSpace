@@ -7,10 +7,12 @@
   ></clr-icon>
   {{ res?.name }}
   <span style="margin-left: 1rem;" [ngClass]="{ notEnough: res.isCapped }">
-    <app-formatted-quantity [quantity]="res.quantity"> </app-formatted-quantity>
+    <app-formatted-quantity [quantity]="res.quantity" [integer]="true">
+    </app-formatted-quantity>
   </span>
   <span *ngIf="res.isLimited" [ngClass]="{ notEnough: res.isCapped }">
-    /<app-formatted-quantity [quantity]="res.limit"> </app-formatted-quantity>
+    /<app-formatted-quantity [quantity]="res.limit" [integer]="true">
+    </app-formatted-quantity>
   </span>
 </h1>
 <div>

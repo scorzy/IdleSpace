@@ -44,7 +44,7 @@ export class PrestigeManager implements ISalvable {
       for (let posK = -1; posK < 2; posK++) {
         const otherI = skill.i + posI;
         const otherK = skill.k + posK;
-        if (otherI >= 0 && otherI < 100 && otherK >= 0 && otherK < 100) {
+        if (otherI >= 0 && otherI < 10 && otherK >= 0 && otherK < 10) {
           this.skills[otherI][otherK].buyable = true;
         }
       }

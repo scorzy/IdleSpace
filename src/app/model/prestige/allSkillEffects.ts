@@ -28,10 +28,10 @@ export class AllSkillEffects {
     ];
     for (let i = 0; i < 7; i++) {
       tier1[i].shape = resMan.materials[i].shape;
-      tier1[i].getDescription = () => {
+      tier1[i].getDescription = (num: number) => {
         return (
           "+" +
-          PLUS_ADD +
+          PLUS_ADD * num +
           " " +
           resMan.tier1[i].name +
           " / " +
@@ -39,6 +39,13 @@ export class AllSkillEffects {
         );
       };
     }
+    tier1.forEach(e => {
+      e.afterBuy = () => {
+        ResourceManager.getInstance().limitedResources.forEach(r =>
+          r.reloadLimit()
+        );
+      };
+    });
 
     AllSkillEffects.effectList = [
       AllSkillEffects.PLUS_METAL_MINER,

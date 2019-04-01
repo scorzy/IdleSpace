@@ -27,6 +27,8 @@ export class Skill {
     }
     this.owned = true;
     this.effect.numOwned++;
+    this.effect.afterBuy();
+    PrestigeManager.getInstance().unlockOther(this);
     return true;
   }
 }

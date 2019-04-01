@@ -9,6 +9,9 @@ import { ActionHeaderComponent } from "../action/action-header/action-header.com
 import { FormatPipe } from "../format.pipe";
 import { MainService } from "../main.service";
 import { OptionsService } from "../options.service";
+import { Job } from "../model/shipyard/job";
+import { ShipDesign } from "../model/fleet/shipDesign";
+import { ShipTypes } from "../model/fleet/shipTypes";
 
 describe("JobComponent", () => {
   let component: JobComponent;
@@ -26,6 +29,11 @@ describe("JobComponent", () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(JobComponent);
     component = fixture.componentInstance;
+    const job = new Job();
+    job.design = new ShipDesign();
+    job.design.type = ShipTypes[0];
+    job.quantity = new Decimal(1);
+    component.job = job;
     fixture.detectChanges();
   });
 

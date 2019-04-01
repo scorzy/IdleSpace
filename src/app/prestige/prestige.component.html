@@ -10,7 +10,7 @@
             <button
               class="btn btn-icon noMargin"
               [disabled]="!skill.buyable"
-              [ngClass]="{ 'btn-success-outline': skill.owned }"
+              [ngClass]="{ 'btn-success': skill.owned }"
               [title]="skill.effect.getDescription()"
               (click)="openBuyModal(skill)"
             >
@@ -29,7 +29,26 @@
             ms.game.prestigeManager.usedPrestige
         }}
       </h4>
-      <button class="btn btn-primary" (click)="prestige()">Prestige</button>
+      <button
+        class="btn btn-primary"
+        (click)="prestigeModal = true"
+        [disabled]="
+          ms.game.enemyManager.maxLevel <= ms.game.prestigeManager.totalPrestige
+        "
+      >
+        Prestige
+        <span
+          *ngIf="
+            ms.game.enemyManager.maxLevel >
+            ms.game.prestigeManager.totalPrestige
+          "
+          >+
+          {{
+            ms.game.enemyManager.maxLevel -
+              ms.game.prestigeManager.totalPrestige
+          }}
+        </span>
+      </button>
       <ul class="list" *ngFor="let desc of skillsList; trackBy: descID">
         <li>{{ desc }}</li>
       </ul>
@@ -37,18 +56,49 @@
   </div>
 </div>
 
-<clr-modal [(clrModalOpen)]="prestigeModal">
+<!-- Buy Modal -->
+<clr-modal [(clrModalOpen)]="buyModal">
   <h3 class="modal-title">
     Skill
   </h3>
   <div class="modal-body" *ngIf="selectedSkill">
-    <p>Buy {{ selectedSkill.effect.getDescription() }} ?</p>
+    <p>Buy {{ selectedSkill.effect.getDescription(1) }} ?</p>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline" (click)="close()">
       Cancel
     </button>
-    <button type="button" class="btn btn-success" (click)="buy()">
+    <button type="button" class="btn btn-primary" (click)="buy()">
+      Ok
+    </button>
+  </div>
+</clr-modal>
+
+<!-- Prestige Modal -->
+<clr-modal [(clrModalOpen)]="prestigeModal">
+  <h3 class="modal-title">
+    Prestige
+  </h3>
+  <div class="modal-body">
+    <p>
+      Everything except prestige skills will reset.
+      <br />
+      You will get
+      {{
+        ms.game.enemyManager.maxLevel - ms.game.prestigeManager.totalPrestige
+      }}
+      points.
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline"
+      (click)="prestigeModal = false"
+    >
+      Cancel
+    </button>
+    <button type="button" class="btn btn-primary" (click)="prestige()">
       Ok
     </button>
   </div>

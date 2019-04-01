@@ -5,4 +5,6 @@ export class SkillEffect {
   getDescription(num = 1): string {
     return "";
   }
+
+  afterBuy() {}
 }

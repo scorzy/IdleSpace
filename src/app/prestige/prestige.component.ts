@@ -7,7 +7,6 @@ import {
 } from "@angular/core";
 import { MainService } from "../main.service";
 import { Skill } from "../model/prestige/skill";
-import { skillsData } from "../model/prestige/skillsData";
 import { AllSkillEffects } from "../model/prestige/allSkillEffects";
 
 @Component({
@@ -20,9 +19,10 @@ export class PrestigeComponent implements OnInit, OnChanges {
   constructor(public ms: MainService) {}
   @HostBinding("class")
   contentContainer = "content-container";
-  prestigeModal = false;
+  buyModal = false;
   selectedSkill: Skill;
   skillsList: string[];
+  prestigeModal = false;
 
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
     this.reloadList();
@@ -44,18 +44,26 @@ export class PrestigeComponent implements OnInit, OnChanges {
   }
 
   openBuyModal(skill: Skill) {
-    if (skill.owned || !skill.buyable) return false;
-    this.prestigeModal = true;
+    if (
+      skill.owned ||
+      !skill.buyable ||
+      this.ms.game.prestigeManager.totalPrestige <=
+        this.ms.game.prestigeManager.usedPrestige
+    ) {
+      return false;
+    }
+    this.buyModal = true;
     this.selectedSkill = skill;
   }
   buy() {
     this.selectedSkill.buy();
-    this.prestigeModal = false;
+    this.buyModal = false;
     this.selectedSkill = null;
+    this.reloadList();
   }
   close() {
     this.selectedSkill = null;
-    this.prestigeModal = false;
+    this.buyModal = false;
   }
   descID(index: number, desc: string) {
     return desc;
@@ -67,5 +75,6 @@ export class PrestigeComponent implements OnInit, OnChanges {
   }
   prestige() {
     this.ms.game.prestige();
+    this.prestigeModal = false;
   }
 }
