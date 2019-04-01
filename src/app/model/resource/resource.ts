@@ -12,6 +12,8 @@ import { Price } from "../prices/price";
 import { IHasQuantity } from "../base/IHasQuantity";
 import { BonusStack } from "../bonus/bonusStack";
 import { IAlert } from "../base/IAlert";
+import { SkillEffect } from "../prestige/skillEffects";
+import { PLUS_ADD } from "../prestige/allSkillEffects";
 
 export class Resource extends AbstractUnlockable
   implements ISpendable, IBuyable {
@@ -45,6 +47,7 @@ export class Resource extends AbstractUnlockable
   limit = new Decimal(Number.POSITIVE_INFINITY);
   limitStorage: IHasQuantity;
   workerPerMine = new Decimal(10);
+  prestigeLimit: SkillEffect;
 
   productionMultiplier = new BonusStack();
   efficiencyMultiplier = new BonusStack();
@@ -125,7 +128,11 @@ export class Resource extends AbstractUnlockable
   }
   reloadLimit() {
     if (this.isLimited) {
-      this.limit = this.limitStorage.quantity.plus(1).times(this.workerPerMine);
+      let worker = this.workerPerMine;
+      if (this.prestigeLimit) {
+        worker = worker.plus(this.prestigeLimit.numOwned * PLUS_ADD);
+      }
+      this.limit = this.limitStorage.quantity.plus(1).times(worker);
       this.quantity = this.quantity.min(this.limit);
     }
   }

@@ -18,12 +18,15 @@ export class Game {
   isPaused = false;
 
   constructor() {
+    this.init();
+  }
+  init(prestige = false) {
     this.resourceManager = new ResourceManager();
     this.researchManager = new ResearchManager();
     this.fleetManager = new FleetManager();
     this.enemyManager = new EnemyManager();
     this.shipyard = new Shipyard();
-    this.prestigeManager = new PrestigeManager();
+    if (!prestige) this.prestigeManager = new PrestigeManager();
 
     this.researchManager.addOtherResearches();
     this.researchManager.setUnlocks();
@@ -137,5 +140,13 @@ export class Game {
 
     this.fleetManager.upgradingCheck();
     this.reload();
+  }
+
+  prestige() {
+    this.prestigeManager.totalPrestige = Math.max(
+      this.prestigeManager.totalPrestige,
+      this.enemyManager.maxLevel
+    );
+    this.init(true);
   }
 }

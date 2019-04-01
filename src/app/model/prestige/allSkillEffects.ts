@@ -1,9 +1,10 @@
 import { SkillEffect } from "./skillEffects";
 import { ResourceManager } from "../resource/resourceManager";
 
-const PLUS_ADD = 1;
-
+export const PLUS_ADD = 5;
 export class AllSkillEffects {
+  static effectList = new Array<SkillEffect>();
+
   static readonly PLUS_METAL_MINER = new SkillEffect();
   static readonly PLUS_CRYSTAL_MINER = new SkillEffect();
   static readonly PLUS_ENERGY = new SkillEffect();
@@ -33,10 +34,20 @@ export class AllSkillEffects {
           PLUS_ADD +
           " " +
           resMan.tier1[i].name +
-          " for " +
+          " / " +
           resMan.tier1[i].actions[1].name
         );
       };
     }
+
+    AllSkillEffects.effectList = [
+      AllSkillEffects.PLUS_METAL_MINER,
+      AllSkillEffects.PLUS_CRYSTAL_MINER,
+      AllSkillEffects.PLUS_ALLOY,
+      AllSkillEffects.PLUS_ENERGY,
+      AllSkillEffects.PLUS_CPU,
+      AllSkillEffects.PLUS_WORKER,
+      AllSkillEffects.PLUS_SEARCH
+    ];
   }
 }

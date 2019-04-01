@@ -11,6 +11,7 @@ import { Bonus } from "../bonus/bonus";
 import { EnemyManager } from "../enemy/enemyManager";
 import { MainService } from "src/app/main.service";
 import { FleetManager } from "../fleet/fleetManager";
+import { AllSkillEffects } from "../prestige/allSkillEffects";
 
 const TIER_2_COST_MULTI = 100;
 const TIER_3_COST_MULTI = 1000;
@@ -362,6 +363,7 @@ export class ResourceManager implements ISalvable {
     buyMetalMine.name = "Metal Mine";
     this.metalX1.actions.push(buyMetalMine);
     this.metalX1.limitStorage = buyMetalMine;
+    this.metalX1.prestigeLimit = AllSkillEffects.PLUS_METAL_MINER;
 
     //  Crystal Mine
     const buyCrystalMine = new Action(
@@ -378,6 +380,7 @@ export class ResourceManager implements ISalvable {
     buyCrystalMine.name = "Crystal Mine";
     this.crystalX1.actions.push(buyCrystalMine);
     this.crystalX1.limitStorage = buyCrystalMine;
+    this.crystalX1.prestigeLimit = AllSkillEffects.PLUS_CRYSTAL_MINER;
 
     //  Energy Battery
     const buyBattery = new Action(
@@ -409,6 +412,7 @@ export class ResourceManager implements ISalvable {
     buyEnergyPlant.name = "Energy Plant";
     this.energyX1.actions.push(buyEnergyPlant);
     this.energyX1.limitStorage = buyEnergyPlant;
+    this.energyX1.prestigeLimit = AllSkillEffects.PLUS_ENERGY;
 
     //  Supercomputer
     const buySuperComputer = new Action(
@@ -425,6 +429,7 @@ export class ResourceManager implements ISalvable {
     buySuperComputer.name = "Super Computer";
     this.computingX1.actions.push(buySuperComputer);
     this.computingX1.limitStorage = buySuperComputer;
+    this.computingX1.prestigeLimit = AllSkillEffects.PLUS_CPU;
 
     //  Alloy Foundry
     const buyFoundry = new Action(
@@ -441,6 +446,7 @@ export class ResourceManager implements ISalvable {
     buyFoundry.name = "Alloy Foundry";
     this.alloyX1.actions.push(buyFoundry);
     this.alloyX1.limitStorage = buyFoundry;
+    this.alloyX1.prestigeLimit = AllSkillEffects.PLUS_ALLOY;
 
     //  Shipyard
     const buyShipyard = new Action(
@@ -457,6 +463,8 @@ export class ResourceManager implements ISalvable {
     buyShipyard.name = "Shipyard";
     this.shipyardX1.actions.push(buyShipyard);
     this.shipyardX1.limitStorage = buyShipyard;
+    this.shipyardX1.prestigeLimit = AllSkillEffects.PLUS_WORKER;
+
     this.shipyardProgress.reloadLimit = () => {
       const shipyard = Shipyard.getInstance();
       if (shipyard) {
@@ -483,6 +491,8 @@ export class ResourceManager implements ISalvable {
     buyTelescope.name = "Telescope";
     this.searchX1.actions.push(buyTelescope);
     this.searchX1.limitStorage = buyTelescope;
+    this.searchX1.prestigeLimit = AllSkillEffects.PLUS_SEARCH;
+
     this.searchProgress.reloadLimit = () => {
       const enemy = EnemyManager.getInstance();
       if (enemy) {

@@ -28,6 +28,7 @@ export class PrestigeManager implements ISalvable {
     this.skills[7][7].buyable = true;
 
     this.skills[2][2].owned = true;
+    this.skills[2][2].effect.numOwned = 1;
   }
   static getInstance(): PrestigeManager {
     return PrestigeManager.instance;
