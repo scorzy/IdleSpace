@@ -63,7 +63,7 @@ export class Price {
       return this.avIn;
     }
   }
-  private getPrice(toBuy: Decimal, bought: Decimal): Decimal {
+  getPrice(toBuy: Decimal, bought: Decimal): Decimal {
     return this.growRate === 1
       ? toBuy.times(this.cost)
       : Decimal.sumGeometricSeries(toBuy, this.cost, this.growRate, bought);

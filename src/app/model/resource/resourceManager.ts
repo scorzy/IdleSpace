@@ -14,9 +14,9 @@ import { FleetManager } from "../fleet/fleetManager";
 import { AllSkillEffects } from "../prestige/allSkillEffects";
 
 const TIER_2_COST_MULTI = 100;
-const TIER_3_COST_MULTI = 1000;
+// const TIER_3_COST_MULTI = 1000;
 const TIER_2_ALLOY_PERCENT = 1;
-const TIER_3_ALLOY_PERCENT = 1;
+// const TIER_3_ALLOY_PERCENT = 1;
 
 export class ResourceManager implements ISalvable {
   private static instance: ResourceManager;
@@ -245,7 +245,6 @@ export class ResourceManager implements ISalvable {
     // ];
     //#endregion
 
-    //#region Actions
     //#region Buy
     this.metalX1.generateBuyAction(
       new MultiPrice([new Price(this.metal, 100), new Price(this.crystal, 25)])
