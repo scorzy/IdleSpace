@@ -175,3 +175,12 @@ input[type="range"]:focus::-ms-fill-lower {
 input[type="range"]:focus::-ms-fill-upper {
   background: rgba(48, 113, 169, 0.78);
 }
+
+.nav-group-content {
+  border-left: 10px solid #49afd9 !important;
+  border-radius: 5px 0 0 5px !important;
+  margin: 2px 0 0 2px !important;
+}
+.nav-content a.nav-link.active {
+  border-radius: 3px 0 0 3px !important;
+}

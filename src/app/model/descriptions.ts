@@ -9,15 +9,15 @@ export const descriptions = {
     b: ["Battery", "Battery"],
 
     m1: ["Mining Drone", "Metal Mining Drone"],
-    m2: ["Mining Drone Factory", ""],
+    m2: ["Mining Factory", ""],
     m3: ["Mining Complex", ""],
 
     c1: ["Crystal Drone", "Crystal Mining Drone"],
-    c2: ["Crystal Drone Factory", ""],
+    c2: ["Crystal Factory", ""],
     c3: ["Crystal Complex", ""],
 
     a1: ["Foundry Drone", ""],
-    a2: ["Foundry Drone Factory", ""],
+    a2: ["Foundry Factory", ""],
     a3: ["Foundry Complex", ""],
 
     e1: ["Technician", ""],
@@ -35,12 +35,12 @@ export const descriptions = {
     N: ["Naval Capacity", ""],
 
     S1: ["Worker Drone", ""],
-    S2: ["Worker Drone Factory", ""],
+    S2: ["Worker Factory", ""],
     S3: ["Shipyard Complex", ""],
     SP: ["Shipyard Progress", "This represent work done by your Shipyard"],
 
     X1: ["Searching Drone", ""],
-    X2: ["Searching Drone Factory", ""],
+    X2: ["Searching Factory", ""],
     X3: ["Searching Complex", ""],
     XP: ["Searching progress", ""],
 

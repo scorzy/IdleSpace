@@ -40,37 +40,37 @@ export class ResourceManager implements ISalvable {
 
   metalX1: Resource;
   metalX2: Resource;
-  metalX3: Resource;
+  // metalX3: Resource;
 
   crystalX1: Resource;
   crystalX2: Resource;
-  crystalX3: Resource;
+  // crystalX3: Resource;
 
   alloyX1: Resource;
   alloyX2: Resource;
-  alloyX3: Resource;
+  // alloyX3: Resource;
 
   energyX1: Resource;
   energyX2: Resource;
-  energyX3: Resource;
+  // energyX3: Resource;
 
   computingX1: Resource;
   computingX2: Resource;
-  computingX3: Resource;
+  // computingX3: Resource;
 
   shipyardX1: Resource;
   shipyardX2: Resource;
-  shipyardX3: Resource;
+  // shipyardX3: Resource;
   shipyardProgress: Resource;
 
   searchX1: Resource;
   searchX2: Resource;
-  searchX3: Resource;
+  // searchX3: Resource;
   searchProgress: Resource;
 
   warriorX1: Resource;
   warriorX2: Resource;
-  warriorX3: Resource;
+  // warriorX3: Resource;
   // #endregion
   //#region group
   materials: Resource[];
@@ -78,7 +78,7 @@ export class ResourceManager implements ISalvable {
   matGroup: ResourceGroup;
   tier1: Resource[];
   tier2: Resource[];
-  tier3: Resource[];
+  // tier3: Resource[];
   matNav: Resource[];
 
   limited: Resource[];
@@ -123,7 +123,7 @@ export class ResourceManager implements ISalvable {
     this.metalX1.unlocked = true;
     this.metalX1.quantity = new Decimal(1);
     this.metalX2 = new Resource("m2");
-    this.metalX3 = new Resource("m3");
+    // this.metalX3 = new Resource("m3");
     this.metal.addGenerator(this.metalX1);
     this.energy.addGenerator(this.metalX1, -1);
 
@@ -132,14 +132,14 @@ export class ResourceManager implements ISalvable {
     this.crystalX1.unlocked = true;
     this.crystalX1.quantity = new Decimal(1);
     this.crystalX2 = new Resource("c2");
-    this.crystalX3 = new Resource("c3");
+    // this.crystalX3 = new Resource("c3");
     this.crystal.addGenerator(this.crystalX1);
     this.energy.addGenerator(this.crystalX1, -1);
 
     //      Alloy
     this.alloyX1 = new Resource("a1");
     this.alloyX2 = new Resource("a2");
-    this.alloyX3 = new Resource("a3");
+    // this.alloyX3 = new Resource("a3");
     this.alloy.addGenerator(this.alloyX1);
     this.energy.addGenerator(this.alloyX1, -1);
     this.alloyX1.productionMultiplier.additiveBonus.push(
@@ -151,7 +151,7 @@ export class ResourceManager implements ISalvable {
     this.energy.quantity = new Decimal(1);
     this.energyX1 = new Resource("e1");
     this.energyX2 = new Resource("e2");
-    this.energyX3 = new Resource("e3");
+    // this.energyX3 = new Resource("e3");
     this.energyX1.unlocked = true;
     this.energyX1.quantity = new Decimal(3);
     this.energy.addGenerator(this.energyX1);
@@ -159,14 +159,14 @@ export class ResourceManager implements ISalvable {
     //      Computing
     this.computingX1 = new Resource("f1");
     this.computingX2 = new Resource("f2");
-    this.computingX3 = new Resource("f3");
+    // this.computingX3 = new Resource("f3");
     this.computing.addGenerator(this.computingX1);
     this.energy.addGenerator(this.computingX1, -2);
 
     //      Shipyard
     this.shipyardX1 = new Resource("S1");
     this.shipyardX2 = new Resource("S2");
-    this.shipyardX3 = new Resource("S3");
+    // this.shipyardX3 = new Resource("S3");
     this.shipyardProgress.addGenerator(this.shipyardX1);
     this.alloy.addGenerator(this.shipyardX1, -1);
     this.energy.addGenerator(this.shipyardX1, -1);
@@ -174,7 +174,7 @@ export class ResourceManager implements ISalvable {
     //      Search
     this.searchX1 = new Resource("X1");
     this.searchX2 = new Resource("X2");
-    this.searchX3 = new Resource("X3");
+    // this.searchX3 = new Resource("X3");
     this.searchProgress.addGenerator(this.searchX1);
     this.energy.addGenerator(this.searchX1, -1);
     this.computing.addGenerator(this.searchX1, -1);
@@ -182,7 +182,7 @@ export class ResourceManager implements ISalvable {
     //      Warrior
     this.warriorX1 = new Resource("W1");
     this.warriorX2 = new Resource("W2");
-    this.warriorX3 = new Resource("W3");
+    // this.warriorX3 = new Resource("W3");
     this.energy.addGenerator(this.warriorX1, -1);
     this.computing.addGenerator(this.warriorX1, -1);
 
@@ -233,16 +233,16 @@ export class ResourceManager implements ISalvable {
       this.searchX2,
       this.warriorX2
     ];
-    this.tier3 = [
-      this.metalX3,
-      this.crystalX3,
-      this.alloyX3,
-      this.energyX3,
-      this.computingX3,
-      this.shipyardX3,
-      this.searchX3,
-      this.warriorX3
-    ];
+    // this.tier3 = [
+    //   this.metalX3,
+    //   this.crystalX3,
+    //   this.alloyX3,
+    //   this.energyX3,
+    //   this.computingX3,
+    //   this.shipyardX3,
+    //   this.searchX3,
+    //   this.warriorX3
+    // ];
     //#endregion
 
     //#region Actions
@@ -294,39 +294,39 @@ export class ResourceManager implements ISalvable {
       prices.push(new Price(this.habitableSpace, 1, 1));
       t2.generateBuyAction(new MultiPrice(prices));
     }
-    for (let i = 0; i < this.tier2.length; i++) {
-      const t2 = this.tier2[i];
-      const t3 = this.tier3[i];
+    // for (let i = 0; i < this.tier2.length; i++) {
+    //   const t2 = this.tier2[i];
+    //   const t3 = this.tier3[i];
 
-      const prices = new Array<Price>();
-      let total = new Decimal(0);
-      t2.buyAction.multiPrice.prices
-        .filter(
-          p => p.spendable !== this.alloy && p.spendable !== this.habitableSpace
-        )
-        .forEach(pr => {
-          const price = pr.cost.times(TIER_3_COST_MULTI);
-          prices.push(new Price(pr.spendable, price));
-          total = total.plus(price);
-        });
-      prices.push(new Price(this.alloy, total.times(TIER_3_ALLOY_PERCENT)));
-      prices.push(new Price(this.habitableSpace, 1, 1));
-      t3.generateBuyAction(new MultiPrice(prices));
-    }
+    //   const prices = new Array<Price>();
+    //   let total = new Decimal(0);
+    //   t2.buyAction.multiPrice.prices
+    //     .filter(
+    //       p => p.spendable !== this.alloy && p.spendable !== this.habitableSpace
+    //     )
+    //     .forEach(pr => {
+    //       const price = pr.cost.times(TIER_3_COST_MULTI);
+    //       prices.push(new Price(pr.spendable, price));
+    //       total = total.plus(price);
+    //     });
+    //   prices.push(new Price(this.alloy, total.times(TIER_3_ALLOY_PERCENT)));
+    //   prices.push(new Price(this.habitableSpace, 1, 1));
+    //   t3.generateBuyAction(new MultiPrice(prices));
+    // }
     for (let i = 0; i < this.tier2.length; i++) {
       const t1 = this.tier1[i];
       const t2 = this.tier2[i];
-      const t3 = this.tier3[i];
+      // const t3 = this.tier3[i];
 
       //  Add Bonus
       // t1.productionMultiplier.additiveBonus.push(new Bonus(t2, 0.1));
-      t1.efficiencyMultiplier.additiveBonus.push(new Bonus(t3, 0.1));
+      // t1.efficiencyMultiplier.additiveBonus.push(new Bonus(t3, 0.1));
 
       t1.addGenerator(t2);
-      t2.addGenerator(t3);
+      // t2.addGenerator(t3);
 
       this.energy.addGenerator(t2, -10);
-      this.energy.addGenerator(t3, -100);
+      // this.energy.addGenerator(t3, -100);
 
       const ba = t1.buyAction;
       if (ba) {
@@ -337,14 +337,14 @@ export class ResourceManager implements ISalvable {
         });
       }
 
-      const ba2 = t2.buyAction;
-      if (ba2) {
-        ba2.multiPrice.prices.forEach(p => {
-          if (p.spendable instanceof Resource) {
-            p.spendable.addGenerator(t3, p.cost.times(-1));
-          }
-        });
-      }
+      // const ba2 = t2.buyAction;
+      // if (ba2) {
+      //   ba2.multiPrice.prices.forEach(p => {
+      //     if (p.spendable instanceof Resource) {
+      //       p.spendable.addGenerator(t3, p.cost.times(-1));
+      //     }
+      //   });
+      // }
     }
     //#endregion
     //#region Mine
@@ -552,45 +552,50 @@ export class ResourceManager implements ISalvable {
       this.computing,
       this.metalX1,
       this.metalX2,
-      this.metalX3,
+      // this.metalX3,
       this.crystalX1,
       this.crystalX2,
-      this.crystalX3,
+      // this.crystalX3,
       this.energyX1,
       this.energyX2,
-      this.energyX3,
+      // this.energyX3,
       this.alloyX1,
       this.alloyX2,
-      this.alloyX3,
+      // this.alloyX3,
       this.computingX1,
       this.computingX2,
-      this.computingX3,
+      // this.computingX3,
       this.habitableSpace,
       this.miningDistrict,
       this.crystalDistrict,
       this.shipyardX1,
       this.shipyardX2,
-      this.shipyardX3,
+      // this.shipyardX3,
       this.shipyardProgress,
       this.searchX1,
       this.searchX2,
-      this.searchX3,
+      // this.searchX3,
       this.searchProgress,
       this.warriorX1,
-      this.warriorX2,
-      this.warriorX3
+      this.warriorX2
+      // this.warriorX3
     ];
     this.allResources.forEach(r => r.generateRefundActions());
     // this.allResources.forEach(r => {
     //   r.unlocked = true;
     // });
-    this.matGroup = new ResourceGroup("0", "Materials", "", this.materials);
+    this.matGroup = new ResourceGroup(
+      "0",
+      "Materials",
+      "objects",
+      this.materials
+    );
     this.tierGroups = [
       this.matGroup,
-      new ResourceGroup("1", "Tier 1", "", this.tier1),
-      new ResourceGroup("2", "Tier 2", "", this.tier2),
-      new ResourceGroup("3", "Tier 3", "", this.tier3),
-      new ResourceGroup("4", "Districts", "", this.districts)
+      new ResourceGroup("1", "Robots", "robot", this.tier1),
+      new ResourceGroup("2", "Factories", "cog", this.tier2),
+      // new ResourceGroup("3", "Tier 3", "", this.tier3),
+      new ResourceGroup("4", "Districts", "world", this.districts)
     ];
 
     this.reloadList();
