@@ -47,7 +47,9 @@ import { FleetTableComponent } from "./fleet-table/fleet-table.component";
 import { ShipyardComponent } from "./fleetDesigner/shipyard/shipyard.component";
 import { BonusViewComponent } from "./bonus-view/bonus-view.component";
 import { JobComponent } from "./job/job.component";
-import { PrestigeComponent } from './prestige/prestige.component';
+import { PrestigeComponent } from "./prestige/prestige.component";
+import { GroupTabComponent } from "./group-tab/group-tab.component";
+import { ResourceGroupComponent } from "./group-tab/resource-group/resource-group.component";
 
 @NgModule({
   declarations: [
@@ -90,7 +92,9 @@ import { PrestigeComponent } from './prestige/prestige.component';
     ShipyardComponent,
     BonusViewComponent,
     JobComponent,
-    PrestigeComponent
+    PrestigeComponent,
+    GroupTabComponent,
+    ResourceGroupComponent
   ],
   imports: [
     BrowserAnimationsModule,

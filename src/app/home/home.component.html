@@ -11,11 +11,11 @@
       trackBy: getGroupId
     "
   >
-    <!-- [routerLink]="['./group/' + unitGroup.id]" -->
     <a
       class="font-weight-bold"
       clrVerticalNavLink
       [routerLinkActive]="'active'"
+      [routerLink]="['./group/' + unitGroup.id]"
     >
       <clr-icon [attr.shape]="unitGroup.icon" clrVerticalNavIcon></clr-icon>
       {{ unitGroup.name }}

@@ -1,0 +1,81 @@
+<div class="clr-row">
+  <div
+    *ngIf="resourceGroup"
+    class="clr-col-xs-12	clr-col-sm-6	clr-col-md-6	clr-col-lg-6	clr-col-xl-6"
+  >
+    <h5>Aggregate group for {{ resourceGroup.name }}: {{ unitsSpan }}</h5>
+
+    <div *ngIf="buyAction">
+      <span>Operativity (average): </span>
+
+      <input
+        type="range"
+        [name]="'gl' + resourceGroup.id"
+        min="0"
+        max="100"
+        step="1"
+        [(ngModel)]="operativity"
+        (onChange)="changeOperativity()"
+      />
+    </div>
+
+    <!-- <app-action-group
+      *ngIf="hatchActionGrp"
+      [actGr]="hatchActionGrp"
+    ></app-action-group>
+    <app-action-group
+      *ngIf="teamActionGrp && ms.game.researches.team2.done"
+      [actGr]="teamActionGrp"
+    ></app-action-group>
+    <app-action-group
+      *ngIf="twinActionGrp && ms.game.researches.twin.done"
+      [actGr]="twinActionGrp"
+    ></app-action-group> -->
+  </div>
+  <div class="clr-col-xs-12	clr-col-sm-6	clr-col-md-6	clr-col-lg-6	clr-col-xl-6">
+    <h6>Stats:</h6>
+    <clr-datagrid
+      *ngIf="resourceGroup"
+      class="datagrid-compact"
+      [(clrDgSelected)]="resourceGroup.selected"
+      (clrDgSelectedChange)="selectedChanged($event)"
+    >
+      <clr-dg-column [clrDgField]="'unit.name'">Name</clr-dg-column>
+      <clr-dg-column [clrDgSortBy]="resourceQuantitySorter">
+        <span>Quantity</span>
+      </clr-dg-column>
+      <clr-dg-column [clrDgSortBy]="limitResourceSorter">
+        <span>Storage</span>
+      </clr-dg-column>
+      <clr-dg-column [clrDgSortBy]="expansionResourceSorter">
+        <span>Storage Exp.</span>
+      </clr-dg-column>
+
+      <clr-dg-row
+        *clrDgItems="let unit of resourceGroup.unlockedResources"
+        [clrDgItem]="unit"
+      >
+        <clr-dg-cell>
+          <a [routerLink]="'/nav/unit/' + unit.id">
+            {{ unit.name }}
+          </a>
+        </clr-dg-cell>
+        <clr-dg-cell>
+          <app-formatted-quantity
+            [quantity]="unit.quantity"
+          ></app-formatted-quantity>
+        </clr-dg-cell>
+        <clr-dg-cell>
+          <app-formatted-quantity
+            [quantity]="unit.limit"
+          ></app-formatted-quantity>
+        </clr-dg-cell>
+        <clr-dg-cell>
+          <app-formatted-quantity
+            [quantity]="unit.limitStorage?.quantity"
+          ></app-formatted-quantity>
+        </clr-dg-cell>
+      </clr-dg-row>
+    </clr-datagrid>
+  </div>
+</div>

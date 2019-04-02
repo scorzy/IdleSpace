@@ -37,6 +37,7 @@ export class MainService {
   kongregate = false;
   playFabLogged = false;
   theme: HTMLLinkElement;
+  overviewTaActive = false;
 
   constructor(
     public options: OptionsService,

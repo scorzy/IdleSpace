@@ -14,6 +14,7 @@ import { EnemyViewComponent } from "./enemies/enemy-view/enemy-view.component";
 import { SearchComponent } from "./enemies/search/search.component";
 import { ShipyardComponent } from "./fleetDesigner/shipyard/shipyard.component";
 import { PrestigeComponent } from "./prestige/prestige.component";
+import { GroupTabComponent } from "./group-tab/group-tab.component";
 
 const routes: Routes = [
   {
@@ -26,8 +27,8 @@ const routes: Routes = [
     component: HomeComponent,
     children: [
       { path: "res", component: ResourceComponent },
-      { path: "res/:id", component: ResourceComponent }
-      // { path: "group/:id", component: GroupTabsComponent }
+      { path: "res/:id", component: ResourceComponent },
+      { path: "group/:id", component: GroupTabComponent }
     ]
   },
   {

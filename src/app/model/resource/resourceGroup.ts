@@ -3,6 +3,7 @@ import { Resource } from "./resource";
 export class ResourceGroup {
   isExpanded = true;
   unlockedResources = new Array<Resource>();
+  selected = new Array<Resource>();
 
   constructor(
     public id: string,
