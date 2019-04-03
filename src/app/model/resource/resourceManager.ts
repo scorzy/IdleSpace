@@ -244,7 +244,6 @@ export class ResourceManager implements ISalvable {
     //   this.warriorX3
     // ];
     //#endregion
-
     //#region Buy
     this.metalX1.generateBuyAction(
       new MultiPrice([new Price(this.metal, 100), new Price(this.crystal, 25)])
@@ -274,7 +273,6 @@ export class ResourceManager implements ISalvable {
       new MultiPrice([new Price(this.alloy, 100)])
     );
     //#endregion
-    //#region Mine
     //#region Tier 2 and 3
     for (let i = 0; i < this.tier2.length; i++) {
       const t1 = this.tier1[i];

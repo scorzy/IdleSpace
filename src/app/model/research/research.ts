@@ -55,6 +55,7 @@ export class Research extends AbstractUnlockable implements IHasQuantity, IJob {
       this.quantity = this.quantity.plus(1);
       this.progress = new Decimal(0);
       this.reloadNum();
+      this.onBuy();
     }
 
     this.progressPercent = Math.floor(
@@ -76,6 +77,7 @@ export class Research extends AbstractUnlockable implements IHasQuantity, IJob {
       }
     }
   }
+  onBuy() {}
   unlock(): boolean {
     if (super.unlock()) {
       ResearchManager.getInstance().addAvailable(this);

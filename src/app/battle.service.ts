@@ -157,7 +157,7 @@ export class BattleService {
       });
     });
 
-    const diff = 1000 - Date.now() + initial;
+    const diff = input.minTime * 1000 - Date.now() + initial;
     if (diff > 0) {
       // console.log("wait:" + diff);
       setTimeout(() => cb(ret), diff);

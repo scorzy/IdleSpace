@@ -8,6 +8,7 @@ import { ResourceManager } from "../resource/resourceManager";
 import { Emitters } from "src/app/emitters";
 import { SearchJob } from "./searchJob";
 import { RomanPipe } from "src/app/roman.pipe";
+import { AllSkillEffects } from "../prestige/allSkillEffects";
 
 export const MAX_ENEMY_LIST_SIZE = 20;
 
@@ -51,6 +52,7 @@ export class EnemyManager implements ISalvable {
     this.currentEnemy.currentZone.reload();
 
     const battleRequest = new BattleRequest();
+    battleRequest.minTime = 1 - 0.2 * AllSkillEffects.FAST_COMBAT.numOwned;
     battleRequest.playerFleet = FleetManager.getInstance().ships.map(s =>
       s.getShipData()
     );

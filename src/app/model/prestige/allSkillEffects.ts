@@ -5,6 +5,7 @@ export const PLUS_ADD = 5;
 export class AllSkillEffects {
   static effectList = new Array<SkillEffect>();
 
+  //#region Limit increase
   static readonly PLUS_METAL_MINER = new SkillEffect();
   static readonly PLUS_CRYSTAL_MINER = new SkillEffect();
   static readonly PLUS_ENERGY = new SkillEffect();
@@ -14,6 +15,10 @@ export class AllSkillEffects {
   static readonly PLUS_SEARCH = new SkillEffect();
   static readonly PLUS_WARRIOR = new SkillEffect();
   static readonly PLUS_BATTERY = new SkillEffect();
+  //#endregion
+  //#region Combat
+  static readonly FAST_COMBAT = new SkillEffect();
+  //#endregion
 
   static initialize() {
     const resMan = ResourceManager.getInstance();
@@ -76,6 +81,12 @@ export class AllSkillEffects {
       ResourceManager.getInstance().limitedResources.forEach(r =>
         r.reloadLimit()
       );
+    };
+    //#endregion
+    //#region Combat
+    AllSkillEffects.FAST_COMBAT.shape = "clock";
+    AllSkillEffects.FAST_COMBAT.getDescription = (num = 1) => {
+      return "- " + 0.2 * num + "s fight time";
     };
     //#endregion
 

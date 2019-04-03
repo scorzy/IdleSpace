@@ -15,6 +15,7 @@ export class ResearchManager {
   //#region Researches
   betterResearch: Research;
   alloy: Research;
+  battery: Research;
   //#region Ship Types
   corvette: Research;
   frigate: Research;
@@ -33,6 +34,10 @@ export class ResearchManager {
     }
     this.betterResearch = this.researches.find(r => r.id === "r");
     this.alloy = this.researches.find(r => r.id === "a");
+    this.battery = this.researches.find(r => r.id === "B");
+    this.battery.onBuy = () => {
+      ResourceManager.getInstance().energy.reloadLimit();
+    };
     this.corvette = this.researches.find(r => r.id === "c");
     this.frigate = this.researches.find(r => r.id === "f");
     this.destroyer = this.researches.find(r => r.id === "d");
@@ -168,8 +173,12 @@ export class ResearchManager {
         const research = this.researches.find(u => u.id === res.i);
         if (research) {
           research.load(res);
-          research.done = true;
-          this.completed.push(research);
+          if (research.quantity.gte(research.limit)) {
+            research.done = true;
+            this.completed.push(research);
+          } else {
+            this.toDo.push(research);
+          }
         }
       }
     }

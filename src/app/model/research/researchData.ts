@@ -100,7 +100,8 @@ export const ResearchData: IResearchData[] = [
     name: "Battery",
     shape: "battery",
     price: 100,
-    description: "Unlock batteries"
+    description: "Unlock batteries; +10% max energy",
+    limit: Number.POSITIVE_INFINITY
   },
   {
     id: "m2",

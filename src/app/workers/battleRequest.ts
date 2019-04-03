@@ -14,6 +14,7 @@ export class ShipData {
 
 // tslint:disable-next-line: max-classes-per-file
 export class BattleRequest {
+  minTime = 1;
   playerFleet = new Array<ShipData>();
   enemyFleet = new Array<ShipData>();
 }
