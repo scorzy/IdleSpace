@@ -15,22 +15,14 @@
         max="100"
         step="1"
         [(ngModel)]="operativity"
-        (onChange)="changeOperativity()"
+        (ngModelChange)="changeOperativity()"
       />
     </div>
 
-    <!-- <app-action-group
-      *ngIf="hatchActionGrp"
-      [actGr]="hatchActionGrp"
-    ></app-action-group>
-    <app-action-group
-      *ngIf="teamActionGrp && ms.game.researches.team2.done"
-      [actGr]="teamActionGrp"
-    ></app-action-group>
-    <app-action-group
-      *ngIf="twinActionGrp && ms.game.researches.twin.done"
-      [actGr]="twinActionGrp"
-    ></app-action-group> -->
+    <app-action
+      *ngFor="let act of actions; trackBy: getActId"
+      [action]="act"
+    ></app-action>
   </div>
   <div class="clr-col-xs-12	clr-col-sm-6	clr-col-md-6	clr-col-lg-6	clr-col-xl-6">
     <h6>Stats:</h6>
@@ -44,10 +36,10 @@
       <clr-dg-column [clrDgSortBy]="resourceQuantitySorter">
         <span>Quantity</span>
       </clr-dg-column>
-      <clr-dg-column [clrDgSortBy]="limitResourceSorter">
+      <clr-dg-column [clrDgSortBy]="limitResourceSorter" *ngIf="storage">
         <span>Storage</span>
       </clr-dg-column>
-      <clr-dg-column [clrDgSortBy]="expansionResourceSorter">
+      <clr-dg-column [clrDgSortBy]="expansionResourceSorter" *ngIf="storage">
         <span>Storage Exp.</span>
       </clr-dg-column>
 
@@ -65,12 +57,12 @@
             [quantity]="unit.quantity"
           ></app-formatted-quantity>
         </clr-dg-cell>
-        <clr-dg-cell>
+        <clr-dg-cell *ngIf="storage">
           <app-formatted-quantity
             [quantity]="unit.limit"
           ></app-formatted-quantity>
         </clr-dg-cell>
-        <clr-dg-cell>
+        <clr-dg-cell *ngIf="storage">
           <app-formatted-quantity
             [quantity]="unit.limitStorage?.quantity"
           ></app-formatted-quantity>
