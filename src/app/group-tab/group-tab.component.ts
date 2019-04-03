@@ -10,7 +10,6 @@ import { MainService } from "../main.service";
 import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
 import { ResourceGroup } from "../model/resource/resourceGroup";
-import { uniq } from "lodash";
 
 @Component({
   selector: "app-group-tab",
