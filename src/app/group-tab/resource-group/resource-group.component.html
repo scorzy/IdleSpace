@@ -3,7 +3,7 @@
     *ngIf="resourceGroup"
     class="clr-col-xs-12	clr-col-sm-6	clr-col-md-6	clr-col-lg-6	clr-col-xl-6"
   >
-    <h5>Aggregate group for {{ resourceGroup.name }}: {{ unitsSpan }}</h5>
+    <h5>Aggregate group for {{ resourceGroup.name }}</h5>
 
     <div *ngIf="buyAction">
       <span>Operativity (average): </span>
@@ -56,6 +56,13 @@
           <app-formatted-quantity
             [quantity]="unit.quantity"
           ></app-formatted-quantity>
+
+          <ng-container *ngIf="unit.isLimited">
+            /
+            <app-formatted-quantity
+              [quantity]="unit.limit"
+            ></app-formatted-quantity>
+          </ng-container>
         </clr-dg-cell>
         <clr-dg-cell *ngIf="storage">
           <app-formatted-quantity

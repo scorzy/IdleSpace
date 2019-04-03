@@ -48,7 +48,14 @@ export class MainService {
     this.theme = this.document.createElement("link");
     this.theme.rel = "stylesheet";
     this.theme.type = "text/css";
-    this.document.querySelector("head").appendChild(this.theme);
+    this.document
+      .querySelector("head")
+      .insertBefore(
+        this.theme,
+        document
+          .getElementsByTagName("head")[0]
+          .getElementsByTagName("style")[0]
+      );
 
     const url = getUrl();
     this.zipWorker = createWorker({

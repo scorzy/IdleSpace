@@ -25,7 +25,7 @@ import { Action } from "src/app/model/actions/abstractAction";
 export class ResourceGroupComponent implements OnInit, OnDestroy, OnChanges {
   constructor(public ms: MainService, private cd: ChangeDetectorRef) {}
   @Input() resourceGroup: ResourceGroup;
-  unitsSpan = "";
+  // unitsSpan = "";
   isSmall = false;
   operativity = 100;
   buyAction: Action;
@@ -76,9 +76,9 @@ export class ResourceGroupComponent implements OnInit, OnDestroy, OnChanges {
     });
   }
   getGroup() {
-    this.unitsSpan = this.resourceGroup.unlockedResources
-      .map(u => u.name)
-      .reduce((p, c) => p + ", " + c);
+    // this.unitsSpan = this.resourceGroup.unlockedResources
+    //   .map(u => u.name)
+    //   .reduce((p, c) => p + ", " + c);
 
     this.buyAction = null;
     this.mineAction = null;
