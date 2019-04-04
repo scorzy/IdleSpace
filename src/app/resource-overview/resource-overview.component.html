@@ -52,6 +52,22 @@
       />
     </div>
 
+    <div *ngIf="res.showPriority">
+      <h6>
+        Priority:
+        <span class="monospace"> {{ res.priority }}</span> %
+      </h6>
+
+      <input
+        type="range"
+        [name]="'p_' + res.id"
+        min="1"
+        max="100"
+        step="1"
+        [(ngModel)]="res.priority"
+      />
+    </div>
+
     <app-action
       *ngFor="let act of res.unlockedActions; trackBy: getActId"
       [action]="act"

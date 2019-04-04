@@ -46,7 +46,7 @@ export const ResearchData: IResearchData[] = [
     price: 100,
     description: "Unlock Telescope",
     resourceToUnlock: ["X1", "XP"],
-    researchToUnlock: ["m2"]
+    researchToUnlock: ["D"]
   },
   {
     id: "c",
@@ -104,138 +104,11 @@ export const ResearchData: IResearchData[] = [
     limit: Number.POSITIVE_INFINITY
   },
   {
-    id: "m2",
-    name: "Mining Drone Factory",
+    id: "D",
+    name: "Drone Factory",
     shape: "battery",
     price: 100,
-    description: "Unlock Mining Drone factories",
-    resourceToUnlock: ["m2"],
-    researchToUnlock: ["c2"]
-  },
-  {
-    id: "c2",
-    name: "Crystal Drone Factory",
-    shape: "battery",
-    price: 100,
-    description: "Unlock Mining Drone factories",
-    resourceToUnlock: ["c2"],
-    researchToUnlock: ["a2", "e2", "f2", "X2", "W2"]
-  },
-  {
-    id: "a2",
-    name: "Alloy Drone Factory",
-    shape: "battery",
-    price: 100,
-    description: "Unlock Alloy Drone factories",
-    researchToUnlock: ["S2"],
-    resourceToUnlock: ["a2"]
-  },
-  {
-    id: "S2",
-    name: "Shipyard 2",
-    shape: "battery",
-    price: 100,
-    description: "Unlock Alloy Drone factories",
-    resourceToUnlock: ["S2"]
-  },
-  {
-    id: "W2",
-    name: "Warriors 2",
-    shape: "bullseye",
-    price: 100,
-    description: "Unlock Warriors",
-    resourceToUnlock: ["W2"]
-  },
-  {
-    id: "X2",
-    name: "Telescope 2",
-    shape: "radar",
-    price: 100,
-    description: "Unlock Telescope 2",
-    resourceToUnlock: ["X2"]
-  },
-  {
-    id: "e2",
-    name: "Technician Drone Factory",
-    shape: "battery",
-    price: 100,
-    description: "Unlock Technician Drone factories",
-    resourceToUnlock: ["e2"]
-  },
-  {
-    id: "f2",
-    name: "Super Computing Center",
-    shape: "battery",
-    price: 100,
-    description: "Unlock Technician Drone factories",
-    resourceToUnlock: ["f2"],
-    researchToUnlock: ["m3"]
+    description: "Drone Factory",
+    resourceToUnlock: ["D", "F"]
   }
-  // {
-  //   id: "m3",
-  //   name: "Mining 3",
-  //   shape: "battery",
-  //   price: 100,
-  //   description: "Unlock Mining Drone factories",
-  //   resourceToUnlock: ["m3"],
-  //   researchToUnlock: ["c3"]
-  // },
-  // {
-  //   id: "c3",
-  //   name: "Crystal 3",
-  //   shape: "battery",
-  //   price: 100,
-  //   description: "Unlock Mining Drone factories",
-  //   resourceToUnlock: ["c3"],
-  //   researchToUnlock: ["a3", "e3", "f3", "X3", "W3"]
-  // },
-  // {
-  //   id: "a3",
-  //   name: "Alloy 3",
-  //   shape: "battery",
-  //   price: 100,
-  //   description: "Unlock Alloy Drone factories",
-  //   researchToUnlock: ["S3"],
-  //   resourceToUnlock: ["a3"]
-  // },
-  // {
-  //   id: "S3",
-  //   name: "Shipyard 3",
-  //   shape: "battery",
-  //   price: 100,
-  //   description: "Unlock Alloy Drone factories",
-  //   resourceToUnlock: ["S3"]
-  // },
-  // {
-  //   id: "W3",
-  //   name: "Warriors 3",
-  //   shape: "bullseye",
-  //   price: 100,
-  //   description: "Unlock Warriors",
-  //   resourceToUnlock: ["W3"]
-  // },
-  // {
-  //   id: "X3",
-  //   name: "Telescope 3",
-  //   shape: "radar",
-  //   price: 100,
-  //   description: "Unlock Telescope 3",
-  //   resourceToUnlock: ["X3"]
-  // },
-  // {
-  //   id: "e3",
-  //   name: "Technician 3",
-  //   shape: "battery",
-  //   price: 100,
-  //   description: "Unlock Technician Drone factories",
-  //   resourceToUnlock: ["e3"]
-  // },
-  // {
-  //   id: "f3",
-  //   name: "Super 3",
-  //   shape: "battery",
-  //   price: 100,
-  //   description: "Unlock Technician Drone factories",
-  //   resourceToUnlock: ["f3"]
-  // }
 ];

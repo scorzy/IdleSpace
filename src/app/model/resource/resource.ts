@@ -14,7 +14,6 @@ import { BonusStack } from "../bonus/bonusStack";
 import { IAlert } from "../base/IAlert";
 import { SkillEffect } from "../prestige/skillEffects";
 import { PLUS_ADD } from "../prestige/allSkillEffects";
-import { ResearchManager } from "../research/researchManager";
 
 export class Resource extends AbstractUnlockable
   implements ISpendable, IBuyable {
@@ -53,6 +52,9 @@ export class Resource extends AbstractUnlockable
 
   productionMultiplier = new BonusStack();
   efficiencyMultiplier = new BonusStack();
+  priority = 100;
+  realPriority = new Decimal();
+  showPriority = false;
 
   alerts: IAlert[];
 
@@ -139,19 +141,13 @@ export class Resource extends AbstractUnlockable
       }
       this.limit = this.limitStorage.quantity.plus(1).times(worker);
 
-      //  Energy
-      if (this.id === "e" && ResearchManager.getInstance()) {
-        this.limit = this.limit.times(
-          new Decimal(1).plus(
-            ResearchManager.getInstance()
-              .battery.quantity.minus(1)
-              .times(0.1)
-          )
-        );
-      }
+      this.limit = this.reloadCustomLimit(this.limit);
 
       this.quantity = this.quantity.min(this.limit);
     }
+  }
+  reloadCustomLimit(limit: Decimal): Decimal {
+    return limit;
   }
   unlock(): boolean {
     if (super.unlock()) {

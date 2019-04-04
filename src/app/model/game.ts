@@ -81,6 +81,9 @@ export class Game {
         this.resourceManager.searchProgress.quantity
       );
       this.resourceManager.searchProgress.quantity = new Decimal(0);
+
+      //  Deploy Drones
+      this.resourceManager.deployDrones();
     }
 
     this.resourceManager.limitedResources.forEach(r => {
