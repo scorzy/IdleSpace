@@ -16,6 +16,7 @@ export class ResearchManager {
   betterResearch: Research;
   alloy: Research;
   battery: Research;
+  modding: Research;
   //#region Ship Types
   corvette: Research;
   frigate: Research;
@@ -44,6 +45,7 @@ export class ResearchManager {
     this.cruiser = this.researches.find(r => r.id === "b");
     this.battlecruiser = this.researches.find(r => r.id === "t");
     this.battleship = this.researches.find(r => r.id === "s");
+    this.modding = this.researches.find(r => r.id === "M");
 
     this.toDo = [this.researches[0], this.researches[1]];
   }

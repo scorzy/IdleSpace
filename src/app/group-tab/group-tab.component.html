@@ -1,4 +1,12 @@
-<h1>{{ unitGroup.name }}</h1>
+<h1>
+  <clr-icon
+    [attr.shape]="unitGroup.icon"
+    *ngIf="unitGroup?.icon"
+    size="48"
+    class="resIcon"
+  ></clr-icon>
+  {{ unitGroup.name }}
+</h1>
 <clr-tabs>
   <clr-tab>
     <button clrTabLink id="link1">Overview</button>

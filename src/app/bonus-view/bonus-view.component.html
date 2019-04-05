@@ -21,21 +21,10 @@
       </td>
     </tr>
     <!-- Additive Bonus -->
-    <tr
-      *ngIf="production.producer.productionMultiplier.additiveBonus.length > 0"
-    >
+    <tr *ngIf="bonusAdd?.length > 0">
       <th colspan="4">Additive bonus</th>
     </tr>
-    <tr
-      *ngFor="
-        let item of production.producer.productionMultiplier.additiveBonus.concat(
-          production.ratio.gt(0)
-            ? production.producer.efficiencyMultiplier.additiveBonus
-            : []
-        );
-        trackBy: bonusAddId
-      "
-    >
+    <tr *ngFor="let item of bonusAdd; trackBy: bonusAddId">
       <td class="left">{{ item.base.name }}</td>
       <td>
         <app-formatted-quantity
@@ -58,16 +47,7 @@
     <tr>
       <th colspan="4">Multiplicative Bonus</th>
     </tr>
-    <tr
-      *ngFor="
-        let item of production.producer.productionMultiplier.multiplicativeBonus.concat(
-          production.ratio.gt(0)
-            ? production.producer.efficiencyMultiplier.multiplicativeBonus
-            : []
-        );
-        trackBy: bonusMulId
-      "
-    >
+    <tr *ngFor="let item of bonusMulti; trackBy: bonusMulId">
       <td class="left">{{ item.base.name }}</td>
       <td>
         <app-formatted-quantity

@@ -50,6 +50,7 @@ import { JobComponent } from "./job/job.component";
 import { PrestigeComponent } from "./prestige/prestige.component";
 import { GroupTabComponent } from "./group-tab/group-tab.component";
 import { ResourceGroupComponent } from "./group-tab/resource-group/resource-group.component";
+import { ModdingComponent } from './modding/modding.component';
 
 @NgModule({
   declarations: [
@@ -94,7 +95,8 @@ import { ResourceGroupComponent } from "./group-tab/resource-group/resource-grou
     JobComponent,
     PrestigeComponent,
     GroupTabComponent,
-    ResourceGroupComponent
+    ResourceGroupComponent,
+    ModdingComponent
   ],
   imports: [
     BrowserAnimationsModule,

@@ -1,0 +1,86 @@
+<div class="clr-row" *ngIf="res">
+  <div class="clr-col-sm-12 clr-col-md-8">
+    <h4>
+      Mods:
+      <app-formatted-quantity
+        [quantity]="used"
+        [integer]="true"
+        [ngClass]="{ notEnough: !isValid }"
+      ></app-formatted-quantity>
+      /
+      <app-formatted-quantity
+        [quantity]="total"
+        [integer]="true"
+      ></app-formatted-quantity>
+    </h4>
+
+    <div *ngFor="let m of res.modStack.mods; trackBy: modID">
+      <h6>
+        {{ m.name }}:
+        <span
+          [ngClass]="{ notEnough: m.quantity_ui < 0, green: m.quantity_ui > 0 }"
+        >
+          <app-formatted-quantity
+            [quantity]="m.quantity_ui"
+            [integer]="true"
+          ></app-formatted-quantity>
+        </span>
+      </h6>
+
+      <input
+        type="range"
+        [name]="'slr' + res.id + m.id"
+        [min]="-max"
+        [max]="max"
+        step="1"
+        [(ngModel)]="m.quantity_ui"
+        (ngModelChange)="reload()"
+      />
+    </div>
+
+    <br />
+
+    <clr-alert [clrAlertType]="'warning'" [clrAlertClosable]="false">
+      <clr-alert-item>
+        <span class="alert-text">
+          On saving all {{ res.name }} will be destroyed!
+        </span></clr-alert-item
+      >
+    </clr-alert>
+    <br />
+
+    <div class="btn-group btn-primary">
+      <button class="btn" (click)="save()" [disabled]="!isValid">
+        <clr-icon shape="floppy"></clr-icon>Save
+      </button>
+      <button class="btn btn-success" (click)="cancel()">
+        <clr-icon shape="undo"></clr-icon>Cancel
+      </button>
+    </div>
+  </div>
+  <div class="clr-col-sm-12 clr-col-md-4">
+    <table class="table table-noborder table-compact">
+      <thead>
+        <tr>
+          <th class="left">Mod</th>
+          <th>Current</th>
+          <th>New</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let m of res.modStack.mods; trackBy: modID">
+          <td class="left">{{ m.description }}</td>
+          <td>{{ m.quantity }}</td>
+          <td
+            [ngClass]="{
+              notEnough: m.quantity_ui < m.quantity,
+              green: m.quantity_ui > m.quantity
+            }"
+          >
+            {{ m.quantity_ui }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

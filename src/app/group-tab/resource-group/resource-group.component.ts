@@ -5,7 +5,8 @@ import {
   Input,
   ChangeDetectorRef,
   OnDestroy,
-  OnChanges
+  OnChanges,
+  SimpleChanges
 } from "@angular/core";
 import { ResourceGroup } from "src/app/model/resource/resourceGroup";
 import { MainService } from "src/app/main.service";
@@ -38,7 +39,7 @@ export class ResourceGroupComponent implements OnInit, OnDestroy, OnChanges {
   private subscriptions: Subscription[] = [];
   storage = false;
 
-  ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
     this.getGroup();
   }
   ngOnInit() {
@@ -89,8 +90,17 @@ export class ResourceGroupComponent implements OnInit, OnDestroy, OnChanges {
       this.resourceGroup === this.ms.game.resourceManager.matGroup &&
       this.ms.game.resourceManager.energy.unlockedActions.length > 0
     ) {
-      this.mineAction = this.ms.game.resourceManager.energy.actions[0];
-      this.actions.push(this.mineAction);
+      if (this.ms.game.resourceManager.energy.actions[0].unlocked) {
+        this.buyAction = this.ms.game.resourceManager.energy.actions[0];
+        this.actions.push(this.buyAction);
+      }
+
+      if (this.ms.game.resourceManager.drone.unlocked) {
+        this.mineAction = this.ms.game.resourceManager.drone.actions[0];
+        this.actions.push(this.mineAction);
+        this.refundAction = this.ms.game.resourceManager.drone.actions[1];
+        this.actions.push(this.refundAction);
+      }
       return true;
     }
     if (

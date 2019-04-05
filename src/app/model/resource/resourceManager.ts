@@ -12,6 +12,7 @@ import { MainService } from "src/app/main.service";
 import { FleetManager } from "../fleet/fleetManager";
 import { AllSkillEffects } from "../prestige/allSkillEffects";
 import { ResearchManager } from "../research/researchManager";
+import { ModStack } from "../mod/modStack";
 
 export class ResourceManager implements ISalvable {
   private static instance: ResourceManager;
@@ -534,6 +535,12 @@ export class ResourceManager implements ISalvable {
           ResourceManager.getInstance().warriorX1.quantity.gte(1)
       }
     ];
+    //#endregion
+    //#region Mods
+    this.tier1.forEach(r => {
+      r.modStack = new ModStack();
+      r.modStack.generateMods(r);
+    });
     //#endregion
   }
   static getInstance() {

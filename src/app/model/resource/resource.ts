@@ -14,6 +14,7 @@ import { BonusStack } from "../bonus/bonusStack";
 import { IAlert } from "../base/IAlert";
 import { SkillEffect } from "../prestige/skillEffects";
 import { PLUS_ADD } from "../prestige/allSkillEffects";
+import { ModStack } from "../mod/modStack";
 
 export class Resource extends AbstractUnlockable
   implements ISpendable, IBuyable {
@@ -57,6 +58,7 @@ export class Resource extends AbstractUnlockable
   showPriority = false;
 
   alerts: IAlert[];
+  modStack: ModStack;
 
   constructor(public id: string) {
     super();
@@ -117,6 +119,14 @@ export class Resource extends AbstractUnlockable
         prod.prodPerSec = prod.ratio.plus(prodAdd.times(positive ? 1 : -1));
         if (positive) prod.prodPerSec = prod.prodPerSec.plus(effAdd);
         const totalMulti = prodMulti.times(positive ? effMulti : 1);
+
+        if (prod.productionMultiplier) {
+          const addProd2 = prod.productionMultiplier.getAdditiveBonus();
+          prod.prodPerSec = prod.ratio.plus(addProd2.times(positive ? 1 : -1));
+
+          const multiProd2 = prod.productionMultiplier.getMultiplicativeBonus();
+          prod.prodPerSec = prod.prodPerSec.times(multiProd2);
+        }
         prod.prodPerSec = prod.prodPerSec.times(totalMulti);
 
         //  Operativity
@@ -184,6 +194,11 @@ export class Resource extends AbstractUnlockable
     this.b = new Decimal(0);
     this.c = new Decimal(0);
   }
+  saveMods() {
+    this.modStack.save();
+    this.quantity = new Decimal(0);
+    if (this.buyAction) this.buyAction.quantity = new Decimal(0);
+  }
   //#region Save and Load
   getSave(): any {
     const data = super.getSave();
@@ -192,6 +207,7 @@ export class Resource extends AbstractUnlockable
       data.a = this.unlockedActions.map(a => a.getSave());
     }
     if (this.operativity !== 100) data.o = this.operativity;
+    if (this.modStack) data.m = this.modStack.getSave();
     return data;
   }
   load(data: any): boolean {
@@ -206,6 +222,7 @@ export class Resource extends AbstractUnlockable
       }
     }
     if ("o" in data) this.operativity = data.o;
+    if ("m" in data) this.modStack.load(data.m);
 
     this.unlockedActions = this.actions.filter(a => a.unlocked);
     return true;

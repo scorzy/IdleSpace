@@ -19,8 +19,15 @@
   <clr-tabs *ngIf="res">
     <clr-tab>
       <button clrTabLink id="link1">Overview</button>
-      <clr-tab-content id="content1">
+      <clr-tab-content id="content1" *clrIfActive>
         <app-resource-overview [res]="res"></app-resource-overview>
+      </clr-tab-content>
+    </clr-tab>
+
+    <clr-tab *ngIf="ms.game.researchManager.modding.firstDone && res.modStack">
+      <button clrTabLink id="link1">Mods</button>
+      <clr-tab-content id="mod-" *clrIfActive>
+        <app-modding [res]="res"></app-modding>
       </clr-tab-content>
     </clr-tab>
   </clr-tabs>

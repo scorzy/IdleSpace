@@ -51,7 +51,7 @@ export class GroupTabComponent implements OnInit, OnDestroy {
     }
     if (!this.unitGroup) return;
 
-    this.ms.lastUnitUrl = "nav/group/" + this.unitGroup.id;
+    this.ms.lastUnitUrl = "home/group/" + this.unitGroup.id;
 
     // this.bugs = uniq(this.unitGroup.unlocked.map(u => u.bugType));
 

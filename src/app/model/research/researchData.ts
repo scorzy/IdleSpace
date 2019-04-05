@@ -109,6 +109,15 @@ export const ResearchData: IResearchData[] = [
     shape: "battery",
     price: 100,
     description: "Drone Factory",
-    resourceToUnlock: ["D", "F"]
+    resourceToUnlock: ["D", "F"],
+    researchToUnlock: ["M"]
+  },
+  {
+    id: "M",
+    name: "Drone Modding",
+    shape: "battery",
+    price: 100,
+    description: "+1 drone modding point",
+    limit: Number.POSITIVE_INFINITY
   }
 ];
