@@ -34,7 +34,7 @@ export class LabComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscriptions.push(
       this.ms.em.updateEmitter.subscribe(() => {
-        this.resMulti = this.ms.game.researchBonus.getMultiplicativeBonus();
+        this.resMulti = this.ms.game.researchBonus.getTotalBonus();
         this.resPerSec = this.resMulti.times(
           this.ms.game.resourceManager.computing.c
         );
@@ -65,7 +65,9 @@ export class LabComponent implements OnInit, OnDestroy {
   getResId(index: number, res: Research) {
     return res.id;
   }
-  sortPrice(){
-    this.ms.game.researchManager.toDo.sort( (a,b)=> a.total.minus(b.total).toNumber() );
+  sortPrice() {
+    this.ms.game.researchManager.toDo.sort((a, b) =>
+      a.total.minus(b.total).toNumber()
+    );
   }
 }

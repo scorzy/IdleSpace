@@ -66,7 +66,7 @@ export class Game {
       //  Convert computing to researches
       if (this.resourceManager.computing.quantity.gt(0)) {
         let computing = this.resourceManager.computing.quantity;
-        computing = computing.times(this.researchBonus.getMultiplicativeBonus());
+        computing = computing.times(this.researchBonus.getTotalBonus());
         this.researchManager.update(computing);
 
         this.resourceManager.computing.quantity = new Decimal(0);

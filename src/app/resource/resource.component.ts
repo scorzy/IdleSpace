@@ -22,8 +22,7 @@ export class ResourceComponent implements OnInit, OnDestroy {
   contentArea = "content-area";
 
   private subscriptions: Subscription[] = [];
-
-  public res: Resource;
+  res: Resource;
 
   constructor(
     public ms: MainService,

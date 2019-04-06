@@ -25,7 +25,16 @@
     </clr-tab>
 
     <clr-tab *ngIf="ms.game.researchManager.modding.firstDone && res.modStack">
-      <button clrTabLink id="link1">Mods</button>
+      <button clrTabLink id="link1">
+        Mods
+        <span class="badge badge-info" *ngIf="res.modStack.getUnused().gt(0)">
+          <app-formatted-quantity
+            [quantity]="res.modStack.getUnused()"
+            [integer]="true"
+            [monospace]="false"
+          ></app-formatted-quantity>
+        </span>
+      </button>
       <clr-tab-content id="mod-" *clrIfActive>
         <app-modding [res]="res"></app-modding>
       </clr-tab-content>

@@ -12,6 +12,10 @@ export class ModStack implements ISalvable {
   production: Mod;
   energyMod: Mod;
   resource: Resource;
+  totalBonus = new BonusStack();
+  maxPoints = new Decimal();
+  usedPoint = new Decimal();
+  private unusedPoints = new Decimal();
 
   generateMods(resource: Resource) {
     this.resource = resource;
@@ -19,8 +23,8 @@ export class ModStack implements ISalvable {
     this.efficiency = new Mod("f");
     this.production = new Mod("p");
     this.mods = [this.efficiency, this.production];
-    resource.efficiencyMultiplier.additiveBonus.push(
-      new Bonus(this.efficiency, 0.1)
+    resource.productionMultiplier.additiveBonus.push(
+      new Bonus(this.efficiency, 0.1, true)
     );
     resource.productionMultiplier.additiveBonus.push(
       new Bonus(this.production, 0.3)
@@ -56,7 +60,23 @@ export class ModStack implements ISalvable {
       this.mods.forEach(m => {
         m.quantity = new Decimal(m.quantity_ui);
       });
+      this.loadUsedPoint();
     }
+  }
+  loadUsedPoint() {
+    this.usedPoint = this.mods
+      .map(m => m.quantity)
+      .reduce((p: Decimal, c: Decimal) => p.plus(c));
+  }
+  getMax(): Decimal {
+    return ResearchManager.getInstance().modding.quantity.times(
+      this.totalBonus.getTotalBonus()
+    );
+  }
+  getUnused(): Decimal {
+    const un = this.getMax().minus(this.usedPoint);
+    if (!this.unusedPoints.eq(un)) this.unusedPoints = un;
+    return this.unusedPoints;
   }
 
   //#region Save and Load
@@ -73,6 +93,7 @@ export class ModStack implements ISalvable {
         mod.load(modData);
       }
     }
+    this.loadUsedPoint();
     return true;
   }
   //#endregion

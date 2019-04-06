@@ -4,14 +4,15 @@ export class BonusStack {
   additiveBonus = new Array<Bonus>();
   multiplicativeBonus = new Array<Bonus>();
 
-  getAdditiveBonus(): Decimal {
+  private getAdditiveBonus(positiveOnly = false): Decimal {
     return this.additiveBonus
+      .filter(b => !b.positiveOnly || !positiveOnly)
       .map(b => b.quantity.times(b.base.quantity))
       .reduce((p, c) => p.plus(c), new Decimal(0));
   }
-  getMultiplicativeBonus(): Decimal {
+  private getMultiplicativeBonus(positiveOnly = false): Decimal {
     return this.multiplicativeBonus
-      .filter(t => !t.base.quantity.eq(0))
+      .filter(t => (!t.positiveOnly || !positiveOnly) && !t.base.quantity.eq(0))
       .map(b => {
         if (b.base.quantity.gt(0)) {
           return b.quantity.times(b.base.quantity).plus(1);
@@ -22,5 +23,10 @@ export class BonusStack {
         }
       })
       .reduce((p, c) => p.times(c), new Decimal(1));
+  }
+  getTotalBonus(positiveOnly = false): Decimal {
+    return this.getAdditiveBonus(positiveOnly)
+      .plus(1)
+      .times(this.getMultiplicativeBonus(positiveOnly));
   }
 }

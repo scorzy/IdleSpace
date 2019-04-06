@@ -24,25 +24,22 @@ export class BonusViewComponent implements OnInit, OnChanges {
 
   ngOnInit() {}
   ngOnChanges(changes: SimpleChanges) {
-    this.bonusAdd = this.production.producer.productionMultiplier.additiveBonus
-      .concat(
-        this.production.ratio.gt(0)
-          ? this.production.producer.efficiencyMultiplier.additiveBonus
-          : []
-      )
-      .filter(b => !b.base.quantity.eq(0));
+    this.bonusAdd = this.production.producer.productionMultiplier.additiveBonus.filter(
+      t =>
+        (!t.positiveOnly || this.production.ratio.gt(0)) &&
+        !t.base.quantity.eq(0)
+    );
     this.bonusMulti = this.production.producer.productionMultiplier.multiplicativeBonus
-      .concat(
-        this.production.ratio.gt(0)
-          ? this.production.producer.efficiencyMultiplier.multiplicativeBonus
-          : []
-      )
       .concat(
         this.production.productionMultiplier
           ? this.production.productionMultiplier.multiplicativeBonus
           : []
       )
-      .filter(b => !b.base.quantity.eq(0));
+      .filter(
+        t =>
+          (!t.positiveOnly || this.production.ratio.gt(0)) &&
+          !t.base.quantity.eq(0)
+      );
   }
 
   bonusAddId(index: number, bonus: Bonus): string {

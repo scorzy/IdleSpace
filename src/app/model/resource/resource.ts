@@ -52,7 +52,6 @@ export class Resource extends AbstractUnlockable
   prestigeLimitIncrease: number;
 
   productionMultiplier = new BonusStack();
-  efficiencyMultiplier = new BonusStack();
   priority = 100;
   realPriority = new Decimal();
   showPriority = false;
@@ -109,25 +108,17 @@ export class Resource extends AbstractUnlockable
   }
   reloadProd() {
     if (this.operativity > 0) {
-      const prodAdd = this.productionMultiplier.getAdditiveBonus();
-      const prodMulti = this.productionMultiplier.getMultiplicativeBonus();
-      const effAdd = this.efficiencyMultiplier.getAdditiveBonus();
-      const effMulti = this.efficiencyMultiplier.getMultiplicativeBonus();
+      const bonusAll = this.productionMultiplier.getTotalBonus();
+      const bonusPos = this.productionMultiplier.getTotalBonus(true);
 
       this.products.forEach(prod => {
         const positive = prod.ratio.gt(0);
-        prod.prodPerSec = prod.ratio.plus(prodAdd.times(positive ? 1 : -1));
-        if (positive) prod.prodPerSec = prod.prodPerSec.plus(effAdd);
-        const totalMulti = prodMulti.times(positive ? effMulti : 1);
+        prod.prodPerSec = prod.ratio.times(positive ? bonusAll : bonusPos);
 
         if (prod.productionMultiplier) {
-          const addProd2 = prod.productionMultiplier.getAdditiveBonus();
-          prod.prodPerSec = prod.ratio.plus(addProd2.times(positive ? 1 : -1));
-
-          const multiProd2 = prod.productionMultiplier.getMultiplicativeBonus();
-          prod.prodPerSec = prod.prodPerSec.times(multiProd2);
+          const bonus3 = prod.productionMultiplier.getTotalBonus(!positive);
+          prod.prodPerSec = prod.prodPerSec.times(bonus3);
         }
-        prod.prodPerSec = prod.prodPerSec.times(totalMulti);
 
         //  Operativity
         prod.prodPerSec = prod.prodPerSec.times(this.operativity / 100);

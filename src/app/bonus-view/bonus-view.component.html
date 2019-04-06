@@ -38,8 +38,9 @@
       </td>
       <td>
         <app-formatted-quantity
-          [quantity]="item.quantity.times(item.base.quantity)"
-        ></app-formatted-quantity>
+          [quantity]="item.quantity.times(item.base.quantity).times(100)"
+        ></app-formatted-quantity
+        >%
       </td>
     </tr>
 
@@ -61,8 +62,9 @@
       </td>
       <td>
         <app-formatted-quantity
-          [quantity]="item.quantity.times(item.base.quantity)"
-        ></app-formatted-quantity>
+          [quantity]="item.quantity.times(item.base.quantity).times(100)"
+        ></app-formatted-quantity
+        >%
       </td>
     </tr>
 

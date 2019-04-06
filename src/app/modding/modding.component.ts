@@ -22,10 +22,12 @@ export class ModdingComponent implements OnInit, OnChanges {
   used = 0;
   total: Decimal;
   max = 0;
+  min = 0;
   constructor(public ms: MainService) {}
 
   ngOnInit() {
     this.cancel();
+    this.reload();
   }
   ngOnChanges(changes: SimpleChanges) {
     this.reload();
@@ -40,9 +42,10 @@ export class ModdingComponent implements OnInit, OnChanges {
   }
   reload() {
     this.isValid = this.res.modStack.validate();
-    this.total = this.ms.game.researchManager.modding.quantity;
+    this.total = this.res.modStack.getMax();
     this.used = this.res.modStack.getTotal();
     this.max = this.ms.game.researchManager.modding.quantity.toNumber();
+    this.min = Math.ceil(this.max / -2);
   }
   modID(index: number, mod: Mod) {
     return mod.id + index;
