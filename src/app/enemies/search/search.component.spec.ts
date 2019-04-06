@@ -1,13 +1,10 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { SearchComponent } from "./search.component";
-import { ClarityModule } from "@clr/angular";
-import { RouterTestingModule } from "@angular/router/testing";
-import { FormsModule } from "@angular/forms";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FormatPipe } from "src/app/format.pipe";
 import { EndInPipe } from "src/app/end-in.pipe";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import { defaultImport } from "src/app/app.component.spec";
 
 describe("SearchComponent", () => {
   let component: SearchComponent;
@@ -16,12 +13,7 @@ describe("SearchComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [
-        ClarityModule,
-        RouterTestingModule,
-        FormsModule,
-        BrowserAnimationsModule
-      ],
+      imports: defaultImport(),
       declarations: [SearchComponent, FormatPipe, EndInPipe]
     }).compileComponents();
   }));

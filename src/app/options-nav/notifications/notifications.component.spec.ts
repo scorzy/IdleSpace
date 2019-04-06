@@ -1,25 +1,27 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { BattlefieldComponent } from "./battlefield.component";
+
+import { NotificationsComponent } from "./notifications.component";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { FormatPipe } from "src/app/format.pipe";
-import { EndInPipe } from "src/app/end-in.pipe";
-import { SizeNamePipe } from "src/app/size-name.pipe";
+import { MainService } from "src/app/main.service";
+import { OptionsService } from "src/app/options.service";
 import { defaultImport } from "src/app/app.component.spec";
 
-describe("BattlefieldComponent", () => {
-  let component: BattlefieldComponent;
-  let fixture: ComponentFixture<BattlefieldComponent>;
+describe("NotificationsComponent", () => {
+  let component: NotificationsComponent;
+  let fixture: ComponentFixture<NotificationsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: defaultImport(),
-      declarations: [BattlefieldComponent, FormatPipe, EndInPipe, SizeNamePipe]
+      declarations: [NotificationsComponent, FormatPipe],
+      providers: [MainService, OptionsService]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BattlefieldComponent);
+    fixture = TestBed.createComponent(NotificationsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

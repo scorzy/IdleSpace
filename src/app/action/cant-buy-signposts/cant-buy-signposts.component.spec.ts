@@ -1,13 +1,9 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
-import { FormsModule } from "@angular/forms";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { RouterTestingModule } from "@angular/router/testing";
-import { ClarityModule } from "@clr/angular";
 import { EndInPipe } from "../../end-in.pipe";
 import { FormatPipe } from "../../format.pipe";
 import { CantBuySignpostsComponent } from "./cant-buy-signposts.component";
-import { getAction } from "src/app/app.component.spec";
+import { getAction, defaultImport } from "src/app/app.component.spec";
 
 describe("CantBuySignpostsComponent", () => {
   let component: CantBuySignpostsComponent;
@@ -16,12 +12,7 @@ describe("CantBuySignpostsComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [
-        ClarityModule,
-        RouterTestingModule,
-        FormsModule,
-        BrowserAnimationsModule
-      ],
+      imports: defaultImport(),
       declarations: [CantBuySignpostsComponent, FormatPipe, EndInPipe]
     }).compileComponents();
   }));

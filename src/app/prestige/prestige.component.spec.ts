@@ -1,13 +1,11 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { PrestigeComponent } from "./prestige.component";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
-import { ClarityModule } from "@clr/angular";
-import { RouterTestingModule } from "@angular/router/testing";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ActionHeaderComponent } from "../action/action-header/action-header.component";
 import { FormatPipe } from "../format.pipe";
 import { MainService } from "../main.service";
 import { OptionsService } from "../options.service";
+import { defaultImport } from "../app.component.spec";
 
 describe("PrestigeComponent", () => {
   let component: PrestigeComponent;
@@ -16,7 +14,7 @@ describe("PrestigeComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [ClarityModule, RouterTestingModule, BrowserAnimationsModule],
+      imports: defaultImport(),
       declarations: [PrestigeComponent, ActionHeaderComponent, FormatPipe],
       providers: [MainService, OptionsService]
     }).compileComponents();

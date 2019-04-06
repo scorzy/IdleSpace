@@ -2,14 +2,11 @@ import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { LabComponent } from "./lab.component";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
-import { ClarityModule } from "@clr/angular";
-import { RouterTestingModule } from "@angular/router/testing";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ActionHeaderComponent } from "../action/action-header/action-header.component";
 import { FormatPipe } from "../format.pipe";
 import { MainService } from "../main.service";
 import { OptionsService } from "../options.service";
-import { DragDropModule } from "@angular/cdk/drag-drop";
+import { defaultImport } from "../app.component.spec";
 
 describe("LabComponent", () => {
   let component: LabComponent;
@@ -18,12 +15,7 @@ describe("LabComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [
-        ClarityModule,
-        RouterTestingModule,
-        BrowserAnimationsModule,
-        DragDropModule
-      ],
+      imports: defaultImport(),
       declarations: [LabComponent, ActionHeaderComponent, FormatPipe],
       providers: [MainService, OptionsService]
     }).compileComponents();

@@ -5,6 +5,8 @@ declare let numberformat;
   providedIn: "root"
 })
 export class OptionsService {
+  static researchNotification = true;
+
   usaFormat = true;
   numFormat = "scientific";
   autosaveNotification = true;
@@ -59,7 +61,8 @@ export class OptionsService {
       i: this.showI,
       p: this.noResourceEndPopUp,
       w: this.noWarpNotification,
-      t: this.timeFormatDetail
+      t: this.timeFormatDetail,
+      r: OptionsService.researchNotification
     };
   }
   restore(data: any) {
@@ -73,6 +76,7 @@ export class OptionsService {
     if ("p" in data) this.noResourceEndPopUp = data.p;
     if ("w" in data) this.noWarpNotification = data.w;
     if ("t" in data) this.timeFormatDetail = data.t;
+    if ("r" in data) OptionsService.researchNotification = data.r;
     this.generateFormatter();
     this.reloadHeader();
   }

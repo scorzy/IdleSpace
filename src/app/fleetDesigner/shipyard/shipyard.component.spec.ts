@@ -2,12 +2,9 @@ import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { ShipyardComponent } from "./shipyard.component";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
-import { ClarityModule } from "@clr/angular";
-import { RouterTestingModule } from "@angular/router/testing";
-import { FormsModule } from "@angular/forms";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MainService } from "src/app/main.service";
 import { OptionsService } from "src/app/options.service";
+import { defaultImport } from "src/app/app.component.spec";
 
 describe("ShipyardComponent", () => {
   let component: ShipyardComponent;
@@ -16,12 +13,7 @@ describe("ShipyardComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [
-        ClarityModule,
-        RouterTestingModule,
-        FormsModule,
-        BrowserAnimationsModule
-      ],
+      imports: defaultImport(),
       declarations: [ShipyardComponent],
       providers: [MainService, OptionsService]
     }).compileComponents();

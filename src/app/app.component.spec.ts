@@ -11,6 +11,9 @@ import { BuyAction } from "./model/actions/buyAction";
 import { Resource } from "./model/resource/resource";
 import { MultiPrice } from "./model/prices/multiPrice";
 import { Price } from "./model/prices/price";
+import { ToastrModule } from "ngx-toastr";
+import { FormsModule } from "@angular/forms";
+import { DragDropModule } from "@angular/cdk/drag-drop";
 
 export function getGame(): Game {
   return new Game();
@@ -22,11 +25,19 @@ export function getAction(): Action {
     new MultiPrice([new Price(new Resource("c"), 10)])
   );
 }
+export const defaultImport = () => [
+  ClarityModule,
+  FormsModule,
+  RouterTestingModule,
+  BrowserAnimationsModule,
+  ToastrModule.forRoot(),
+  DragDropModule
+];
 
 describe("AppComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, ClarityModule, BrowserAnimationsModule],
+      imports: defaultImport(),
       declarations: [AppComponent, FormatPipe],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();

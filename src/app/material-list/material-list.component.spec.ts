@@ -1,12 +1,10 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { MaterialListComponent } from "./material-list.component";
 import { FormatPipe } from "../format.pipe";
-import { RouterTestingModule } from "@angular/router/testing";
-import { ClarityModule } from "@clr/angular";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { MainService } from "../main.service";
 import { OptionsService } from "../options.service";
+import { defaultImport } from "../app.component.spec";
 
 describe("MaterialListComponent", () => {
   let component: MaterialListComponent;
@@ -15,7 +13,7 @@ describe("MaterialListComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [MaterialListComponent, FormatPipe],
-      imports: [RouterTestingModule, ClarityModule, BrowserAnimationsModule],
+      imports: defaultImport(),
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [MainService, OptionsService]
     }).compileComponents();

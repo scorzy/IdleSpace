@@ -1,9 +1,7 @@
 import { TabComponent } from "./tab.component";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { RouterTestingModule } from "@angular/router/testing";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
-import { ClarityModule } from "@clr/angular";
+import { defaultImport } from "src/app/app.component.spec";
 
 describe("TabComponent", () => {
   let component: TabComponent;
@@ -12,7 +10,7 @@ describe("TabComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [TabComponent],
-      imports: [RouterTestingModule, ClarityModule, BrowserAnimationsModule],
+      imports: defaultImport(),
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   }));

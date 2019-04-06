@@ -2,13 +2,11 @@ import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { ResLineComponent } from "./res-line.component";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
-import { ClarityModule } from "@clr/angular";
-import { RouterTestingModule } from "@angular/router/testing";
 import { OptionsService } from "../../options.service";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FormatPipe } from "../../format.pipe";
 import { Resource } from "../../model/resource/resource";
 import { MainService } from "src/app/main.service";
+import { defaultImport } from "src/app/app.component.spec";
 
 describe("ResLineComponent", () => {
   let component: ResLineComponent;
@@ -17,7 +15,7 @@ describe("ResLineComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ResLineComponent, FormatPipe],
-      imports: [RouterTestingModule, ClarityModule, BrowserAnimationsModule],
+      imports: defaultImport(),
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [MainService, OptionsService]
     }).compileComponents();

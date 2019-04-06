@@ -6,6 +6,7 @@ import { IResearchData } from "./iResearchData";
 import { IHasQuantity } from "../base/IHasQuantity";
 import { IJob } from "../base/IJob";
 import { MainService } from "src/app/main.service";
+import { OptionsService } from "src/app/options.service";
 
 export class Research extends AbstractUnlockable implements IHasQuantity, IJob {
   private constructor() {
@@ -49,7 +50,7 @@ export class Research extends AbstractUnlockable implements IHasQuantity, IJob {
     let ret = new Decimal(0);
 
     if (this.progress.gte(this.total)) {
-      ret = diff;
+      ret = toAdd.minus(diff);
       this.done = true;
       this.firstDone = true;
       this.toUnlock.forEach(u => u.unlock());
@@ -59,7 +60,14 @@ export class Research extends AbstractUnlockable implements IHasQuantity, IJob {
       this.onBuy();
 
       //  Notification
-      MainService.toastr.info(this.getName(), "Research completed");
+      if (OptionsService.researchNotification) {
+        MainService.toastr.show(
+          this.getName(),
+          "Research completed",
+          {},
+          "toast-research"
+        );
+      }
     }
 
     this.progressPercent = Math.floor(

@@ -3,10 +3,7 @@ import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { PolynomComponent } from "./polynom.component";
 import { FormatPipe } from "../format.pipe";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
-import { ClarityModule } from "@clr/angular";
-import { RouterTestingModule } from "@angular/router/testing";
-import { FormsModule } from "@angular/forms";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { defaultImport } from "../app.component.spec";
 
 describe("PolynomComponent", () => {
   let component: PolynomComponent;
@@ -15,12 +12,7 @@ describe("PolynomComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [
-        ClarityModule,
-        RouterTestingModule,
-        FormsModule,
-        BrowserAnimationsModule
-      ],
+      imports: defaultImport(),
       declarations: [PolynomComponent, FormatPipe]
     }).compileComponents();
   }));

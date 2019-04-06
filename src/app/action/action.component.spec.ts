@@ -1,13 +1,9 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { FormsModule } from "@angular/forms";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { RouterTestingModule } from "@angular/router/testing";
-import { ClarityModule } from "@clr/angular";
 import { EndInPipe } from "../end-in.pipe";
 import { FormatPipe } from "../format.pipe";
 import { ActionComponent } from "./action.component";
-import { getAction } from "../app.component.spec";
+import { getAction, defaultImport } from "../app.component.spec";
 
 describe("ActionComponent", () => {
   let component: ActionComponent;
@@ -16,12 +12,7 @@ describe("ActionComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [
-        ClarityModule,
-        RouterTestingModule,
-        FormsModule,
-        BrowserAnimationsModule
-      ],
+      imports: defaultImport(),
       declarations: [ActionComponent, FormatPipe, EndInPipe]
     }).compileComponents();
   }));

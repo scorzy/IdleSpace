@@ -1,11 +1,8 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { OptionsNavComponent } from "./options-nav.component";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
-import { ClarityModule } from "@clr/angular";
-import { RouterTestingModule } from "@angular/router/testing";
-import { FormsModule } from "@angular/forms";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FormatPipe } from "../format.pipe";
+import { defaultImport } from "../app.component.spec";
 
 describe("OptionsNavComponent", () => {
   let component: OptionsNavComponent;
@@ -14,12 +11,7 @@ describe("OptionsNavComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [
-        ClarityModule,
-        RouterTestingModule,
-        FormsModule,
-        BrowserAnimationsModule
-      ],
+      imports: defaultImport(),
       declarations: [OptionsNavComponent, FormatPipe]
     }).compileComponents();
   }));

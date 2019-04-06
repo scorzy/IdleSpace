@@ -52,6 +52,7 @@ import { GroupTabComponent } from "./group-tab/group-tab.component";
 import { ResourceGroupComponent } from "./group-tab/resource-group/resource-group.component";
 import { ModdingComponent } from "./modding/modding.component";
 import { ToastrModule } from "ngx-toastr";
+import { NotificationsComponent } from './options-nav/notifications/notifications.component';
 
 @NgModule({
   declarations: [
@@ -97,7 +98,8 @@ import { ToastrModule } from "ngx-toastr";
     PrestigeComponent,
     GroupTabComponent,
     ResourceGroupComponent,
-    ModdingComponent
+    ModdingComponent,
+    NotificationsComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -106,7 +108,9 @@ import { ToastrModule } from "ngx-toastr";
     ClarityModule,
     FormsModule,
     DragDropModule,
-    ToastrModule.forRoot({ positionClass: "toast-bottom-right" })
+    ToastrModule.forRoot({
+      positionClass: "toast-bottom-right"
+    })
   ],
   providers: [MainService, OptionsService, BattleService],
   bootstrap: [AppComponent],

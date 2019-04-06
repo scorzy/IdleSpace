@@ -2,10 +2,8 @@ import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { ProductionTablesComponent } from "./production-tables.component";
 import { FormatPipe } from "../format.pipe";
-import { RouterTestingModule } from "@angular/router/testing";
-import { ClarityModule } from "@clr/angular";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import { defaultImport } from "../app.component.spec";
 
 describe("ProductionTablesComponent", () => {
   let component: ProductionTablesComponent;
@@ -14,7 +12,7 @@ describe("ProductionTablesComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ProductionTablesComponent, FormatPipe],
-      imports: [RouterTestingModule, ClarityModule, BrowserAnimationsModule],
+      imports: defaultImport(),
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   }));

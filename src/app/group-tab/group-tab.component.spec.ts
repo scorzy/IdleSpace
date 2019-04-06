@@ -3,11 +3,8 @@ import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { GroupTabComponent } from "./group-tab.component";
 import { FormatPipe } from "../format.pipe";
 import { EndInPipe } from "../end-in.pipe";
-import { RouterTestingModule } from "@angular/router/testing";
-import { ClarityModule } from "@clr/angular";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { FormsModule } from "@angular/forms";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import { defaultImport } from "../app.component.spec";
 
 describe("GroupTabComponent", () => {
   let component: GroupTabComponent;
@@ -16,12 +13,7 @@ describe("GroupTabComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [GroupTabComponent, FormatPipe, EndInPipe],
-      imports: [
-        RouterTestingModule,
-        ClarityModule,
-        BrowserAnimationsModule,
-        FormsModule
-      ],
+      imports: defaultImport(),
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   }));

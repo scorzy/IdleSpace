@@ -136,9 +136,9 @@ export class Game {
     this.resourceManager.miningDistrict.quantity = new Decimal(100);
     this.resourceManager.crystalDistrict.quantity = new Decimal(100);
 
-    this.resourceManager.materials.forEach(m => {
-      m.quantity = new Decimal(1e20);
-    });
+    // this.resourceManager.materials.forEach(m => {
+    //   m.quantity = new Decimal(1e20);
+    // });
     this.enemyManager.maxLevel = 50;
     this.prestigeManager.totalPrestige = 100;
 

@@ -2,13 +2,10 @@ import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { ViewComponent } from "./view.component";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
-import { ClarityModule } from "@clr/angular";
-import { RouterTestingModule } from "@angular/router/testing";
-import { FormsModule } from "@angular/forms";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ShipDesign } from "src/app/model/fleet/shipDesign";
 import { MainService } from "src/app/main.service";
 import { OptionsService } from "src/app/options.service";
+import { defaultImport } from "src/app/app.component.spec";
 
 describe("ViewComponent", () => {
   let component: ViewComponent;
@@ -17,12 +14,7 @@ describe("ViewComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [
-        ClarityModule,
-        RouterTestingModule,
-        FormsModule,
-        BrowserAnimationsModule
-      ],
+      imports: defaultImport(),
       declarations: [ViewComponent],
       providers: [MainService, OptionsService]
     }).compileComponents();

@@ -2,12 +2,9 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { FleetDesignerComponent } from "./fleetDesigner.component";
-import { ClarityModule } from "@clr/angular";
-import { RouterTestingModule } from "@angular/router/testing";
-import { FormsModule } from "@angular/forms";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MainService } from "../main.service";
 import { OptionsService } from "../options.service";
+import { defaultImport } from "../app.component.spec";
 
 describe("FleetDesignerComponent", () => {
   let component: FleetDesignerComponent;
@@ -16,12 +13,7 @@ describe("FleetDesignerComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [
-        ClarityModule,
-        RouterTestingModule,
-        FormsModule,
-        BrowserAnimationsModule
-      ],
+      imports: defaultImport(),
       declarations: [FleetDesignerComponent],
       providers: [MainService, OptionsService]
     }).compileComponents();

@@ -1,12 +1,9 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { ResourceOverviewComponent } from "./resource-overview.component";
 import { FormatPipe } from "../format.pipe";
-import { RouterTestingModule } from "@angular/router/testing";
-import { ClarityModule } from "@clr/angular";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { EndInPipe } from "../end-in.pipe";
-import { FormsModule } from "@angular/forms";
+import { defaultImport } from "../app.component.spec";
 
 describe("ResourceOverviewComponent", () => {
   let component: ResourceOverviewComponent;
@@ -15,12 +12,7 @@ describe("ResourceOverviewComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ResourceOverviewComponent, FormatPipe, EndInPipe],
-      imports: [
-        RouterTestingModule,
-        ClarityModule,
-        BrowserAnimationsModule,
-        FormsModule
-      ],
+      imports: defaultImport(),
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   }));
