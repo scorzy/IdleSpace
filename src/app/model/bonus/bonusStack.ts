@@ -17,9 +17,7 @@ export class BonusStack {
         if (b.base.quantity.gt(0)) {
           return b.quantity.times(b.base.quantity).plus(1);
         } else {
-          return new Decimal(1).div(
-            b.quantity.times(b.base.quantity.abs()).plus(1)
-          );
+          return new Decimal(1).minus(b.quantity.times(b.base.quantity.abs()));
         }
       })
       .reduce((p, c) => p.times(c), new Decimal(1));

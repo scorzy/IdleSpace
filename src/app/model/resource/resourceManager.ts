@@ -775,20 +775,22 @@ export class ResourceManager implements ISalvable {
       .map(j => j.realPriority)
       .reduce((p, c) => p.plus(c), new Decimal());
     jobs.sort((a, b) => b.realPriority.cmp(a.realPriority));
-    let toDeploy = this.drone.quantity.floor();
+    let toDeploy = this.drone.quantity;
     let n = 0;
-    while (toDeploy.gte(1) && n < jobs.length) {
+    while (toDeploy.gte(0) && n < jobs.length) {
       const job = jobs[n];
       const toAddMax = job.limit.minus(job.quantity).floor();
       const toAddPrior = toDeploy
         .times(job.realPriority)
+        .div(job.standardPrice)
         .div(totalPriority)
-        .ceil();
+        .floor();
       const toAdd = Decimal.min(toAddMax, toAddPrior).floor();
       if (toAdd.gte(1)) {
         job.quantity = job.quantity.plus(toAdd);
-        toDeploy = toDeploy.minus(toAdd);
-        this.drone.quantity = this.drone.quantity.minus(toAdd);
+        const price = toAdd.times(job.standardPrice);
+        toDeploy = toDeploy.minus(price);
+        this.drone.quantity = this.drone.quantity.minus(price);
       }
 
       n++;

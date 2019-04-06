@@ -15,7 +15,7 @@ import { OptionsService } from "src/app/options.service";
 export class NotificationsComponent implements OnInit {
   @HostBinding("class")
   contentArea = "content-area";
-
+  OptionsService = OptionsService;
   constructor(public os: OptionsService) {}
 
   ngOnInit() {}

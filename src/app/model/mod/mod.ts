@@ -3,18 +3,23 @@ import { ModData } from "./modData";
 import { IResource } from "../base/iResource";
 
 export class Mod implements ISalvable, IResource {
+  quantity = new Decimal();
+  quantity_ui = 0;
+  name = "";
+  description = "";
+  max: number = Number.POSITIVE_INFINITY;
+  min: number = Number.NEGATIVE_INFINITY;
+
   constructor(public id: string) {
     const modData = ModData[id];
     if (modData) {
       this.name = modData.name;
       this.description = modData.description;
+      this.getBonus = modData.getBonus;
+      if ("min" in modData) this.min = modData.min;
+      if ("max" in modData) this.max = modData.max;
     }
   }
-
-  quantity = new Decimal();
-  quantity_ui = 0;
-  name = "";
-  description = "";
 
   getSave(): any {
     const save: any = {};
@@ -26,5 +31,8 @@ export class Mod implements ISalvable, IResource {
     if (!("i" in data && data.i === this.id)) return false;
     if ("q" in data) this.quantity = Decimal.fromDecimal(data.q);
     return true;
+  }
+  getBonus(num: DecimalSource): string {
+    return new Decimal(num).toNumber() + "";
   }
 }

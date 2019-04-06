@@ -119,11 +119,11 @@ export class MainService {
   }
   load2(data: any): any {
     this.last = data.l;
+    if ("o" in data) this.options.restore(data.o);
+    this.setTheme();
     this.game = new Game();
     this.game.enemyManager.battleService = this.battleService;
     this.game.load(data.g);
-    if ("o" in data) this.options.restore(data.o);
-    this.setTheme();
     this.show = true;
     this.toastr.info(
       "You were offline for " +

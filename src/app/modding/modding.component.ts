@@ -50,4 +50,10 @@ export class ModdingComponent implements OnInit, OnChanges {
   modID(index: number, mod: Mod) {
     return mod.id + index;
   }
+  getMin(mod: Mod): number {
+    return Math.max(mod.min, this.min);
+  }
+  getMax(mod: Mod): number {
+    return Math.min(mod.max, this.max);
+  }
 }

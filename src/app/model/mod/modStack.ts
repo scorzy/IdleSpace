@@ -6,11 +6,16 @@ import { ResearchManager } from "../research/researchManager";
 import { Bonus } from "../bonus/bonus";
 import { BonusStack } from "../bonus/bonusStack";
 
+export const MOD_EFFICIENCY = 0.1;
+export const MOD_PRODUCTION = 0.3;
+export const MOD_ENERGY = -0.05;
+
 export class ModStack implements ISalvable {
   mods: Mod[];
   efficiency: Mod;
   production: Mod;
   energyMod: Mod;
+  priceMod: Mod;
   resource: Resource;
   totalBonus = new BonusStack();
   maxPoints = new Decimal();
@@ -22,12 +27,13 @@ export class ModStack implements ISalvable {
 
     this.efficiency = new Mod("f");
     this.production = new Mod("p");
-    this.mods = [this.efficiency, this.production];
+    this.priceMod = new Mod("s");
+    this.mods = [this.efficiency, this.production, this.priceMod];
     resource.productionMultiplier.additiveBonus.push(
-      new Bonus(this.efficiency, 0.1, true)
+      new Bonus(this.efficiency, MOD_EFFICIENCY, true)
     );
     resource.productionMultiplier.additiveBonus.push(
-      new Bonus(this.production, 0.3)
+      new Bonus(this.production, MOD_PRODUCTION)
     );
 
     //  Energy
@@ -41,7 +47,7 @@ export class ModStack implements ISalvable {
         energyProd.productionMultiplier = new BonusStack();
       }
       energyProd.productionMultiplier.multiplicativeBonus.push(
-        new Bonus(this.energyMod, -0.05)
+        new Bonus(this.energyMod, MOD_ENERGY)
       );
     }
   }
@@ -60,6 +66,7 @@ export class ModStack implements ISalvable {
       this.mods.forEach(m => {
         m.quantity = new Decimal(m.quantity_ui);
       });
+      this.setPrice();
       this.loadUsedPoint();
     }
   }
@@ -78,6 +85,9 @@ export class ModStack implements ISalvable {
     if (!this.unusedPoints.eq(un)) this.unusedPoints = un;
     return this.unusedPoints;
   }
+  setPrice() {
+    this.resource.standardPrice = new Decimal(0.9).pow(this.priceMod.quantity);
+  }
 
   //#region Save and Load
   getSave() {
@@ -93,6 +103,7 @@ export class ModStack implements ISalvable {
         mod.load(modData);
       }
     }
+    this.setPrice();
     this.loadUsedPoint();
     return true;
   }

@@ -30,8 +30,8 @@
       <input
         type="range"
         [name]="'slr' + res.id + m.id"
-        [min]="min"
-        [max]="max"
+        [min]="getMin(m)"
+        [max]="getMax(m)"
         step="1"
         [(ngModel)]="m.quantity_ui"
         (ngModelChange)="reload()"
@@ -59,7 +59,7 @@
     </div>
   </div>
   <div class="clr-col-sm-12 clr-col-md-4">
-    <table class="table table-noborder table-compact">
+    <table class="table table-noborder table-compact mod-recap">
       <thead>
         <tr>
           <th class="left">Mod</th>
@@ -70,14 +70,17 @@
       <tbody>
         <tr *ngFor="let m of res.modStack.mods; trackBy: modID">
           <td class="left">{{ m.description }}</td>
-          <td>{{ m.quantity }}</td>
+          <td class="monospace">
+            {{ m.getBonus(m.quantity) }}
+          </td>
           <td
+            class="monospace"
             [ngClass]="{
               notEnough: m.quantity_ui < m.quantity,
               green: m.quantity_ui > m.quantity
             }"
           >
-            {{ m.quantity_ui }}
+            {{ m.getBonus(m.quantity_ui) }}
           </td>
         </tr>
       </tbody>

@@ -58,6 +58,7 @@ export class Resource extends AbstractUnlockable
 
   alerts: IAlert[];
   modStack: ModStack;
+  standardPrice = new Decimal(1);
 
   constructor(public id: string) {
     super();

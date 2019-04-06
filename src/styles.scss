@@ -185,6 +185,10 @@ input[type="range"]:focus::-ms-fill-upper {
   border-radius: 3px 0 0 3px !important;
 }
 
+.toast-container .ngx-toastr {
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
 .toast-research {
   fill: green;
   background-color: #2f96b4;
