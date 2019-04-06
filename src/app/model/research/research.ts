@@ -5,6 +5,7 @@ import { RomanPipe } from "src/app/roman.pipe";
 import { IResearchData } from "./iResearchData";
 import { IHasQuantity } from "../base/IHasQuantity";
 import { IJob } from "../base/IJob";
+import { MainService } from "src/app/main.service";
 
 export class Research extends AbstractUnlockable implements IHasQuantity, IJob {
   private constructor() {
@@ -56,6 +57,9 @@ export class Research extends AbstractUnlockable implements IHasQuantity, IJob {
       this.progress = new Decimal(0);
       this.reloadNum();
       this.onBuy();
+
+      //  Notification
+      MainService.toastr.info(this.getName(), "Research completed");
     }
 
     this.progressPercent = Math.floor(

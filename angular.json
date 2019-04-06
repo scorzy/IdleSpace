@@ -39,7 +39,8 @@
             ],
             "styles": [
               "node_modules/@clr/icons/clr-icons.min.css",
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": [
               "node_modules/break_infinity.js/break_infinity.min.js",
@@ -99,7 +100,11 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
-            "styles": ["src/styles.scss"],
+            "styles": [
+              "node_modules/@clr/icons/clr-icons.min.css",
+              "src/styles.scss",
+              "node_modules/ngx-toastr/toastr.css"
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets",

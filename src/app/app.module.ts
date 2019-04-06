@@ -50,7 +50,8 @@ import { JobComponent } from "./job/job.component";
 import { PrestigeComponent } from "./prestige/prestige.component";
 import { GroupTabComponent } from "./group-tab/group-tab.component";
 import { ResourceGroupComponent } from "./group-tab/resource-group/resource-group.component";
-import { ModdingComponent } from './modding/modding.component';
+import { ModdingComponent } from "./modding/modding.component";
+import { ToastrModule } from "ngx-toastr";
 
 @NgModule({
   declarations: [
@@ -104,7 +105,8 @@ import { ModdingComponent } from './modding/modding.component';
     AppRoutingModule,
     ClarityModule,
     FormsModule,
-    DragDropModule
+    DragDropModule,
+    ToastrModule.forRoot({ positionClass: "toast-bottom-right" })
   ],
   providers: [MainService, OptionsService, BattleService],
   bootstrap: [AppComponent],

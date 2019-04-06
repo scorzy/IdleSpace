@@ -6,6 +6,8 @@ import { DOCUMENT } from "@angular/common";
 import { OptionsService } from "./options.service";
 import { BattleService } from "./battle.service";
 import { FormatPipe } from "./format.pipe";
+import { ToastrService } from "ngx-toastr";
+import { EndInPipe } from "./end-in.pipe";
 
 declare let LZString: any;
 
@@ -27,6 +29,8 @@ export function getUrl() {
 })
 export class MainService {
   static formatPipe: FormatPipe;
+  static endInPipe: EndInPipe;
+  static toastr: ToastrService;
 
   zipWorker: ITypedWorker<CompressRequest, CompressRequest2>;
   game: Game;
@@ -42,8 +46,10 @@ export class MainService {
   constructor(
     public options: OptionsService,
     public battleService: BattleService,
-    @Inject(DOCUMENT) private document: Document
+    @Inject(DOCUMENT) private document: Document,
+    public toastr: ToastrService
   ) {
+    MainService.toastr = this.toastr;
     this.battleService.em = this.em;
     this.theme = this.document.createElement("link");
     this.theme.rel = "stylesheet";
@@ -69,6 +75,7 @@ export class MainService {
     });
 
     MainService.formatPipe = new FormatPipe(this.options);
+    MainService.endInPipe = new EndInPipe(this.options);
   }
   start() {
     const savedData = localStorage.getItem("save");
@@ -118,6 +125,11 @@ export class MainService {
     if ("o" in data) this.options.restore(data.o);
     this.setTheme();
     this.show = true;
+    this.toastr.info(
+      "You were offline for " +
+        MainService.endInPipe.transform(Date.now() - this.last),
+      "Game Loaded"
+    );
   }
   import(str: string) {
     this.zipWorker.postMessage(new CompressRequest(str, "", false, 2));
@@ -160,18 +172,21 @@ export class MainService {
         if (result.requestId === 0) {
           localStorage.setItem("save", result.zipped);
           localStorage.setItem("saveDate", Date());
+          this.toastr.success("Game Saved");
         } else if (result.requestId === 1) {
           this.em.zipEmitter.emit(result.zipped);
         }
         // console.log(result);
       } else {
         console.log("Error");
+        this.toastr.error("Game not Saved");
       }
     } else {
       if (result.obj != null) {
         this.load2(result.obj);
       } else {
         console.log("Error");
+        this.toastr.error("Game not Saved");
       }
     }
     this.em.saveEmitter.emit("s");
