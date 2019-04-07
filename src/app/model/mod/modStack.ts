@@ -79,7 +79,8 @@ export class ModStack implements ISalvable {
   getMax(): Decimal {
     return ResearchManager.getInstance()
       .modding.quantity.times(this.totalBonus.getTotalBonus())
-      .plus(+AllSkillEffects.MODDING_PLUS.numOwned * 5);
+      .plus(AllSkillEffects.MODDING_PLUS.numOwned * 5)
+      .times(AllSkillEffects.DOUBLE_MODDING.numOwned + 1);
   }
   getUnused(): Decimal {
     const un = this.getMax().minus(this.usedPoint);

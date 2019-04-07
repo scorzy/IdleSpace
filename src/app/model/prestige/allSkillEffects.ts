@@ -20,16 +20,24 @@ export class AllSkillEffects {
   //#region Combat
   static readonly FAST_COMBAT = new SkillEffect();
   static readonly DOUBLE_NAVAL_CAPACITY = new SkillEffect();
+  static readonly DOUBLE_DARK_MATTER = new SkillEffect();
   //#endregion
   //#region Robot Modding
   static readonly FACTORY_BONUS = new SkillEffect();
   static readonly MODDING_PLUS = new SkillEffect();
+  static readonly DOUBLE_MODDING = new SkillEffect();
   //#endregion
   //#region Search
   static readonly SEARCH_MULTI = new SkillEffect();
   static readonly SEARCH_METAL = new SkillEffect();
   static readonly SEARCH_CRY = new SkillEffect();
   static readonly SEARCH_HAB = new SkillEffect();
+  //#endregion
+  //#region Resource Gain Multi
+  static readonly ENERGY_MULTI = new SkillEffect();
+  static readonly ALLOY_MULTI = new SkillEffect();
+  static readonly COMPUTING_MULTI = new SkillEffect();
+  static readonly SHIPYARD_MULTI = new SkillEffect();
   //#endregion
 
   static initialize() {
@@ -103,6 +111,9 @@ export class AllSkillEffects {
     AllSkillEffects.DOUBLE_NAVAL_CAPACITY.getDescription = (num = 1) => {
       return "+ " + 100 * num + "%\nnaval capacity";
     };
+    AllSkillEffects.DOUBLE_DARK_MATTER.getDescription = (num = 1) => {
+      return "+ " + 100 * num + "%\nDark Matter";
+    };
     //#endregion
     //#region Robot Modding
     AllSkillEffects.FACTORY_BONUS.getDescription = (num = 1) => {
@@ -113,6 +124,9 @@ export class AllSkillEffects {
     );
     AllSkillEffects.MODDING_PLUS.getDescription = (num = 1) => {
       return "+ " + 5 * num + "\n Modding points";
+    };
+    AllSkillEffects.DOUBLE_MODDING.getDescription = (num = 1) => {
+      return "+ " + 100 * num + "%\n Modding points";
     };
     //#endregion
     //#region Search
@@ -125,7 +139,7 @@ export class AllSkillEffects {
     );
 
     AllSkillEffects.SEARCH_METAL.getDescription = (num = 1) => {
-      return "+ " + 0.1 * num + "Searching\ncan search for metal district";
+      return "+ " + 0.1 * num + " Searching\ncan search for metal district";
     };
     AllSkillEffects.SEARCH_METAL.name = "Prestige search metal";
     resMan.searchX1.productionMultiplier.additiveBonus.push(
@@ -141,13 +155,46 @@ export class AllSkillEffects {
     );
 
     AllSkillEffects.SEARCH_HAB.getDescription = (num = 1) => {
-      return "+ " + 0.1 * num + "Searching\ncan search for habitable space";
+      return "+ " + 0.1 * num + " Searching\ncan search for habitable space";
     };
     AllSkillEffects.SEARCH_HAB.name = "Prestige search habitable space";
     resMan.searchX1.productionMultiplier.additiveBonus.push(
       new Bonus(AllSkillEffects.SEARCH_HAB, 0.1, true)
     );
-    //#region
+    //#endregion
+    //#region Gain Multi
+    AllSkillEffects.ENERGY_MULTI.getDescription = (num = 1) => {
+      return "+ " + 100 * num + "%\n Energy";
+    };
+    AllSkillEffects.ENERGY_MULTI.name = "Prestige energy multi";
+    resMan.energyX1.productionMultiplier.multiplicativeBonus.push(
+      new Bonus(AllSkillEffects.ENERGY_MULTI, 1, true)
+    );
+
+    AllSkillEffects.ALLOY_MULTI.getDescription = (num = 1) => {
+      return "+ " + 100 * num + "%\n Alloy";
+    };
+    AllSkillEffects.ALLOY_MULTI.name = "Prestige alloy multi";
+    resMan.alloyX1.productionMultiplier.multiplicativeBonus.push(
+      new Bonus(AllSkillEffects.ALLOY_MULTI, 1, true)
+    );
+
+    AllSkillEffects.COMPUTING_MULTI.getDescription = (num = 1) => {
+      return "+ " + 100 * num + "%\n Computing";
+    };
+    AllSkillEffects.COMPUTING_MULTI.name = "Prestige computing multi";
+    resMan.computingX1.productionMultiplier.multiplicativeBonus.push(
+      new Bonus(AllSkillEffects.COMPUTING_MULTI, 1, true)
+    );
+
+    AllSkillEffects.SHIPYARD_MULTI.getDescription = (num = 1) => {
+      return "+ " + 100 * num + "%\n Shipyard Progress";
+    };
+    AllSkillEffects.SHIPYARD_MULTI.name = "Prestige Shipyard Progress multi";
+    resMan.shipyardX1.productionMultiplier.multiplicativeBonus.push(
+      new Bonus(AllSkillEffects.SHIPYARD_MULTI, 1, true)
+    );
+    //#endregion
 
     AllSkillEffects.effectList = [
       AllSkillEffects.PLUS_METAL_MINER,
@@ -166,7 +213,13 @@ export class AllSkillEffects {
       AllSkillEffects.SEARCH_MULTI,
       AllSkillEffects.SEARCH_METAL,
       AllSkillEffects.SEARCH_CRY,
-      AllSkillEffects.SEARCH_HAB
+      AllSkillEffects.SEARCH_HAB,
+      AllSkillEffects.DOUBLE_DARK_MATTER,
+      AllSkillEffects.ENERGY_MULTI,
+      AllSkillEffects.ALLOY_MULTI,
+      AllSkillEffects.COMPUTING_MULTI,
+      AllSkillEffects.SHIPYARD_MULTI,
+      AllSkillEffects.DOUBLE_MODDING
     ];
 
     AllSkillEffects.effectList.forEach(e => {

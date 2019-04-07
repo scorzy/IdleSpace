@@ -132,7 +132,9 @@ export class EnemyManager implements ISalvable {
         DarkMatterManager.getInstance().darkMatter.unlock();
         darkMatter.unlock();
         darkMatter.quantity = darkMatter.quantity.plus(
-          this.currentEnemy.level * DARK_MATTER_MULTI
+          this.currentEnemy.level *
+            DARK_MATTER_MULTI *
+            (AllSkillEffects.DOUBLE_DARK_MATTER.numOwned + 1)
         );
       }
       //#endregion
@@ -179,12 +181,7 @@ export class EnemyManager implements ISalvable {
     searchJob.moreMetal = this.moreMetal;
     searchJob.moreCrystal = this.moreCrystal;
     searchJob.moreHabitableSpace = this.moreHabitable;
-    searchJob.total = this.getRequiredSearch(
-      level,
-      searchJob.moreMetal,
-      searchJob.moreCrystal,
-      searchJob.moreHabitableSpace
-    );
+    searchJob.total = this.getRequiredSearch(level);
     searchJob.generateNameDescription();
     this.searchJobs.push(searchJob);
   }

@@ -163,12 +163,12 @@ export class Game {
   }
   load(data: any) {
     if (!("r" in data)) return false;
+    if ("p" in data) this.prestigeManager.load(data.p);
     this.resourceManager.load(data.r);
     this.researchManager.load(data.e);
     this.fleetManager.load(data.f);
     if ("w" in data) this.enemyManager.load(data.w);
     if ("s" in data) this.shipyard.load(data.s);
-    if ("p" in data) this.prestigeManager.load(data.p);
     if ("d" in data) this.darkMatterManager.load(data.d);
 
     this.resourceManager.habitableSpace.quantity = new Decimal(100);

@@ -144,7 +144,7 @@ export class Resource extends AbstractUnlockable
       this.limit = this.limitStorage.quantity.plus(1).times(worker);
 
       this.limit = this.reloadCustomLimit(this.limit);
-
+      this.limit = this.limit.floor();
       this.quantity = this.quantity.min(this.limit);
     }
   }

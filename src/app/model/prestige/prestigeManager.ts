@@ -33,7 +33,23 @@ export class PrestigeManager implements ISalvable {
       new Skill(14, AllSkillEffects.SEARCH_MULTI),
       new Skill(15, AllSkillEffects.SEARCH_METAL),
       new Skill(16, AllSkillEffects.SEARCH_CRY),
-      new Skill(17, AllSkillEffects.SEARCH_HAB)
+      new Skill(17, AllSkillEffects.SEARCH_HAB),
+      new Skill(18, AllSkillEffects.DOUBLE_DARK_MATTER),
+      new Skill(19, AllSkillEffects.ENERGY_MULTI),
+      new Skill(20, AllSkillEffects.ALLOY_MULTI),
+      new Skill(21, AllSkillEffects.COMPUTING_MULTI),
+      new Skill(22, AllSkillEffects.SHIPYARD_MULTI),
+      new Skill(23, AllSkillEffects.DOUBLE_MODDING),
+
+      new Skill(24, AllSkillEffects.PLUS_METAL_MINER),
+      new Skill(25, AllSkillEffects.PLUS_CRYSTAL_MINER),
+      new Skill(26, AllSkillEffects.PLUS_ALLOY),
+      new Skill(27, AllSkillEffects.PLUS_ENERGY),
+      new Skill(28, AllSkillEffects.PLUS_BATTERY),
+      new Skill(29, AllSkillEffects.PLUS_CPU),
+      new Skill(30, AllSkillEffects.PLUS_WORKER),
+      new Skill(31, AllSkillEffects.PLUS_WARRIOR),
+      new Skill(32, AllSkillEffects.PLUS_SEARCH)
     ]);
 
     this.visEdge = new DataSet([
@@ -45,14 +61,29 @@ export class PrestigeManager implements ISalvable {
       { from: 3, to: 7 },
       { from: 6, to: 8 },
       { from: 6, to: 9 },
-      { from: 8, to: 10 },
-      { from: 10, to: 11 },
+      { from: 8, to: 11 },
+      { from: 11, to: 10 },
       { from: 3, to: 12 },
       { from: 12, to: 13 },
       { from: 9, to: 14 },
       { from: 14, to: 15 },
       { from: 14, to: 16 },
-      { from: 14, to: 17 }
+      { from: 14, to: 17 },
+      { from: 8, to: 18 },
+      { from: 3, to: 20 },
+      { from: 4, to: 19 },
+      { from: 6, to: 21 },
+      { from: 7, to: 22 },
+      { from: 13, to: 23 },
+      { from: 1, to: 24 },
+      { from: 2, to: 25 },
+      { from: 3, to: 26 },
+      { from: 4, to: 27 },
+      { from: 5, to: 28 },
+      { from: 6, to: 29 },
+      { from: 7, to: 30 },
+      { from: 8, to: 31 },
+      { from: 9, to: 32 }
     ]);
   }
   static getInstance(): PrestigeManager {
