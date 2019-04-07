@@ -14,9 +14,12 @@
       [cap]="g.isCapped"
     ></app-tab>
   </li>
-  <li class="nav-item" class="matTab">
+  <li
+    class="nav-item"
+    class="matTab"
+    *ngIf="ms.game.researchManager.corvette.firstDone"
+  >
     <app-tab
-      *ngIf="ms.game.researchManager.corvette.firstDone"
       [id]="'naval'"
       [shape]="'ship'"
       [isEnding]="false"
@@ -24,6 +27,7 @@
       [limit]="ms.game.fleetManager.totalNavalCapacity"
       [cog]="ms.game.shipyard.jobs.length > 0"
       [integer]="true"
+      [link]="'/fleet/shipyard'"
       [cap]="
         ms.game.fleetManager.usedNavalCapacity.gte(
           ms.game.fleetManager.totalNavalCapacity
@@ -31,21 +35,20 @@
       "
     ></app-tab>
   </li>
-  <!-- <li *ngIf="ms.game.firstEndingUnit">
-    <clr-alert
-      [clrAlertClosable]="false"
-      [clrAlertType]="
-        ms.game.firstEndingUnit.endIn < 3600000
-          ? 'alert-danger'
-          : 'alert-warning'
-      "
-    >
-      <div clr-alert-item class="alert-item">
-        <span class="alert-text">
-          {{ ms.game.firstEndingUnit.name }} is ending in
-          {{ ms.game.firstEndingUnit.endIn | endIn }}
-        </span>
-      </div>
-    </clr-alert>
-  </li> -->
+  <li
+    *ngIf="ms.game.darkMatterManager.darkMatter.unlocked"
+    class="nav-item"
+    class="matTab"
+  >
+    <app-tab
+      [id]="ms.game.darkMatterManager.darkMatter.id"
+      [shape]="ms.game.darkMatterManager.darkMatter.shape"
+      [isEnding]="ms.game.darkMatterManager.darkMatter.isEnding"
+      [quantity]="ms.game.darkMatterManager.darkMatter.quantity"
+      [limit]="ms.game.resourceManager.inactiveDarkMatter.quantity"
+      [showQta]="true"
+      [cap]="false"
+      [link]="'/darkMatter'"
+    ></app-tab>
+  </li>
 </ul>

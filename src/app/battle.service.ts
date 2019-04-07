@@ -4,6 +4,7 @@ import { getUrl } from "./main.service";
 import { EnemyManager } from "./model/enemy/enemyManager";
 import { BattleRequest, ShipData } from "./workers/battleRequest";
 import { Emitters } from "./emitters";
+import { Enemy } from "./model/enemy/enemy";
 
 @Injectable({
   providedIn: "root"
@@ -11,6 +12,7 @@ import { Emitters } from "./emitters";
 export class BattleService {
   battleWorker: ITypedWorker<BattleRequest, BattleResult>;
   em: Emitters;
+  enemy: Enemy;
 
   constructor() {
     const url = getUrl();

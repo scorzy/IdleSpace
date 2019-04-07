@@ -1,5 +1,5 @@
 <a
-  [routerLink]="id !== 'naval' ? ['/home/res/' + id] : ['/fleet/shipyard']"
+  [routerLink]="!link ? ['/home/res/' + id] : [link]"
   class="nav-link matLink clr-row clr-justify-content-between"
   routerLinkActive="active"
   [ngClass]="{ red: isEnding }"
@@ -11,12 +11,6 @@
       class="resIcon"
       [ngClass]="{ 'is-error': isEnding, 'is-info': cog }"
     ></clr-icon>
-    <!-- <clr-icon
-      class="is-error is-solid"
-      shape="exclamation-triangle"
-      *ngIf="isEnding"
-    ></clr-icon>
-    <clr-icon class="is-info is-solid" shape="cog" *ngIf="cog"></clr-icon> -->
     <span [class.notEnough]="cap">
       <app-formatted-quantity
         *ngIf="showQta"
@@ -26,7 +20,7 @@
     </span>
   </span>
 
-  <span *ngIf="c" class="perSecTab  monospace clr-col clr-align-self-end">
+  <span *ngIf="c" class="perSecTab clr-col clr-align-self-end">
     <span *ngIf="c && c.abs().gt(0.001)" [ngClass]="{ notEnough: c.lt(0) }">
       <app-formatted-quantity [quantity]="c" [integer]="integer">
       </app-formatted-quantity
@@ -34,7 +28,7 @@
     </span>
   </span>
 
-  <span *ngIf="limit" class="perSecTab  monospace clr-col clr-align-self-end">
+  <span *ngIf="limit" class="perSecTab clr-col clr-align-self-end">
     <span>
       /
       <app-formatted-quantity [quantity]="limit" [integer]="integer">

@@ -225,6 +225,7 @@ export class ShipDesign implements ISalvable, IBuyable {
     ret.type = this.type;
     ret.name = this.name;
     ret.modules = this.modules;
+    ret.order = this.order;
     ret.reload(false);
     return ret;
   }

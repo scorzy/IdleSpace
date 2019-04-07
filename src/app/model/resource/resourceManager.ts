@@ -36,6 +36,7 @@ export class ResourceManager implements ISalvable {
   droneFactory: Resource;
   drone: Resource;
   navalCap: Resource;
+  inactiveDarkMatter: Resource;
 
   metalX1: Resource;
   crystalX1: Resource;
@@ -93,6 +94,9 @@ export class ResourceManager implements ISalvable {
 
     this.navalCap = new Resource("n");
     this.navalCap.shape = "ship";
+
+    this.inactiveDarkMatter = new Resource("d");
+    this.inactiveDarkMatter.shape = "darkMatter";
     //#endregion
     //#region Declarations
 
@@ -487,7 +491,8 @@ export class ResourceManager implements ISalvable {
       this.warriorX1,
       this.drone,
       this.droneFactory,
-      this.navalCap
+      this.navalCap,
+      this.inactiveDarkMatter
     ];
     this.allResources.forEach(r => r.generateRefundActions());
     this.matGroup = new ResourceGroup(

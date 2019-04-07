@@ -6,6 +6,9 @@ import { FleetManager } from "./fleet/fleetManager";
 import { EnemyManager } from "./enemy/enemyManager";
 import { Shipyard } from "./shipyard/shipyard";
 import { PrestigeManager } from "./prestige/prestigeManager";
+import { DarkMatterManager } from "./darkMatter/darkMatterManager";
+import { MainService } from "../main.service";
+import { OptionsService } from "../options.service";
 
 const ZERO_DECIMAL_IMMUTABLE = new Decimal(0);
 
@@ -17,6 +20,7 @@ export class Game {
   researchBonus: BonusStack;
   shipyard: Shipyard;
   prestigeManager: PrestigeManager;
+  darkMatterManager: DarkMatterManager;
   isPaused = false;
 
   constructor() {
@@ -28,7 +32,10 @@ export class Game {
     this.fleetManager = new FleetManager();
     this.enemyManager = new EnemyManager();
     this.shipyard = new Shipyard();
-    if (!prestige) this.prestigeManager = new PrestigeManager();
+    if (!prestige) {
+      this.prestigeManager = new PrestigeManager();
+      this.darkMatterManager = new DarkMatterManager(this);
+    }
 
     this.researchManager.addOtherResearches();
     this.researchManager.setUnlocks();
@@ -47,8 +54,21 @@ export class Game {
       r => (r.unlockedActions = r.actions.filter(a => a.unlocked))
     );
   }
-  update(diff: number): void {
-    if (!this.isPaused) {
+  /**
+   * Main update loop
+   * @param diff difference in milliseconds
+   * @param warp true if time warp
+   */
+  update(diff: number, warp = false): void {
+    if (!this.isPaused || warp) {
+      if (warp && OptionsService.warpNotification) {
+        MainService.toastr.show(
+          MainService.endInPipe.transform(diff * 1000),
+          "Time Warp",
+          {},
+          "toast-warp"
+        );
+      }
       while (diff > 0) {
         let resEnded = false;
         this.resourceManager.loadPolynomial();
@@ -87,6 +107,7 @@ export class Game {
       //  Deploy Drones
       this.resourceManager.deployDrones();
     }
+
     this.resourceManager.navalCap.quantity = new Decimal(0);
 
     this.resourceManager.limitedResources.forEach(r => {
@@ -110,12 +131,25 @@ export class Game {
     this.fleetManager.isBuildingCheckAll();
     if (!this.isPaused) this.fleetManager.doAutoFight();
     this.shipyard.adjust();
+    this.darkMatterManager.reload();
   }
   reload() {
     this.resourceManager.loadPolynomial();
     this.resourceManager.loadEndTime();
   }
+  prestige() {
+    this.darkMatterManager.darkMatter.quantity = this.darkMatterManager.darkMatter.quantity.plus(
+      this.resourceManager.inactiveDarkMatter.quantity
+    );
+    this.prestigeManager.totalPrestige = Math.max(
+      this.prestigeManager.totalPrestige,
+      this.enemyManager.maxLevel
+    );
+    this.init(true);
+    this.resourceManager.limitedResources.forEach(r => r.reloadLimit());
+  }
 
+  //#region Save and Load
   save(): any {
     const save: any = {};
     save.r = this.resourceManager.getSave();
@@ -124,6 +158,7 @@ export class Game {
     save.w = this.enemyManager.getSave();
     save.s = this.shipyard.getSave();
     save.p = this.prestigeManager.getSave();
+    save.d = this.darkMatterManager.getSave();
     return save;
   }
   load(data: any) {
@@ -134,10 +169,13 @@ export class Game {
     if ("w" in data) this.enemyManager.load(data.w);
     if ("s" in data) this.shipyard.load(data.s);
     if ("p" in data) this.prestigeManager.load(data.p);
+    if ("d" in data) this.darkMatterManager.load(data.d);
 
     this.resourceManager.habitableSpace.quantity = new Decimal(100);
     this.resourceManager.miningDistrict.quantity = new Decimal(100);
     this.resourceManager.crystalDistrict.quantity = new Decimal(100);
+    this.darkMatterManager.darkMatter.quantity = new Decimal(1e4);
+    this.resourceManager.metal.quantity = new Decimal();
 
     // this.resourceManager.materials.forEach(m => {
     //   m.quantity = new Decimal(1e20);
@@ -149,13 +187,5 @@ export class Game {
     this.resourceManager.limitedResources.forEach(r => r.reloadLimit());
     this.reload();
   }
-
-  prestige() {
-    this.prestigeManager.totalPrestige = Math.max(
-      this.prestigeManager.totalPrestige,
-      this.enemyManager.maxLevel
-    );
-    this.init(true);
-    this.resourceManager.limitedResources.forEach(r => r.reloadLimit());
-  }
+  //#endregion
 }

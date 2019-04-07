@@ -6,6 +6,7 @@ declare let numberformat;
 })
 export class OptionsService {
   static researchNotification = true;
+  static warpNotification = true;
 
   usaFormat = true;
   numFormat = "scientific";
@@ -15,7 +16,6 @@ export class OptionsService {
   materialPosition = 1;
   showI = true;
   noResourceEndPopUp = false;
-  noWarpNotification = true;
   timeFormatDetail = false;
   headerClass = "";
 
@@ -60,7 +60,7 @@ export class OptionsService {
       m: this.materialPosition,
       i: this.showI,
       p: this.noResourceEndPopUp,
-      w: this.noWarpNotification,
+      w: OptionsService.warpNotification,
       t: this.timeFormatDetail,
       r: OptionsService.researchNotification
     };
@@ -74,7 +74,7 @@ export class OptionsService {
     if ("m" in data) this.materialPosition = data.m;
     if ("i" in data) this.showI = data.i;
     if ("p" in data) this.noResourceEndPopUp = data.p;
-    if ("w" in data) this.noWarpNotification = data.w;
+    if ("w" in data) OptionsService.warpNotification = data.w;
     if ("t" in data) this.timeFormatDetail = data.t;
     if ("r" in data) OptionsService.researchNotification = data.r;
     this.generateFormatter();

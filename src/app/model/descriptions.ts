@@ -35,6 +35,8 @@ export const descriptions = {
     F: ["Robot Factory", "Robot Factory"],
     D: ["Robot", "Standard multipurpose robot"],
 
-    n: ["Naval Capacity", "Naval Capacity"]
+    n: ["Naval Capacity", "Naval Capacity"],
+    d: ["Inactive Dark Matter", "Inactive Dark Matter"],
+    da: ["Dark Matter", "Dark Matter"]
   }
 };

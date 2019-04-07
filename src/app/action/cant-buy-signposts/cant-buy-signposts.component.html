@@ -4,8 +4,11 @@
     <p>
       {{ action.description }}
     </p>
+
     <p *ngIf="!action.isCapped(); else capped">
-      Available in {{ action.availableIn | endIn }}
+      <ng-container *ngIf="action.showTime">
+        Available in {{ action.availableIn | endIn }}
+      </ng-container>
     </p>
     <ng-template #capped>
       <p>
@@ -15,7 +18,7 @@
 
     <div *ngFor="let cost of action.multiPrice.prices; trackBy: getPriceId">
       <h6>{{ cost.spendable.name }} {{ getVal(cost) }}%</h6>
-      <span *ngIf="!cost.canBuy"
+      <span *ngIf="!cost.canBuy && action.showTime"
         >Available in {{ cost.avIn.times(1000).toNumber() | endIn }}</span
       >
       <div

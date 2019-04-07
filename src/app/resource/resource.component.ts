@@ -44,9 +44,13 @@ export class ResourceComponent implements OnInit, OnDestroy {
     if (id === undefined) {
       id = this.ms.game.resourceManager.metal.id;
     }
-    const b = this.ms.game.resourceManager.unlockedResources.find(
-      u => u.id === id
-    );
+    let b: Resource;
+
+    b =
+      id !== "da"
+        ? this.ms.game.resourceManager.unlockedResources.find(u => u.id === id)
+        : (b = this.ms.game.darkMatterManager.darkMatter);
+
     if (b instanceof Resource) {
       this.res = b;
       this.res.isNew = false;

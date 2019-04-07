@@ -12,13 +12,10 @@
             ms.game.prestigeManager.usedPrestige
         }}
       </h4>
-      <button
-        class="btn btn-primary"
-        (click)="prestigeModal = true"
-        [disabled]="
+      <!-- [disabled]="
           ms.game.enemyManager.maxLevel <= ms.game.prestigeManager.totalPrestige
-        "
-      >
+        " -->
+      <button class="btn btn-primary" (click)="prestigeModal = true">
         Prestige
         <span
           *ngIf="
@@ -64,13 +61,20 @@
   </h3>
   <div class="modal-body">
     <p>
-      Everything except prestige skills will reset.
+      Everything except prestige Skills and Dark Matter will reset.
       <br />
       You will get
       {{
         ms.game.enemyManager.maxLevel - ms.game.prestigeManager.totalPrestige
       }}
-      points.
+      Skill Points and
+      <app-formatted-quantity
+        [quantity]="ms.game.resourceManager.inactiveDarkMatter.quantity"
+        [integer]="true"
+      >
+      </app-formatted-quantity>
+
+      {{ ms.game.darkMatterManager.darkMatter.name }}
     </p>
   </div>
   <div class="modal-footer">

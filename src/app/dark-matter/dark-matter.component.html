@@ -1,0 +1,36 @@
+<div class="content-area">
+  <h1>
+    <clr-icon
+      [attr.shape]="ms.game.darkMatterManager.darkMatter.shape"
+      *ngIf="ms.game.darkMatterManager.darkMatter.shape"
+      size="48"
+      class="resIcon"
+    ></clr-icon>
+    {{ ms.game.darkMatterManager.darkMatter.name }}
+    <span style="margin-left: 1rem;">
+      <app-formatted-quantity
+        [quantity]="ms.game.darkMatterManager.darkMatter.quantity"
+        [integer]="true"
+      >
+      </app-formatted-quantity>
+    </span>
+  </h1>
+  <h6>
+    {{ ms.game.darkMatterManager.darkMatter.description }}
+  </h6>
+  <p>
+    You can prestige to get
+    <app-formatted-quantity
+      [quantity]="ms.game.resourceManager.inactiveDarkMatter.quantity"
+      [integer]="true"
+    >
+    </app-formatted-quantity>
+
+    {{ ms.game.darkMatterManager.darkMatter.name }}
+  </p>
+
+  <app-action
+    *ngFor="let act of ms.game.darkMatterManager.actions; trackBy: getActId"
+    [action]="act"
+  ></app-action>
+</div>

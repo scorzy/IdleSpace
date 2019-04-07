@@ -50,10 +50,10 @@ export class ResourceOverviewComponent
         : [];
   }
 
-  getResId(index, base: Resource) {
+  getResId(index: number, base: Resource) {
     return base.id;
   }
-  getActId(index, base: Action) {
+  getActId(index: number, base: Action) {
     return base.id;
   }
   getAlertId(index: number, alert: IAlert) {

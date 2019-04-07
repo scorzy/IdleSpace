@@ -33,7 +33,7 @@ export class Enemy {
     enemy.level = level;
     enemy.name = sample(enemyNames) + " " + sample(enemySuffixes);
     enemy.generateIcon();
-    const moduleLevelMulti = sample([1, 1.5, 2]);
+    const moduleLevelMulti = sample([1, 1.2, 1.4]);
     const moduleLevel =
       Math.floor(level * Math.pow(1.003, level)) * moduleLevelMulti;
     const navalCap =
@@ -69,19 +69,11 @@ export class Enemy {
       });
       sd.reload(false);
     });
-    enemy.shipsDesign.sort((a, b) => {
-      const a2 = a.armorDamage.div(a.shieldDamage);
-      const b2 = b.armorDamage.div(b.shieldDamage);
-      return a2.cmp(b2);
-    });
-    let n = 1;
-    enemy.shipsDesign.forEach(s => {
-      s.order = n;
-      n++;
-    });
+    enemy.setOrder();
     enemy.reload();
     return enemy;
   }
+
   static fromData(data: any, zone = false): Enemy {
     const enemy = new Enemy();
     if ("n" in data) enemy.name = data.n;
@@ -113,8 +105,22 @@ export class Enemy {
       s.order = n;
       n++;
     });
+    enemy.setOrder();
     enemy.reload();
     return enemy;
+  }
+
+  setOrder() {
+    this.shipsDesign.sort((a, b) => {
+      const a2 = a.armorDamage.div(a.shieldDamage);
+      const b2 = b.armorDamage.div(b.shieldDamage);
+      return a2.cmp(b2);
+    });
+    let n = 1;
+    this.shipsDesign.forEach(s => {
+      s.order = n;
+      n++;
+    });
   }
 
   reload() {

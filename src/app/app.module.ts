@@ -53,6 +53,7 @@ import { ResourceGroupComponent } from "./group-tab/resource-group/resource-grou
 import { ModdingComponent } from "./modding/modding.component";
 import { ToastrModule } from "ngx-toastr";
 import { NotificationsComponent } from './options-nav/notifications/notifications.component';
+import { DarkMatterComponent } from './dark-matter/dark-matter.component';
 
 @NgModule({
   declarations: [
@@ -99,7 +100,8 @@ import { NotificationsComponent } from './options-nav/notifications/notification
     GroupTabComponent,
     ResourceGroupComponent,
     ModdingComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    DarkMatterComponent
   ],
   imports: [
     BrowserAnimationsModule,

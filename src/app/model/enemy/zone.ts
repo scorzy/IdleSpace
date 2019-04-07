@@ -46,6 +46,17 @@ export class Zone implements ISalvable {
           this.color += col + (i < 2 ? "," : "");
         }
         this.color += ")";
+
+        this.ships.sort((a, b) => {
+          const a2 = a.armorDamage.div(a.shieldDamage);
+          const b2 = b.armorDamage.div(b.shieldDamage);
+          return a2.cmp(b2);
+        });
+        let n = 1;
+        this.ships.forEach(s => {
+          s.order = n;
+          n++;
+        });
       }
     }
 

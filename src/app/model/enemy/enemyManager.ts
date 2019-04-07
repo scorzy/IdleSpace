@@ -9,8 +9,11 @@ import { Emitters } from "src/app/emitters";
 import { SearchJob } from "./searchJob";
 import { RomanPipe } from "src/app/roman.pipe";
 import { AllSkillEffects } from "../prestige/allSkillEffects";
+import { DarkMatterManager } from "../darkMatter/darkMatterManager";
 
 export const MAX_ENEMY_LIST_SIZE = 20;
+const DARK_MATTER_START_LEVEL = 5;
+const DARK_MATTER_MULTI = 0.2;
 
 export class EnemyManager implements ISalvable {
   private static instance: EnemyManager;
@@ -24,6 +27,7 @@ export class EnemyManager implements ISalvable {
   inBattle = false;
 
   searchJobs = new Array<SearchJob>();
+  fightEnemy: Enemy;
 
   static getInstance(): EnemyManager {
     return EnemyManager.instance;
@@ -45,6 +49,7 @@ export class EnemyManager implements ISalvable {
 
   startBattle() {
     if (this.inBattle || !this.currentEnemy) return false;
+    this.fightEnemy = this.currentEnemy;
 
     Emitters.getInstance().battleEndEmitter.emit(1);
     this.inBattle = true;
@@ -62,10 +67,26 @@ export class EnemyManager implements ISalvable {
     this.battleService.battleWorker.postMessage(battleRequest);
   }
   onBattleEnd(result: BattleResult) {
+    if (
+      !this.inBattle ||
+      !this.currentEnemy ||
+      this.fightEnemy !== this.fightEnemy
+    ) {
+      this.inBattle = false;
+      return false;
+    }
+
     // console.log("On Battle End");
     result.enemyLost.forEach(e => {
       const ship = this.currentEnemy.currentZone.ships.find(s => s.id === e[0]);
-      ship.quantity = ship.quantity.minus(Decimal.fromDecimal(e[1]));
+      if (ship) {
+        ship.quantity = ship.quantity.minus(Decimal.fromDecimal(e[1]));
+        if (ship.quantity.lt(1)) {
+          this.currentEnemy.currentZone.ships = this.currentEnemy.currentZone.ships.filter(
+            s => s !== ship
+          );
+        }
+      }
     });
     result.playerLost.forEach(e => {
       const ship = FleetManager.getInstance().ships.find(s => s.id === e[0]);
@@ -101,10 +122,22 @@ export class EnemyManager implements ISalvable {
         }
       }
       //#endregion
+      //#region Dark Matter
+      if (this.currentEnemy.level >= DARK_MATTER_START_LEVEL) {
+        const darkMatter = ResourceManager.getInstance().inactiveDarkMatter;
+        DarkMatterManager.getInstance().darkMatter.unlock();
+        darkMatter.unlock();
+        darkMatter.quantity = darkMatter.quantity.plus(
+          this.currentEnemy.level * DARK_MATTER_MULTI
+        );
+      }
+      //#endregion
       if (this.currentEnemy.currentZone.number >= 99) {
         this.currentEnemy = null;
         if (this.allEnemy.length > 0) this.attack(this.allEnemy[0]);
       } else {
+        this.currentEnemy.currentZone.completed = true;
+        this.currentEnemy.currentZone.reload();
         this.currentEnemy.currentZone = this.currentEnemy.zones[
           this.currentEnemy.currentZone.number + 1
         ];
