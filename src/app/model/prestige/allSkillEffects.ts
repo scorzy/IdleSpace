@@ -25,6 +25,12 @@ export class AllSkillEffects {
   static readonly FACTORY_BONUS = new SkillEffect();
   static readonly MODDING_PLUS = new SkillEffect();
   //#endregion
+  //#region Search
+  static readonly SEARCH_MULTI = new SkillEffect();
+  static readonly SEARCH_METAL = new SkillEffect();
+  static readonly SEARCH_CRY = new SkillEffect();
+  static readonly SEARCH_HAB = new SkillEffect();
+  //#endregion
 
   static initialize() {
     const resMan = ResourceManager.getInstance();
@@ -109,6 +115,39 @@ export class AllSkillEffects {
       return "+ " + 5 * num + "\n Modding points";
     };
     //#endregion
+    //#region Search
+    AllSkillEffects.SEARCH_MULTI.getDescription = (num = 1) => {
+      return "+ " + 100 * num + "%\n Searching";
+    };
+    AllSkillEffects.SEARCH_MULTI.name = "Prestige search multi";
+    resMan.searchX1.productionMultiplier.multiplicativeBonus.push(
+      new Bonus(AllSkillEffects.SEARCH_MULTI, 1, true)
+    );
+
+    AllSkillEffects.SEARCH_METAL.getDescription = (num = 1) => {
+      return "+ " + 0.1 * num + "Searching\ncan search for metal district";
+    };
+    AllSkillEffects.SEARCH_METAL.name = "Prestige search metal";
+    resMan.searchX1.productionMultiplier.additiveBonus.push(
+      new Bonus(AllSkillEffects.SEARCH_METAL, 0.1, true)
+    );
+
+    AllSkillEffects.SEARCH_CRY.getDescription = (num = 1) => {
+      return "+ " + 0.1 * num + " Searching\ncan search for crystal district";
+    };
+    AllSkillEffects.SEARCH_CRY.name = "Prestige search crystal";
+    resMan.searchX1.productionMultiplier.additiveBonus.push(
+      new Bonus(AllSkillEffects.SEARCH_CRY, 0.1, true)
+    );
+
+    AllSkillEffects.SEARCH_HAB.getDescription = (num = 1) => {
+      return "+ " + 0.1 * num + "Searching\ncan search for habitable space";
+    };
+    AllSkillEffects.SEARCH_HAB.name = "Prestige search habitable space";
+    resMan.searchX1.productionMultiplier.additiveBonus.push(
+      new Bonus(AllSkillEffects.SEARCH_HAB, 0.1, true)
+    );
+    //#region
 
     AllSkillEffects.effectList = [
       AllSkillEffects.PLUS_METAL_MINER,
@@ -123,7 +162,11 @@ export class AllSkillEffects {
       AllSkillEffects.FAST_COMBAT,
       AllSkillEffects.DOUBLE_NAVAL_CAPACITY,
       AllSkillEffects.FACTORY_BONUS,
-      AllSkillEffects.MODDING_PLUS
+      AllSkillEffects.MODDING_PLUS,
+      AllSkillEffects.SEARCH_MULTI,
+      AllSkillEffects.SEARCH_METAL,
+      AllSkillEffects.SEARCH_CRY,
+      AllSkillEffects.SEARCH_HAB
     ];
 
     AllSkillEffects.effectList.forEach(e => {

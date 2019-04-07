@@ -12,6 +12,10 @@ export class SearchJob implements IJob {
   progress = new Decimal(0);
   progressPercent = 0;
 
+  moreMetal = false;
+  moreCrystal = false;
+  moreHabitableSpace = false;
+
   level = 0;
   done = false;
 
@@ -25,6 +29,10 @@ export class SearchJob implements IJob {
     if ("p" in data) job.progress = Decimal.fromDecimal(data.p);
     if ("t" in data) job.total = Decimal.fromDecimal(data.t);
     if ("l" in data) job.level = data.l;
+
+    if ("mm" in data) job.moreMetal = data.mm;
+    if ("mc" in data) job.moreCrystal = data.mc;
+    if ("mh" in data) job.moreHabitableSpace = data.mh;
 
     job.generateNameDescription();
     job.reload();
@@ -50,8 +58,38 @@ export class SearchJob implements IJob {
     );
   }
   generateNameDescription() {
-    this.name = "Standard search";
+    const bonusCount =
+      (this.moreMetal ? 1 : 0) +
+      (this.moreCrystal ? 1 : 0) +
+      (this.moreHabitableSpace ? 1 : 0);
+    switch (bonusCount) {
+      case 0:
+        this.name = "Standard search";
+        break;
+      case 1:
+        this.name = this.moreMetal
+          ? "Metal search"
+          : this.moreCrystal
+          ? "Crystal search"
+          : this.moreHabitableSpace
+          ? "Habitable space search"
+          : "";
+        break;
+      case 2:
+        this.name = this.moreMetal ? "Metal & " : "";
+        this.name += this.moreCrystal ? "Crystal " : "";
+        this.name += this.moreCrystal && this.moreHabitableSpace ? "& " : "";
+        this.name += this.moreHabitableSpace ? "Habitable Space " : "";
+        this.name += " search";
+        break;
+      case 3:
+        this.name = "Search everything";
+    }
+
     this.description = "Level " + EnemyManager.romanPipe.transform(this.level);
+    if (this.moreMetal) this.description += "More Metal";
+    if (this.moreCrystal) this.description += "More Crystal";
+    if (this.moreHabitableSpace) this.description += "More Space";
   }
 
   getName(): string {
@@ -83,6 +121,9 @@ export class SearchJob implements IJob {
     data.p = this.progress;
     data.t = this.total;
     data.l = this.level;
+    if (this.moreMetal) data.mm = this.moreMetal;
+    if (this.moreCrystal) data.mc = this.moreCrystal;
+    if (this.moreHabitableSpace) data.mh = this.moreHabitableSpace;
     return data;
   }
 }

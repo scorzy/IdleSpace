@@ -9,8 +9,13 @@ import { Reward } from "./reward";
 import { enemyNames } from "./enemyNames";
 import { enemySuffixes } from "./enemySuffixes";
 import { enemyIcons } from "./enemyIcons";
+import { SearchJob } from "./searchJob";
 
 export class Enemy {
+  constructor() {
+    Enemy.lastId++;
+    this.id = Enemy.lastId;
+  }
   private static lastId = 0;
 
   name = "";
@@ -23,13 +28,32 @@ export class Enemy {
   currentZone: Zone;
   totalNavalCap = new Decimal(0);
 
-  constructor() {
-    Enemy.lastId++;
-    this.id = Enemy.lastId;
-  }
+  moreMetal = false;
+  moreCrystal = false;
+  moreHabitableSpace = false;
+  bonusCount = 0;
 
-  static generate(level: number): Enemy {
+  static generate(searchJob: SearchJob): Enemy {
     const enemy = new Enemy();
+    const level = searchJob.level;
+    enemy.moreMetal = searchJob.moreMetal;
+    enemy.moreCrystal = searchJob.moreCrystal;
+    enemy.moreHabitableSpace = searchJob.moreHabitableSpace;
+
+    for (let n = 1; n < 4; n++) {
+      if (Math.random() < enemy.level / (enemy.level + 100 * n)) {
+        const bon = Math.random();
+        if (bon < 1 / 3) {
+          enemy.moreMetal = true;
+        } else if (bon < 2 / 3) {
+          enemy.moreCrystal = true;
+        } else {
+          enemy.moreHabitableSpace = true;
+        }
+      }
+    }
+    enemy.loadBonusCount();
+
     enemy.level = level;
     enemy.name = sample(enemyNames) + " " + sample(enemySuffixes);
     enemy.generateIcon();
@@ -79,6 +103,10 @@ export class Enemy {
     if ("n" in data) enemy.name = data.n;
     if ("l" in data) enemy.level = data.l;
     if ("h" in data) enemy.shape = data.h;
+    if ("mm" in data) enemy.moreMetal = data.mm;
+    if ("mc" in data) enemy.moreCrystal = data.mc;
+    if ("mh" in data) enemy.moreHabitableSpace = data.mh;
+
     if ("s" in data) {
       for (const shipData of data.s) {
         const ship = new ShipDesign();
@@ -105,9 +133,17 @@ export class Enemy {
       s.order = n;
       n++;
     });
+
     enemy.setOrder();
+    enemy.loadBonusCount();
     enemy.reload();
     return enemy;
+  }
+  private loadBonusCount() {
+    this.bonusCount =
+      (this.moreMetal ? 1 : 0) +
+      (this.moreCrystal ? 1 : 0) +
+      (this.moreHabitableSpace ? 1 : 0);
   }
 
   setOrder() {
@@ -164,14 +200,21 @@ export class Enemy {
         this.zones[i].reward = Reward.HabitableSpace;
         let otherZones = new Array<Zone>();
         for (let k = 1; k < 10; k++) otherZones.push(this.zones[i - k]);
-        for (let j = 0; j < 2; j++) {
+        const metalCount = 2 + (this.moreMetal ? 1 : 0);
+        for (let j = 0; j < metalCount; j++) {
           const rand = sample(otherZones);
           rand.reward = Reward.MetalMine;
           otherZones = otherZones.filter(z => !z.reward);
         }
-        for (let j = 0; j < 2; j++) {
+        const crystalCount = 2 + (this.moreCrystal ? 1 : 0);
+        for (let j = 0; j < crystalCount; j++) {
           const rand = sample(otherZones);
           rand.reward = Reward.CrystalMine;
+          otherZones = otherZones.filter(z => !z.reward);
+        }
+        if (this.moreHabitableSpace) {
+          const rand = sample(otherZones);
+          rand.reward = Reward.HabitableSpace;
           otherZones = otherZones.filter(z => !z.reward);
         }
       }
@@ -195,6 +238,9 @@ export class Enemy {
       data.z = this.zones.map(z => z.getSave());
     }
     if (this.currentZone) data.c = this.currentZone.number;
+    if (this.moreMetal) data.mm = this.moreMetal;
+    if (this.moreCrystal) data.mc = this.moreCrystal;
+    if (this.moreHabitableSpace) data.mh = this.moreHabitableSpace;
 
     return data;
   }

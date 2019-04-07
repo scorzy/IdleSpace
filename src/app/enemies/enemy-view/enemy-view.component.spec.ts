@@ -7,6 +7,7 @@ import { Enemy } from "src/app/model/enemy/enemy";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { SizeNamePipe } from "src/app/size-name.pipe";
 import { defaultImport } from "src/app/app.component.spec";
+import { SearchJob } from "src/app/model/enemy/searchJob";
 
 describe("EnemyViewComponent", () => {
   let component: EnemyViewComponent;
@@ -24,7 +25,7 @@ describe("EnemyViewComponent", () => {
     fixture = TestBed.createComponent(EnemyViewComponent);
     component = fixture.componentInstance;
     component.ms.start();
-    component.enemy = Enemy.generate(1);
+    component.enemy = Enemy.generate(new SearchJob());
     fixture.detectChanges();
   });
 

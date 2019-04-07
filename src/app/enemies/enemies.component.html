@@ -21,6 +21,10 @@
     <clr-icon [attr.shape]="en.shape"></clr-icon>
 
     {{ en.name }}
+    <span class="badge badge-info" *ngIf="en.bonusCount > 0">{{
+      en.bonusCount
+    }}</span>
+
     <span class="level">
       {{ en.level }}
     </span>

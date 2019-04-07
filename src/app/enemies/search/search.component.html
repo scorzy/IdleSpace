@@ -61,6 +61,46 @@
       />
     </form>
 
+    <!-- Search options -->
+    <div class="btn-group" *ngIf="moreSearch">
+      <div class="checkbox btn" *ngIf="metal">
+        <input
+          type="checkbox"
+          id="btn-mmd"
+          [(ngModel)]="ms.game.enemyManager.moreMetal"
+        />
+        <label for="btn-mmd">
+          <clr-icon
+            [attr.shape]="ms.game.resourceManager.miningDistrict.shape"
+          ></clr-icon>
+        </label>
+      </div>
+      <div class="checkbox btn" *ngIf="cry">
+        <input
+          type="checkbox"
+          id="btn-mcd"
+          [(ngModel)]="ms.game.enemyManager.moreCrystal"
+        />
+        <label for="btn-mcd">
+          <clr-icon
+            [attr.shape]="ms.game.resourceManager.crystalDistrict.shape"
+          ></clr-icon
+        ></label>
+      </div>
+      <div class="checkbox btn" *ngIf="hab">
+        <input
+          type="checkbox"
+          id="btn-mhs"
+          [(ngModel)]="ms.game.enemyManager.moreHabitable"
+        />
+        <label for="btn-mhs">
+          <clr-icon
+            [attr.shape]="ms.game.resourceManager.habitableSpace.shape"
+          ></clr-icon
+        ></label>
+      </div>
+    </div>
+
     <clr-alert
       *ngIf="!limited"
       [clrAlertType]="'warning'"
@@ -80,16 +120,16 @@
           <app-price-line
             [canBuy]="true"
             [unit]="ms.game.resourceManager.searchProgress"
-            [price]="ms.game.enemyManager.getRequiredSearch(this.userLevel)"
+            [price]="ms.game.enemyManager.getRequiredSearch(userLevel)"
           ></app-price-line>
         </span>
       </clr-alert-item>
     </clr-alert>
 
     <button
-      class="btn btn-primary"
+      class="btn btn-success"
       (click)="generate()"
-      [disabled]="!this.isValid()"
+      [disabled]="!isValid()"
     >
       Search
     </button>

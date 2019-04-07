@@ -13,7 +13,7 @@ import { DarkMatterManager } from "../darkMatter/darkMatterManager";
 
 export const MAX_ENEMY_LIST_SIZE = 20;
 const DARK_MATTER_START_LEVEL = 5;
-const DARK_MATTER_MULTI = 0.2;
+const DARK_MATTER_MULTI = 1;
 
 export class EnemyManager implements ISalvable {
   private static instance: EnemyManager;
@@ -29,6 +29,10 @@ export class EnemyManager implements ISalvable {
   searchJobs = new Array<SearchJob>();
   fightEnemy: Enemy;
 
+  moreMetal = false;
+  moreCrystal = false;
+  moreHabitable = false;
+
   static getInstance(): EnemyManager {
     return EnemyManager.instance;
   }
@@ -36,7 +40,7 @@ export class EnemyManager implements ISalvable {
     EnemyManager.instance = this;
   }
   generate(searchJob: SearchJob) {
-    this.allEnemy.push(Enemy.generate(searchJob.level));
+    this.allEnemy.push(Enemy.generate(searchJob));
   }
 
   attack(enemy: Enemy): boolean {
@@ -159,6 +163,11 @@ export class EnemyManager implements ISalvable {
   }
 
   getRequiredSearch(level: number): Decimal {
+    level =
+      level +
+      (this.moreMetal ? 1 : 0) +
+      (this.moreCrystal ? 1 : 0) +
+      (this.moreHabitable ? 1 : 0);
     return new Decimal(level * 100).times(Decimal.pow(1.1, level - 1));
   }
   /**
@@ -167,7 +176,15 @@ export class EnemyManager implements ISalvable {
   startSearching(level: number) {
     const searchJob = new SearchJob();
     searchJob.level = level;
-    searchJob.total = this.getRequiredSearch(level);
+    searchJob.moreMetal = this.moreMetal;
+    searchJob.moreCrystal = this.moreCrystal;
+    searchJob.moreHabitableSpace = this.moreHabitable;
+    searchJob.total = this.getRequiredSearch(
+      level,
+      searchJob.moreMetal,
+      searchJob.moreCrystal,
+      searchJob.moreHabitableSpace
+    );
     searchJob.generateNameDescription();
     this.searchJobs.push(searchJob);
   }

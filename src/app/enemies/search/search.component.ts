@@ -10,6 +10,7 @@ import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 import { SearchJob } from "src/app/model/enemy/searchJob";
 import { MAX_ENEMY_LIST_SIZE } from "src/app/model/enemy/enemyManager";
 import { Subscription } from "rxjs";
+import { AllSkillEffects } from "src/app/model/prestige/allSkillEffects";
 
 @Component({
   selector: "app-search",
@@ -24,11 +25,26 @@ export class SearchComponent implements OnInit {
   searchValid = true;
   valid = true;
   limited = false;
+
+  moreSearch = false;
+  metal = false;
+  cry = false;
+  hab = false;
+
   private subscriptions: Subscription[] = [];
 
   constructor(public ms: MainService, private cd: ChangeDetectorRef) {}
 
   ngOnInit() {
+    this.moreSearch =
+      AllSkillEffects.SEARCH_CRY.numOwned > 0 ||
+      AllSkillEffects.SEARCH_METAL.numOwned > 0 ||
+      AllSkillEffects.SEARCH_HAB.numOwned > 0;
+
+    this.metal = AllSkillEffects.SEARCH_METAL.numOwned > 0;
+    this.cry = AllSkillEffects.SEARCH_CRY.numOwned > 0;
+    this.hab = AllSkillEffects.SEARCH_HAB.numOwned > 0;
+
     this.userLevel = this.ms.game.enemyManager.maxLevel;
     this.validate();
 

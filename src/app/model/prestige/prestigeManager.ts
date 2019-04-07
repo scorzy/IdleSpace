@@ -29,7 +29,11 @@ export class PrestigeManager implements ISalvable {
       new Skill(10, AllSkillEffects.FAST_COMBAT),
       new Skill(11, AllSkillEffects.DOUBLE_NAVAL_CAPACITY),
       new Skill(12, AllSkillEffects.FACTORY_BONUS),
-      new Skill(13, AllSkillEffects.MODDING_PLUS)
+      new Skill(13, AllSkillEffects.MODDING_PLUS),
+      new Skill(14, AllSkillEffects.SEARCH_MULTI),
+      new Skill(15, AllSkillEffects.SEARCH_METAL),
+      new Skill(16, AllSkillEffects.SEARCH_CRY),
+      new Skill(17, AllSkillEffects.SEARCH_HAB)
     ]);
 
     this.visEdge = new DataSet([
@@ -44,7 +48,11 @@ export class PrestigeManager implements ISalvable {
       { from: 8, to: 10 },
       { from: 10, to: 11 },
       { from: 3, to: 12 },
-      { from: 12, to: 13 }
+      { from: 12, to: 13 },
+      { from: 9, to: 14 },
+      { from: 14, to: 15 },
+      { from: 14, to: 16 },
+      { from: 14, to: 17 }
     ]);
   }
   static getInstance(): PrestigeManager {

@@ -17,9 +17,26 @@
         [quantity]="enemy.totalFleetPower"
       ></app-formatted-quantity>
     </p>
+    <p *ngIf="enemy.bonusCount > 0">
+      <span class="label label-info" *ngIf="enemy.moreMetal"
+        >More Metal District</span
+      >
+      <span class="label label-success" *ngIf="enemy.moreCrystal"
+        >More Crystal District</span
+      >
+      <span class="label label-warning" *ngIf="enemy.moreHabitableSpace"
+        >More Habitable Space</span
+      >
+    </p>
     <br />
     <div class="btn-group btn-primary">
-      <button class="btn btn-success" (click)="attack()">Attack</button>
+      <button
+        class="btn btn-success"
+        (click)="attack()"
+        [disabled]="ms.game.enemyManager.currentEnemy"
+      >
+        Attack
+      </button>
       <button class="btn" (click)="move(-1)">Move Up</button>
       <button class="btn" (click)="move(1)">Move Down</button>
       <button class="btn btn-danger" (click)="deleteModal = true">
