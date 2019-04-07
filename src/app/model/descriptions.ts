@@ -33,6 +33,8 @@ export const descriptions = {
     W1: ["Warrior Drone", ""],
 
     F: ["Robot Factory", "Robot Factory"],
-    D: ["Robot", "Standard multipurpose robot"]
+    D: ["Robot", "Standard multipurpose robot"],
+
+    n: ["Naval Capacity", "Naval Capacity"]
   }
 };

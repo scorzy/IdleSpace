@@ -7,6 +7,8 @@ import { EnemyManager } from "./enemy/enemyManager";
 import { Shipyard } from "./shipyard/shipyard";
 import { PrestigeManager } from "./prestige/prestigeManager";
 
+const ZERO_DECIMAL_IMMUTABLE = new Decimal(0);
+
 export class Game {
   resourceManager: ResourceManager;
   researchManager: ResearchManager;
@@ -80,11 +82,12 @@ export class Game {
       this.enemyManager.addProgress(
         this.resourceManager.searchProgress.quantity
       );
-      this.resourceManager.searchProgress.quantity = new Decimal(0);
+      this.resourceManager.searchProgress.quantity = ZERO_DECIMAL_IMMUTABLE;
 
       //  Deploy Drones
       this.resourceManager.deployDrones();
     }
+    this.resourceManager.navalCap.quantity = new Decimal(0);
 
     this.resourceManager.limitedResources.forEach(r => {
       if (r.quantity.gt(r.limit)) {

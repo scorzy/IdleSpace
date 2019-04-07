@@ -37,7 +37,7 @@ export const ResearchData: IResearchData[] = [
     shape: "bullseye",
     price: 100,
     description: "Unlock Warriors",
-    resourceToUnlock: ["W1"]
+    resourceToUnlock: ["W1", "n"]
   },
   {
     id: "X1",

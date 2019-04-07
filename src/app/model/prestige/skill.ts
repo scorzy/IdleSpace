@@ -6,7 +6,7 @@ export const OWNED_COLOR = "#ff0000ee";
 export const NOT_AVAILABLE_COLOR = "#4286f4ee";
 
 export class Skill {
-  effectId: number;
+  effectId: string;
   label = "";
   owned = false;
   color = NOT_AVAILABLE_COLOR;

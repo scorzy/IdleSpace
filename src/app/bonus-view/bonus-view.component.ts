@@ -27,7 +27,7 @@ export class BonusViewComponent implements OnInit, OnChanges {
     this.bonusAdd = this.production.producer.productionMultiplier.additiveBonus.filter(
       t =>
         (!t.positiveOnly || this.production.ratio.gt(0)) &&
-        !t.base.quantity.eq(0)
+        !t.base.getQuantity().eq(0)
     );
     this.bonusMulti = this.production.producer.productionMultiplier.multiplicativeBonus
       .concat(
@@ -38,7 +38,7 @@ export class BonusViewComponent implements OnInit, OnChanges {
       .filter(
         t =>
           (!t.positiveOnly || this.production.ratio.gt(0)) &&
-          !t.base.quantity.eq(0)
+          !t.base.getQuantity().eq(0)
       );
   }
 

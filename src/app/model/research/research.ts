@@ -7,8 +7,10 @@ import { IHasQuantity } from "../base/IHasQuantity";
 import { IJob } from "../base/IJob";
 import { MainService } from "src/app/main.service";
 import { OptionsService } from "src/app/options.service";
+import { IResource } from "../base/iResource";
 
-export class Research extends AbstractUnlockable implements IHasQuantity, IJob {
+export class Research extends AbstractUnlockable
+  implements IHasQuantity, IResource, IJob {
   private constructor() {
     super();
   }
@@ -96,6 +98,10 @@ export class Research extends AbstractUnlockable implements IHasQuantity, IJob {
       return true;
     }
     return false;
+  }
+
+  getQuantity(): Decimal {
+    return this.quantity;
   }
   //#region IJob
   getName(): string {

@@ -35,4 +35,7 @@ export class Mod implements ISalvable, IResource {
   getBonus(num: DecimalSource): string {
     return new Decimal(num).toNumber() + "";
   }
+  getQuantity(): Decimal {
+    return this.quantity;
+  }
 }

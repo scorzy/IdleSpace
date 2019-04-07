@@ -5,6 +5,7 @@ import { ResourceManager } from "../resource/resourceManager";
 import { ResearchManager } from "../research/researchManager";
 import { Bonus } from "../bonus/bonus";
 import { BonusStack } from "../bonus/bonusStack";
+import { AllSkillEffects } from "../prestige/allSkillEffects";
 
 export const MOD_EFFICIENCY = 0.1;
 export const MOD_PRODUCTION = 0.3;
@@ -76,9 +77,9 @@ export class ModStack implements ISalvable {
       .reduce((p: Decimal, c: Decimal) => p.plus(c));
   }
   getMax(): Decimal {
-    return ResearchManager.getInstance().modding.quantity.times(
-      this.totalBonus.getTotalBonus()
-    );
+    return ResearchManager.getInstance()
+      .modding.quantity.times(this.totalBonus.getTotalBonus())
+      .plus(+AllSkillEffects.MODDING_PLUS.numOwned * 5);
   }
   getUnused(): Decimal {
     const un = this.getMax().minus(this.usedPoint);

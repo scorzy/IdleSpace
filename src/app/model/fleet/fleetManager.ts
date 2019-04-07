@@ -9,6 +9,7 @@ import { Job } from "../shipyard/job";
 import { EnemyManager } from "../enemy/enemyManager";
 import { ResourceManager } from "../resource/resourceManager";
 import { ResearchManager } from "../research/researchManager";
+import { AllSkillEffects } from "../prestige/allSkillEffects";
 
 export const MAX_NAVAL_CAPACITY = 1e4;
 export const MAX_DESIGN = 20;
@@ -54,13 +55,14 @@ export class FleetManager implements ISalvable {
     });
   }
   getNavalCapacityFromDrones(): Decimal {
-    const warriorX1 = ResourceManager.getInstance().warriorX1;
-    return warriorX1.quantity.times(warriorX1.operativity / 100);
+    const navalCapRes = ResourceManager.getInstance().navalCap;
+    return navalCapRes.c;
   }
   reloadNavalCapacity() {
     this.totalNavalCapacity = new Decimal(20).plus(
       this.getNavalCapacityFromDrones()
     );
+
     const resMan = ResearchManager.getInstance();
     if (resMan.frigate.firstDone) {
       this.totalNavalCapacity = this.totalNavalCapacity.plus(
@@ -87,6 +89,9 @@ export class FleetManager implements ISalvable {
         ShipTypes[5].navalCapacity * 5
       );
     }
+    this.totalNavalCapacity = this.totalNavalCapacity.times(
+      AllSkillEffects.DOUBLE_NAVAL_CAPACITY.numOwned + 1
+    );
 
     this.totalShips = this.ships
       .map(s => s.quantity)

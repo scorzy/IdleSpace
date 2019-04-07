@@ -35,6 +35,7 @@ export class ResourceManager implements ISalvable {
   crystalDistrict: Resource;
   droneFactory: Resource;
   drone: Resource;
+  navalCap: Resource;
 
   metalX1: Resource;
   crystalX1: Resource;
@@ -89,6 +90,9 @@ export class ResourceManager implements ISalvable {
 
     this.searchProgress = new Resource("XP");
     this.searchProgress.shape = "radar";
+
+    this.navalCap = new Resource("n");
+    this.navalCap.shape = "ship";
     //#endregion
     //#region Declarations
 
@@ -138,6 +142,7 @@ export class ResourceManager implements ISalvable {
 
     //      Warrior
     this.warriorX1 = new Resource("W1");
+    this.navalCap.addGenerator(this.warriorX1);
     this.energy.addGenerator(this.warriorX1, -1);
     this.computing.addGenerator(this.warriorX1, -1);
 
@@ -175,7 +180,8 @@ export class ResourceManager implements ISalvable {
       this.computing,
       this.shipyardProgress,
       this.searchProgress,
-      this.drone
+      this.drone,
+      this.navalCap
     ];
     this.tier1 = [
       this.metalX1,
@@ -480,7 +486,8 @@ export class ResourceManager implements ISalvable {
       this.searchProgress,
       this.warriorX1,
       this.drone,
-      this.droneFactory
+      this.droneFactory,
+      this.navalCap
     ];
     this.allResources.forEach(r => r.generateRefundActions());
     this.matGroup = new ResourceGroup(
@@ -559,10 +566,13 @@ export class ResourceManager implements ISalvable {
     this.unlockedTierGroups = this.tierGroups.filter(
       u => u.unlockedResources.length > 0
     );
-    this.matNav = this.materials.filter(
-      m =>
-        m.unlocked && m !== this.shipyardProgress && m !== this.searchProgress
-    );
+    this.matNav = [
+      this.metal,
+      this.crystal,
+      this.alloy,
+      this.energy,
+      this.computing
+    ].filter(m => m.unlocked);
   }
   /**
    *  Calculate polynomial grow
