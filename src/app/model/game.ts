@@ -13,6 +13,8 @@ import { OptionsService } from "../options.service";
 const ZERO_DECIMAL_IMMUTABLE = new Decimal(0);
 
 export class Game {
+  private static instance: Game;
+
   resourceManager: ResourceManager;
   researchManager: ResearchManager;
   fleetManager: FleetManager;
@@ -24,9 +26,14 @@ export class Game {
   isPaused = false;
 
   constructor() {
+    Game.instance = this;
     this.init();
   }
+  static getInstance(): Game {
+    return Game.instance;
+  }
   init(prestige = false) {
+    this.researchBonus = new BonusStack();
     this.resourceManager = new ResourceManager();
     this.researchManager = new ResearchManager();
     this.fleetManager = new FleetManager();
@@ -45,7 +52,6 @@ export class Game {
     this.resourceManager.metal.quantity = new Decimal(100000);
     this.resourceManager.crystal.quantity = new Decimal(100000);
 
-    this.researchBonus = new BonusStack();
     this.researchBonus.multiplicativeBonus.push(
       new Bonus(this.researchManager.betterResearch, new Decimal(0.2))
     );

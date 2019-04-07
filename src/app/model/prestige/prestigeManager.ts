@@ -2,6 +2,7 @@ import { Skill, BUYABLE_COLOR, OWNED_COLOR } from "./skill";
 import { ISalvable } from "../base/ISalvable";
 import { AllSkillEffects } from "./allSkillEffects";
 import { DataSet } from "vis";
+import { Game } from "../game";
 
 export class PrestigeManager implements ISalvable {
   private static instance: PrestigeManager;
@@ -40,7 +41,6 @@ export class PrestigeManager implements ISalvable {
       new Skill(21, AllSkillEffects.COMPUTING_MULTI),
       new Skill(22, AllSkillEffects.SHIPYARD_MULTI),
       new Skill(23, AllSkillEffects.DOUBLE_MODDING),
-
       new Skill(24, AllSkillEffects.PLUS_METAL_MINER),
       new Skill(25, AllSkillEffects.PLUS_CRYSTAL_MINER),
       new Skill(26, AllSkillEffects.PLUS_ALLOY),
@@ -49,7 +49,8 @@ export class PrestigeManager implements ISalvable {
       new Skill(29, AllSkillEffects.PLUS_CPU),
       new Skill(30, AllSkillEffects.PLUS_WORKER),
       new Skill(31, AllSkillEffects.PLUS_WARRIOR),
-      new Skill(32, AllSkillEffects.PLUS_SEARCH)
+      new Skill(32, AllSkillEffects.PLUS_SEARCH),
+      new Skill(33, AllSkillEffects.RESEARCH_MULTI)
     ]);
 
     this.visEdge = new DataSet([
@@ -83,7 +84,8 @@ export class PrestigeManager implements ISalvable {
       { from: 6, to: 29 },
       { from: 7, to: 30 },
       { from: 8, to: 31 },
-      { from: 9, to: 32 }
+      { from: 9, to: 32 },
+      { from: 21, to: 33 }
     ]);
   }
   static getInstance(): PrestigeManager {

@@ -1,6 +1,7 @@
 import { SkillEffect } from "./skillEffects";
 import { ResourceManager } from "../resource/resourceManager";
 import { Bonus } from "../bonus/bonus";
+import { Game } from "../game";
 
 export const PLUS_ADD = 5;
 export class AllSkillEffects {
@@ -38,6 +39,8 @@ export class AllSkillEffects {
   static readonly ALLOY_MULTI = new SkillEffect();
   static readonly COMPUTING_MULTI = new SkillEffect();
   static readonly SHIPYARD_MULTI = new SkillEffect();
+  static readonly RESEARCH_MULTI = new SkillEffect();
+
   //#endregion
 
   static initialize() {
@@ -194,6 +197,14 @@ export class AllSkillEffects {
     resMan.shipyardX1.productionMultiplier.multiplicativeBonus.push(
       new Bonus(AllSkillEffects.SHIPYARD_MULTI, 1, true)
     );
+
+    AllSkillEffects.RESEARCH_MULTI.getDescription = (num = 1) => {
+      return "+ " + 100 * num + "%\n Research";
+    };
+    AllSkillEffects.RESEARCH_MULTI.name = "Prestige Research multi";
+    Game.getInstance().researchBonus.multiplicativeBonus.push(
+      new Bonus(AllSkillEffects.RESEARCH_MULTI, 1, true)
+    );
     //#endregion
 
     AllSkillEffects.effectList = [
@@ -219,7 +230,8 @@ export class AllSkillEffects {
       AllSkillEffects.ALLOY_MULTI,
       AllSkillEffects.COMPUTING_MULTI,
       AllSkillEffects.SHIPYARD_MULTI,
-      AllSkillEffects.DOUBLE_MODDING
+      AllSkillEffects.DOUBLE_MODDING,
+      AllSkillEffects.RESEARCH_MULTI
     ];
 
     AllSkillEffects.effectList.forEach(e => {
