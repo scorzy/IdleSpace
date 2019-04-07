@@ -1,34 +1,20 @@
 import { SkillEffect } from "./skillEffects";
-import { skillsData } from "./skillsData";
-import { PrestigeManager } from "./prestigeManager";
 import { AllSkillEffects } from "./allSkillEffects";
 
+export const BUYABLE_COLOR = "#008000ee";
+export const OWNED_COLOR = "#ff0000ee";
+export const NOT_AVAILABLE_COLOR = "#4286f4ee";
+
 export class Skill {
-  id: number;
-  effect: SkillEffect;
-  buyable = false;
+  effectId: number;
+  label = "";
   owned = false;
-  constructor(public i: number, public k: number) {
-    try {
-      this.effect = skillsData[i][k];
-    } catch {}
+  color = NOT_AVAILABLE_COLOR;
 
-    if (!this.effect) this.effect = AllSkillEffects.PLUS_METAL_MINER;
-    this.id = i * 10 + k;
-  }
-
-  buy(): boolean {
-    if (
-      this.owned ||
-      !this.buyable ||
-      !PrestigeManager.getInstance().buySkill()
-    ) {
-      return false;
-    }
-    this.owned = true;
-    this.effect.numOwned++;
-    this.effect.afterBuy();
-    PrestigeManager.getInstance().unlockOther(this);
-    return true;
+  constructor(public id: number, effect: SkillEffect, public buyable = false) {
+    if (!effect) effect = AllSkillEffects.PLUS_METAL_MINER;
+    this.label = effect.label;
+    this.effectId = effect.id;
+    if (buyable) this.color = BUYABLE_COLOR;
   }
 }

@@ -1,26 +1,9 @@
+<div id="network" #network></div>
+
 <div class="content-area">
   <h1>Prestige</h1>
 
-  <div class="clr-row">
-    <div class="clr-col">
-      <br />
-      <table class="">
-        <tr *ngFor="let row of ms.game.prestigeManager.skills; trackByRow">
-          <td *ngFor="let skill of row; trackByCell">
-            <button
-              class="btn btn-icon noMargin"
-              [disabled]="!skill.buyable"
-              [ngClass]="{ 'btn-success': skill.owned }"
-              [title]="skill.effect.getDescription()"
-              (click)="openBuyModal(skill)"
-            >
-              <clr-icon [attr.shape]="skill.effect.shape" size="24"></clr-icon>
-            </button>
-          </td>
-        </tr>
-      </table>
-    </div>
-
+  <div class="clr-row full-height">
     <div class="clr-col">
       <h4>
         Available Points:
@@ -62,7 +45,7 @@
     Skill
   </h3>
   <div class="modal-body" *ngIf="selectedSkill">
-    <p>Buy {{ selectedSkill.effect.getDescription(1) }} ?</p>
+    <p>Buy {{ effect.getDescription(1) }} ?</p>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline" (click)="close()">

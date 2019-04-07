@@ -18,6 +18,7 @@ export class AllSkillEffects {
   //#endregion
   //#region Combat
   static readonly FAST_COMBAT = new SkillEffect();
+  static readonly DOUBLE_NAVAL_CAPACITY = new SkillEffect();
   //#endregion
 
   static initialize() {
@@ -41,7 +42,7 @@ export class AllSkillEffects {
           PLUS_ADD * num +
           " " +
           resMan.tier1[i].name +
-          " / " +
+          "\n / " +
           resMan.tier1[i].actions[1].name
         );
       };
@@ -62,7 +63,7 @@ export class AllSkillEffects {
         PLUS_ADD * num +
         " " +
         resMan.warriorX1.name +
-        " / " +
+        "\n / " +
         resMan.warriorX1.actions[1].name
       );
     };
@@ -88,6 +89,9 @@ export class AllSkillEffects {
     AllSkillEffects.FAST_COMBAT.getDescription = (num = 1) => {
       return "- " + 0.2 * num + "s fight time";
     };
+    AllSkillEffects.DOUBLE_NAVAL_CAPACITY.getDescription = (num = 1) => {
+      return "+ " + 100 * num + "% naval capacity";
+    };
     //#endregion
 
     AllSkillEffects.effectList = [
@@ -99,7 +103,13 @@ export class AllSkillEffects {
       AllSkillEffects.PLUS_WORKER,
       AllSkillEffects.PLUS_SEARCH,
       AllSkillEffects.PLUS_WARRIOR,
-      AllSkillEffects.PLUS_BATTERY
+      AllSkillEffects.PLUS_BATTERY,
+      AllSkillEffects.FAST_COMBAT,
+      AllSkillEffects.DOUBLE_NAVAL_CAPACITY
     ];
+
+    AllSkillEffects.effectList.forEach(e => {
+      e.label = e.getDescription(1);
+    });
   }
 }
