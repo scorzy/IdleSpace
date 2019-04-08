@@ -59,6 +59,9 @@ export class ShipDesign implements ISalvable, IBuyable {
   };
   order = 0;
 
+  /**
+   * Generate Ships from presets
+   */
   static fromPreset(preset: Preset): ShipDesign {
     const shipDesign = new ShipDesign();
     shipDesign.name = preset.name;
@@ -117,8 +120,8 @@ export class ShipDesign implements ISalvable, IBuyable {
     this.modules
       .filter(q => q.isValid())
       .forEach(w => {
-        const multiPrice = w.level * Math.pow(MODULE_PRICE_INCREASE, w.level);
-        const bonus = w.level;
+        const multiPrice = w.level / 10; // * Math.pow(MODULE_PRICE_INCREASE, w.level);
+        const bonus = w.level / 10;
         const sizeFactor = w.size + (w.size - 1) * SIZE_MULTI;
         this.usedModulePoint += w.size;
 
@@ -239,7 +242,7 @@ export class ShipDesign implements ISalvable, IBuyable {
   }
   maxAll() {
     this.editable.modules.forEach(m => {
-      m.level = m.module.research.quantity.toNumber();
+      m.level = m.maxLevel;
       m.levelUi = m.level;
     });
     this.editable.reload();

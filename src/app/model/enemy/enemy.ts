@@ -57,11 +57,14 @@ export class Enemy {
     enemy.level = level;
     enemy.name = sample(enemyNames) + " " + sample(enemySuffixes);
     enemy.generateIcon();
-    const moduleLevelMulti = sample([1, 1.2, 1.4]);
-    const moduleLevel =
-      Math.floor(level * Math.pow(1.003, level)) * moduleLevelMulti;
+    const moduleLevelMulti = sample([1, 1.2, 1.4, 1.6, 1.8, 2]);
+    const moduleLevel = Math.floor(
+      10 * Math.pow(1.1, level - 1) * moduleLevelMulti
+    );
     const navalCap =
-      (MAX_NAVAL_CAPACITY * level) / (level + 500) / moduleLevelMulti;
+      (MAX_NAVAL_CAPACITY * level) /
+      (level + 500) /
+      (1 + (moduleLevelMulti - 1) * 0.8);
     const maxShipTye = Math.min(level, ShipTypes.length);
     for (let k = 0; k < 2; k++) {
       for (let i = 0; i < maxShipTye; i++) {

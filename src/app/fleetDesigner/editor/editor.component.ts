@@ -12,6 +12,7 @@ import { Module, Sizes, getSizeName } from "src/app/model/fleet/module";
 import { MainService } from "src/app/main.service";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
+import { DesignLine } from "src/app/model/fleet/designLine";
 
 @Component({
   selector: "app-editor",
@@ -73,6 +74,9 @@ export class EditorComponent implements OnInit, OnChanges {
     });
 
     this.design.editable.reload();
+    this.design.editable.isValid =
+      this.design.editable.isValid &&
+      this.design.editable.modules.findIndex(m => this.validateLevel(m)) === -1;
     this.reloadCanBuy();
     this.ms.em.designEmitter.emit(1);
   }
@@ -113,5 +117,8 @@ export class EditorComponent implements OnInit, OnChanges {
   maxAll() {
     this.design.maxAll();
     this.reload();
+  }
+  validateLevel(w: DesignLine) {
+    return !(w.levelUi >= 10 && w.levelUi <= w.maxLevel);
   }
 }

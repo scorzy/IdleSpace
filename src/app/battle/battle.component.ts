@@ -23,6 +23,12 @@ export class BattleMenuComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
   ngOnInit() {
+    let n = 1;
+    this.ms.game.fleetManager.ships.forEach(s => {
+      s.order = n;
+      n++;
+    });
+
     this.subscriptions.push(
       this.ms.em.battleEndEmitter.subscribe(() => {
         this.cd.markForCheck();

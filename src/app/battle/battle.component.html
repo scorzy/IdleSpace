@@ -53,10 +53,24 @@
       ></app-battlefield>
     </div>
     <div class="clr-col-6">
-      <h4>Ships:</h4>
-      <app-fleet-table
-        [fleet]="ms.game.enemyManager.currentEnemy.currentZone.ships"
-      ></app-fleet-table>
+      <clr-tabs>
+        <clr-tab>
+          <button clrTabLink>You</button>
+          <clr-tab-content *clrIfActive>
+            <app-fleet-table
+              [fleet]="ms.game.fleetManager.ships"
+            ></app-fleet-table>
+          </clr-tab-content>
+        </clr-tab>
+        <clr-tab>
+          <button clrTabLink>Enemy</button>
+          <clr-tab-content *clrIfActive>
+            <app-fleet-table
+              [fleet]="ms.game.enemyManager.currentEnemy.currentZone.ships"
+            ></app-fleet-table>
+          </clr-tab-content>
+        </clr-tab>
+      </clr-tabs>
     </div>
   </div>
 </div>

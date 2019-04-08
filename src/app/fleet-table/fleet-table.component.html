@@ -15,7 +15,11 @@
         [integer]="true"
       ></app-formatted-quantity>
     </clr-dg-cell>
-    <clr-dg-cell>{{ ship.modules[0].level }}</clr-dg-cell>
+    <clr-dg-cell>
+      <app-formatted-quantity
+        [quantity]="ship.modules[0].level"
+      ></app-formatted-quantity>
+    </clr-dg-cell>
     <clr-dg-row-detail *clrIfExpanded>
       <clr-tabs>
         <clr-tab>
@@ -44,7 +48,9 @@
                     {{ mod.size | sizeName }}
                   </td>
                   <td>
-                    {{ mod.level }}
+                    <app-formatted-quantity
+                      [quantity]="mod.level"
+                    ></app-formatted-quantity>
                   </td>
                 </tr>
               </tbody>

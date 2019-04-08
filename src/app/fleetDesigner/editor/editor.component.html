@@ -72,158 +72,126 @@
           </span>
         </span>
         <br />
-
-        <table class="table table-noborder table-compact moduleTable">
-          <thead>
-            <tr>
-              <!-- <th>Num.</th> -->
-              <th>Module</th>
-              <th>Size</th>
-              <!-- <th>Quantity</th> -->
-              <th>Level</th>
-              <!-- <th>Energy</th> -->
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              *ngFor="
-                let w of design.editable.modules;
-                let i = index;
-                trackBy: getModuleId
-              "
-              [attr.data-index]="i"
-            >
-              <!-- Module -->
-              <td>
-                <div class="clr-select-wrapper">
-                  <select
-                    class="clr-select"
-                    [name]="'weap' + i"
-                    [(ngModel)]="w.moduleId"
-                    (ngModelChange)="reload()"
-                  >
-                    <option
-                      *ngFor="
-                        let wt of ms.game.fleetManager.unlockedModules;
-                        trackBy: getModuleId
-                      "
-                      [ngValue]="wt.id"
-                      >{{ wt.name }}</option
+        <form class="clr-form">
+          <table class="table table-noborder table-compact moduleTable">
+            <thead>
+              <tr>
+                <th>Module</th>
+                <th>Size</th>
+                <th>Level</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let w of design.editable.modules;
+                  let i = index;
+                  trackBy: getModuleId
+                "
+                [attr.data-index]="i"
+              >
+                <!-- Module -->
+                <td>
+                  <div class="clr-select-wrapper">
+                    <select
+                      class="clr-select"
+                      [name]="'weap' + i"
+                      [(ngModel)]="w.moduleId"
+                      (ngModelChange)="reload()"
                     >
-                  </select>
-                </div>
-              </td>
-              <!-- Size -->
-              <td>
-                <div class="clr-select-wrapper">
-                  <select
-                    *ngIf="w.module"
-                    class="clr-select"
-                    [name]="'size' + i"
-                    [(ngModel)]="w.size"
-                    (ngModelChange)="reload()"
+                      <option
+                        *ngFor="
+                          let wt of ms.game.fleetManager.unlockedModules;
+                          trackBy: getModuleId
+                        "
+                        [ngValue]="wt.id"
+                        >{{ wt.name }}</option
+                      >
+                    </select>
+                  </div>
+                </td>
+                <!-- Size -->
+                <td>
+                  <div class="clr-select-wrapper">
+                    <select
+                      *ngIf="w.module"
+                      class="clr-select"
+                      [name]="'size' + i"
+                      [(ngModel)]="w.size"
+                      (ngModelChange)="reload()"
+                    >
+                      <option
+                        *ngFor="
+                          let si of (w.module.sizes
+                            | sizes: design.type.moduleCount);
+                          trackBy: getSizeId
+                        "
+                        [ngValue]="si"
+                        >{{ getSizeName(si) }}
+                        <!-- {{ si }} -->
+                      </option>
+                    </select>
+                  </div>
+                </td>
+                <!-- Level -->
+                <td>
+                  <div
+                    class="clr-control-container"
+                    [ngClass]="{ 'clr-error': validateLevel(w) }"
                   >
-                    <option
-                      *ngFor="
-                        let si of (w.module.sizes
-                          | sizes: design.type.moduleCount);
-                        trackBy: getSizeId
-                      "
-                      [ngValue]="si"
-                      >{{ getSizeName(si) }}
-                      <!-- {{ si }} -->
-                    </option>
-                  </select>
-                </div>
-              </td>
-              <!-- Quantity -->
-              <!-- <td>
-                <div class="btn-group btn-primary">
-                  <button
-                    type="button"
-                    class="btn  btn-sm btn-outline btn-icon"
-                    (click)="w.quantityUi = w.quantityUi - 1; reload()"
-                    [disabled]="w.quantity <= 1"
-                  >
-                    <clr-icon shape="minus"></clr-icon>
-                  </button>
-                  <input
-                    class="clr-input smallInput"
-                    type="number"
-                    [(ngModel)]="w.quantityUi"
-                    [name]="'w' + i"
-                    (ngModelChange)="reload()"
-                    [min]="1"
-                    [attr.max]="design.type.modulePoint"
-                    required
-                  />
-                  <button
-                    type="button"
-                    class="btn  btn-sm btn-outline btn-icon"
-                    (click)="w.quantityUi = w.quantityUi + 1; reload()"
-                    [disabled]="
-                      design.editable.usedModulePoint >= design.type.modulePoint
-                    "
-                  >
-                    <clr-icon shape="plus"></clr-icon>
-                  </button>
-                </div>
-              </td> -->
-              <!-- Level -->
-              <td>
-                <div class="btn-group btn-primary">
-                  <button
-                    type="button"
-                    class="btn  btn-sm btn-outline btn-icon"
-                    (click)="w.levelUi = w.levelUi - 1; reload()"
-                    [disabled]="w.levelUi <= 1"
-                  >
-                    <clr-icon shape="minus"></clr-icon>
-                  </button>
-                  <input
-                    class="clr-input smallInput"
-                    type="number"
-                    [(ngModel)]="w.levelUi"
-                    [name]="'l' + i"
-                    (ngModelChange)="reload()"
-                    [min]="1"
-                    [attr.max]="w.maxLevel"
-                    required
-                  />
-                  <button
-                    type="button"
-                    class="btn  btn-sm btn-outline btn-icon"
-                    (click)="w.levelUi = w.levelUi + 1; reload()"
-                    [disabled]="w.levelUi >= w.maxLevel"
-                  >
-                    <clr-icon shape="plus"></clr-icon>
-                  </button>
-                </div>
-              </td>
-              <!-- Energy -->
-              <!-- <td
-                    [ngClass]="{
-                      green: w[1]?.energy?.energy.gt(0),
-                      notEnough: w[1]?.energy?.lt(0)
-                    }"
-                  >
-                    {{ w[1]?.energy }}
-                  </td> -->
-              <!-- Remove -->
-              <td>
-                <button
-                  type="button"
-                  class="btn btn-warning btn-sm btn-icon noTopMargin"
-                  (click)="removeModule(i)"
-                >
-                  <clr-icon shape="trash"></clr-icon>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                    <div class="btn-group btn-primary">
+                      <button
+                        type="button"
+                        class="btn  btn-sm btn-outline btn-icon"
+                        (click)="w.levelUi = w.levelUi - 1; reload()"
+                        [disabled]="w.levelUi <= 10"
+                      >
+                        <clr-icon shape="minus"></clr-icon>
+                      </button>
 
+                      <input
+                        class="smallInput clr-input"
+                        type="number"
+                        required
+                        min="10"
+                        [(ngModel)]="w.levelUi"
+                        [name]="'l' + i"
+                        (ngModelChange)="reload()"
+                        min="10"
+                        [attr.max]="w.maxLevel"
+                        required
+                      />
+
+                      <button
+                        type="button"
+                        class="btn  btn-sm btn-outline btn-icon"
+                        (click)="w.levelUi = w.levelUi + 1; reload()"
+                        [disabled]="w.levelUi >= w.maxLevel"
+                      >
+                        <clr-icon shape="plus"></clr-icon>
+                      </button>
+                    </div>
+                    <clr-icon
+                      class="clr-validate-icon"
+                      shape="exclamation-circle"
+                    ></clr-icon>
+                  </div>
+                </td>
+                <!-- Remove -->
+                <td>
+                  <button
+                    type="button"
+                    class="btn btn-warning btn-sm btn-icon noTopMargin"
+                    (click)="removeModule(i)"
+                  >
+                    <clr-icon shape="trash"></clr-icon>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </form>
         <br />
 
         <div *ngIf="!design.editable.isValid; else upgradeAlert">

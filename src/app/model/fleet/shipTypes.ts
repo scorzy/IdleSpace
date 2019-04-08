@@ -14,7 +14,7 @@ export const ShipTypes = [
   new ShipType(
     "1",
     "Corvette",
-    new Decimal(50),
+    new Decimal(10),
     new Decimal(50),
     4,
     4,
@@ -24,7 +24,7 @@ export const ShipTypes = [
   new ShipType(
     "2",
     "Frigate",
-    new Decimal(100),
+    new Decimal(20),
     new Decimal(100),
     5,
     6,
@@ -34,7 +34,7 @@ export const ShipTypes = [
   new ShipType(
     "3",
     "Destroyer",
-    new Decimal(200),
+    new Decimal(40),
     new Decimal(200),
     6,
     8,
@@ -44,7 +44,7 @@ export const ShipTypes = [
   new ShipType(
     "4",
     "Cruiser",
-    new Decimal(400),
+    new Decimal(80),
     new Decimal(400),
     7,
     10,
@@ -54,7 +54,7 @@ export const ShipTypes = [
   new ShipType(
     "5",
     "Battlecruiser",
-    new Decimal(800),
+    new Decimal(160),
     new Decimal(800),
     8,
     12,
@@ -64,7 +64,7 @@ export const ShipTypes = [
   new ShipType(
     "6",
     "Battleship",
-    new Decimal(1600),
+    new Decimal(320),
     new Decimal(1600),
     9,
     14,

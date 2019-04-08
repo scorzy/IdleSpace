@@ -2,14 +2,14 @@ import { Module, Sizes } from "./module";
 import { FleetManager } from "./fleetManager";
 
 export class DesignLine {
-  maxLevel = 1;
+  maxLevel = 10;
   computedDamage = new Decimal(0);
   constructor(
     public module: Module = null,
     public size: Sizes = Sizes.Small,
-    public level = 1,
+    public level = 10,
     public moduleId = "",
-    public levelUi = 1
+    public levelUi = 10
   ) {
     this.setMaxLevel();
   }
@@ -39,9 +39,10 @@ export class DesignLine {
   }
   setMaxLevel() {
     this.maxLevel =
-      this.module && this.module.research
+      10 +
+      (this.module && this.module.research
         ? this.module.research.quantity.toNumber()
-        : 1;
+        : 1);
   }
 
   getSave(): any {
