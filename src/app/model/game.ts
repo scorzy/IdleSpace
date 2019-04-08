@@ -48,9 +48,9 @@ export class Game {
     this.researchManager.setUnlocks();
 
     this.fleetManager.reload();
-
-    this.resourceManager.metal.quantity = new Decimal(100000);
-    this.resourceManager.crystal.quantity = new Decimal(100000);
+    this.resourceManager.metal.quantity = new Decimal(100);
+    this.resourceManager.crystal.quantity = new Decimal(70);
+    this.darkMatterManager.darkMatter.quantity = new Decimal(1e10);
 
     this.researchBonus.multiplicativeBonus.push(
       new Bonus(this.researchManager.betterResearch, new Decimal(0.2))
@@ -149,7 +149,7 @@ export class Game {
     );
     this.prestigeManager.totalPrestige = Math.max(
       this.prestigeManager.totalPrestige,
-      this.enemyManager.maxLevel
+      this.enemyManager.maxLevel - 1
     );
     this.init(true);
     this.resourceManager.limitedResources.forEach(r => r.reloadLimit());
@@ -177,17 +177,17 @@ export class Game {
     if ("s" in data) this.shipyard.load(data.s);
     if ("d" in data) this.darkMatterManager.load(data.d);
 
-    this.resourceManager.habitableSpace.quantity = new Decimal(100);
-    this.resourceManager.miningDistrict.quantity = new Decimal(100);
-    this.resourceManager.crystalDistrict.quantity = new Decimal(100);
-    this.darkMatterManager.darkMatter.quantity = new Decimal(1e4);
-    this.resourceManager.metal.quantity = new Decimal();
+    // this.resourceManager.habitableSpace.quantity = new Decimal(100);
+    // this.resourceManager.miningDistrict.quantity = new Decimal(100);
+    // this.resourceManager.crystalDistrict.quantity = new Decimal(100);
+    // this.darkMatterManager.darkMatter.quantity = new Decimal(1e4);
+    // this.resourceManager.metal.quantity = new Decimal();
 
     // this.resourceManager.materials.forEach(m => {
     //   m.quantity = new Decimal(1e20);
     // });
-    this.enemyManager.maxLevel = 50;
-    this.prestigeManager.totalPrestige = 100;
+    // this.enemyManager.maxLevel = 50;
+    // this.prestigeManager.totalPrestige = 100;
 
     this.fleetManager.upgradingCheck();
     this.resourceManager.limitedResources.forEach(r => r.reloadLimit());

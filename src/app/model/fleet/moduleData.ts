@@ -11,7 +11,7 @@ export const ModulesData: IModuleData[] = [
     shieldPercent: 50,
     armorPercent: 200,
     nextToUnlock: ["p"],
-    researchPrice: 100,
+    researchPrice: 2e3,
     shape: "laser"
   },
   {
@@ -23,7 +23,7 @@ export const ModulesData: IModuleData[] = [
     damage: 10,
     shieldPercent: 20,
     armorPercent: 400,
-    researchPrice: 100,
+    researchPrice: 2e3,
     shape: "plasma"
   },
   {
@@ -36,7 +36,7 @@ export const ModulesData: IModuleData[] = [
     shieldPercent: 200,
     armorPercent: 50,
     nextToUnlock: ["g"],
-    researchPrice: 100
+    researchPrice: 2e3
   },
   {
     id: "g",
@@ -47,7 +47,7 @@ export const ModulesData: IModuleData[] = [
     damage: 10,
     shieldPercent: 400,
     armorPercent: 20,
-    researchPrice: 100
+    researchPrice: 2e3
   },
   {
     id: "S",
@@ -56,7 +56,7 @@ export const ModulesData: IModuleData[] = [
     energyBalance: 2,
     alloyPrice: 10,
     nextToUnlock: ["R"],
-    researchPrice: 100,
+    researchPrice: 2e3,
     shape: "solar"
   },
   {
@@ -66,7 +66,7 @@ export const ModulesData: IModuleData[] = [
     energyBalance: 4,
     alloyPrice: 20,
     nextToUnlock: ["F"],
-    researchPrice: 100,
+    researchPrice: 2e3,
     shape: "radioactive",
     explosionChance: 10
   },
@@ -76,7 +76,7 @@ export const ModulesData: IModuleData[] = [
     sizes: ALL_SIZES,
     energyBalance: 6,
     alloyPrice: 30,
-    researchPrice: 100,
+    researchPrice: 2e3,
     shape: "reactor",
     explosionChance: 20
   },
@@ -87,7 +87,7 @@ export const ModulesData: IModuleData[] = [
     energyBalance: 0,
     alloyPrice: 10,
     armor: 20,
-    researchPrice: 100,
+    researchPrice: 2e3,
     shape: "armor"
   },
   {
@@ -97,7 +97,7 @@ export const ModulesData: IModuleData[] = [
     energyBalance: -1,
     alloyPrice: 20,
     shield: 20,
-    researchPrice: 100,
+    researchPrice: 2e3,
     shape: "shield"
   }
 ];

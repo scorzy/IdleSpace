@@ -16,7 +16,7 @@ export class SearchJob implements IJob {
   moreCrystal = false;
   moreHabitableSpace = false;
 
-  level = 0;
+  level = 1;
   done = false;
 
   constructor() {

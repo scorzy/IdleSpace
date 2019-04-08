@@ -7,7 +7,7 @@ export const ResearchData: IResearchData[] = [
     id: "r",
     name: "Better Researching",
     shape: "flask",
-    price: 100,
+    price: 200,
     description: "+20% researching speed",
     limit: Number.POSITIVE_INFINITY,
     researchToUnlock: ["B"]
@@ -16,7 +16,7 @@ export const ResearchData: IResearchData[] = [
     id: "a",
     name: "Alloy",
     shape: "alloy",
-    price: 100,
+    price: 500,
     description: "Unlock alloy foundry",
     resourceToUnlock: ["a", "a1"],
     researchToUnlock: ["S1"]
@@ -26,7 +26,7 @@ export const ResearchData: IResearchData[] = [
     id: "S1",
     name: "Shipyard",
     shape: "alloy",
-    price: 100,
+    price: 1e3,
     description: "Unlock Shipyard",
     resourceToUnlock: ["S1", "SP"],
     researchToUnlock: ["c", "X1", "W1"]
@@ -35,7 +35,7 @@ export const ResearchData: IResearchData[] = [
     id: "W1",
     name: "Warriors",
     shape: "bullseye",
-    price: 100,
+    price: 1e4,
     description: "Unlock Warriors",
     resourceToUnlock: ["W1", "n"]
   },
@@ -43,7 +43,7 @@ export const ResearchData: IResearchData[] = [
     id: "X1",
     name: "Telescope",
     shape: "radar",
-    price: 100,
+    price: 1e5,
     description: "Unlock Telescope",
     resourceToUnlock: ["X1", "XP"],
     researchToUnlock: ["D"]
@@ -52,7 +52,7 @@ export const ResearchData: IResearchData[] = [
     id: "c",
     name: "Corvette",
     shape: "rank1",
-    price: 100,
+    price: 2e3,
     description: "Unlock Corvette",
     researchToUnlock: ["f"]
   },
@@ -60,7 +60,7 @@ export const ResearchData: IResearchData[] = [
     id: "f",
     name: "Frigate",
     shape: "rank2",
-    price: 100,
+    price: 1e4,
     description: "Unlock frigate",
     researchToUnlock: ["d"]
   },
@@ -68,7 +68,7 @@ export const ResearchData: IResearchData[] = [
     id: "d",
     name: "Destroyer",
     shape: "rank3",
-    price: 100,
+    price: 1e6,
     description: "Unlock destroyer",
     researchToUnlock: ["b"]
   },
@@ -76,7 +76,7 @@ export const ResearchData: IResearchData[] = [
     id: "b",
     name: "Cruiser",
     shape: "rank4",
-    price: 100,
+    price: 1e9,
     description: "Unlock cruiser",
     researchToUnlock: ["t"]
   },
@@ -84,7 +84,7 @@ export const ResearchData: IResearchData[] = [
     id: "t",
     name: "Battlecruiser",
     shape: "flask",
-    price: 100,
+    price: 1e13,
     description: "Unlock battlecruiser",
     researchToUnlock: ["s"]
   },
@@ -92,14 +92,14 @@ export const ResearchData: IResearchData[] = [
     id: "s",
     name: "Battleship",
     shape: "flask",
-    price: 100,
+    price: 1e18,
     description: "Unlock battleship"
   },
   {
     id: "B",
     name: "Battery",
     shape: "battery",
-    price: 100,
+    price: 1e3,
     description: "Unlock batteries; +10% max energy",
     limit: Number.POSITIVE_INFINITY
   },
@@ -107,7 +107,7 @@ export const ResearchData: IResearchData[] = [
     id: "D",
     name: "Drone Factory",
     shape: "battery",
-    price: 100,
+    price: 1e6,
     description: "Drone Factory",
     resourceToUnlock: ["D", "F"],
     researchToUnlock: ["M"]
@@ -116,7 +116,7 @@ export const ResearchData: IResearchData[] = [
     id: "M",
     name: "Drone Modding",
     shape: "battery",
-    price: 100,
+    price: 1e8,
     description: "+1 drone modding point",
     limit: Number.POSITIVE_INFINITY
   }

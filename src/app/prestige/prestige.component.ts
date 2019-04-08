@@ -35,6 +35,7 @@ export class PrestigeComponent implements OnInit, OnChanges, AfterViewInit {
   skillsList: string[];
   prestigeModal = false;
   node: any;
+  exp = "";
 
   constructor(public ms: MainService, private cd: ChangeDetectorRef) {}
 
@@ -136,5 +137,10 @@ export class PrestigeComponent implements OnInit, OnChanges, AfterViewInit {
         this.cd.markForCheck();
       });
     }, 0);
+  }
+
+  export() {
+    this.networkVis.storePositions();
+    this.exp = JSON.stringify(this.networkVis.getPositions());
   }
 }

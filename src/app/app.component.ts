@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from "@angular/core";
+import { Component, AfterViewInit, HostListener } from "@angular/core";
 import { MainService } from "./main.service";
 import { trigger, transition, style, animate } from "@angular/animations";
 import { OptionsService } from "./options.service";
@@ -93,5 +93,17 @@ export class AppComponent implements AfterViewInit {
   }
   navigateLast() {
     this.router.navigateByUrl(this.ms.lastUnitUrl);
+  }
+
+  @HostListener("window:keyup", ["$event"])
+  onKey(event: KeyboardEvent) {
+    // with type info
+    switch (event.key) {
+      case "m":
+        this.ms.game.darkMatterManager.warpMin.buy(new Decimal(1));
+        break;
+      case "h":
+        this.ms.game.darkMatterManager.warpHour.buy(new Decimal(1));
+    }
   }
 }

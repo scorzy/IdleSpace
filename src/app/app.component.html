@@ -32,17 +32,6 @@
       </a>
 
       <a
-        [routerLink]="'enemies'"
-        class="nav-link"
-        [routerLinkActive]="'active'"
-        *ngIf="ms.game.researchManager.corvette.firstDone"
-      >
-        <span class="nav-text">
-          <clr-icon shape="world"></clr-icon>
-        </span>
-      </a>
-
-      <a
         [routerLink]="'battle'"
         class="nav-link"
         [routerLinkActive]="'active'"
@@ -50,6 +39,17 @@
       >
         <span class="nav-text">
           <clr-icon shape="crosshairs"></clr-icon>
+        </span>
+      </a>
+
+      <a
+        [routerLink]="'enemies'"
+        class="nav-link"
+        [routerLinkActive]="'active'"
+        *ngIf="ms.game.researchManager.telescope.firstDone"
+      >
+        <span class="nav-text">
+          <clr-icon shape="world"></clr-icon>
         </span>
       </a>
 

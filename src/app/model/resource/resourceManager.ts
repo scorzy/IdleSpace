@@ -111,7 +111,7 @@ export class ResourceManager implements ISalvable {
     this.crystalX1 = new Resource("c1");
     this.crystalX1.unlocked = true;
     this.crystalX1.quantity = new Decimal(1);
-    this.crystal.addGenerator(this.crystalX1);
+    this.crystal.addGenerator(this.crystalX1, 0.7);
     this.energy.addGenerator(this.crystalX1, -1);
 
     //      Alloy

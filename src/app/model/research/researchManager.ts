@@ -3,6 +3,8 @@ import { ResourceManager } from "../resource/resourceManager";
 import { ResearchData } from "./researchData";
 import { FleetManager } from "../fleet/fleetManager";
 import { IResearchData } from "./iResearchData";
+import { EnemyManager } from "../enemy/enemyManager";
+import { SearchJob } from "../enemy/searchJob";
 
 export class ResearchManager {
   private static instance: ResearchManager;
@@ -17,6 +19,7 @@ export class ResearchManager {
   alloy: Research;
   battery: Research;
   modding: Research;
+  telescope: Research;
   //#region Ship Types
   corvette: Research;
   frigate: Research;
@@ -46,6 +49,12 @@ export class ResearchManager {
     this.battlecruiser = this.researches.find(r => r.id === "t");
     this.battleship = this.researches.find(r => r.id === "s");
     this.modding = this.researches.find(r => r.id === "M");
+    this.telescope = this.researches.find(r => r.id === "X1");
+
+    this.corvette.onBuy = () => {
+      EnemyManager.getInstance().generate(new SearchJob());
+      EnemyManager.getInstance().attack(EnemyManager.getInstance().allEnemy[0]);
+    };
 
     this.toDo = [this.researches[0], this.researches[1]];
   }

@@ -5,7 +5,8 @@ import {
   Input,
   ChangeDetectorRef,
   OnDestroy,
-  AfterViewInit
+  AfterViewInit,
+  OnChanges
 } from "@angular/core";
 import { Resource } from "../model/resource/resource";
 import { Subscription } from "rxjs";
@@ -19,27 +20,28 @@ import { IAlert } from "../model/base/IAlert";
   styleUrls: ["./resource-overview.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ResourceOverviewComponent
-  implements OnInit, OnDestroy, AfterViewInit {
+export class ResourceOverviewComponent implements OnInit, OnDestroy, OnChanges {
   @Input() res: Resource;
-  showSlider = false;
   private subscriptions: Subscription[] = [];
   alerts: IAlert[];
   isFinite = Number.isFinite;
 
   constructor(public ms: MainService, private cd: ChangeDetectorRef) {}
+
   ngOnInit() {
     this.setAlerts();
     this.subscriptions.push(
       this.ms.em.updateEmitter.subscribe(() => {
-        this.cd.markForCheck();
         this.setAlerts();
+        this.cd.markForCheck();
       })
     );
   }
-  ngAfterViewInit(): void {
-    this.showSlider = true;
+
+  ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
+    this.setAlerts();
   }
+
   ngOnDestroy() {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }

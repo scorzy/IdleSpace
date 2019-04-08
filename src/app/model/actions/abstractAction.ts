@@ -11,7 +11,7 @@ export class Action extends AbstractUnlockable
   shape: string;
   onlyOne = false;
   skippable = false;
-  showTime = false;
+  showTime = true;
   limit = new Decimal(Number.POSITIVE_INFINITY);
   complete = false;
   canBuy = false;

@@ -20,18 +20,25 @@
         <span
           *ngIf="
             ms.game.enemyManager.maxLevel >
-            ms.game.prestigeManager.totalPrestige
+            ms.game.prestigeManager.totalPrestige - 1
           "
           >+
           {{
             ms.game.enemyManager.maxLevel -
-              ms.game.prestigeManager.totalPrestige
+              ms.game.prestigeManager.totalPrestige -
+              1
           }}
         </span>
       </button>
       <ul class="list" *ngFor="let desc of skillsList; trackBy: descID">
         <li>{{ desc }}</li>
       </ul>
+
+      <!-- Debug Stuff -->
+      <button class="btn" (click)="export()">
+        Export positions
+      </button>
+      <textarea name="raw" [(ngModel)]="exp" rows="1"></textarea>
     </div>
   </div>
 </div>
@@ -65,7 +72,9 @@
       <br />
       You will get
       {{
-        ms.game.enemyManager.maxLevel - ms.game.prestigeManager.totalPrestige
+        ms.game.enemyManager.maxLevel -
+          ms.game.prestigeManager.totalPrestige -
+          1
       }}
       Skill Points and
       <app-formatted-quantity
