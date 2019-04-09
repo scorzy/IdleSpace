@@ -135,7 +135,10 @@ export class Game {
     this.resourceManager.unlockedResources.forEach(r => r.setABC());
     this.fleetManager.reloadActions();
     this.fleetManager.isBuildingCheckAll();
-    if (!this.isPaused) this.fleetManager.doAutoFight();
+    this.fleetManager.setFight();
+    if (!this.isPaused && this.fleetManager.fightEnabled) {
+      this.fleetManager.doAutoFight();
+    }
     this.shipyard.adjust();
     this.darkMatterManager.reload();
   }
@@ -151,8 +154,13 @@ export class Game {
       this.prestigeManager.totalPrestige,
       this.enemyManager.maxLevel - 1
     );
+    this.prestigeManager.totalPrestige = Math.min(
+      this.prestigeManager.totalPrestige,
+      this.prestigeManager.maxPrestigePoints
+    );
     this.init(true);
     this.resourceManager.limitedResources.forEach(r => r.reloadLimit());
+    this.prestigeManager.reloadPrestigeToEarn();
   }
 
   //#region Save and Load
@@ -192,6 +200,7 @@ export class Game {
     this.fleetManager.upgradingCheck();
     this.resourceManager.limitedResources.forEach(r => r.reloadLimit());
     this.reload();
+    this.prestigeManager.reloadPrestigeToEarn();
   }
   //#endregion
 }

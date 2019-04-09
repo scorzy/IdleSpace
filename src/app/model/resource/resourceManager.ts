@@ -130,7 +130,7 @@ export class ResourceManager implements ISalvable {
     //      Computing
     this.computingX1 = new Resource("f1");
     this.computing.addGenerator(this.computingX1);
-    this.energy.addGenerator(this.computingX1, -2);
+    this.energy.addGenerator(this.computingX1, -1);
 
     //      Shipyard
     this.shipyardX1 = new Resource("S1");

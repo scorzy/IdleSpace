@@ -5,7 +5,6 @@ import {
   Input,
   ChangeDetectorRef,
   OnDestroy,
-  AfterViewInit,
   OnChanges
 } from "@angular/core";
 import { Resource } from "../model/resource/resource";

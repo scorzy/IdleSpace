@@ -33,6 +33,7 @@ export class FleetManager implements ISalvable {
   autoFight = false;
   autoReinforce = false;
   fullStrength = false;
+  fightEnabled = false;
 
   constructor() {
     FleetManager.instance = this;
@@ -228,5 +229,8 @@ export class FleetManager implements ISalvable {
     ) {
       enemyManager.startBattle();
     }
+  }
+  setFight() {
+    this.fightEnabled = this.ships.findIndex(s => s.quantity.gte(1)) > -1;
   }
 }

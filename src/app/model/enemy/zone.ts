@@ -6,7 +6,7 @@ import { ResourceManager } from "../resource/resourceManager";
 
 const TO_DO_COLOR = [245, 79, 71];
 const DONE_COLOR = [96, 181, 21];
-const MAX_ZONE_QUANTITY_MULTI = 4;
+const MAX_ZONE_QUANTITY_MULTI = 2;
 
 export class Zone implements ISalvable {
   completed = false;
@@ -47,11 +47,6 @@ export class Zone implements ISalvable {
         }
         this.color += ")";
 
-        this.ships.sort((a, b) => {
-          const a2 = a.armorDamage.div(a.shieldDamage);
-          const b2 = b.armorDamage.div(b.shieldDamage);
-          return a2.cmp(b2);
-        });
         let n = 1;
         this.ships.forEach(s => {
           s.order = n;

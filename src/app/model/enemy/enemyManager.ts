@@ -10,6 +10,7 @@ import { SearchJob } from "./searchJob";
 import { RomanPipe } from "src/app/roman.pipe";
 import { AllSkillEffects } from "../prestige/allSkillEffects";
 import { DarkMatterManager } from "../darkMatter/darkMatterManager";
+import { PrestigeManager } from "../prestige/prestigeManager";
 
 export const MAX_ENEMY_LIST_SIZE = 20;
 const DARK_MATTER_START_LEVEL = 5;
@@ -100,7 +101,6 @@ export class EnemyManager implements ISalvable {
 
     //#region Win
     if (result.result === "1") {
-      this.maxLevel = Math.max(this.maxLevel, this.currentEnemy.level + 1);
       this.currentEnemy.currentZone.ships = null;
       this.currentEnemy.currentZone.originalNavCap = null;
       //#region Reward
@@ -141,6 +141,8 @@ export class EnemyManager implements ISalvable {
       if (this.currentEnemy.currentZone.number >= 99) {
         this.currentEnemy = null;
         if (this.allEnemy.length > 0) this.attack(this.allEnemy[0]);
+        this.maxLevel = Math.max(this.maxLevel, this.currentEnemy.level + 1);
+        PrestigeManager.getInstance().reloadPrestigeToEarn();
       } else {
         this.currentEnemy.currentZone.completed = true;
         this.currentEnemy.currentZone.reload();
@@ -170,7 +172,7 @@ export class EnemyManager implements ISalvable {
       (this.moreMetal ? 1 : 0) +
       (this.moreCrystal ? 1 : 0) +
       (this.moreHabitable ? 1 : 0);
-    return new Decimal(level * 100).times(Decimal.pow(1.1, level - 1));
+    return new Decimal(1000).times(Decimal.pow(1.1, level - 1));
   }
   /**
    * Start searching a new enemy
@@ -246,6 +248,10 @@ export class EnemyManager implements ISalvable {
           this.searchJobs.push(job);
         }
       }
+    }
+    if (this.currentEnemy) {
+      this.currentEnemy.setOrder();
+      if (this.currentEnemy.currentZone) this.currentEnemy.currentZone.reload();
     }
     return true;
   }

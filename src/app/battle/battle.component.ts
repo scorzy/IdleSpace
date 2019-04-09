@@ -35,6 +35,7 @@ export class BattleMenuComponent implements OnInit, OnDestroy {
       })
     );
   }
+
   ngOnDestroy() {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }

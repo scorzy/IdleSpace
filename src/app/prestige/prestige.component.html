@@ -17,17 +17,9 @@
         " -->
       <button class="btn btn-primary" (click)="prestigeModal = true">
         Prestige
-        <span
-          *ngIf="
-            ms.game.enemyManager.maxLevel >
-            ms.game.prestigeManager.totalPrestige - 1
-          "
+        <span *ngIf="ms.game.prestigeManager.prestigeToEarn > 0"
           >+
-          {{
-            ms.game.enemyManager.maxLevel -
-              ms.game.prestigeManager.totalPrestige -
-              1
-          }}
+          {{ ms.game.prestigeManager.prestigeToEarn }}
         </span>
       </button>
       <ul class="list" *ngFor="let desc of skillsList; trackBy: descID">
@@ -71,11 +63,7 @@
       Everything except prestige Skills and Dark Matter will reset.
       <br />
       You will get
-      {{
-        ms.game.enemyManager.maxLevel -
-          ms.game.prestigeManager.totalPrestige -
-          1
-      }}
+      {{ ms.game.prestigeManager.prestigeToEarn }}
       Skill Points and
       <app-formatted-quantity
         [quantity]="ms.game.resourceManager.inactiveDarkMatter.quantity"

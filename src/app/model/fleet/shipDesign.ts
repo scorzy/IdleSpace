@@ -14,7 +14,6 @@ import { Job } from "../shipyard/job";
 import { Shipyard } from "../shipyard/shipyard";
 import { SliderOptions } from "../utility/sliderOptions";
 
-const MODULE_PRICE_INCREASE = 1.1;
 export const SIZE_MULTI = 0.1;
 
 export class ShipDesign implements ISalvable, IBuyable {
@@ -62,12 +61,20 @@ export class ShipDesign implements ISalvable, IBuyable {
   /**
    * Generate Ships from presets
    */
-  static fromPreset(preset: Preset): ShipDesign {
+  static fromPreset(preset: Preset, weapons = 0): ShipDesign {
     const shipDesign = new ShipDesign();
     shipDesign.name = preset.name;
     shipDesign.type = preset.type;
     shipDesign.modules = preset.modules.map(dm => {
-      const chosen = sample(dm.id);
+      let toSelect = dm.id;
+      if (weapons > 0 && toSelect.length > 2) {
+        const halfWay = Math.floor(toSelect.length / 2);
+        toSelect =
+          weapons === 1
+            ? toSelect.slice(0, halfWay)
+            : toSelect.slice(halfWay, toSelect.length);
+      }
+      const chosen = sample(toSelect);
       return new DesignLine(
         FleetManager.getInstance().allModules.find(m => m.id === chosen),
         dm.size
@@ -77,22 +84,23 @@ export class ShipDesign implements ISalvable, IBuyable {
 
     //  Complete with armor
     const availableModules =
-      shipDesign.modules.length - shipDesign.type.moduleCount;
-    const availableModulePoints =
-      shipDesign.usedModulePoint - shipDesign.type.modulePoint;
+      shipDesign.type.moduleCount - shipDesign.modules.length;
+    let availableModulePoints =
+      shipDesign.type.modulePoint - shipDesign.usedModulePoint;
 
     if (availableModulePoints > 0) {
       let armor = shipDesign.modules.find(
         m => m.module.id === FleetManager.getInstance().armor.id
       );
-      if (!armor && availableModules > 1) {
+      if (!armor && availableModules > 0) {
         armor = new DesignLine(FleetManager.getInstance().armor);
         shipDesign.modules.push(armor);
+        availableModulePoints--;
       }
       if (armor) {
         armor.size = armor.size + availableModulePoints;
+        armor.size = Math.min(armor.size, Sizes.ExtraLarge);
       }
-      armor.size = Math.min(armor.size, Sizes.ExtraLarge);
     }
 
     shipDesign.reload();

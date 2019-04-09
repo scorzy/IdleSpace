@@ -10,6 +10,7 @@ import { enemyNames } from "./enemyNames";
 import { enemySuffixes } from "./enemySuffixes";
 import { enemyIcons } from "./enemyIcons";
 import { SearchJob } from "./searchJob";
+import { shuffle } from "lodash-es";
 
 export class Enemy {
   constructor() {
@@ -57,25 +58,25 @@ export class Enemy {
     enemy.level = level;
     enemy.name = sample(enemyNames) + " " + sample(enemySuffixes);
     enemy.generateIcon();
-    const moduleLevelMulti = sample([1, 1.2, 1.4, 1.6, 1.8, 2]);
+    const moduleLevelMulti = sample([1, 1.4]);
     const moduleLevel = Math.floor(
       10 * Math.pow(1.1, level - 1) * moduleLevelMulti
     );
     const navalCap =
       (MAX_NAVAL_CAPACITY * level) /
       (level + 500) /
-      (1 + (moduleLevelMulti - 1) * 0.8);
+      (1 + (moduleLevelMulti - 1) * 0.5);
     const maxShipTye = Math.min(level, ShipTypes.length);
     for (let k = 0; k < 2; k++) {
       for (let i = 0; i < maxShipTye; i++) {
         if (!(maxShipTye > 2 && Math.random() < 0.15)) {
           let presets = Presets.filter(p => p.type === ShipTypes[i]);
           const pres = sample(presets);
-          enemy.addFromPreset(pres);
+          enemy.addFromPreset(pres, k);
           if (presets.length > 2 && Math.random() < 0.3) {
             presets = presets.filter(p => p !== pres);
             const pres2 = sample(presets);
-            enemy.addFromPreset(pres2);
+            enemy.addFromPreset(pres2, k);
           }
         }
       }
@@ -131,11 +132,6 @@ export class Enemy {
         }
       }
     }
-    let n = 1;
-    enemy.shipsDesign.forEach(s => {
-      s.order = n;
-      n++;
-    });
 
     enemy.setOrder();
     enemy.loadBonusCount();
@@ -198,26 +194,32 @@ export class Enemy {
     });
     if (!empty) {
       this.currentZone.generateShips(this.shipsDesign);
-      //  Planet Reward for last row zones
-      for (let i = 9; i < 100; i += 10) {
-        this.zones[i].reward = Reward.HabitableSpace;
+      for (let i = 10; i < 100; i += 10) {
         let otherZones = new Array<Zone>();
-        for (let k = 1; k < 10; k++) otherZones.push(this.zones[i - k]);
+        for (let k = 0; k < 10; k++) otherZones.push(this.zones[i - k]);
+        otherZones = shuffle(otherZones);
+
+        // Habitable Space
+        const spaceCount = 3 + (this.moreHabitableSpace ? 1 : 0);
+        for (let j = 0; j < spaceCount; j++) {
+          const rand = otherZones.pop();
+          rand.reward = Reward.HabitableSpace;
+          otherZones = otherZones.filter(z => !z.reward);
+        }
+
+        // Metal
         const metalCount = 2 + (this.moreMetal ? 1 : 0);
         for (let j = 0; j < metalCount; j++) {
-          const rand = sample(otherZones);
+          const rand = otherZones.pop();
           rand.reward = Reward.MetalMine;
           otherZones = otherZones.filter(z => !z.reward);
         }
+
+        // Crystal
         const crystalCount = 2 + (this.moreCrystal ? 1 : 0);
         for (let j = 0; j < crystalCount; j++) {
-          const rand = sample(otherZones);
+          const rand = otherZones.pop();
           rand.reward = Reward.CrystalMine;
-          otherZones = otherZones.filter(z => !z.reward);
-        }
-        if (this.moreHabitableSpace) {
-          const rand = sample(otherZones);
-          rand.reward = Reward.HabitableSpace;
           otherZones = otherZones.filter(z => !z.reward);
         }
       }
@@ -225,8 +227,8 @@ export class Enemy {
       this.zones.forEach(z => z.reload());
     }
   }
-  private addFromPreset(pres: Preset) {
-    const design = ShipDesign.fromPreset(pres);
+  private addFromPreset(pres: Preset, weapons = 0) {
+    const design = ShipDesign.fromPreset(pres, weapons + 1);
     design.weight = random(1, 5);
     design.id = this.id + "-" + this.shipsDesign.length;
     this.shipsDesign.push(design);

@@ -5,6 +5,9 @@ import { FleetManager } from "../fleet/fleetManager";
 import { IResearchData } from "./iResearchData";
 import { EnemyManager } from "../enemy/enemyManager";
 import { SearchJob } from "../enemy/searchJob";
+import { ShipDesign } from "../fleet/shipDesign";
+import { ShipTypes } from "../fleet/shipTypes";
+import { Sizes } from "../fleet/module";
 
 export class ResearchManager {
   private static instance: ResearchManager;
@@ -54,9 +57,36 @@ export class ResearchManager {
     this.corvette.onBuy = () => {
       EnemyManager.getInstance().generate(new SearchJob());
       EnemyManager.getInstance().attack(EnemyManager.getInstance().allEnemy[0]);
+      FleetManager.getInstance()
+        .allModules.filter(m => m.start)
+        .forEach(m => {
+          m.research.quantity = new Decimal(1);
+          m.research.reloadNum();
+          m.unlock();
+        });
+      const corvetteDesign = ShipDesign.fromPreset({
+        name: "Corvette",
+        type: ShipTypes[0],
+        modules: [
+          {
+            id: ["l"],
+            size: Sizes.Small
+          },
+          {
+            id: ["S"],
+            size: Sizes.Small
+          },
+          {
+            id: ["a"],
+            size: Sizes.Small
+          }
+        ]
+      });
+      corvetteDesign.id = "0";
+      FleetManager.getInstance().ships.push(corvetteDesign);
     };
 
-    this.toDo = [this.researches[0], this.researches[1]];
+    this.toDo = [this.betterResearch];
   }
   static getInstance() {
     return ResearchManager.instance;

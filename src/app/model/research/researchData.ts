@@ -1,8 +1,7 @@
 import { IResearchData } from "./iResearchData";
 
 export const ResearchData: IResearchData[] = [
-  //  First two research are unlocked by default
-  //  Dont Move !
+  //  Unlocked by default
   {
     id: "r",
     name: "Better Researching",
@@ -10,26 +9,17 @@ export const ResearchData: IResearchData[] = [
     price: 200,
     description: "+20% researching speed",
     limit: Number.POSITIVE_INFINITY,
-    researchToUnlock: ["B"]
-  },
-  {
-    id: "a",
-    name: "Alloy",
-    shape: "alloy",
-    price: 500,
-    description: "Unlock alloy foundry",
-    resourceToUnlock: ["a", "a1"],
-    researchToUnlock: ["S1"]
+    researchToUnlock: ["c", "B"]
   },
   //    End of starting researches  ---------------
   {
-    id: "S1",
-    name: "Shipyard",
-    shape: "alloy",
-    price: 1e3,
-    description: "Unlock Shipyard",
-    resourceToUnlock: ["S1", "SP"],
-    researchToUnlock: ["c", "X1", "W1"]
+    id: "c",
+    name: "Corvette",
+    shape: "rank1",
+    price: 2e3,
+    description: "Unlock Corvette",
+    resourceToUnlock: ["S1", "SP", "a", "a1"],
+    researchToUnlock: ["f", "X1", "W1"]
   },
   {
     id: "W1",
@@ -47,14 +37,6 @@ export const ResearchData: IResearchData[] = [
     description: "Unlock Telescope",
     resourceToUnlock: ["X1", "XP"],
     researchToUnlock: ["D"]
-  },
-  {
-    id: "c",
-    name: "Corvette",
-    shape: "rank1",
-    price: 2e3,
-    description: "Unlock Corvette",
-    researchToUnlock: ["f"]
   },
   {
     id: "f",

@@ -2,6 +2,7 @@
   <div class="clr-col-sm-12 clr-col-md-6">
     <h6>{{ res.description }}</h6>
 
+    <!-- Ending Alert -->
     <clr-alert
       *ngIf="res.isEnding"
       [clrAlertClosable]="false"
@@ -14,6 +15,7 @@
       </clr-alert-item>
     </clr-alert>
 
+    <!-- Alerts -->
     <ng-container *ngIf="res?.alerts">
       <clr-alert
         *ngFor="let alert of alerts; trackBy: getAlertId"
@@ -36,6 +38,7 @@
       </clr-alert-item>
     </clr-alert>
 
+    <!-- Operativity -->
     <div *ngIf="res?.products.length > 0">
       <h6>
         Operativity:
@@ -52,7 +55,8 @@
       />
     </div>
 
-    <div *ngIf="res.showPriority">
+    <!-- Priority -->
+    <div *ngIf="res.showPriority && ms.game.resourceManager.drone.unlocked">
       <h6>
         Priority:
         <span class="monospace"> {{ res.priority }}</span> %

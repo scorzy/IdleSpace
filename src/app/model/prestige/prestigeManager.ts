@@ -2,16 +2,17 @@ import { Skill, BUYABLE_COLOR, OWNED_COLOR } from "./skill";
 import { ISalvable } from "../base/ISalvable";
 import { AllSkillEffects } from "./allSkillEffects";
 import { DataSet } from "vis";
-import { Game } from "../game";
+import { EnemyManager } from "../enemy/enemyManager";
 
 export class PrestigeManager implements ISalvable {
   private static instance: PrestigeManager;
 
   usedPrestige = 0;
   totalPrestige = 0;
-
   visSkills: DataSet<Skill>;
   visEdge: DataSet<{ from: number; to: number }>;
+  maxPrestigePoints = 1;
+  prestigeToEarn = 0;
 
   constructor() {
     PrestigeManager.instance = this;
@@ -87,6 +88,8 @@ export class PrestigeManager implements ISalvable {
       { from: 9, to: 32 },
       { from: 21, to: 33 }
     ]);
+
+    this.maxPrestigePoints = this.visSkills.length;
   }
   static getInstance(): PrestigeManager {
     return PrestigeManager.instance;
@@ -138,6 +141,12 @@ export class PrestigeManager implements ISalvable {
         this.visSkills.update(nodes);
       }
     });
+  }
+  reloadPrestigeToEarn() {
+    this.prestigeToEarn = Math.max(
+      EnemyManager.getInstance().maxLevel - this.totalPrestige - 1,
+      0
+    );
   }
 
   //#region Save and Load

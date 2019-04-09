@@ -1,8 +1,10 @@
-<div class="content-area">
+<div
+  class="content-area"
+  *ngIf="ms.game.enemyManager.currentEnemy; else noEnemy"
+>
   <h1>
     <clr-icon
       [attr.shape]="ms.game.enemyManager.currentEnemy?.shape"
-      *ngIf="ms.game.enemyManager.currentEnemy?.shape"
       size="48"
       class="resIcon"
     ></clr-icon>
@@ -17,6 +19,7 @@
           class="btn"
           (click)="startBattle()"
           [disabled]="ms.game.enemyManager.inBattle"
+          [disabled]="!ms.game.fleetManager.fightEnabled"
         >
           <clr-icon shape="floppy"></clr-icon>
           Fight
@@ -97,3 +100,16 @@
     </button>
   </div>
 </clr-modal>
+
+<ng-template #noEnemy>
+  <div class="content-area">
+    <clr-alert [clrAlertClosable]="false">
+      <clr-alert-item>
+        <span class="alert-text">
+          You are not attacking any enemy.
+          <a [routerLink]="'/enemies/search'">Search for an enemy</a>
+        </span>
+      </clr-alert-item>
+    </clr-alert>
+  </div>
+</ng-template>

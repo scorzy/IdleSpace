@@ -12,7 +12,8 @@ export const ModulesData: IModuleData[] = [
     armorPercent: 200,
     nextToUnlock: ["p"],
     researchPrice: 2e3,
-    shape: "laser"
+    shape: "laser",
+    start: true
   },
   {
     id: "p",
@@ -57,7 +58,8 @@ export const ModulesData: IModuleData[] = [
     alloyPrice: 10,
     nextToUnlock: ["R"],
     researchPrice: 2e3,
-    shape: "solar"
+    shape: "solar",
+    start: true
   },
   {
     id: "R",
@@ -88,7 +90,8 @@ export const ModulesData: IModuleData[] = [
     alloyPrice: 10,
     armor: 20,
     researchPrice: 2e3,
-    shape: "armor"
+    shape: "armor",
+    start: true
   },
   {
     id: "s",
