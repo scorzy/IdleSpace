@@ -75,7 +75,6 @@ export class EditorComponent implements OnInit, OnChanges {
     this.design.editable.isValid =
       this.design.editable.isValid &&
       this.design.editable.modules.findIndex(m => this.validateLevel(m)) === -1;
-    this.reloadCanBuy();
     this.ms.em.designEmitter.emit(1);
   }
 

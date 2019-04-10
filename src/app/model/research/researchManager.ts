@@ -6,8 +6,6 @@ import { IResearchData } from "./iResearchData";
 import { EnemyManager } from "../enemy/enemyManager";
 import { SearchJob } from "../enemy/searchJob";
 import { ShipDesign } from "../fleet/shipDesign";
-import { ShipTypes } from "../fleet/shipTypes";
-import { Sizes } from "../fleet/module";
 import { CORVETTE_PRESET } from "../enemy/preset";
 
 export class ResearchManager {
