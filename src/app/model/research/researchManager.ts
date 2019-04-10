@@ -8,6 +8,7 @@ import { SearchJob } from "../enemy/searchJob";
 import { ShipDesign } from "../fleet/shipDesign";
 import { ShipTypes } from "../fleet/shipTypes";
 import { Sizes } from "../fleet/module";
+import { CORVETTE_PRESET } from "../enemy/preset";
 
 export class ResearchManager {
   private static instance: ResearchManager;
@@ -64,24 +65,7 @@ export class ResearchManager {
           m.research.reloadNum();
           m.unlock();
         });
-      const corvetteDesign = ShipDesign.fromPreset({
-        name: "Corvette",
-        type: ShipTypes[0],
-        modules: [
-          {
-            id: ["l"],
-            size: Sizes.Small
-          },
-          {
-            id: ["S"],
-            size: Sizes.Small
-          },
-          {
-            id: ["a"],
-            size: Sizes.Small
-          }
-        ]
-      });
+      const corvetteDesign = ShipDesign.fromPreset(CORVETTE_PRESET);
       corvetteDesign.id = "0";
       FleetManager.getInstance().ships.push(corvetteDesign);
     };

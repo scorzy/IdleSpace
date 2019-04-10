@@ -136,9 +136,8 @@ export class Game {
     this.fleetManager.reloadActions();
     this.fleetManager.isBuildingCheckAll();
     this.fleetManager.setFight();
-    if (!this.isPaused && this.fleetManager.fightEnabled) {
-      this.fleetManager.doAutoFight();
-    }
+    this.fleetManager.doAutoFight();
+
     this.shipyard.adjust();
     this.darkMatterManager.reload();
   }

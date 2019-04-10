@@ -31,7 +31,7 @@ export class FleetTableComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscriptions.push(
-      this.ms.em.battleEndEmitter.subscribe(() => {
+      this.ms.em.updateEmitter.subscribe(() => {
         this.cd.markForCheck();
       })
     );

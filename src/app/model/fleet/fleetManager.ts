@@ -221,13 +221,15 @@ export class FleetManager implements ISalvable {
       this.make();
     }
 
-    const enemyManager = EnemyManager.getInstance();
-    if (
-      !enemyManager.inBattle &&
-      this.autoFight &&
-      (this.fullStrength || !this.autoReinforce)
-    ) {
-      enemyManager.startBattle();
+    if (this.fightEnabled) {
+      const enemyManager = EnemyManager.getInstance();
+      if (
+        !enemyManager.inBattle &&
+        this.autoFight &&
+        (this.fullStrength || !this.autoReinforce)
+      ) {
+        enemyManager.startBattle();
+      }
     }
   }
   setFight() {

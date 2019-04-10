@@ -2,7 +2,7 @@ import { Zone } from "./zone";
 import { ShipDesign } from "../fleet/shipDesign";
 import { MAX_NAVAL_CAPACITY } from "../fleet/fleetManager";
 import { ShipTypes } from "../fleet/shipTypes";
-import { Presets, Preset } from "./preset";
+import { Presets, Preset, CORVETTE_PRESET } from "./preset";
 import sample from "lodash-es/sample";
 import random from "lodash-es/random";
 import { Reward } from "./reward";
@@ -70,23 +70,25 @@ export class Enemy {
     const maxShipTye = Math.floor(
       Math.min(Math.max(Math.log(level) / Math.log(1.8), 1), ShipTypes.length)
     );
-    let shipToUse = [];
-    for (let i = 0; i < maxShipTye; i++) shipToUse.push(ShipTypes[i]);
-    shipToUse = shuffle(shipToUse);
-
-    const numShipToUse = random(2, ShipTypes.length - 1);
-    while (shipToUse.length > numShipToUse) shipToUse.pop();
-
-    shipToUse.forEach(shipType => {
-      let presets = Presets.filter(p => p.type === shipType);
-      const pres = sample(presets);
-      enemy.addFromPreset(pres);
-      if (presets.length > 2 && Math.random() < 0.4) {
-        presets = presets.filter(p => p !== pres);
-        const pres2 = sample(presets);
-        enemy.addFromPreset(pres2);
-      }
-    });
+    if (level > 1) {
+      let shipToUse = [];
+      for (let i = 0; i < maxShipTye; i++) shipToUse.push(ShipTypes[i]);
+      shipToUse = shuffle(shipToUse);
+      const numShipToUse = random(2, ShipTypes.length - 1);
+      while (shipToUse.length > numShipToUse) shipToUse.pop();
+      shipToUse.forEach(shipType => {
+        let presets = Presets.filter(p => p.type === shipType);
+        const pres = sample(presets);
+        enemy.addFromPreset(pres);
+        if (presets.length > 2 && Math.random() < 0.4) {
+          presets = presets.filter(p => p !== pres);
+          const pres2 = sample(presets);
+          enemy.addFromPreset(pres2);
+        }
+      });
+    } else {
+      enemy.addFromPreset(CORVETTE_PRESET);
+    }
 
     const totalWeight = enemy.shipsDesign
       .map(s => s.weight)

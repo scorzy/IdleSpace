@@ -14,7 +14,7 @@ import { Job } from "../shipyard/job";
 import { Shipyard } from "../shipyard/shipyard";
 import { SliderOptions } from "../utility/sliderOptions";
 
-export const SIZE_MULTI = 0.1;
+export const SIZE_MULTI = 0.25;
 
 export class ShipDesign implements ISalvable, IBuyable {
   id: string;

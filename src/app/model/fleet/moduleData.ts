@@ -1,4 +1,5 @@
 import { IModuleData, ALL_SIZES } from "./module";
+export const BASE_ARMOR = 30;
 
 export const ModulesData: IModuleData[] = [
   {
@@ -22,8 +23,8 @@ export const ModulesData: IModuleData[] = [
     energyBalance: -1,
     alloyPrice: 10,
     damage: 10,
-    shieldPercent: 20,
-    armorPercent: 200,
+    shieldPercent: 30,
+    armorPercent: 170,
     researchPrice: 2e3,
     shape: "plasma"
   },
@@ -46,8 +47,8 @@ export const ModulesData: IModuleData[] = [
     energyBalance: -1,
     alloyPrice: 10,
     damage: 10,
-    shieldPercent: 200,
-    armorPercent: 20,
+    shieldPercent: 170,
+    armorPercent: 30,
     researchPrice: 2e3
   },
   {
@@ -88,7 +89,7 @@ export const ModulesData: IModuleData[] = [
     sizes: ALL_SIZES,
     energyBalance: 0,
     alloyPrice: 10,
-    armor: 25,
+    armor: BASE_ARMOR,
     researchPrice: 2e3,
     shape: "armor",
     start: true
@@ -99,7 +100,7 @@ export const ModulesData: IModuleData[] = [
     sizes: ALL_SIZES,
     energyBalance: -1,
     alloyPrice: 20,
-    shield: 10,
+    shield: BASE_ARMOR / 2,
     researchPrice: 2e3,
     shape: "shield"
   }

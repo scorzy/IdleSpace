@@ -10,6 +10,25 @@ const RANDOM_WEAPON = ["l", "p", "d", "g"];
 const RANDOM_DEFENSE = ["a", "s"];
 const RANDOM_GENERATOR = ["S", "R", "F"];
 
+export const CORVETTE_PRESET: Preset = {
+  name: "Corvette",
+  type: ShipTypes[0],
+  modules: [
+    {
+      id: ["l"],
+      size: Sizes.Small
+    },
+    {
+      id: ["S"],
+      size: Sizes.Small
+    },
+    {
+      id: ["a"],
+      size: Sizes.Small
+    }
+  ]
+};
+
 export const Presets: Preset[] = [
   {
     name: "Corvette",
