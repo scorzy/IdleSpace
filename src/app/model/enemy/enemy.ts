@@ -66,21 +66,28 @@ export class Enemy {
       (MAX_NAVAL_CAPACITY * level) /
       (level + 500) /
       (1 + (moduleLevelMulti - 1) * 0.5);
-    const maxShipTye = Math.min(level, ShipTypes.length);
-    for (let k = 0; k < 2; k++) {
-      for (let i = 0; i < maxShipTye; i++) {
-        if (!(maxShipTye > 2 && Math.random() < 0.15)) {
-          let presets = Presets.filter(p => p.type === ShipTypes[i]);
-          const pres = sample(presets);
-          enemy.addFromPreset(pres, k);
-          if (presets.length > 2 && Math.random() < 0.3) {
-            presets = presets.filter(p => p !== pres);
-            const pres2 = sample(presets);
-            enemy.addFromPreset(pres2, k);
-          }
-        }
+
+    const maxShipTye = Math.floor(
+      Math.min(Math.max(Math.log(level) / Math.log(1.8), 1), ShipTypes.length)
+    );
+    let shipToUse = [];
+    for (let i = 0; i < maxShipTye; i++) shipToUse.push(ShipTypes[i]);
+    shipToUse = shuffle(shipToUse);
+
+    const numShipToUse = random(2, ShipTypes.length - 1);
+    while (shipToUse.length > numShipToUse) shipToUse.pop();
+
+    shipToUse.forEach(shipType => {
+      let presets = Presets.filter(p => p.type === shipType);
+      const pres = sample(presets);
+      enemy.addFromPreset(pres);
+      if (presets.length > 2 && Math.random() < 0.4) {
+        presets = presets.filter(p => p !== pres);
+        const pres2 = sample(presets);
+        enemy.addFromPreset(pres2);
       }
-    }
+    });
+
     const totalWeight = enemy.shipsDesign
       .map(s => s.weight)
       .reduce((p, c) => p + c, 0);
@@ -227,8 +234,8 @@ export class Enemy {
       this.zones.forEach(z => z.reload());
     }
   }
-  private addFromPreset(pres: Preset, weapons = 0) {
-    const design = ShipDesign.fromPreset(pres, weapons + 1);
+  private addFromPreset(pres: Preset) {
+    const design = ShipDesign.fromPreset(pres);
     design.weight = random(1, 5);
     design.id = this.id + "-" + this.shipsDesign.length;
     this.shipsDesign.push(design);

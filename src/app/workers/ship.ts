@@ -4,6 +4,7 @@ class Ship {
   originalArmor: Decimal;
   explosionLevel: number;
   shield: Decimal;
+  originalShield: Decimal;
   modules = new Array<{
     damage: Decimal
     shieldPercent: number
@@ -16,6 +17,7 @@ class Ship {
     ret.armor = new Decimal(this.armor);
     ret.originalArmor = new Decimal(this.armor);
     ret.shield = new Decimal(this.shield);
+    ret.originalShield = new Decimal(this.shield);
     ret.modules = this.modules;
     ret.explosionLevel = this.explosionLevel;
 

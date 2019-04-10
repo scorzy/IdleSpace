@@ -46,8 +46,9 @@ export class BattleService {
         ship.id = ds.id;
         ship.armor = Decimal.fromDecimal(ds.totalArmor);
         ship.originalArmor = new Decimal(ship.armor);
-        ship.explosionLevel = ds.explosionLevel;
         ship.shield = Decimal.fromDecimal(ds.totalShield);
+        ship.originalShield = new Decimal(ship.shield);
+        ship.explosionLevel = ds.explosionLevel;
         ds.modules.forEach(dl => {
           if (Decimal.fromDecimal(dl.computedDamage).gt(0)) {
             ship.modules.push({
@@ -86,8 +87,8 @@ export class BattleService {
             if (target.shield.gt(0)) {
               const shieldPercent = weapon.shieldPercent / 100;
               const maxShieldDamage = damageToDo.times(shieldPercent);
-              //  Skip if damage <1% shield
-              if (maxShieldDamage.gte(target.shield.div(100))) {
+              //  Skip if damage <0.1% shield
+              if (maxShieldDamage.gte(target.shield.div(1000))) {
                 target.shield = target.shield.minus(maxShieldDamage);
                 if (target.shield.lt(0)) {
                   const toDo = damageToDo.plus(target.shield);
@@ -102,8 +103,8 @@ export class BattleService {
             //  Damage to Armor
             if (damageToDo.gt(0)) {
               const maxArmorDamage = damageToDo.times(weapon.armorPercent / 100);
-              //  Skip if damage < 1% armor
-              if (maxArmorDamage.gte(target.armor.div(100))) {
+              //  Skip if damage < 0.1% armor
+              if (maxArmorDamage.gte(target.armor.div(1000))) {
                 target.armor = target.armor.minus(maxArmorDamage);
                 //  Check explosion
                 // console.log(
@@ -140,6 +141,15 @@ export class BattleService {
       //  Remove death ships
       playerShips = playerShips.filter(s => s.armor.gt(0));
       enemyShip = enemyShip.filter(s => s.armor.gt(0));
+
+      //  Regenerate shields
+      playerShips
+        .concat(enemyShip)
+        .filter(s => s.shield.gt(0))
+        .forEach(s => {
+          s.shield = new Decimal(s.originalShield);
+        });
+
       battleFleets = [playerShips, enemyShip]; //  just to be sure
     }
     //#endregion
