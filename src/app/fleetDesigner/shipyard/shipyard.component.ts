@@ -21,6 +21,7 @@ import { ShipDesign } from "src/app/model/fleet/shipDesign";
 export class ShipyardComponent implements OnInit, OnDestroy {
   @HostBinding("class")
   contentArea = "content-area";
+  totalPrice = new Decimal(0);
 
   private subscriptions: Subscription[] = [];
 
@@ -29,10 +30,13 @@ export class ShipyardComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.ms.game.fleetManager.reloadSliders();
     this.ms.game.fleetManager.resetSliders();
+    this.totalPrice = this.ms.game.fleetManager.getTotalPrice();
 
     this.subscriptions.push(
       this.ms.em.updateEmitter.subscribe(() => {
         this.onSliderChange();
+        const newPrice = this.ms.game.fleetManager.getTotalPrice();
+        if (!newPrice.eq(this.totalPrice)) this.totalPrice = newPrice;
         this.cd.markForCheck();
       })
     );

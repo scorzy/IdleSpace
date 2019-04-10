@@ -48,8 +48,8 @@ export class Game {
     this.researchManager.setUnlocks();
 
     this.fleetManager.reload();
-    this.resourceManager.metal.quantity = new Decimal(100);
-    this.resourceManager.crystal.quantity = new Decimal(70);
+    this.resourceManager.metal.quantity = new Decimal(500);
+    this.resourceManager.crystal.quantity = new Decimal(200);
     this.darkMatterManager.darkMatter.quantity = new Decimal(1e10);
 
     this.researchBonus.multiplicativeBonus.push(
@@ -193,7 +193,7 @@ export class Game {
     // this.resourceManager.materials.forEach(m => {
     //   m.quantity = new Decimal(1e20);
     // });
-    this.enemyManager.maxLevel = 50;
+    // this.enemyManager.maxLevel = 50;
     // this.prestigeManager.totalPrestige = 100;
 
     this.fleetManager.upgradingCheck();

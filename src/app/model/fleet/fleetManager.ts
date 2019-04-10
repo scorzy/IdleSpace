@@ -210,6 +210,20 @@ export class FleetManager implements ISalvable {
       }
     });
   }
+  getTotalPrice(): Decimal {
+    let ret = new Decimal();
+    this.ships.forEach(s => {
+      let qta = s.quantity.plus(Shipyard.getInstance().getTotalShips(s));
+      const wantQta = new Decimal(s.wantQuantityTemp);
+      let diff = wantQta.minus(qta);
+      qta = s.quantity.plus(Shipyard.getInstance().getTotalShips(s));
+      diff = wantQta.minus(qta);
+      if (diff.gt(0)) {
+        ret = ret.plus(diff.times(s.price));
+      }
+    });
+    return ret;
+  }
 
   checkStatus() {
     this.fullStrength =

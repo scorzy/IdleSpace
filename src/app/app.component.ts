@@ -95,6 +95,23 @@ export class AppComponent implements AfterViewInit {
     this.router.navigateByUrl(this.ms.lastUnitUrl);
   }
 
+  all100() {
+    this.ms.game.resourceManager.unlockedResources.forEach(r => {
+      r.operativity = 100;
+    });
+  }
+  all(operativity: number) {
+    this.ms.game.resourceManager.unlockedResources.forEach(r => {
+      r.operativity = operativity;
+    });
+  }
+  skip(minute: number) {
+    this.ms.game.darkMatterManager.warpMin.buy(new Decimal(minute));
+  }
+  warpAv(minute: number) {
+    return this.ms.game.darkMatterManager.darkMatter.quantity.gte(60 * minute);
+  }
+
   @HostListener("window:keyup", ["$event"])
   onKey(event: KeyboardEvent) {
     // with type info

@@ -13,8 +13,8 @@ import { DarkMatterManager } from "../darkMatter/darkMatterManager";
 import { PrestigeManager } from "../prestige/prestigeManager";
 
 export const MAX_ENEMY_LIST_SIZE = 20;
-const DARK_MATTER_START_LEVEL = 5;
-const DARK_MATTER_MULTI = 1;
+const DARK_MATTER_START_LEVEL = 2;
+const DARK_MATTER_MULTI = 3;
 
 export class EnemyManager implements ISalvable {
   private static instance: EnemyManager;

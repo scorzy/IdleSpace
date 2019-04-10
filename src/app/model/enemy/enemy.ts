@@ -58,14 +58,15 @@ export class Enemy {
     enemy.level = level;
     enemy.name = sample(enemyNames) + " " + sample(enemySuffixes);
     enemy.generateIcon();
-    const moduleLevelMulti = sample([1, 1.4]);
+    const moduleLevelMulti = sample([1, 1.1, 1.2]);
     const moduleLevel = Math.floor(
       10 * Math.pow(1.1, level - 1) * moduleLevelMulti
     );
-    const navalCap =
+    let navalCap = Math.ceil(
       (MAX_NAVAL_CAPACITY * level) /
-      (level + 500) /
-      (1 + (moduleLevelMulti - 1) * 0.5);
+        (level + 500) /
+        (1 + (moduleLevelMulti - 1) * 0.9)
+    );
 
     const maxShipTye = Math.floor(
       Math.min(Math.max(Math.log(level) / Math.log(1.8), 1), ShipTypes.length)
@@ -87,6 +88,7 @@ export class Enemy {
         }
       });
     } else {
+      navalCap = 20;
       enemy.addFromPreset(CORVETTE_PRESET);
     }
 

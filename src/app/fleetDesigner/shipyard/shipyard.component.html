@@ -19,8 +19,7 @@
         [integer]="true"
       >
       </app-formatted-quantity>
-      <br />
-      Progress:
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Progress:
       <app-polynom
         [a]="ms.game.resourceManager.shipyardProgress.a"
         [b]="ms.game.resourceManager.shipyardProgress.b"
@@ -29,21 +28,19 @@
       <br />
     </p>
 
-    <clr-alert
-      *ngIf="ms.game.resourceManager.shipyardX1.quantity.lte(0)"
-      [clrAlertType]="'warning'"
-      [clrAlertClosable]="false"
-    >
-      <clr-alert-item>
-        <span class="alert-text">
-          You don't have any
-          <a [routerLink]="'/home/res/S1'"
-            >{{ ms.game.resourceManager.shipyardX1.name }}
-          </a>
-        </span>
-      </clr-alert-item>
-    </clr-alert>
-    <br />
+    <ng-container *ngIf="ms.game.resourceManager.shipyardX1.quantity.lte(0)">
+      <clr-alert [clrAlertType]="'warning'" [clrAlertClosable]="false">
+        <clr-alert-item>
+          <span class="alert-text">
+            You don't have any
+            <a [routerLink]="'/home/res/S1'"
+              >{{ ms.game.resourceManager.shipyardX1.name }}
+            </a>
+          </span>
+        </clr-alert-item>
+      </clr-alert>
+      <br />
+    </ng-container>
 
     <div
       *ngIf="ms.game.fleetManager.ships.length > 0; else noDesignAlert"
@@ -66,6 +63,19 @@
         Reinforce fleet
       </button>
     </div>
+
+    <clr-alert [clrAlertType]="'info'" [clrAlertClosable]="false">
+      <clr-alert-item>
+        <span class="alert-text">
+          Total Price:
+          <app-price-line
+            [canBuy]="true"
+            [unit]="ms.game.resourceManager.shipyardProgress"
+            [price]="totalPrice"
+          ></app-price-line>
+        </span>
+      </clr-alert-item>
+    </clr-alert>
 
     <ng-template #noDesignAlert>
       <clr-alert [clrAlertClosable]="false">

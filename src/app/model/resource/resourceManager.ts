@@ -117,6 +117,8 @@ export class ResourceManager implements ISalvable {
     //      Alloy
     this.alloyX1 = new Resource("a1");
     this.alloy.addGenerator(this.alloyX1);
+    this.metal.addGenerator(this.alloyX1, -3);
+    this.crystal.addGenerator(this.alloyX1, -2);
     this.energy.addGenerator(this.alloyX1, -1);
 
     //      Energy
@@ -190,12 +192,12 @@ export class ResourceManager implements ISalvable {
     this.tier1 = [
       this.metalX1,
       this.crystalX1,
-      this.alloyX1,
       this.energyX1,
       this.computingX1,
+      this.alloyX1,
       this.shipyardX1,
-      this.searchX1,
-      this.warriorX1
+      this.warriorX1,
+      this.searchX1
     ];
     this.tier2 = [this.droneFactory];
     //#endregion
@@ -210,26 +212,30 @@ export class ResourceManager implements ISalvable {
     this.crystalX1.buyAction.afterBuy = this.unlockComputing.bind(this);
 
     this.alloyX1.generateBuyAction(
-      new MultiPrice([new Price(this.metal, 100), new Price(this.crystal, 100)])
+      new MultiPrice([new Price(this.metal, 100), new Price(this.crystal, 75)])
     );
     this.energyX1.generateBuyAction(
-      new MultiPrice([new Price(this.metal, 100), new Price(this.crystal, 100)])
+      new MultiPrice([new Price(this.metal, 100), new Price(this.crystal, 75)])
     );
     this.computingX1.generateBuyAction(
-      new MultiPrice([new Price(this.metal, 100), new Price(this.crystal, 200)])
+      new MultiPrice([new Price(this.metal, 75), new Price(this.crystal, 150)])
     );
     this.shipyardX1.generateBuyAction(
-      new MultiPrice([new Price(this.alloy, 100)])
+      new MultiPrice([
+        new Price(this.alloy, 50),
+        new Price(this.metal, 100),
+        new Price(this.crystal, 25)
+      ])
     );
     this.searchX1.generateBuyAction(
-      new MultiPrice([new Price(this.alloy, 100)])
+      new MultiPrice([new Price(this.alloy, 100), new Price(this.crystal, 200)])
     );
     this.warriorX1.generateBuyAction(
-      new MultiPrice([new Price(this.alloy, 100)])
+      new MultiPrice([new Price(this.alloy, 200)])
     );
     this.droneFactory.generateBuyAction(
       new MultiPrice([
-        new Price(this.alloy, 100),
+        new Price(this.alloy, 150),
         new Price(this.habitableSpace, 1, 1)
       ])
     );
@@ -273,9 +279,7 @@ export class ResourceManager implements ISalvable {
     this.energy.reloadCustomLimit = (limit: Decimal) => {
       if (ResearchManager.getInstance()) {
         limit = limit.times(
-          new Decimal(1).plus(
-            ResearchManager.getInstance().battery.quantity.times(0.1)
-          )
+          new Decimal(1).plus(ResearchManager.getInstance().battery.quantity)
         );
       }
       return limit;
@@ -826,6 +830,7 @@ export class ResourceManager implements ISalvable {
     for (const res of data.r) {
       const resource = this.allResources.find(u => u.id === res.i);
       if (resource) resource.load(res);
+      // console.log("Res: " + resource.name + " " + resource.quantity.toNumber());
     }
 
     this.reloadList();

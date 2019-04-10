@@ -255,7 +255,10 @@ export class ShipDesign implements ISalvable, IBuyable {
     });
     this.editable.reload();
   }
-  saveConfig() {
+  /**
+   * Return true if an upgrade is queued
+   */
+  saveConfig(): boolean {
     if (!(this.editable && this.editable.isValid && !this.isUpgrading)) {
       return false;
     }
@@ -270,6 +273,7 @@ export class ShipDesign implements ISalvable, IBuyable {
     } else {
       this.upgrade(this.editable);
     }
+    return true;
   }
   generateBuyAction() {
     this.buyAction = new Action(

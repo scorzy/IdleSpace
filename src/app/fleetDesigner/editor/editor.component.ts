@@ -27,7 +27,6 @@ export class EditorComponent implements OnInit, OnChanges {
   deleteModal = false;
   changed = false;
   canUpgrade = false;
-  upgradeMessage = "";
   private subscriptions: Subscription[] = [];
 
   constructor(
@@ -46,10 +45,9 @@ export class EditorComponent implements OnInit, OnChanges {
     if (this.design.modules.length === 0) {
       this.edit();
     }
-    this.reloadCanBuy();
+
     this.subscriptions.push(
       this.ms.em.updateEmitter.subscribe(() => {
-        this.reloadCanBuy();
         this.cd.markForCheck();
       })
     );
@@ -80,16 +78,7 @@ export class EditorComponent implements OnInit, OnChanges {
     this.reloadCanBuy();
     this.ms.em.designEmitter.emit(1);
   }
-  reloadCanBuy() {
-    if (!this.design || !this.design.editable) return false;
 
-    this.canUpgrade = this.ms.game.resourceManager.alloy.quantity.gte(
-      this.design.editable.upgradePrice
-    );
-    this.upgradeMessage = this.canUpgrade
-      ? "Upgrade will cost"
-      : "Cannot upgrade! Need ";
-  }
   deleteDesign() {
     this.ms.game.fleetManager.deleteDesign(this.design);
     this.router.navigate(["/fleet/design"]);
@@ -103,9 +92,13 @@ export class EditorComponent implements OnInit, OnChanges {
   save() {
     // if (!this.canUpgrade) return false;
 
-    this.design.saveConfig();
+    const ret = this.design.saveConfig();
     this.ms.em.designEmitter.emit(5);
-    this.cd.markForCheck();
+    if (ret) {
+      this.router.navigate(["/fleet/shipyard"]);
+    } else {
+      this.cd.markForCheck();
+    }
   }
   revert() {
     if (this.design) this.design.copy();

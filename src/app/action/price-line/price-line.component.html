@@ -1,6 +1,6 @@
 <span [class.notEnough]="!canBuy">
-  <clr-signpost clrSignpostTrigger>
-    <span>
+  <clr-signpost>
+    <span clrSignpostTrigger>
       <clr-icon
         size="24"
         [attr.shape]="unit.shape"
@@ -16,15 +16,25 @@
     </span>
     <!-- <a clrSignpostTrigger> {{ unit.name }}, </a> -->
     <clr-signpost-content *clrIfOpen>
-      <h3 style="margin-top: 0">{{ unit.name }}</h3>
+      <h3 style="margin-top: 0">
+        <clr-icon
+          size="24"
+          [attr.shape]="unit.shape"
+          *ngIf="unit.shape"
+          class="resIcon"
+        ></clr-icon>
+        {{ unit.name }}
+      </h3>
       <p>
-        Quantity:
-        <span *ngIf="unit.quantity.abs().gt(0.001)" class="qta">
-          <app-formatted-quantity
-            [quantity]="unit.quantity"
-          ></app-formatted-quantity>
+        <span *ngIf="unit.quantity.gt(0)">
+          Quantity:
+          <span *ngIf="unit.quantity.abs().gt(0.001)" class="qta">
+            <app-formatted-quantity
+              [quantity]="unit.quantity"
+            ></app-formatted-quantity>
+          </span>
+          <br />
         </span>
-        <br />
         <app-polynom [a]="unit.a" [b]="unit.b" [c]="unit.c"> </app-polynom>
       </p>
       <a [routerLink]="'/home/res/' + unit.id" class="noRed">

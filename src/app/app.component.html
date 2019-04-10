@@ -57,6 +57,7 @@
         [routerLink]="'prestige'"
         class="nav-link"
         [routerLinkActive]="'active'"
+        *ngIf="ms.game.enemyManager.maxLevel > 1"
       >
         <span class="nav-text">
           <clr-icon shape="star"></clr-icon>
@@ -65,6 +66,75 @@
     </div>
 
     <div class="header-actions">
+      <clr-dropdown>
+        <button class="nav-icon" clrDropdownTrigger>
+          <clr-icon shape="tools"></clr-icon>
+          <clr-icon shape="caret down"></clr-icon>
+        </button>
+        <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+          <a clrDropdownItem (click)="all100()">All 100%</a>
+          <a clrDropdownItem (click)="skip(1)">Warp 1 minute</a>
+
+          <clr-dropdown *ngIf="ms.game.enemyManager.maxLevel > 1">
+            <button type="button" clrDropdownTrigger>Time Warps</button>
+            <clr-dropdown-menu clrPosition="left-top" *clrIfOpen>
+              <a
+                clrDropdownItem
+                [ngClass]="{ disabled: !warpAv(1) }"
+                (click)="skip(1)"
+                >Warp 1 minute</a
+              >
+              <a
+                clrDropdownItem
+                [ngClass]="{ disabled: !warpAv(5) }"
+                (click)="skip(5)"
+                >Warp 5 minute</a
+              >
+              <a
+                clrDropdownItem
+                [ngClass]="{ disabled: !warpAv(10) }"
+                (click)="skip(10)"
+                >Warp 10 minute</a
+              >
+              <a
+                clrDropdownItem
+                [ngClass]="{ disabled: !warpAv(15) }"
+                (click)="skip(15)"
+                >Warp 15 minute</a
+              >
+              <a
+                clrDropdownItem
+                [ngClass]="{ disabled: !warpAv(30) }"
+                (click)="skip(30)"
+                >Warp 30 minute</a
+              >
+              <a
+                clrDropdownItem
+                [ngClass]="{ disabled: !warpAv(60) }"
+                (click)="skip(60)"
+                >Warp 1 hour</a
+              >
+            </clr-dropdown-menu>
+          </clr-dropdown>
+
+          <clr-dropdown>
+            <button type="button" clrDropdownTrigger>Operativity</button>
+            <clr-dropdown-menu clrPosition="left-top" *clrIfOpen>
+              <a clrDropdownItem (click)="all100()">All 100%</a>
+              <a clrDropdownItem (click)="all(90)">All 90%</a>
+              <a clrDropdownItem (click)="all(80)">All 80%</a>
+              <a clrDropdownItem (click)="all(70)">All 70%</a>
+              <a clrDropdownItem (click)="all(60)">All 60%</a>
+              <a clrDropdownItem (click)="all(50)">All 50%</a>
+              <a clrDropdownItem (click)="all(40)">All 40%</a>
+              <a clrDropdownItem (click)="all(30)">All 30%</a>
+              <a clrDropdownItem (click)="all(20)">All 20%</a>
+              <a clrDropdownItem (click)="all(10)">All 100%</a>
+            </clr-dropdown-menu>
+          </clr-dropdown>
+        </clr-dropdown-menu>
+      </clr-dropdown>
+
       <a href="javascript://" class="nav-link nav-icon">
         <clr-icon
           [attr.shape]="ms.game.isPaused ? 'play' : 'pause'"

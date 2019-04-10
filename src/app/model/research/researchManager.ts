@@ -115,7 +115,7 @@ export class ResearchManager {
         id: m.id + "-R",
         name: m.name,
         shape: m.shape,
-        price: m.researchPrice,
+        price: 1e4,
         description: "Unlock " + m.name
       };
       const research = Research.fromData(resData);
