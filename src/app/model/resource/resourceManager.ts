@@ -1,7 +1,6 @@
 import { Resource } from "./resource";
 import { ISalvable } from "../base/ISalvable";
 import isArray from "lodash-es/isArray";
-import { solveEquation } from "ant-utils";
 import { ResourceGroup } from "./resourceGroup";
 import { MultiPrice } from "../prices/multiPrice";
 import { Price } from "../prices/price";
@@ -11,7 +10,6 @@ import { EnemyManager } from "../enemy/enemyManager";
 import { MainService } from "src/app/main.service";
 import { FleetManager } from "../fleet/fleetManager";
 import { AllSkillEffects } from "../prestige/allSkillEffects";
-import { ResearchManager } from "../research/researchManager";
 import { ModStack } from "../mod/modStack";
 
 export class ResourceManager implements ISalvable {
@@ -275,33 +273,6 @@ export class ResourceManager implements ISalvable {
     this.crystalX1.limitStorage = buyCrystalMine;
     this.crystalX1.prestigeLimit = AllSkillEffects.PLUS_CRYSTAL_MINER;
 
-    //  Energy
-    this.energy.reloadCustomLimit = (limit: Decimal) => {
-      if (ResearchManager.getInstance()) {
-        limit = limit.times(
-          new Decimal(1).plus(ResearchManager.getInstance().battery.quantity)
-        );
-      }
-      return limit;
-    };
-
-    //  Energy Battery
-    const buyBattery = new Action(
-      "P",
-      new MultiPrice([
-        new Price(this.metal, 1500),
-        new Price(this.crystal, 1000)
-      ])
-    );
-    buyBattery.afterBuy = () => {
-      this.energy.reloadLimit();
-    };
-    buyBattery.name = "Batteries";
-    this.energy.actions.push(buyBattery);
-    this.energy.limitStorage = buyBattery;
-    this.energy.prestigeLimit = AllSkillEffects.PLUS_BATTERY;
-    this.energy.prestigeLimitIncrease = 100;
-
     //  Energy Plant
     const buyEnergyPlant = new Action(
       "L",
@@ -450,11 +421,53 @@ export class ResourceManager implements ISalvable {
               .map(r => r.limit.minus(r.quantity))
               .reduce((c, p) => c.plus(p), new Decimal(0))
       );
-    };
+    }
 
     //#endregion
+    //#region Storage
+    ;[this.metal, this.crystal, this.alloy].forEach(m => {
+      m.isLimited = true;
+      const buyExpansion1 = new Action(
+        "L",
+        new MultiPrice([
+          new Price(m, 900, 2),
+          new Price(this.habitableSpace, 1, 1)
+        ])
+      );
+      buyExpansion1.afterBuy = () => {
+        m.reloadLimit();
+      };
+      buyExpansion1.name = m.name + " Storage";
+      m.actions.push(buyExpansion1);
+      m.limitStorage = buyExpansion1;
+      m.exponentialStorage = true;
+      m.alwaysActive = true;
+      m.workerPerMine = new Decimal(1000);
+    });
+    this.energy.isLimited = true;
+    const buyExpansion = new Action(
+      "L",
+      new MultiPrice([
+        new Price(this.metal, 900, 2),
+        new Price(this.crystal, 900, 2),
+        new Price(this.habitableSpace, 1, 1)
+      ])
+    );
+    buyExpansion.afterBuy = () => {
+      this.energy.reloadLimit();
+    };
+    buyExpansion.name = "Batteries";
+    this.energy.actions.push(buyExpansion);
+    this.energy.limitStorage = buyExpansion;
+    this.energy.exponentialStorage = true;
+    this.energy.alwaysActive = true;
+    this.energy.workerPerMine = new Decimal(200);
+    //#region
     //#region Arrays
     this.limited = [
+      this.metal,
+      this.crystal,
+      this.alloy,
       this.metalX1,
       this.crystalX1,
       this.alloyX1,
@@ -468,7 +481,6 @@ export class ResourceManager implements ISalvable {
       this.warriorX1,
       this.drone
     ];
-
     this.limited.forEach(rl => {
       rl.isLimited = true;
       rl.reloadLimit();
@@ -595,41 +607,12 @@ export class ResourceManager implements ISalvable {
     this.energy.isCapped = false;
 
     for (const unit of this.unlockedProdResources) {
-      unit.a = new Decimal(0);
-      unit.b = new Decimal(0);
       unit.c = new Decimal(0);
 
-      if (!unit.isCapped) {
-        for (const prod1 of unit.generators.filter(p =>
-          p.producer.isActive()
-        )) {
-          // x
-          const prodX = prod1.prodPerSec;
-          unit.c = unit.c.plus(prodX.times(prod1.producer.quantity));
-
-          if (!prod1.producer.isCapped) {
-            for (const prod2 of prod1.producer.generators.filter(p =>
-              p.producer.isActive()
-            )) {
-              // x^2
-              const prodX2 = prod2.prodPerSec.times(prodX);
-              unit.b = unit.b.plus(prodX2.times(prod2.producer.quantity));
-
-              if (!prod2.producer.isCapped) {
-                for (const prod3 of prod2.producer.generators.filter(p =>
-                  p.producer.isActive()
-                )) {
-                  // x^3
-                  const prodX3 = prod3.prodPerSec.times(prodX2);
-                  unit.a = unit.a.plus(prodX3.times(prod3.producer.quantity));
-                }
-              }
-            }
-          }
-        }
+      for (const prod1 of unit.generators.filter(p => p.producer.isActive())) {
+        const prodX = prod1.prodPerSec;
+        unit.c = unit.c.plus(prodX.times(prod1.producer.quantity));
       }
-      unit.a = unit.a.div(6);
-      unit.b = unit.b.div(2);
     }
 
     if (this.energy.quantity.gte(this.energy.limit)) {
@@ -653,23 +636,14 @@ export class ResourceManager implements ISalvable {
     //  Load end times
     this.unlockedProdResources.forEach(unit => {
       const d = unit.quantity;
-      if (unit.a.lt(0) || unit.b.lt(0) || unit.c.lt(0)) {
-        const solution = solveEquation(unit.a, unit.b, unit.c, d).filter(s =>
-          s.gte(0)
-        );
-
-        if (solution.length > 0) {
-          const min = solution.reduce(
-            (p, c) => p.min(c),
-            new Decimal(Number.POSITIVE_INFINITY)
-          );
-          if (this.maxTime > min.toNumber() * 1000) {
-            this.maxTime = min.toNumber() * 1000;
-            this.unitZero = unit;
-          }
-          unit.endIn = Math.min(min.times(1000).toNumber(), unit.endIn);
-          unit.isEnding = true;
+      if (unit.c.lt(0)) {
+        const min = d.div(unit.c.abs()).max(0);
+        if (this.maxTime > min.toNumber() * 1000) {
+          this.maxTime = min.toNumber() * 1000;
+          this.unitZero = unit;
         }
+        unit.endIn = Math.min(min.times(1000).toNumber(), unit.endIn);
+        unit.isEnding = true;
       }
     });
 
@@ -677,23 +651,14 @@ export class ResourceManager implements ISalvable {
     this.limitedResources
       .filter(r => !r.isCapped && !r.isEnding)
       .forEach(unit => {
-        const d = unit.quantity.minus(unit.limit);
-        if (unit.a.gt(0) || unit.b.gt(0) || unit.c.gt(0)) {
-          const solution = solveEquation(unit.a, unit.b, unit.c, d).filter(s =>
-            s.gt(0)
-          );
-
-          if (solution.length > 0) {
-            const min = solution.reduce(
-              (p, c) => p.min(c),
-              new Decimal(Number.POSITIVE_INFINITY)
-            );
-            if (this.maxTime > min.toNumber() * 1000) {
-              this.maxTime = min.toNumber() * 1000;
-              this.unitZero = unit;
-            }
-            unit.fullIn = Math.min(min.times(1000).toNumber(), unit.fullIn);
+        const d = unit.limit.minus(unit.quantity);
+        if (unit.c.gt(0)) {
+          const min = d.div(unit.c);
+          if (this.maxTime > min.toNumber() * 1000) {
+            this.maxTime = min.toNumber() * 1000;
+            this.unitZero = unit;
           }
+          unit.fullIn = Math.min(min.times(1000).toNumber(), unit.fullIn);
         }
       });
 
@@ -712,19 +677,15 @@ export class ResourceManager implements ISalvable {
    */
   update(seconds: number): void {
     this.unlockedResources
-      .filter(u => !u.a.eq(0) || !u.b.eq(0) || !u.c.eq(0))
+      .filter(u => !u.c.eq(0))
       .forEach(u => {
-        u.quantity = u.quantity
-          .plus(u.a.times(Decimal.pow(seconds, 3)))
-          .plus(u.b.times(Decimal.pow(seconds, 2)))
-          .plus(u.c.times(seconds));
+        u.quantity = u.quantity.plus(u.c.times(seconds));
       });
     this.unlockedResources
       .filter(u => u.quantity.lt(0))
       .forEach(u => {
-        u.quantity = new Decimal(0);
+        // u.quantity = new Decimal(0);
       });
-    this.energy.quantity = this.energy.quantity.min(this.energy.limit);
   }
   /**
    * Stop consumers and producers of consumers of resource that have been ended
@@ -736,16 +697,6 @@ export class ResourceManager implements ISalvable {
         .filter(p => p.producer.quantity.gt(0) && p.ratio.lt(0))
         .forEach(p => {
           p.producer.operativity = 0;
-        });
-      //  Stop consumers of producers
-      this.unitZero.generators
-        .filter(p => p.producer.quantity.gt(0) && p.ratio.gt(0))
-        .forEach(p => {
-          p.producer.generators
-            .filter(p2 => p2.ratio.lt(0))
-            .forEach(p2 => {
-              p2.producer.operativity = 0;
-            });
         });
       this.unitZero.isEnding = false;
     }

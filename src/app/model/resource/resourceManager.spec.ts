@@ -30,20 +30,9 @@ describe("ResourceManager", () => {
     });
     resourceManager.loadPolynomial();
 
-    expect(res1.a.toNumber()).toBe(1 / 6);
-    expect(res1.b.toNumber()).toBe(1 / 2);
     expect(res1.c.toNumber()).toBe(1);
-
-    expect(res2.a.toNumber()).toBe(0);
-    expect(res2.b.toNumber()).toBe(1 / 2);
     expect(res2.c.toNumber()).toBe(1);
-
-    expect(res3.a.toNumber()).toBe(0);
-    expect(res3.b.toNumber()).toBe(0);
     expect(res3.c.toNumber()).toBe(1);
-
-    expect(res4.a.toNumber()).toBe(0);
-    expect(res4.b.toNumber()).toBe(0);
     expect(res4.c.toNumber()).toBe(0);
   });
 });

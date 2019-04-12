@@ -75,7 +75,9 @@ export class Game {
           "toast-warp"
         );
       }
-      while (diff > 0) {
+      let n = 0;
+      while (diff > 0 && n < 50) {
+        n++;
         let resEnded = false;
         this.resourceManager.loadPolynomial();
         let max = this.resourceManager.loadEndTime();
@@ -90,6 +92,7 @@ export class Game {
           this.resourceManager.stopResource();
         }
       }
+      if (n > 49) console.log("aaa");
 
       //  Convert computing to researches
       if (this.resourceManager.computing.quantity.gt(0)) {
@@ -118,16 +121,17 @@ export class Game {
 
     this.resourceManager.limitedResources.forEach(r => {
       if (r.quantity.gt(r.limit)) {
-        const difference = r.limit.minus(r.quantity);
-        r.generators[0].producer.products.forEach(ref => {
-          ref.product.quantity = ref.product.quantity.minus(
-            difference.times(ref.prodPerSec)
-          );
-        });
+        // const difference = r.limit.minus(r.quantity);
+        // r.generators[0].producer.products.forEach(ref => {
+        //   ref.product.quantity = ref.product.quantity.minus(
+        //     difference.times(ref.prodPerSec)
+        //   );
+        // });
 
         r.quantity = r.limit;
       }
     });
+
     this.resourceManager.loadPolynomial();
     if (this.isPaused) this.resourceManager.loadEndTime();
 

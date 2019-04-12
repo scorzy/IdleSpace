@@ -18,6 +18,11 @@ import { ModStack } from "../mod/modStack";
 
 export class Resource extends AbstractUnlockable
   implements ISpendable, IBuyable {
+  constructor(public id: string) {
+    super();
+    this.name = descriptions.resources[id][0];
+    this.description = descriptions.resources[id][1];
+  }
   name: string;
   description: string;
   shape: string;
@@ -25,11 +30,7 @@ export class Resource extends AbstractUnlockable
   unlocked = false;
   quantity = new Decimal(0);
   operativity = 100;
-  a = new Decimal(0);
-  b = new Decimal(0);
   c = new Decimal(0);
-  private lastA = new Decimal(0);
-  private lastB = new Decimal(0);
   private lastC = new Decimal(0);
   endIn: number = Number.POSITIVE_INFINITY;
   isEnding = false;
@@ -59,12 +60,8 @@ export class Resource extends AbstractUnlockable
   alerts: IAlert[];
   modStack: ModStack;
   standardPrice = new Decimal(1);
-
-  constructor(public id: string) {
-    super();
-    this.name = descriptions.resources[id][0];
-    this.description = descriptions.resources[id][1];
-  }
+  exponentialStorage = false;
+  alwaysActive = false;
 
   addGenerator(generator: Resource, ratio: DecimalSource = 1): void {
     const prod = new Production(generator, this, ratio);
@@ -76,7 +73,9 @@ export class Resource extends AbstractUnlockable
       this.unlocked &&
       this.operativity > Number.EPSILON &&
       this.quantity.gt(0) &&
-      !this.products.find(p => p.product.isCapped && p.ratio.gt(0))
+      !this.products.find(
+        p => !p.product.alwaysActive && p.product.isCapped && p.ratio.gt(0)
+      )
     );
   }
 
@@ -141,7 +140,9 @@ export class Resource extends AbstractUnlockable
           : PLUS_ADD;
         worker = worker.plus(this.prestigeLimit.numOwned * toAdd);
       }
-      this.limit = this.limitStorage.quantity.plus(1).times(worker);
+      this.limit = this.exponentialStorage
+        ? this.workerPerMine.times(Decimal.pow(2, this.limitStorage.quantity))
+        : this.limitStorage.quantity.plus(1).times(worker);
 
       this.limit = this.reloadCustomLimit(this.limit);
       this.limit = this.limit.floor();
@@ -161,18 +162,6 @@ export class Resource extends AbstractUnlockable
   }
 
   setABC() {
-    if (this.lastA.eq(this.a)) {
-      this.a = this.lastA;
-    } else {
-      this.lastA = this.a;
-    }
-
-    if (this.lastB.eq(this.b)) {
-      this.b = this.lastB;
-    } else {
-      this.lastB = this.b;
-    }
-
     if (this.lastC.eq(this.c)) {
       this.c = this.lastC;
     } else {
@@ -182,8 +171,6 @@ export class Resource extends AbstractUnlockable
   reset(): void {
     super.reset();
     this.quantity = new Decimal(0);
-    this.a = new Decimal(0);
-    this.b = new Decimal(0);
     this.c = new Decimal(0);
   }
   saveMods() {

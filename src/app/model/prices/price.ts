@@ -1,5 +1,4 @@
 import { ISpendable } from "../base/ISpendable";
-import { solveEquation } from "ant-utils";
 
 export class Price {
   canBuy = false;
@@ -52,14 +51,12 @@ export class Price {
   getTime(): Decimal {
     if (this.singleCost.lte(this.spendable.quantity)) return new Decimal(0);
     else {
-      this.avIn = solveEquation(
-        this.spendable.a,
-        this.spendable.b,
-        this.spendable.c,
-        this.spendable.quantity.minus(this.singleCost)
-      )
-        .filter(s => s.gte(0))
-        .reduce((p, c) => p.min(c), new Decimal(Number.POSITIVE_INFINITY));
+      this.avIn = this.singleCost.gt(this.spendable.limit)
+        ? new Decimal(Number.POSITIVE_INFINITY)
+        : this.singleCost
+            .minus(this.spendable.quantity)
+            .div(this.spendable.c)
+            .max(0);
       return this.avIn;
     }
   }

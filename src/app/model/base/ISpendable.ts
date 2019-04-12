@@ -2,9 +2,8 @@ export interface ISpendable {
   id: string;
   quantity: Decimal;
   name: string;
-  a: Decimal;
-  b: Decimal;
   c: Decimal;
+  limit: Decimal;
 }
 export function isISpendable(obj: any): obj is ISpendable {
   return (

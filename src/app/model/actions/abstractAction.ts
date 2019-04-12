@@ -24,8 +24,6 @@ export class Action extends AbstractUnlockable
   research: Research;
 
   alertMessage: string;
-  a = new Decimal(0);
-  b = new Decimal(0);
   c = new Decimal(0);
 
   constructor(id: string, public multiPrice: MultiPrice) {
