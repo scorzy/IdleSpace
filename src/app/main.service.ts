@@ -12,7 +12,7 @@ import { EndInPipe } from "./end-in.pipe";
 declare let LZString: any;
 
 const UP_INTERVAL = 200; // 5 fps
-// declare let CompressRequest2: any;
+const SAVE_INTERVAL = 5 * 60 * 1000; // 5 fps
 
 export function getUrl() {
   return (
@@ -84,19 +84,19 @@ export class MainService {
       this.setTheme();
     } else {
       this.game = new Game();
-      this.game.enemyManager.battleService = this.battleService;
       this.setTheme();
       this.show = true;
     }
     setInterval(this.update.bind(this), UP_INTERVAL);
+    setInterval(this.save.bind(this, true), SAVE_INTERVAL);
   }
 
   update() {
     if (!this.game) return false;
 
     const now = Date.now();
-    const diff = (now - this.last) / 1000;
-    // diff = diff * 10000;
+    let diff = (now - this.last) / 1000;
+    diff = diff * 1000;
     this.game.update(diff);
     this.last = now;
     this.em.updateEmitter.emit(diff);
@@ -122,7 +122,6 @@ export class MainService {
     if ("o" in data) this.options.restore(data.o);
     this.setTheme();
     this.game = new Game();
-    this.game.enemyManager.battleService = this.battleService;
     this.game.load(data.g);
     this.show = true;
     this.toastr.info(
@@ -138,8 +137,12 @@ export class MainService {
   export() {
     this.zipWorker.postMessage(new CompressRequest(this.getSave(), "", true, 1));
   }
-  save() {
-    this.zipWorker.postMessage(new CompressRequest(this.getSave(), "", true, 0));
+  save(auto = false) {
+    if (!this.game) return false;
+
+    this.zipWorker.postMessage(
+      new CompressRequest(this.getSave(), "", true, auto ? 10 : 0)
+    );
   }
   clear() {
     localStorage.removeItem("save");
@@ -169,10 +172,12 @@ export class MainService {
   onZip(result: CompressRequest2): void {
     if (result.compress) {
       if (result.zipped !== "") {
-        if (result.requestId === 0) {
+        if (result.requestId === 0 || result.requestId === 10) {
           localStorage.setItem("save", result.zipped);
           localStorage.setItem("saveDate", Date());
-          this.toastr.success("Game Saved");
+          if (result.requestId === 0 || this.options.autosaveNotification) {
+            this.toastr.success("Game Saved");
+          }
         } else if (result.requestId === 1) {
           this.em.zipEmitter.emit(result.zipped);
         }

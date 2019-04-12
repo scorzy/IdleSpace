@@ -54,6 +54,7 @@ import { ModdingComponent } from "./modding/modding.component";
 import { ToastrModule } from "ngx-toastr";
 import { NotificationsComponent } from './options-nav/notifications/notifications.component';
 import { DarkMatterComponent } from './dark-matter/dark-matter.component';
+import { InfoComponent } from './info/info.component';
 
 @NgModule({
   declarations: [
@@ -101,7 +102,8 @@ import { DarkMatterComponent } from './dark-matter/dark-matter.component';
     ResourceGroupComponent,
     ModdingComponent,
     NotificationsComponent,
-    DarkMatterComponent
+    DarkMatterComponent,
+    InfoComponent
   ],
   imports: [
     BrowserAnimationsModule,

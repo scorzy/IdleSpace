@@ -16,7 +16,8 @@
     "compileCompResult": "tsc  -p myTsconfig.json",
     "analyze": "ng build --prod --stats-json --build-optimizer=false && webpack-bundle-analyzer dist/IdleSpace/stats.json",
     "make-themes": "node-sass ./src/themes --output ./src/assets --output-style compressed",
-    "stylelint": "stylelint 'src/**/*.scss' --fix"
+    "stylelint": "stylelint 'src/**/*.scss' --fix",
+    "release": "ngh --dir=dist/IdleAnt2"
   },
   "private": true,
   "husky": {
@@ -53,8 +54,10 @@
     "@types/lodash-es": "^4.17.3",
     "@types/vis": "^4.21.12",
     "@webcomponents/custom-elements": "^1.2.2",
+    "angular-cli-ghpages": "^0.5.3",
     "ant-utils": "^1.2.0",
     "break_infinity.js": "^1.0.5",
+    "classlist.js": "^1.1.20150312",
     "core-js": "^2.6.5",
     "date-fns": "^1.30.1",
     "lodash-es": "^4.17.11",

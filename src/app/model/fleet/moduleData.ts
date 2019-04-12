@@ -100,7 +100,7 @@ export const ModulesData: IModuleData[] = [
     sizes: ALL_SIZES,
     energyBalance: -1,
     alloyPrice: 20,
-    shield: BASE_ARMOR / 2,
+    shield: BASE_ARMOR,
     researchPrice: 2e3,
     shape: "shield"
   }

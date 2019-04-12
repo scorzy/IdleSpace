@@ -57,7 +57,7 @@
         [routerLink]="'prestige'"
         class="nav-link"
         [routerLinkActive]="'active'"
-        *ngIf="ms.game.enemyManager.maxLevel > 1"
+        *ngIf="ms.game.prestigeManager.totalPrestige > 0"
       >
         <span class="nav-text">
           <clr-icon shape="star"></clr-icon>
@@ -140,6 +140,13 @@
           [attr.shape]="ms.game.isPaused ? 'play' : 'pause'"
           (click)="ms.game.isPaused = !ms.game.isPaused"
         ></clr-icon>
+      </a>
+      <a
+        [routerLink]="'info'"
+        class="nav-link nav-icon"
+        [routerLinkActive]="'active'"
+      >
+        <clr-icon shape="help-info"></clr-icon>
       </a>
       <a
         [routerLink]="'opt/save/'"

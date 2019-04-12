@@ -1,26 +1,27 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { PolynomComponent } from "./polynom.component";
-import { FormatPipe } from "../format.pipe";
+import { InfoComponent } from "./info.component";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { defaultImport } from "../app.component.spec";
+import { MainService } from "../main.service";
+import { OptionsService } from "../options.service";
 
-describe("PolynomComponent", () => {
-  let component: PolynomComponent;
-  let fixture: ComponentFixture<PolynomComponent>;
+describe("InfoComponent", () => {
+  let component: InfoComponent;
+  let fixture: ComponentFixture<InfoComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: defaultImport(),
-      declarations: [PolynomComponent, FormatPipe]
+      declarations: [InfoComponent],
+      providers: [MainService, OptionsService]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PolynomComponent);
+    fixture = TestBed.createComponent(InfoComponent);
     component = fixture.componentInstance;
-    component.c = new Decimal(1);
     fixture.detectChanges();
   });
 

@@ -24,7 +24,6 @@ export class EnemyManager implements ISalvable {
   currentEnemy: Enemy;
   allEnemy = new Array<Enemy>();
   maxLevel = 1;
-  battleService: BattleService;
   inBattle = false;
 
   searchJobs = new Array<SearchJob>();
@@ -69,7 +68,8 @@ export class EnemyManager implements ISalvable {
     battleRequest.enemyFleet = this.currentEnemy.currentZone.ships.map(s =>
       s.getShipData()
     );
-    this.battleService.battleWorker.postMessage(battleRequest);
+    const battleService = BattleService.getInstance();
+    if (battleService) battleService.battleWorker.postMessage(battleRequest);
   }
   onBattleEnd(result: BattleResult) {
     if (
@@ -139,9 +139,9 @@ export class EnemyManager implements ISalvable {
       }
       //#endregion
       if (this.currentEnemy.currentZone.number >= 99) {
+        this.maxLevel = Math.max(this.maxLevel, this.currentEnemy.level + 1);
         this.currentEnemy = null;
         if (this.allEnemy.length > 0) this.attack(this.allEnemy[0]);
-        this.maxLevel = Math.max(this.maxLevel, this.currentEnemy.level + 1);
         PrestigeManager.getInstance().reloadPrestigeToEarn();
       } else {
         this.currentEnemy.currentZone.completed = true;

@@ -24,7 +24,7 @@ export class DarkMatterManager implements ISalvable {
       "wi",
       new MultiPrice([new Price(this.darkMatter, 60, 1)])
     );
-    this.warpMin.name = "Minute Warp";
+    this.warpMin.name = "Minute Warp (hotkey m)";
     this.warpMin.afterBuy = (number: Decimal) => {
       this.game.update(number.times(60).toNumber(), true);
     };
@@ -33,7 +33,7 @@ export class DarkMatterManager implements ISalvable {
       "wh",
       new MultiPrice([new Price(this.darkMatter, 3600, 1)])
     );
-    this.warpHour.name = "Hour Warp";
+    this.warpHour.name = "Hour Warp (hotkey h)";
     this.warpHour.afterBuy = (number: Decimal) => {
       this.game.update(number.times(3600).toNumber(), true);
     };

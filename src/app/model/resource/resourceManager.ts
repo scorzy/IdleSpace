@@ -604,7 +604,6 @@ export class ResourceManager implements ISalvable {
     this.unlockedProdResources.forEach(res => {
       res.reloadProd();
     });
-    this.energy.isCapped = false;
 
     for (const unit of this.unlockedProdResources) {
       unit.c = new Decimal(0);
@@ -613,10 +612,6 @@ export class ResourceManager implements ISalvable {
         const prodX = prod1.prodPerSec;
         unit.c = unit.c.plus(prodX.times(prod1.producer.quantity));
       }
-    }
-
-    if (this.energy.quantity.gte(this.energy.limit)) {
-      this.energy.isCapped = true;
     }
   }
   /**
@@ -638,8 +633,8 @@ export class ResourceManager implements ISalvable {
       const d = unit.quantity;
       if (unit.c.lt(0)) {
         const min = d.div(unit.c.abs()).max(0);
-        if (this.maxTime > min.toNumber() * 1000) {
-          this.maxTime = min.toNumber() * 1000;
+        if (this.maxTime > min.toNumber()) {
+          this.maxTime = min.toNumber();
           this.unitZero = unit;
         }
         unit.endIn = Math.min(min.times(1000).toNumber(), unit.endIn);
@@ -654,8 +649,8 @@ export class ResourceManager implements ISalvable {
         const d = unit.limit.minus(unit.quantity);
         if (unit.c.gt(0)) {
           const min = d.div(unit.c);
-          if (this.maxTime > min.toNumber() * 1000) {
-            this.maxTime = min.toNumber() * 1000;
+          if (this.maxTime > min.toNumber()) {
+            this.maxTime = min.toNumber();
             this.unitZero = unit;
           }
           unit.fullIn = Math.min(min.times(1000).toNumber(), unit.fullIn);
@@ -668,6 +663,14 @@ export class ResourceManager implements ISalvable {
       this.computing.isEnding = false;
       this.unitZero = null;
     }
+
+    // console.log(
+    //   this.unitZero.name +
+    //     " " +
+    //     this.unitZero.endIn +
+    //     " " +
+    //     this.unitZero.fullIn
+    // );
     return this.maxTime;
   }
   /**

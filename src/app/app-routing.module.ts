@@ -17,6 +17,7 @@ import { PrestigeComponent } from "./prestige/prestige.component";
 import { GroupTabComponent } from "./group-tab/group-tab.component";
 import { NotificationsComponent } from "./options-nav/notifications/notifications.component";
 import { DarkMatterComponent } from "./dark-matter/dark-matter.component";
+import { InfoComponent } from "./info/info.component";
 
 const routes: Routes = [
   {
@@ -90,6 +91,10 @@ const routes: Routes = [
   {
     path: "darkMatter",
     component: DarkMatterComponent
+  },
+  {
+    path: "info",
+    component: InfoComponent
   }
 ];
 

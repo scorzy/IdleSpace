@@ -113,9 +113,9 @@ export class PrestigeComponent implements OnInit, OnChanges, AfterViewInit {
               roundness: 0.5
             }
           },
-          interaction: { dragNodes: true, hover: true },
+          interaction: { dragNodes: false, hover: true },
           physics: {
-            enabled: true,
+            enabled: false,
             barnesHut: {
               gravitationalConstant: -3500,
               avoidOverlap: 0.0

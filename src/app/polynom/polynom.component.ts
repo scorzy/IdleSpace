@@ -18,10 +18,6 @@ import {
 })
 export class PolynomComponent implements OnInit {
   @Input()
-  a: Decimal;
-  @Input()
-  b: Decimal;
-  @Input()
   c: Decimal;
 
   constructor() {

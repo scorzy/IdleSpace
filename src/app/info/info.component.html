@@ -1,0 +1,62 @@
+<div class="content-area">
+  <div class="clr-row clr-justify-content-center">
+    <div
+      class="clr-col-12 clr-col-sm-12 clr-col-md-11 clr-col-lg-10 clr-col-xl-9"
+    >
+      <h1>Info</h1>
+      <h3>Start</h3>
+      <p>
+        The first thing to do is to buy Mining Drones and Crystal Drones and
+        Technicians as needed. Than you should buy an Energy Plant to be able to
+        get more Technician. Than buy some Computing Unit, Research tab will
+        appear. Unused computing will be converted to Research, research
+        Corvette and you will be ready to start battle.
+      </p>
+      <h3>Fleet</h3>
+      <p>
+        In the ruler-pencil tab you can reinforce your fleet and make new ship
+        design. For now just drag the Corvette slider to max and click Reinforce
+        fleet. You must have Foundry Drones and Worker Drones to complete the
+        job.
+      </p>
+      <h3>Ship Design</h3>
+      <p>
+        You can create and modify ships design. Ships have this specifications:
+      </p>
+      <ul class="list">
+        <li>Armor: health, you now</li>
+        <li>Shield: take damage before Armor</li>
+        <li>Energy: must be positive, has no effect in battle</li>
+        <li>Damage: average damage, see modules for more info</li>
+        <li>
+          Explosion Chance: the armor threshold where your ship may explode
+          (lower is better)
+        </li>
+        <li>Price: price of one ship in Alloy</li>
+      </ul>
+      <h3>Battle</h3>
+      <p>
+        Battle calculate every ship individually, so if you have 1000 ships 1000
+        will be simulated. Battle consist of up to five rounds, fleets start
+        with maximum armor and shields. In each round, all participating units
+        randomly choose a target enemy unit.
+        <br />
+        For each weapon of each ship:
+      </p>
+      <ul class="list">
+        <li>
+          If the damage * shield percent is lower than 0.1% of target shield no
+          damage is done.
+        </li>
+        <li>
+          Enemy shield get damaged, than if shield is zero damage is done to
+          Armor (with armor damage percent of the weapon)
+        </li>
+        <li>
+          If target armor percent is less than 100 - target Explosion Chance
+          there is a chance that target explode.
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -10,11 +10,13 @@ import { Enemy } from "./model/enemy/enemy";
   providedIn: "root"
 })
 export class BattleService {
+  private static instance: BattleService;
   battleWorker: ITypedWorker<BattleRequest, BattleResult>;
   em: Emitters;
   enemy: Enemy;
 
   constructor() {
+    BattleService.instance = this;
     const url = getUrl();
     this.battleWorker = createWorker({
       workerFunction: this.doBattle,
@@ -26,6 +28,9 @@ export class BattleService {
         url + "assets/battleResult.js"
       ]
     });
+  }
+  static getInstance(): BattleService {
+    return BattleService.instance;
   }
   doBattle(input: BattleRequest, cb: (_: BattleResult) => void): void {
     // console.log(input);
@@ -126,6 +131,8 @@ export class BattleService {
                   //     " " +
                   //     target.originalArmor.toNumber() +
                   //     " " +
+                  //     target.explosionLevel +
+                  //     " " +
                   //     prob
                   // );
                   if (Math.random() < prob) {
@@ -143,12 +150,12 @@ export class BattleService {
       enemyShip = enemyShip.filter(s => s.armor.gt(0));
 
       //  Regenerate shields
-      playerShips
-        .concat(enemyShip)
-        .filter(s => s.shield.gt(0))
-        .forEach(s => {
-          s.shield = new Decimal(s.originalShield);
-        });
+      // playerShips
+      //   .concat(enemyShip)
+      //   .filter(s => s.shield.gt(0))
+      //   .forEach(s => {
+      //     s.shield = new Decimal(s.originalShield);
+      //   });
 
       battleFleets = [playerShips, enemyShip]; //  just to be sure
     }
