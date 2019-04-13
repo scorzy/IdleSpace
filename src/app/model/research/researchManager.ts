@@ -7,6 +7,7 @@ import { EnemyManager } from "../enemy/enemyManager";
 import { SearchJob } from "../enemy/searchJob";
 import { ShipDesign } from "../fleet/shipDesign";
 import { CORVETTE_PRESET } from "../enemy/preset";
+import { Bonus } from "../bonus/bonus";
 
 export class ResearchManager {
   private static instance: ResearchManager;
@@ -18,8 +19,7 @@ export class ResearchManager {
 
   //#region Researches
   betterResearch: Research;
-  alloy: Research;
-  // battery: Research;
+  energy: Research;
   modding: Research;
   telescope: Research;
   //#region Ship Types
@@ -39,11 +39,6 @@ export class ResearchManager {
       this.researches.push(Research.fromData(resData));
     }
     this.betterResearch = this.researches.find(r => r.id === "r");
-    this.alloy = this.researches.find(r => r.id === "a");
-    // this.battery = this.researches.find(r => r.id === "B");
-    // this.battery.onBuy = () => {
-    //   ResourceManager.getInstance().energy.reloadLimit();
-    // };
     this.corvette = this.researches.find(r => r.id === "c");
     this.frigate = this.researches.find(r => r.id === "f");
     this.destroyer = this.researches.find(r => r.id === "d");
@@ -52,6 +47,10 @@ export class ResearchManager {
     this.battleship = this.researches.find(r => r.id === "s");
     this.modding = this.researches.find(r => r.id === "M");
     this.telescope = this.researches.find(r => r.id === "X1");
+    this.energy = this.researches.find(r => r.id === "E");
+    ResourceManager.getInstance().energyX1.productionMultiplier.additiveBonus.push(
+      new Bonus(this.energy, 0.1)
+    );
 
     this.corvette.onBuy = () => {
       EnemyManager.getInstance().generate(new SearchJob());
@@ -207,5 +206,20 @@ export class ResearchManager {
     }
 
     return true;
+  }
+  /**
+   * Unlock stuff tha should be unlocked
+   * Used for new added researches
+   */
+  fixUnlocks() {
+    this.researches
+      .filter(r => r.firstDone)
+      .forEach(r => {
+        r.toUnlock
+          .filter(t => !t.unlocked)
+          .forEach(t => {
+            t.unlock();
+          });
+      });
   }
 }

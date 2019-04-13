@@ -188,6 +188,7 @@ export class Game {
     if ("w" in data) this.enemyManager.load(data.w);
     if ("s" in data) this.shipyard.load(data.s);
     if ("d" in data) this.darkMatterManager.load(data.d);
+    this.researchManager.fixUnlocks();
 
     // this.resourceManager.habitableSpace.quantity = new Decimal(100);
     // this.resourceManager.miningDistrict.quantity = new Decimal(100);

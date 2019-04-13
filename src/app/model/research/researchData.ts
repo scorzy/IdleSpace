@@ -9,7 +9,15 @@ export const ResearchData: IResearchData[] = [
     price: 200,
     description: "+20% researching speed",
     limit: Number.POSITIVE_INFINITY,
-    researchToUnlock: ["c"]
+    researchToUnlock: ["c", "E"]
+  },
+  {
+    id: "E",
+    name: "Energy",
+    shape: "energy",
+    price: 1e3,
+    description: "+10% energy",
+    limit: Number.POSITIVE_INFINITY
   },
   //    End of starting researches  ---------------
   {
@@ -25,7 +33,7 @@ export const ResearchData: IResearchData[] = [
     id: "W1",
     name: "Warriors",
     shape: "bullseye",
-    price: 1e4,
+    price: 1e5,
     description: "Unlock Warriors",
     resourceToUnlock: ["W1", "n"]
   },
@@ -33,7 +41,7 @@ export const ResearchData: IResearchData[] = [
     id: "X1",
     name: "Telescope",
     shape: "radar",
-    price: 1e5,
+    price: 1e4,
     description: "Unlock Telescope",
     resourceToUnlock: ["X1", "XP"],
     researchToUnlock: ["D"]
@@ -77,14 +85,6 @@ export const ResearchData: IResearchData[] = [
     price: 1e19,
     description: "Unlock battleship"
   },
-  // {
-  //   id: "B",
-  //   name: "Battery",
-  //   shape: "battery",
-  //   price: 1e3,
-  //   description: "Unlock batteries; +100% max energy",
-  //   limit: Number.POSITIVE_INFINITY
-  // },
   {
     id: "D",
     name: "Drone Factory",
