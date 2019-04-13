@@ -172,8 +172,10 @@ export class ResourceManager implements ISalvable {
     ];
     this.districts.forEach(d => {
       d.unlocked = true;
-      d.quantity = new Decimal(10);
     });
+    this.habitableSpace.quantity = new Decimal(6);
+    this.miningDistrict.quantity = new Decimal(3);
+    this.crystalDistrict.quantity = new Decimal(3);
     //#endregion
     //#region Group
     this.materials = [
@@ -401,8 +403,8 @@ export class ResourceManager implements ISalvable {
     const buyDrone = new Action(
       "L",
       new MultiPrice([
-        new Price(this.metal, 1000),
-        new Price(this.crystal, 1000),
+        new Price(this.metal, 1000, 2),
+        new Price(this.crystal, 1000, 2),
         new Price(this.habitableSpace, 1, 1)
       ])
     );
@@ -410,6 +412,7 @@ export class ResourceManager implements ISalvable {
       this.drone.reloadLimit();
     };
     buyDrone.name = "Drone Depot";
+    this.drone.exponentialStorage = true;
     this.drone.actions.push(buyDrone);
     this.drone.limitStorage = buyDrone;
     this.drone.reloadCustomLimit = (limit: Decimal) => {
@@ -448,8 +451,8 @@ export class ResourceManager implements ISalvable {
     const buyExpansion = new Action(
       "L",
       new MultiPrice([
-        new Price(this.metal, 900, 2),
-        new Price(this.crystal, 900, 2),
+        new Price(this.metal, 500, 2),
+        new Price(this.crystal, 1000, 2),
         new Price(this.habitableSpace, 1, 1)
       ])
     );
@@ -462,7 +465,7 @@ export class ResourceManager implements ISalvable {
     this.energy.exponentialStorage = true;
     this.energy.alwaysActive = true;
     this.energy.workerPerMine = new Decimal(200);
-    //#region
+    //#endregion
     //#region Arrays
     this.limited = [
       this.metal,

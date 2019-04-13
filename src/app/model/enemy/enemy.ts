@@ -205,7 +205,7 @@ export class Enemy {
     });
     if (!empty) {
       this.currentZone.generateShips(this.shipsDesign);
-      for (let i = 10; i < 100; i += 10) {
+      for (let i = 9; i < 100; i += 10) {
         let otherZones = new Array<Zone>();
         for (let k = 0; k < 10; k++) otherZones.push(this.zones[i - k]);
         otherZones = shuffle(otherZones);

@@ -191,7 +191,7 @@ export class ShipDesign implements ISalvable, IBuyable {
     if (!this.shipQuantity.eq(0)) data.q = this.shipQuantity;
     data.t = this.type.id;
     data.n = this.name;
-    data.m = this.modules.map(m => m.getSave());
+    data.m = this.modules.filter(m => m.isValid()).map(m => m.getSave());
     if (this.quantity.gt(0)) data.q = this.quantity;
     if (this.wantQuantity.gt(0)) data.w = this.wantQuantity;
 
@@ -262,7 +262,7 @@ export class ShipDesign implements ISalvable, IBuyable {
     if (!(this.editable && this.editable.isValid && !this.isUpgrading)) {
       return false;
     }
-
+    this.editable.modules = this.editable.modules.filter(m => m.isValid());
     if (this.editable.upgradePrice.gt(0)) {
       const job = new Job();
       job.design = this;

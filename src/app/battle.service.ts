@@ -53,7 +53,7 @@ export class BattleService {
         ship.originalArmor = new Decimal(ship.armor);
         ship.shield = Decimal.fromDecimal(ds.totalShield);
         ship.originalShield = new Decimal(ship.shield);
-        ship.explosionLevel = ds.explosionLevel;
+        ship.explosionLevel = ds.explosionLevel / 100;
         ds.modules.forEach(dl => {
           if (Decimal.fromDecimal(dl.computedDamage).gt(0)) {
             ship.modules.push({
@@ -120,11 +120,13 @@ export class BattleService {
                 if (
                   target.armor.gt(0) &&
                   target.armor.div(target.originalArmor).toNumber() <
-                    target.explosionLevel / 100
+                    target.explosionLevel
                 ) {
                   const prob =
-                    target.armor.div(target.originalArmor).toNumber() /
-                    (target.explosionLevel / 100);
+                    1 -
+                    target.armor
+                      .div(target.originalArmor.times(target.explosionLevel))
+                      .toNumber();
                   // console.log(
                   //   "Expl:" +
                   //     target.armor.toNumber() +

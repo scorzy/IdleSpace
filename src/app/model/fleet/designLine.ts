@@ -1,5 +1,6 @@
 import { Module, Sizes } from "./module";
 import { FleetManager } from "./fleetManager";
+import { AllSkillEffects } from "../prestige/allSkillEffects";
 
 export class DesignLine {
   maxLevel = 10;
@@ -19,7 +20,7 @@ export class DesignLine {
       other.module,
       other.size,
       other.level,
-      other.module.id,
+      other.module ? other.module.id : "",
       other.level
     );
   }
@@ -38,11 +39,13 @@ export class DesignLine {
     return this.module;
   }
   setMaxLevel() {
-    this.maxLevel =
-      10 +
-      (this.module && this.module.research
-        ? this.module.research.quantity.toNumber()
-        : 1);
+    this.maxLevel = Math.floor(
+      (10 +
+        (this.module && this.module.research
+          ? this.module.research.quantity.toNumber()
+          : 1)) *
+        (1 + AllSkillEffects.MODULE_LEVEL.numOwned * 0.5)
+    );
   }
 
   getSave(): any {

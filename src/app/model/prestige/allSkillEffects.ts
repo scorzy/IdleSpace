@@ -22,6 +22,7 @@ export class AllSkillEffects {
   static readonly FAST_COMBAT = new SkillEffect();
   static readonly DOUBLE_NAVAL_CAPACITY = new SkillEffect();
   static readonly DOUBLE_DARK_MATTER = new SkillEffect();
+  static readonly MODULE_LEVEL = new SkillEffect();
   //#endregion
   //#region Robot Modding
   static readonly FACTORY_BONUS = new SkillEffect();
@@ -65,9 +66,16 @@ export class AllSkillEffects {
           " " +
           resMan.tier1[i].name +
           "\n / " +
-          resMan.tier1[i].actions[1].name
+          resMan.tier1[i].actions[1].name +
+          "\n 0.1 " +
+          resMan.tier1[i].name +
+          " output"
         );
       };
+      tier1[i].name = resMan.tier1[i].name + " Prestige";
+      resMan.tier1[i].productionMultiplier.additiveBonus.push(
+        new Bonus(tier1[i], 0.1, true)
+      );
     }
     tier1.forEach(e => {
       e.afterBuy = () => {
@@ -95,17 +103,6 @@ export class AllSkillEffects {
       );
     };
     //#endregion
-    //#region PLUS_BATTERY
-    AllSkillEffects.PLUS_BATTERY.shape = "battery";
-    AllSkillEffects.PLUS_BATTERY.getDescription = (num = 1) => {
-      return "+ " + 100 * num + "% battery storage";
-    };
-    AllSkillEffects.PLUS_BATTERY.afterBuy = () => {
-      ResourceManager.getInstance().limitedResources.forEach(r =>
-        r.reloadLimit()
-      );
-    };
-    //#endregion
     //#region Combat
     AllSkillEffects.FAST_COMBAT.shape = "clock";
     AllSkillEffects.FAST_COMBAT.getDescription = (num = 1) => {
@@ -116,6 +113,9 @@ export class AllSkillEffects {
     };
     AllSkillEffects.DOUBLE_DARK_MATTER.getDescription = (num = 1) => {
       return "+ " + 100 * num + "%\nDark Matter";
+    };
+    AllSkillEffects.MODULE_LEVEL.getDescription = (num = 1) => {
+      return "+ " + 50 * num + "%\nShip Module Level";
     };
     //#endregion
     //#region Robot Modding
@@ -216,7 +216,6 @@ export class AllSkillEffects {
       AllSkillEffects.PLUS_WORKER,
       AllSkillEffects.PLUS_SEARCH,
       AllSkillEffects.PLUS_WARRIOR,
-      AllSkillEffects.PLUS_BATTERY,
       AllSkillEffects.FAST_COMBAT,
       AllSkillEffects.DOUBLE_NAVAL_CAPACITY,
       AllSkillEffects.FACTORY_BONUS,
@@ -231,7 +230,8 @@ export class AllSkillEffects {
       AllSkillEffects.COMPUTING_MULTI,
       AllSkillEffects.SHIPYARD_MULTI,
       AllSkillEffects.DOUBLE_MODDING,
-      AllSkillEffects.RESEARCH_MULTI
+      AllSkillEffects.RESEARCH_MULTI,
+      AllSkillEffects.MODULE_LEVEL
     ];
 
     AllSkillEffects.effectList.forEach(e => {

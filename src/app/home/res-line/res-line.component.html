@@ -7,18 +7,6 @@
     <span class="resLeft">
       <clr-icon [attr.shape]="shape" *ngIf="shape"></clr-icon>&nbsp;
       <span class="resName">
-        <!-- <clr-icon
-        class="is-info is-solid"
-        shape="angle"
-        *ngIf="!isMalus && team"
-        (click)="unit.teamAction.buy()"
-      ></clr-icon> -->
-        <!-- <clr-icon
-        class="is-info is-solid"
-        shape="angle-double"
-        *ngIf="!isMalus && twin"
-        (click)="unit.twinAction.buy()"
-      ></clr-icon> -->
         <clr-icon
           class="is-warning is-solid"
           shape="pause"
@@ -36,6 +24,9 @@
           *ngIf="os.showI && isNew"
         ></clr-icon>
         {{ name }}
+        <span *ngIf="mods && mods > 0" class="badge badge-info">{{
+          mods
+        }}</span>
       </span>
     </span>
     <span *ngIf="quantity.abs().gt(0.001)" class="qta" [class.notEnough]="cap">

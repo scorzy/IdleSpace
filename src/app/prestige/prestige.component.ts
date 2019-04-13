@@ -117,8 +117,8 @@ export class PrestigeComponent implements OnInit, OnChanges, AfterViewInit {
           physics: {
             enabled: false,
             barnesHut: {
-              gravitationalConstant: -3500,
-              avoidOverlap: 0.0
+              gravitationalConstant: -2500,
+              avoidOverlap: 0.5
             },
             minVelocity: 1
           }
