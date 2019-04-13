@@ -432,10 +432,7 @@ export class ResourceManager implements ISalvable {
       m.isLimited = true;
       const buyExpansion1 = new Action(
         "L",
-        new MultiPrice([
-          new Price(m, 900, 2),
-          new Price(this.habitableSpace, 1, 1)
-        ])
+        new MultiPrice([new Price(m, 900, 2)])
       );
       buyExpansion1.afterBuy = () => {
         m.reloadLimit();
@@ -452,8 +449,7 @@ export class ResourceManager implements ISalvable {
       "L",
       new MultiPrice([
         new Price(this.metal, 500, 2),
-        new Price(this.crystal, 1000, 2),
-        new Price(this.habitableSpace, 1, 1)
+        new Price(this.crystal, 1000, 2)
       ])
     );
     buyExpansion.afterBuy = () => {
