@@ -78,17 +78,20 @@ export class MainService {
     MainService.endInPipe = new EndInPipe(this.options);
   }
   start() {
+    this.game = new Game();
+    this.setTheme();
+    this.show = true;
+
     const savedData = localStorage.getItem("save");
     if (savedData) {
       this.load(savedData);
       this.setTheme();
-    } else {
-      this.game = new Game();
-      this.setTheme();
-      this.show = true;
     }
+
     setInterval(this.update.bind(this), UP_INTERVAL);
-    setInterval(this.save.bind(this, true), SAVE_INTERVAL);
+    setTimeout(() => {
+      setInterval(this.save.bind(this, true), SAVE_INTERVAL);
+    }, SAVE_INTERVAL);
   }
 
   update() {
@@ -118,17 +121,22 @@ export class MainService {
     );
   }
   load2(data: any): any {
-    this.last = data.l;
-    if ("o" in data) this.options.restore(data.o);
-    this.setTheme();
-    this.game = new Game();
-    this.game.load(data.g);
-    this.show = true;
-    this.toastr.info(
-      "You were offline for " +
-        MainService.endInPipe.transform(Date.now() - this.last),
-      "Game Loaded"
-    );
+    if (data && data.g) {
+      this.last = data.l;
+      if ("o" in data) this.options.restore(data.o);
+      this.setTheme();
+      this.game = new Game();
+      this.game.load(data.g);
+      this.show = true;
+      this.toastr.info(
+        "You were offline for " +
+          MainService.endInPipe.transform(Date.now() - this.last),
+        "Game Loaded"
+      );
+    } else {
+      this.toastr.error("See console", "Load Failed");
+      console.log(data);
+    }
   }
   import(str: string) {
     this.zipWorker.postMessage(new CompressRequest(str, "", false, 2));
