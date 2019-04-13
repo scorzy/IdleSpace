@@ -42,7 +42,7 @@ export const ResearchData: IResearchData[] = [
     id: "f",
     name: "Frigate",
     shape: "rank2",
-    price: 1e4,
+    price: 1e6,
     description: "Unlock frigate",
     researchToUnlock: ["d"]
   },
@@ -50,7 +50,7 @@ export const ResearchData: IResearchData[] = [
     id: "d",
     name: "Destroyer",
     shape: "rank3",
-    price: 1e6,
+    price: 1e8,
     description: "Unlock destroyer",
     researchToUnlock: ["b"]
   },
@@ -58,7 +58,7 @@ export const ResearchData: IResearchData[] = [
     id: "b",
     name: "Cruiser",
     shape: "rank4",
-    price: 1e9,
+    price: 1e11,
     description: "Unlock cruiser",
     researchToUnlock: ["t"]
   },
@@ -66,7 +66,7 @@ export const ResearchData: IResearchData[] = [
     id: "t",
     name: "Battlecruiser",
     shape: "flask",
-    price: 1e13,
+    price: 1e14,
     description: "Unlock battlecruiser",
     researchToUnlock: ["s"]
   },
@@ -74,7 +74,7 @@ export const ResearchData: IResearchData[] = [
     id: "s",
     name: "Battleship",
     shape: "flask",
-    price: 1e18,
+    price: 1e19,
     description: "Unlock battleship"
   },
   // {

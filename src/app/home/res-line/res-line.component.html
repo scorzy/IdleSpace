@@ -14,6 +14,12 @@
           (click)="setOp100()"
         ></clr-icon>
         <clr-icon
+          shape="exclamation-circle"
+          class="is-warning"
+          (click)="setOp100()"
+          *ngIf="operativity > 0 && operativity < 100"
+        ></clr-icon>
+        <clr-icon
           class="is-error is-error is-solid"
           shape="exclamation-triangle"
           *ngIf="isEnding"

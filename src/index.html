@@ -7,12 +7,33 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
+
+    <style>
+      body {
+        margin: 0;
+      }
+      .flexCont {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+      .loaderC {
+        text-align: center;
+        max-width: 50%;
+      }
+    </style>
   </head>
   <body>
     <app-root>
-      <h1>
-        Idle Space
-      </h1>
+      <div id="preload" class="flexCont">
+        <div class="loaderC">
+          <h1>
+            Idle Space
+          </h1>
+          <p>Loading<br />Optimized for latest Chromium and Firefox</p>
+        </div>
+      </div>
     </app-root>
 
     <!-- I just want to see if someone is playing my game -->
