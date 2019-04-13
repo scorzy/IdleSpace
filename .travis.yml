@@ -1,23 +1,27 @@
-dist: trusty
-sudo: false
-
 language: node_js
 node_js:
-  - "node"
+  - node
+
+git:
+  depth: false
+
+sudo: required
+dist: trusty
+group: edge
 
 addons:
   apt:
     sources:
+      - ubuntu-toolchain-r-test
       - google-chrome
     packages:
+      - g++-4.8
       - google-chrome-stable
 
-cache:
-  directories:
-    - ./node_modules
-
-install:
-  - npm install
+before_install:
+  - export CHROME_BIN=/usr/bin/google-chrome
+  # package-lock.json was introduced in npm@5
+  - "[[ $(node -v) =~ ^v9.*$ ]] || npm install -g npm@latest" # skipped when using node 9
 
 script:
   - npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
