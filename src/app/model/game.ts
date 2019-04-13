@@ -48,8 +48,8 @@ export class Game {
     this.researchManager.setUnlocks();
 
     this.fleetManager.reload();
-    this.resourceManager.metal.quantity = new Decimal(500);
-    this.resourceManager.crystal.quantity = new Decimal(200);
+    this.resourceManager.metal.quantity = new Decimal(600);
+    this.resourceManager.crystal.quantity = new Decimal(400);
     // this.darkMatterManager.darkMatter.quantity = new Decimal(1e10);
 
     this.researchBonus.multiplicativeBonus.push(
@@ -179,6 +179,7 @@ export class Game {
     return save;
   }
   load(data: any) {
+    if (typeof data === "undefined") return false;
     if (!("r" in data)) return false;
     if ("p" in data) this.prestigeManager.load(data.p);
     this.resourceManager.load(data.r);
