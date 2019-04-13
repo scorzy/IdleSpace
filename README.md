@@ -1,4 +1,5 @@
 # IdleSpace
+[![Build Status](https://travis-ci.org/scorzy/IdleSpace.svg?branch=master)](https://travis-ci.org/scorzy/IdleSpace)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.2.
 
