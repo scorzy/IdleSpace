@@ -9,6 +9,7 @@ import { PrestigeManager } from "./prestige/prestigeManager";
 import { DarkMatterManager } from "./darkMatter/darkMatterManager";
 import { MainService } from "../main.service";
 import { OptionsService } from "../options.service";
+import { AllSkillEffects } from "./prestige/allSkillEffects";
 
 const ZERO_DECIMAL_IMMUTABLE = new Decimal(0);
 
@@ -164,6 +165,7 @@ export class Game {
     this.init(true);
     this.resourceManager.limitedResources.forEach(r => r.reloadLimit());
     this.prestigeManager.reloadPrestigeToEarn();
+    AllSkillEffects.initialize(true);
   }
 
   //#region Save and Load

@@ -44,36 +44,54 @@ export class AllSkillEffects {
 
   //#endregion
 
-  static initialize() {
+  static initialize(prestige = false) {
     const resMan = ResourceManager.getInstance();
 
     //#region Tier 1
+    const resources = [
+      resMan.metal,
+      resMan.crystal,
+      resMan.energy,
+      resMan.computing,
+      resMan.alloy,
+      resMan.shipyardProgress,
+      resMan.searchProgress
+    ];
+    const workers = [
+      resMan.metalX1,
+      resMan.crystalX1,
+      resMan.energyX1,
+      resMan.computingX1,
+      resMan.alloyX1,
+      resMan.shipyardX1,
+      resMan.searchX1
+    ];
     const tier1 = [
       AllSkillEffects.PLUS_METAL_MINER,
       AllSkillEffects.PLUS_CRYSTAL_MINER,
-      AllSkillEffects.PLUS_ALLOY,
       AllSkillEffects.PLUS_ENERGY,
       AllSkillEffects.PLUS_CPU,
+      AllSkillEffects.PLUS_ALLOY,
       AllSkillEffects.PLUS_WORKER,
       AllSkillEffects.PLUS_SEARCH
     ];
     for (let i = 0; i < 7; i++) {
-      tier1[i].shape = resMan.materials[i].shape;
+      tier1[i].shape = resources[i].shape;
       tier1[i].getDescription = (num = 1) => {
         return (
           "+" +
           PLUS_ADD * num +
           " " +
-          resMan.tier1[i].name +
+          workers[i].name +
           "\n / " +
-          resMan.tier1[i].actions[1].name +
+          workers[i].actions[1].name +
           "\n 0.1 " +
-          resMan.tier1[i].name +
+          workers[i].name +
           " output"
         );
       };
-      tier1[i].name = resMan.tier1[i].name + " Prestige";
-      resMan.tier1[i].productionMultiplier.additiveBonus.push(
+      tier1[i].name = workers[i].name + " Prestige";
+      workers[i].productionMultiplier.additiveBonus.push(
         new Bonus(tier1[i], 0.1, true)
       );
     }
@@ -233,10 +251,11 @@ export class AllSkillEffects {
       AllSkillEffects.RESEARCH_MULTI,
       AllSkillEffects.MODULE_LEVEL
     ];
-
-    AllSkillEffects.effectList.forEach(e => {
-      e.numOwned = 0;
-      e.label = e.getDescription(1);
-    });
+    if (!prestige) {
+      AllSkillEffects.effectList.forEach(e => {
+        e.numOwned = 0;
+        e.label = e.getDescription(1);
+      });
+    }
   }
 }

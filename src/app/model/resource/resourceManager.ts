@@ -181,9 +181,9 @@ export class ResourceManager implements ISalvable {
     this.materials = [
       this.metal,
       this.crystal,
-      this.alloy,
       this.energy,
       this.computing,
+      this.alloy,
       this.shipyardProgress,
       this.searchProgress,
       this.drone,
