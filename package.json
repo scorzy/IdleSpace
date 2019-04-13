@@ -17,7 +17,7 @@
     "analyze": "ng build --prod --stats-json --build-optimizer=false && webpack-bundle-analyzer dist/IdleSpace/stats.json",
     "make-themes": "node-sass ./src/themes --output ./src/assets --output-style compressed",
     "stylelint": "stylelint 'src/**/*.scss' --fix",
-    "release": "ngh --dir=dist/IdleAnt2"
+    "release": "ngh --dir=dist/IdleSpace"
   },
   "private": true,
   "husky": {
