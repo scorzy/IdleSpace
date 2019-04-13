@@ -26,4 +26,17 @@
       <label for="warp_noti"></label>
     </div>
   </div>
+
+  <div class="form-group">
+    <label for="enemy">Enemy Defeated</label>
+    <div class="toggle-switch">
+      <input
+        name="enemy"
+        type="checkbox"
+        id="enemy"
+        [(ngModel)]="OptionsService.enemyDefeatedNotification"
+      />
+      <label for="enemy"></label>
+    </div>
+  </div>
 </form>

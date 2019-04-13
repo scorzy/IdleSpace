@@ -11,6 +11,8 @@ import { RomanPipe } from "src/app/roman.pipe";
 import { AllSkillEffects } from "../prestige/allSkillEffects";
 import { DarkMatterManager } from "../darkMatter/darkMatterManager";
 import { PrestigeManager } from "../prestige/prestigeManager";
+import { OptionsService } from "src/app/options.service";
+import { MainService } from "src/app/main.service";
 
 export const MAX_ENEMY_LIST_SIZE = 20;
 const DARK_MATTER_START_LEVEL = 2;
@@ -143,6 +145,12 @@ export class EnemyManager implements ISalvable {
         this.currentEnemy = null;
         if (this.allEnemy.length > 0) this.attack(this.allEnemy[0]);
         PrestigeManager.getInstance().reloadPrestigeToEarn();
+
+        try {
+          if (OptionsService.enemyDefeatedNotification) {
+            MainService.toastr.success("", "Enemy Defeated");
+          }
+        } catch (ex) {}
       } else {
         this.currentEnemy.currentZone.completed = true;
         this.currentEnemy.currentZone.reload();

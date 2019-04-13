@@ -7,6 +7,7 @@ declare let numberformat;
 export class OptionsService {
   static researchNotification = true;
   static warpNotification = true;
+  static enemyDefeatedNotification = true;
 
   usaFormat = true;
   numFormat = "scientific";
@@ -62,7 +63,8 @@ export class OptionsService {
       p: this.noResourceEndPopUp,
       w: OptionsService.warpNotification,
       t: this.timeFormatDetail,
-      r: OptionsService.researchNotification
+      r: OptionsService.researchNotification,
+      a: OptionsService.enemyDefeatedNotification
     };
   }
   restore(data: any) {
@@ -77,6 +79,7 @@ export class OptionsService {
     if ("w" in data) OptionsService.warpNotification = data.w;
     if ("t" in data) this.timeFormatDetail = data.t;
     if ("r" in data) OptionsService.researchNotification = data.r;
+    if ("a" in data) OptionsService.enemyDefeatedNotification = data.a;
     this.generateFormatter();
     this.reloadHeader();
   }
