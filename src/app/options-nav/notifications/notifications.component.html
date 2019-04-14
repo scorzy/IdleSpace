@@ -52,4 +52,18 @@
       <label for="research"></label>
     </div>
   </div>
+  <br />
+
+  <div class="form-group">
+    <label for="battleWin">Battle win notification</label>
+    <div class="toggle-switch">
+      <input
+        name="battleWin"
+        type="checkbox"
+        id="battleWin"
+        [(ngModel)]="OptionsService.battleWinNotification"
+      />
+      <label for="battleWin"></label>
+    </div>
+  </div>
 </form>

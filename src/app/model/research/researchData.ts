@@ -11,6 +11,7 @@ export const ResearchData: IResearchData[] = [
     limit: Number.POSITIVE_INFINITY,
     researchToUnlock: ["c", "E"]
   },
+  //    End of starting researches  ---------------
   {
     id: "E",
     name: "Energy",
@@ -19,7 +20,6 @@ export const ResearchData: IResearchData[] = [
     description: "+10% energy",
     limit: Number.POSITIVE_INFINITY
   },
-  //    End of starting researches  ---------------
   {
     id: "c",
     name: "Corvette",
@@ -27,7 +27,15 @@ export const ResearchData: IResearchData[] = [
     price: 2e3,
     description: "Unlock Corvette",
     resourceToUnlock: ["S1", "SP", "a", "a1"],
-    researchToUnlock: ["f", "X1", "W1"]
+    researchToUnlock: ["SC", "f", "X1", "W1"]
+  },
+  {
+    id: "SC",
+    name: "Scavenger",
+    shape: "coin-bag",
+    price: 5e3,
+    description: "+10% resources from battle",
+    limit: Number.POSITIVE_INFINITY
   },
   {
     id: "W1",

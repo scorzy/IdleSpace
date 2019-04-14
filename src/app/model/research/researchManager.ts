@@ -23,6 +23,7 @@ export class ResearchManager {
   energy: Research;
   modding: Research;
   telescope: Research;
+  scavenger: Research;
   //#region Ship Types
   corvette: Research;
   frigate: Research;
@@ -49,6 +50,7 @@ export class ResearchManager {
     this.modding = this.researches.find(r => r.id === "M");
     this.telescope = this.researches.find(r => r.id === "X1");
     this.energy = this.researches.find(r => r.id === "E");
+    this.scavenger = this.researches.find(r => r.id === "SC");
     ResourceManager.getInstance().energyX1.productionMultiplier.additiveBonus.push(
       new Bonus(this.energy, 0.1)
     );

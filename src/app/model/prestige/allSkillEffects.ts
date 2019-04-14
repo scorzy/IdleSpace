@@ -23,6 +23,7 @@ export class AllSkillEffects {
   static readonly DOUBLE_NAVAL_CAPACITY = new SkillEffect();
   static readonly DOUBLE_DARK_MATTER = new SkillEffect();
   static readonly MODULE_LEVEL = new SkillEffect();
+  static readonly DOUBLE_BATTLE_GAIN = new SkillEffect();
   //#endregion
   //#region Robot Modding
   static readonly FACTORY_BONUS = new SkillEffect();
@@ -134,6 +135,9 @@ export class AllSkillEffects {
     };
     AllSkillEffects.MODULE_LEVEL.getDescription = (num = 1) => {
       return "+ " + 50 * num + "%\nShip Module Level";
+    };
+    AllSkillEffects.DOUBLE_BATTLE_GAIN.getDescription = (num = 1) => {
+      return "+ " + 100 * num + "%\nResource gain from battle";
     };
     //#endregion
     //#region Robot Modding
@@ -249,7 +253,8 @@ export class AllSkillEffects {
       AllSkillEffects.SHIPYARD_MULTI,
       AllSkillEffects.DOUBLE_MODDING,
       AllSkillEffects.RESEARCH_MULTI,
-      AllSkillEffects.MODULE_LEVEL
+      AllSkillEffects.MODULE_LEVEL,
+      AllSkillEffects.DOUBLE_BATTLE_GAIN
     ];
     if (!prestige) {
       AllSkillEffects.effectList.forEach(e => {

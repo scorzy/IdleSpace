@@ -13,10 +13,13 @@ import { DarkMatterManager } from "../darkMatter/darkMatterManager";
 import { PrestigeManager } from "../prestige/prestigeManager";
 import { OptionsService } from "src/app/options.service";
 import { MainService } from "src/app/main.service";
+import { ResearchManager } from "../research/researchManager";
 
 export const MAX_ENEMY_LIST_SIZE = 20;
 const DARK_MATTER_START_LEVEL = 2;
 const DARK_MATTER_MULTI = 3;
+const RESOURCE_GAIN_MULTI = 1e3;
+const RESEARCH_GAIN_MULTI = 3e3;
 
 export class EnemyManager implements ISalvable {
   private static instance: EnemyManager;
@@ -108,25 +111,88 @@ export class EnemyManager implements ISalvable {
       //#region Reward
       const currentZone = this.currentEnemy.currentZone;
       const resMan = ResourceManager.getInstance();
+      let message = "";
+      let gain = new Decimal();
       if (currentZone.reward) {
+        let prestigeMulti = new Decimal(1).plus(
+          ResearchManager.getInstance().scavenger.quantity.times(0.1)
+        );
+        prestigeMulti = prestigeMulti.times(
+          AllSkillEffects.DOUBLE_BATTLE_GAIN.numOwned + 1
+        );
+
         switch (currentZone.reward) {
           case Reward.HabitableSpace:
             resMan.habitableSpace.quantity = resMan.habitableSpace.quantity.plus(
               this.currentEnemy.level
             );
+            gain = new Decimal(
+              RESEARCH_GAIN_MULTI * this.currentEnemy.level
+            ).times(prestigeMulti);
+            ResearchManager.getInstance().update(gain);
+            message =
+              "+ " +
+              this.currentEnemy.level +
+              " " +
+              resMan.computing.name +
+              "<br/>" +
+              "+ " +
+              MainService.formatPipe.transform(gain) +
+              " research";
             break;
+
           case Reward.MetalMine:
             resMan.miningDistrict.quantity = resMan.miningDistrict.quantity.plus(
               this.currentEnemy.level
             );
+            gain = new Decimal(
+              RESOURCE_GAIN_MULTI * this.currentEnemy.level
+            ).times(prestigeMulti);
+            resMan.metal.quantity = resMan.metal.quantity.plus(gain);
+            resMan.metal.quantity = resMan.metal.quantity.min(
+              resMan.metal.limit
+            );
+            message =
+              "+ " +
+              this.currentEnemy.level +
+              " " +
+              resMan.miningDistrict.name +
+              "<br/>" +
+              "+ " +
+              MainService.formatPipe.transform(gain) +
+              " " +
+              resMan.metal.name;
             break;
+
           case Reward.CrystalMine:
             resMan.crystalDistrict.quantity = resMan.crystalDistrict.quantity.plus(
               this.currentEnemy.level
             );
+            gain = new Decimal(
+              RESOURCE_GAIN_MULTI * this.currentEnemy.level
+            ).times(prestigeMulti);
+            resMan.crystal.quantity = resMan.crystal.quantity.plus(gain);
+            resMan.crystal.quantity = resMan.crystal.quantity.min(
+              resMan.crystal.limit
+            );
+            message =
+              "+ " +
+              this.currentEnemy.level +
+              " " +
+              resMan.miningDistrict.name +
+              "<br/>" +
+              "+ " +
+              MainService.formatPipe.transform(gain) +
+              " " +
+              resMan.crystal.name;
             break;
         }
       }
+      try {
+        MainService.toastr.success(message, "Battle Win", {
+          enableHtml: true
+        });
+      } catch (ex) {}
       //#endregion
       //#region Dark Matter
       if (this.currentEnemy.level >= DARK_MATTER_START_LEVEL) {

@@ -50,7 +50,9 @@ export class PrestigeManager implements ISalvable {
       new Skill(31, AllSkillEffects.PLUS_WARRIOR),
       new Skill(32, AllSkillEffects.PLUS_SEARCH),
       new Skill(33, AllSkillEffects.RESEARCH_MULTI),
-      new Skill(34, AllSkillEffects.MODULE_LEVEL)
+      new Skill(34, AllSkillEffects.MODULE_LEVEL),
+      new Skill(35, AllSkillEffects.DOUBLE_BATTLE_GAIN, true),
+      new Skill(36, AllSkillEffects.DOUBLE_BATTLE_GAIN)
     ]);
 
     this.visEdge = new DataSet([
@@ -85,7 +87,11 @@ export class PrestigeManager implements ISalvable {
       { from: 8, to: 31 },
       { from: 9, to: 32 },
       { from: 21, to: 33 },
-      { from: 11, to: 34 }
+      { from: 11, to: 34 },
+      { from: 35, to: 1 },
+      { from: 35, to: 2 },
+      { from: 35, to: 4 },
+      { from: 8, to: 36 }
     ]);
 
     this.maxPrestigePoints = this.visSkills.length;

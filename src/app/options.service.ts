@@ -9,6 +9,7 @@ export class OptionsService {
   static warpNotification = true;
   static enemyDefeatedNotification = true;
   static researchModal = true;
+  static battleWinNotification = true;
 
   usaFormat = true;
   numFormat = "scientific";
@@ -67,7 +68,8 @@ export class OptionsService {
       t: this.timeFormatDetail,
       r: OptionsService.researchNotification,
       a: OptionsService.enemyDefeatedNotification,
-      q: OptionsService.researchModal
+      q: OptionsService.researchModal,
+      b: OptionsService.battleWinNotification
     };
   }
   restore(data: any) {
@@ -84,6 +86,7 @@ export class OptionsService {
     if ("r" in data) OptionsService.researchNotification = data.r;
     if ("a" in data) OptionsService.enemyDefeatedNotification = data.a;
     if ("q" in data) OptionsService.researchModal = data.q;
+    if ("b" in data) OptionsService.battleWinNotification = data.b;
     this.generateFormatter();
     this.reloadHeader();
   }
