@@ -10,8 +10,6 @@ export function isISpendable(obj: any): obj is ISpendable {
     typeof obj.id === "string" &&
     obj.quantity instanceof Decimal &&
     typeof obj.name === "string" &&
-    obj.a instanceof Decimal &&
-    obj.b instanceof Decimal &&
     obj.c instanceof Decimal
   );
 }

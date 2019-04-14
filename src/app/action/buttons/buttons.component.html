@@ -92,7 +92,10 @@
 <clr-modal [(clrModalOpen)]="alertModal">
   <h3 class="modal-title">
     {{ action.name }}
-    <app-formatted-quantity [quantity]="alertQuantity"></app-formatted-quantity>
+    <app-formatted-quantity
+      [quantity]="alertQuantity"
+      [integer]="true"
+    ></app-formatted-quantity>
   </h3>
   <div class="modal-body">
     <p>{{ action.alertMessage }}</p>

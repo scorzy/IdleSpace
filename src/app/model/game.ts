@@ -49,8 +49,11 @@ export class Game {
     this.researchManager.setUnlocks();
 
     this.fleetManager.reload();
-    this.resourceManager.metal.quantity = new Decimal(600);
-    this.resourceManager.crystal.quantity = new Decimal(400);
+    this.resourceManager.metal.quantity = new Decimal(200);
+    this.resourceManager.crystal.quantity = new Decimal(120);
+    this.resourceManager.habitableSpace.quantity = new Decimal(10);
+    this.resourceManager.miningDistrict.quantity = new Decimal(2);
+    this.resourceManager.crystalDistrict.quantity = new Decimal(2);
     // this.darkMatterManager.darkMatter.quantity = new Decimal(1e10);
 
     this.researchBonus.multiplicativeBonus.push(
