@@ -5,6 +5,7 @@ import { OptionsService } from "./options.service";
 import { Router } from "@angular/router";
 
 declare let ClarityIcons;
+export let preventScroll: any;
 
 @Component({
   selector: "app-root",

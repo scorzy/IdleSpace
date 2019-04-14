@@ -4,13 +4,15 @@ import {
   ChangeDetectionStrategy,
   HostBinding,
   ChangeDetectorRef,
-  OnDestroy
+  OnDestroy,
+  AfterViewInit
 } from "@angular/core";
 import { Subscription } from "rxjs";
 import { MainService } from "src/app/main.service";
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 import { Job } from "src/app/model/shipyard/job";
 import { ShipDesign } from "src/app/model/fleet/shipDesign";
+import { preventScroll } from "src/app/app.component";
 
 @Component({
   selector: "app-shipyard",
@@ -18,7 +20,7 @@ import { ShipDesign } from "src/app/model/fleet/shipDesign";
   styleUrls: ["./shipyard.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ShipyardComponent implements OnInit, OnDestroy {
+export class ShipyardComponent implements OnInit, OnDestroy, AfterViewInit {
   @HostBinding("class")
   contentArea = "content-area";
   totalPrice = new Decimal(0);
@@ -26,7 +28,9 @@ export class ShipyardComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
   constructor(public ms: MainService, private cd: ChangeDetectorRef) {}
-
+  ngAfterViewInit(): void {
+    if (typeof preventScroll === typeof Function) preventScroll();
+  }
   ngOnInit() {
     this.ms.game.fleetManager.reloadSliders();
     this.ms.game.fleetManager.resetSliders();

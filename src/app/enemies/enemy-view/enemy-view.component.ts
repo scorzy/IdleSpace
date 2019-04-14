@@ -4,7 +4,8 @@ import {
   ChangeDetectionStrategy,
   OnDestroy,
   ChangeDetectorRef,
-  HostBinding
+  HostBinding,
+  AfterViewInit
 } from "@angular/core";
 import { Enemy } from "src/app/model/enemy/enemy";
 import { Subscription } from "rxjs";
@@ -12,6 +13,7 @@ import { MainService } from "src/app/main.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ShipDesign } from "src/app/model/fleet/shipDesign";
 import { Module } from "src/app/model/fleet/module";
+import { preventScroll } from "src/app/app.component";
 import { moveItemInArray } from "@angular/cdk/drag-drop";
 
 @Component({
@@ -20,7 +22,7 @@ import { moveItemInArray } from "@angular/cdk/drag-drop";
   styleUrls: ["./enemy-view.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EnemyViewComponent implements OnInit, OnDestroy {
+export class EnemyViewComponent implements OnInit, OnDestroy, AfterViewInit {
   @HostBinding("class")
   contentArea = "content-area";
   enemy: Enemy;
@@ -38,6 +40,9 @@ export class EnemyViewComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.route.params.subscribe(this.getEnemy.bind(this))
     );
+  }
+  ngAfterViewInit(): void {
+    if (typeof preventScroll === typeof Function) preventScroll();
   }
   ngOnDestroy() {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());

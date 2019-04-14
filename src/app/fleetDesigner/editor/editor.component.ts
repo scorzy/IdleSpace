@@ -5,7 +5,8 @@ import {
   ChangeDetectionStrategy,
   OnChanges,
   SimpleChanges,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  AfterViewInit
 } from "@angular/core";
 import { ShipDesign } from "src/app/model/fleet/shipDesign";
 import { Module, Sizes, getSizeName } from "src/app/model/fleet/module";
@@ -13,6 +14,7 @@ import { MainService } from "src/app/main.service";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { DesignLine } from "src/app/model/fleet/designLine";
+import { preventScroll } from "src/app/app.component";
 
 @Component({
   selector: "app-editor",
@@ -20,7 +22,7 @@ import { DesignLine } from "src/app/model/fleet/designLine";
   styleUrls: ["./editor.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EditorComponent implements OnInit, OnChanges {
+export class EditorComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() design: ShipDesign;
 
   getSizeName = getSizeName;
@@ -34,7 +36,9 @@ export class EditorComponent implements OnInit, OnChanges {
     private cd: ChangeDetectorRef,
     private router: Router
   ) {}
-
+  ngAfterViewInit(): void {
+    if (typeof preventScroll === typeof Function) preventScroll();
+  }
   ngOnChanges(changes: SimpleChanges) {
     if (this.design) this.design.copy();
     if (this.design.modules.length === 0) {

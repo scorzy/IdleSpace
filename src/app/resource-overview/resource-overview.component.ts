@@ -5,13 +5,15 @@ import {
   Input,
   ChangeDetectorRef,
   OnDestroy,
-  OnChanges
+  OnChanges,
+  AfterViewInit
 } from "@angular/core";
 import { Resource } from "../model/resource/resource";
 import { Subscription } from "rxjs";
 import { MainService } from "../main.service";
 import { Action } from "../model/actions/abstractAction";
 import { IAlert } from "../model/base/IAlert";
+import { preventScroll } from "../app.component";
 
 @Component({
   selector: "app-resource-overview",
@@ -19,14 +21,17 @@ import { IAlert } from "../model/base/IAlert";
   styleUrls: ["./resource-overview.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ResourceOverviewComponent implements OnInit, OnDestroy, OnChanges {
+export class ResourceOverviewComponent
+  implements OnInit, OnDestroy, OnChanges, AfterViewInit {
   @Input() res: Resource;
   private subscriptions: Subscription[] = [];
   alerts: IAlert[];
   isFinite = Number.isFinite;
 
   constructor(public ms: MainService, private cd: ChangeDetectorRef) {}
-
+  ngAfterViewInit(): void {
+    if (typeof preventScroll === typeof Function) preventScroll();
+  }
   ngOnInit() {
     this.setAlerts();
     this.subscriptions.push(

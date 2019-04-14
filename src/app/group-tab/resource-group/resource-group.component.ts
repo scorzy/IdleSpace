@@ -6,7 +6,8 @@ import {
   ChangeDetectorRef,
   OnDestroy,
   OnChanges,
-  SimpleChanges
+  SimpleChanges,
+  AfterViewInit
 } from "@angular/core";
 import { ResourceGroup } from "src/app/model/resource/resourceGroup";
 import { MainService } from "src/app/main.service";
@@ -16,6 +17,7 @@ import { ResourceQuantitySorter } from "src/app/model/utility/resourceQuantitySo
 import { LimitResourceSorter } from "src/app/model/utility/limitResourceSorter";
 import { ExpansionResourceSorter } from "src/app/model/utility/expansionResourceSorter";
 import { Action } from "src/app/model/actions/abstractAction";
+import { preventScroll } from "src/app/app.component";
 
 @Component({
   selector: "app-resource-group",
@@ -23,7 +25,8 @@ import { Action } from "src/app/model/actions/abstractAction";
   styleUrls: ["./resource-group.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ResourceGroupComponent implements OnInit, OnDestroy, OnChanges {
+export class ResourceGroupComponent
+  implements OnInit, OnDestroy, OnChanges, AfterViewInit {
   constructor(public ms: MainService, private cd: ChangeDetectorRef) {}
   @Input() resourceGroup: ResourceGroup;
   // unitsSpan = "";
@@ -38,7 +41,9 @@ export class ResourceGroupComponent implements OnInit, OnDestroy, OnChanges {
   expansionResourceSorter = new ExpansionResourceSorter();
   private subscriptions: Subscription[] = [];
   storage = false;
-
+  ngAfterViewInit(): void {
+    if (typeof preventScroll === typeof Function) preventScroll();
+  }
   ngOnChanges(changes: SimpleChanges): void {
     this.getGroup();
   }

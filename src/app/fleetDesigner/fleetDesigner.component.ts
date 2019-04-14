@@ -2,11 +2,13 @@ import {
   Component,
   OnInit,
   ChangeDetectionStrategy,
-  HostBinding
+  HostBinding,
+  AfterViewInit
 } from "@angular/core";
 import { MainService } from "../main.service";
 import { ShipDesign } from "../model/fleet/shipDesign";
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
+import { preventScroll } from "../app.component";
 
 @Component({
   selector: "app-fleet-designer",
@@ -14,14 +16,16 @@ import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
   styleUrls: ["./fleetDesigner.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FleetDesignerComponent implements OnInit {
+export class FleetDesignerComponent implements OnInit, AfterViewInit {
   @HostBinding("class")
   contentContainer = "content-container";
 
   constructor(public ms: MainService) {}
 
   ngOnInit() {}
-
+  ngAfterViewInit(): void {
+    if (typeof preventScroll === typeof Function) preventScroll();
+  }
   designId(index: number, data: ShipDesign) {
     return data.id;
   }

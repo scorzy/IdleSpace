@@ -4,12 +4,14 @@ import {
   ChangeDetectionStrategy,
   HostBinding,
   ChangeDetectorRef,
-  OnDestroy
+  OnDestroy,
+  AfterViewInit
 } from "@angular/core";
 import { MainService } from "../main.service";
 import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
 import { ResourceGroup } from "../model/resource/resourceGroup";
+import { preventScroll } from "../app.component";
 
 @Component({
   selector: "app-group-tab",
@@ -17,7 +19,7 @@ import { ResourceGroup } from "../model/resource/resourceGroup";
   styleUrls: ["./group-tab.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GroupTabComponent implements OnInit, OnDestroy {
+export class GroupTabComponent implements OnInit, OnDestroy, AfterViewInit {
   @HostBinding("class")
   contentArea = "content-area";
   paramsSub: any;
@@ -31,6 +33,9 @@ export class GroupTabComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private cd: ChangeDetectorRef
   ) {}
+  ngAfterViewInit(): void {
+    if (typeof preventScroll === typeof Function) preventScroll();
+  }
   ngOnInit() {
     this.subscriptions.push(
       this.route.params.subscribe(this.getGroup.bind(this))

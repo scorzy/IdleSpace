@@ -4,10 +4,12 @@ import {
   ChangeDetectionStrategy,
   HostBinding,
   OnDestroy,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  AfterViewInit
 } from "@angular/core";
 import { MainService } from "../main.service";
 import { Subscription } from "rxjs";
+import { preventScroll } from "../app.component";
 
 @Component({
   selector: "app-battle",
@@ -15,7 +17,7 @@ import { Subscription } from "rxjs";
   styleUrls: ["./battle.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BattleMenuComponent implements OnInit, OnDestroy {
+export class BattleMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   @HostBinding("class")
   contentContainer = "content-container";
   surrenderModal = false;
@@ -35,7 +37,9 @@ export class BattleMenuComponent implements OnInit, OnDestroy {
       })
     );
   }
-
+  ngAfterViewInit(): void {
+    if (typeof preventScroll === typeof Function) preventScroll();
+  }
   ngOnDestroy() {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }

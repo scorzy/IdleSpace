@@ -4,7 +4,8 @@ import {
   HostBinding,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  OnDestroy
+  OnDestroy,
+  AfterViewInit
 } from "@angular/core";
 import { Subscription } from "rxjs";
 import { MainService } from "src/app/main.service";
@@ -13,6 +14,7 @@ import { ShipDesign } from "src/app/model/fleet/shipDesign";
 import { ShipTypes, ShipType } from "src/app/model/fleet/shipTypes";
 import { ResearchManager } from "src/app/model/research/researchManager";
 import { MAX_DESIGN } from "src/app/model/fleet/fleetManager";
+import { preventScroll } from "src/app/app.component";
 
 @Component({
   selector: "app-design",
@@ -20,7 +22,7 @@ import { MAX_DESIGN } from "src/app/model/fleet/fleetManager";
   styleUrls: ["./design.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DesignComponent implements OnInit, OnDestroy {
+export class DesignComponent implements OnInit, OnDestroy, AfterViewInit {
   @HostBinding("class")
   contentArea = "content-area";
   design: ShipDesign;
@@ -39,7 +41,9 @@ export class DesignComponent implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef,
     private router: Router
   ) {}
-
+  ngAfterViewInit(): void {
+    if (typeof preventScroll === typeof Function) preventScroll();
+  }
   ngOnInit() {
     this.unlockedShips = [];
     if (ResearchManager.getInstance().corvette.firstDone) {

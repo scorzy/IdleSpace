@@ -14,6 +14,7 @@ import { Skill } from "../model/prestige/skill";
 import { AllSkillEffects } from "../model/prestige/allSkillEffects";
 import { Network } from "vis";
 import { SkillEffect } from "../model/prestige/skillEffects";
+import { preventScroll } from "../app.component";
 
 @Component({
   selector: "app-prestige",
@@ -95,6 +96,7 @@ export class PrestigeComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    if (typeof preventScroll === typeof Function) preventScroll();
     setTimeout(() => {
       const myNodes: any = this.ms.game.prestigeManager.visSkills;
       const myEedges: any = this.ms.game.prestigeManager.visEdge;

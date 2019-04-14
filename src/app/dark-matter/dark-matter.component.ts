@@ -2,10 +2,12 @@ import {
   Component,
   OnInit,
   ChangeDetectionStrategy,
-  HostBinding
+  HostBinding,
+  AfterViewInit
 } from "@angular/core";
 import { MainService } from "../main.service";
 import { Action } from "../model/actions/abstractAction";
+import { preventScroll } from "../app.component";
 
 @Component({
   selector: "app-dark-matter",
@@ -13,7 +15,7 @@ import { Action } from "../model/actions/abstractAction";
   styleUrls: ["./dark-matter.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DarkMatterComponent implements OnInit {
+export class DarkMatterComponent implements OnInit, AfterViewInit {
   @HostBinding("class")
   contentContainer = "content-container";
 
@@ -23,5 +25,8 @@ export class DarkMatterComponent implements OnInit {
 
   getActId(index: number, base: Action) {
     return base.id;
+  }
+  ngAfterViewInit(): void {
+    if (typeof preventScroll === typeof Function) preventScroll();
   }
 }

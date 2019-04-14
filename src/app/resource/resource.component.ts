@@ -4,12 +4,14 @@ import {
   ChangeDetectionStrategy,
   OnDestroy,
   ChangeDetectorRef,
-  HostBinding
+  HostBinding,
+  AfterViewInit
 } from "@angular/core";
 import { Subscription } from "rxjs";
 import { MainService } from "../main.service";
 import { ActivatedRoute } from "@angular/router";
 import { Resource } from "../model/resource/resource";
+import { preventScroll } from "../app.component";
 
 @Component({
   selector: "app-resource",
@@ -17,7 +19,7 @@ import { Resource } from "../model/resource/resource";
   styleUrls: ["./resource.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ResourceComponent implements OnInit, OnDestroy {
+export class ResourceComponent implements OnInit, OnDestroy, AfterViewInit {
   @HostBinding("class")
   contentArea = "content-area";
 
@@ -29,7 +31,9 @@ export class ResourceComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private cd: ChangeDetectorRef
   ) {}
-
+  ngAfterViewInit(): void {
+    if (typeof preventScroll === typeof Function) preventScroll();
+  }
   ngOnInit() {
     this.subscriptions.push(
       this.route.params.subscribe(this.getUnit.bind(this))

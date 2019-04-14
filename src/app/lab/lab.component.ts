@@ -4,7 +4,8 @@ import {
   ChangeDetectionStrategy,
   HostBinding,
   ChangeDetectorRef,
-  OnDestroy
+  OnDestroy,
+  AfterViewInit
 } from "@angular/core";
 import { MainService } from "../main.service";
 import {
@@ -14,6 +15,7 @@ import {
 } from "@angular/cdk/drag-drop";
 import { Research } from "../model/research/research";
 import { Subscription } from "rxjs";
+import { preventScroll } from "../app.component";
 
 @Component({
   selector: "app-lab",
@@ -21,7 +23,7 @@ import { Subscription } from "rxjs";
   styleUrls: ["./lab.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LabComponent implements OnInit, OnDestroy {
+export class LabComponent implements OnInit, OnDestroy, AfterViewInit {
   @HostBinding("class")
   contentContainer = "content-container";
   resMulti = new Decimal(1);
@@ -30,7 +32,9 @@ export class LabComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
   constructor(public ms: MainService, private cd: ChangeDetectorRef) {}
-
+  ngAfterViewInit(): void {
+    if (typeof preventScroll === typeof Function) preventScroll();
+  }
   ngOnInit() {
     this.ms.game.researchManager.isNew = false;
     this.subscriptions.push(

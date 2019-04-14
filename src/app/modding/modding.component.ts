@@ -4,11 +4,13 @@ import {
   ChangeDetectionStrategy,
   Input,
   OnChanges,
-  SimpleChanges
+  SimpleChanges,
+  AfterViewInit
 } from "@angular/core";
 import { Resource } from "../model/resource/resource";
 import { Mod } from "../model/mod/mod";
 import { MainService } from "../main.service";
+import { preventScroll } from "../app.component";
 
 @Component({
   selector: "app-modding",
@@ -16,7 +18,7 @@ import { MainService } from "../main.service";
   styleUrls: ["./modding.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ModdingComponent implements OnInit, OnChanges {
+export class ModdingComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() res: Resource;
   isValid = true;
   used = 0;
@@ -24,7 +26,9 @@ export class ModdingComponent implements OnInit, OnChanges {
   max = 0;
   min = 0;
   constructor(public ms: MainService) {}
-
+  ngAfterViewInit(): void {
+    if (typeof preventScroll === typeof Function) preventScroll();
+  }
   ngOnInit() {
     this.cancel();
     this.reload();

@@ -2,11 +2,13 @@ import {
   Component,
   OnInit,
   ChangeDetectionStrategy,
-  HostBinding
+  HostBinding,
+  AfterViewInit
 } from "@angular/core";
 import { MainService } from "src/app/main.service";
 import { OptionsService } from "src/app/options.service";
 import { FormatPipe } from "src/app/format.pipe";
+import { preventScroll } from "src/app/app.component";
 
 @Component({
   selector: "app-ui",
@@ -14,14 +16,14 @@ import { FormatPipe } from "src/app/format.pipe";
   styleUrls: ["./ui.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UiComponent implements OnInit {
+export class UiComponent implements OnInit, AfterViewInit {
   @HostBinding("class")
   contentArea = "content-area";
 
-  constructor(public ms: MainService, public os: OptionsService) {
-    //
+  constructor(public ms: MainService, public os: OptionsService) {}
+  ngAfterViewInit(): void {
+    if (typeof preventScroll === typeof Function) preventScroll();
   }
-
   ngOnInit() {}
   onFormatChange() {
     FormatPipe.map.clear();

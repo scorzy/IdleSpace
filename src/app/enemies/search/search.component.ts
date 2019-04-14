@@ -3,7 +3,8 @@ import {
   OnInit,
   ChangeDetectionStrategy,
   HostBinding,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  AfterViewInit
 } from "@angular/core";
 import { MainService } from "src/app/main.service";
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
@@ -11,14 +12,14 @@ import { SearchJob } from "src/app/model/enemy/searchJob";
 import { MAX_ENEMY_LIST_SIZE } from "src/app/model/enemy/enemyManager";
 import { Subscription } from "rxjs";
 import { AllSkillEffects } from "src/app/model/prestige/allSkillEffects";
-
+import { preventScroll } from "src/app/app.component";
 @Component({
   selector: "app-search",
   templateUrl: "./search.component.html",
   styleUrls: ["./search.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, AfterViewInit {
   @HostBinding("class")
   contentArea = "content-area";
   userLevel = 1;
@@ -55,7 +56,9 @@ export class SearchComponent implements OnInit {
       })
     );
   }
-
+  ngAfterViewInit(): void {
+    if (typeof preventScroll === typeof Function) preventScroll();
+  }
   generate() {
     this.ms.game.enemyManager.startSearching(this.userLevel);
   }

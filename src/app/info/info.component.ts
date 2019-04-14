@@ -2,8 +2,10 @@ import {
   Component,
   OnInit,
   ChangeDetectionStrategy,
-  HostBinding
+  HostBinding,
+  AfterViewInit
 } from "@angular/core";
+import { preventScroll } from "../app.component";
 
 @Component({
   selector: "app-info",
@@ -11,11 +13,13 @@ import {
   styleUrls: ["./info.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class InfoComponent implements OnInit {
+export class InfoComponent implements OnInit, AfterViewInit {
   @HostBinding("class")
   contentContainer = "content-container";
 
   constructor() {}
-
+  ngAfterViewInit(): void {
+    if (typeof preventScroll === typeof Function) preventScroll();
+  }
   ngOnInit() {}
 }

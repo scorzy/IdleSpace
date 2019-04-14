@@ -4,11 +4,13 @@ import {
   ChangeDetectionStrategy,
   Input,
   ChangeDetectorRef,
-  OnDestroy
+  OnDestroy,
+  AfterViewInit
 } from "@angular/core";
 import { ShipDesign } from "src/app/model/fleet/shipDesign";
 import { Subscription } from "rxjs";
 import { MainService } from "src/app/main.service";
+import { preventScroll } from "src/app/app.component";
 
 @Component({
   selector: "app-view",
@@ -16,14 +18,16 @@ import { MainService } from "src/app/main.service";
   styleUrls: ["./view.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ViewComponent implements OnInit, OnDestroy {
+export class ViewComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() design: ShipDesign;
   @Input() showDifference = false;
 
   private subscriptions: Subscription[] = [];
 
   constructor(public ms: MainService, private cd: ChangeDetectorRef) {}
-
+  ngAfterViewInit(): void {
+    if (typeof preventScroll === typeof Function) preventScroll();
+  }
   ngOnInit() {
     this.subscriptions.push(
       this.ms.em.designEmitter.subscribe(() => {
