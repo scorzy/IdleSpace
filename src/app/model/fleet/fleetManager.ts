@@ -10,9 +10,13 @@ import { EnemyManager } from "../enemy/enemyManager";
 import { ResourceManager } from "../resource/resourceManager";
 import { ResearchManager } from "../research/researchManager";
 import { AllSkillEffects } from "../prestige/allSkillEffects";
+import sample from "lodash-es/sample";
+import { MainService } from "src/app/main.service";
 
 export const MAX_NAVAL_CAPACITY = 1e4;
 export const MAX_DESIGN = 20;
+const DISBAND_INTERVAL = 60 * 1000 * 5; //  5 minutes
+const DISBAND_PERCENT = 0.1;
 
 export class FleetManager implements ISalvable {
   private static instance: FleetManager;
@@ -21,6 +25,7 @@ export class FleetManager implements ISalvable {
   ships = new Array<ShipDesign>();
   freeNavalCapacity: Resource;
   usedNavalCapacity = new Decimal(0);
+  usedNavalCapacityShips = new Decimal(0);
   totalShips = new Decimal(0);
 
   allModules = new Array<Module>();
@@ -34,6 +39,7 @@ export class FleetManager implements ISalvable {
   autoReinforce = false;
   fullStrength = false;
   fightEnabled = false;
+  lastFleetDisband = Date.now();
 
   constructor() {
     FleetManager.instance = this;
@@ -98,7 +104,8 @@ export class FleetManager implements ISalvable {
       .map(s => s.quantity)
       .reduce((p, c) => p.plus(c), new Decimal(0));
 
-    this.usedNavalCapacity = ShipDesign.GetTotalNavalCap(this.ships).plus(
+    this.usedNavalCapacityShips = ShipDesign.GetTotalNavalCap(this.ships);
+    this.usedNavalCapacity = this.usedNavalCapacityShips.plus(
       Shipyard.getInstance().getTotalNavalCapacity()
     );
     this.freeNavalCapacity.quantity = this.totalNavalCapacity.minus(
@@ -248,5 +255,38 @@ export class FleetManager implements ISalvable {
   }
   setFight() {
     this.fightEnabled = this.ships.findIndex(s => s.quantity.gte(1)) > -1;
+  }
+  /**
+   * Disband random ships
+   */
+  disbandShips() {
+    if (this.usedNavalCapacityShips.lte(this.totalNavalCapacity)) {
+      this.lastFleetDisband = Date.now();
+    } else if (Date.now() - this.lastFleetDisband > DISBAND_INTERVAL) {
+      //  Disband Ships
+      let diff = this.totalNavalCapacity.minus(this.usedNavalCapacityShips);
+      diff = diff.times(DISBAND_PERCENT);
+      const ships = this.ships.filter(s => s.quantity.gte(1));
+      const randomShip = sample(ships);
+      const toRemove = Decimal.min(
+        randomShip.quantity,
+        diff
+          .div(randomShip.type.navalCapacity)
+          .max(1)
+          .ceil()
+      );
+      if (toRemove.gte(1)) {
+        this.lastFleetDisband = Date.now();
+        randomShip.quantity = randomShip.quantity.minus(toRemove);
+        MainService.toastr.warning(
+          MainService.formatPipe.transform(toRemove, true) +
+            " " +
+            randomShip.name +
+            " lost",
+          "Exceeding Naval Capacity"
+        );
+        this.reloadNavalCapacity();
+      }
+    }
   }
 }
