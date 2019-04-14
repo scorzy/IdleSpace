@@ -27,7 +27,7 @@ export const ResearchData: IResearchData[] = [
     price: 2e3,
     description: "Unlock Corvette",
     resourceToUnlock: ["S1", "SP", "a", "a1"],
-    researchToUnlock: ["SC", "f", "X1", "W1"]
+    researchToUnlock: ["SC", "f", "X1", "W1", "mM", "cM", "eM"]
   },
   {
     id: "SC",
@@ -109,5 +109,30 @@ export const ResearchData: IResearchData[] = [
     price: 2e5,
     description: "+1 drone modding point",
     limit: Number.POSITIVE_INFINITY
+  },
+
+  {
+    id: "mM",
+    name: "Mineral purification plant",
+    shape: "metal",
+    price: 5e4,
+    description: "unlock Mineral purification plant",
+    resourceToUnlock: ["mM"]
+  },
+  {
+    id: "cM",
+    name: "Crystal purification plant",
+    shape: "crystal",
+    price: 5e4,
+    description: "unlock Crystal purification plant",
+    resourceToUnlock: ["cM"]
+  },
+  {
+    id: "eM",
+    name: "Electrical grid",
+    shape: "energy",
+    price: 5e4,
+    description: "unlock Electrical grid",
+    resourceToUnlock: ["eM"]
   }
 ];

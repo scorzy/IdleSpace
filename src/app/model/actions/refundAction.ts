@@ -9,8 +9,16 @@ export class RefundAction extends Action {
   actionToRefund: Action;
 
   onBuy(number: Decimal): boolean {
+    const owned =
+      this.actionToRefund !== this.multiPrice.prices[0].spendable
+        ? this.actionToRefund.quantity.minus(number)
+        : this.actionToRefund.quantity;
+    const toRefund = Decimal.sumGeometricSeries(number, 1, 2, owned);
+    // console.log(toRefund.toNumber());
+    // console.log(owned.toNumber());
+
     ResourceManager.getInstance().habitableSpace.quantity = ResourceManager.getInstance().habitableSpace.quantity.plus(
-      number
+      toRefund
     );
     if (this.actionToRefund !== this.multiPrice.prices[0].spendable) {
       this.actionToRefund.quantity = this.actionToRefund.quantity.minus(number);

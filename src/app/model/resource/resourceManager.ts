@@ -13,6 +13,7 @@ import { AllSkillEffects } from "../prestige/allSkillEffects";
 import { ModStack } from "../mod/modStack";
 import { ResearchManager } from "../research/researchManager";
 import { OptionsService } from "src/app/options.service";
+import { Bonus } from "../bonus/bonus";
 
 export class ResourceManager implements ISalvable {
   private static instance: ResourceManager;
@@ -48,6 +49,10 @@ export class ResourceManager implements ISalvable {
   searchX1: Resource;
   searchProgress: Resource;
   warriorX1: Resource;
+
+  metalM: Resource;
+  crystalM: Resource;
+  energyM: Resource;
   // #endregion
   //#region group
   materials: Resource[];
@@ -97,6 +102,10 @@ export class ResourceManager implements ISalvable {
 
     this.inactiveDarkMatter = new Resource("d");
     this.inactiveDarkMatter.shape = "darkMatter";
+
+    this.metalM = new Resource("mM");
+    this.crystalM = new Resource("cM");
+    this.energyM = new Resource("eM");
     //#endregion
     //#region Declarations
 
@@ -199,7 +208,7 @@ export class ResourceManager implements ISalvable {
       this.warriorX1,
       this.searchX1
     ];
-    this.tier2 = [this.droneFactory];
+    this.tier2 = [this.droneFactory, this.metalM, this.crystalM, this.energyM];
     //#endregion
     //#region Buy
     this.metalX1.generateBuyAction(
@@ -236,9 +245,40 @@ export class ResourceManager implements ISalvable {
     this.droneFactory.generateBuyAction(
       new MultiPrice([
         new Price(this.alloy, 1e3),
-        new Price(this.habitableSpace, 1, 1)
+        new Price(this.habitableSpace, 1, 2)
       ])
     );
+    this.metalM.generateBuyAction(
+      new MultiPrice([
+        new Price(this.alloy, 1e3),
+        new Price(this.crystal, 1e4),
+        new Price(this.habitableSpace, 1, 2)
+      ])
+    );
+    this.metalX1.productionMultiplier.additiveBonus.push(
+      new Bonus(this.metalM, 1, true)
+    );
+    this.crystalM.generateBuyAction(
+      new MultiPrice([
+        new Price(this.alloy, 1e3),
+        new Price(this.crystal, 1e4),
+        new Price(this.habitableSpace, 1, 2)
+      ])
+    );
+    this.crystalX1.productionMultiplier.additiveBonus.push(
+      new Bonus(this.crystalM, 1, true)
+    );
+    this.energyM.generateBuyAction(
+      new MultiPrice([
+        new Price(this.alloy, 1e3),
+        new Price(this.crystal, 1e4),
+        new Price(this.habitableSpace, 1, 2)
+      ])
+    );
+    this.energyX1.productionMultiplier.additiveBonus.push(
+      new Bonus(this.energyM, 1, true)
+    );
+
     //#endregion
     //#region Mine
     //  Metal Mine
@@ -247,7 +287,7 @@ export class ResourceManager implements ISalvable {
       new MultiPrice([
         new Price(this.metal, 1000),
         new Price(this.crystal, 250),
-        new Price(this.miningDistrict, 1, 1)
+        new Price(this.miningDistrict, 1, 2)
       ])
     );
     buyMetalMine.afterBuy = () => {
@@ -264,7 +304,7 @@ export class ResourceManager implements ISalvable {
       new MultiPrice([
         new Price(this.metal, 1000),
         new Price(this.crystal, 500),
-        new Price(this.crystalDistrict, 1, 1)
+        new Price(this.crystalDistrict, 1, 2)
       ])
     );
     buyCrystalMine.afterBuy = () => {
@@ -281,7 +321,7 @@ export class ResourceManager implements ISalvable {
       new MultiPrice([
         new Price(this.metal, 1500),
         new Price(this.crystal, 1000),
-        new Price(this.habitableSpace, 1, 1)
+        new Price(this.habitableSpace, 1, 2)
       ])
     );
     buyEnergyPlant.afterBuy = () => {
@@ -298,7 +338,7 @@ export class ResourceManager implements ISalvable {
       new MultiPrice([
         new Price(this.metal, 1500),
         new Price(this.crystal, 1000),
-        new Price(this.habitableSpace, 1, 1)
+        new Price(this.habitableSpace, 1, 2)
       ])
     );
     buySuperComputer.afterBuy = () => {
@@ -315,7 +355,7 @@ export class ResourceManager implements ISalvable {
       new MultiPrice([
         new Price(this.metal, 1000),
         new Price(this.crystal, 1000),
-        new Price(this.habitableSpace, 1, 1)
+        new Price(this.habitableSpace, 1, 2)
       ])
     );
     buyFoundry.afterBuy = () => {
@@ -332,7 +372,7 @@ export class ResourceManager implements ISalvable {
       new MultiPrice([
         new Price(this.metal, 1000),
         new Price(this.crystal, 1000),
-        new Price(this.habitableSpace, 1, 1)
+        new Price(this.habitableSpace, 1, 2)
       ])
     );
     buyShipyard.afterBuy = () => {
@@ -360,7 +400,7 @@ export class ResourceManager implements ISalvable {
       new MultiPrice([
         new Price(this.metal, 1000),
         new Price(this.crystal, 1000),
-        new Price(this.habitableSpace, 1, 1)
+        new Price(this.habitableSpace, 1, 2)
       ])
     );
     buyTelescope.afterBuy = () => {
@@ -388,7 +428,7 @@ export class ResourceManager implements ISalvable {
       new MultiPrice([
         new Price(this.metal, 1000),
         new Price(this.crystal, 1000),
-        new Price(this.habitableSpace, 1, 1)
+        new Price(this.habitableSpace, 1, 2)
       ])
     );
     buyStronghold.afterBuy = () => {
@@ -403,9 +443,9 @@ export class ResourceManager implements ISalvable {
     const buyDrone = new Action(
       "L",
       new MultiPrice([
-        new Price(this.metal, 1000, 2),
-        new Price(this.crystal, 1000, 2),
-        new Price(this.habitableSpace, 1, 1)
+        new Price(this.metal, 1000),
+        new Price(this.crystal, 1000),
+        new Price(this.habitableSpace, 1, 2)
       ])
     );
     buyDrone.afterBuy = () => {
@@ -434,7 +474,7 @@ export class ResourceManager implements ISalvable {
         "L",
         new MultiPrice([
           new Price(m, 900, 2),
-          new Price(this.habitableSpace, 1, 1)
+          new Price(this.habitableSpace, 1, 2)
         ])
       );
       buyExpansion1.afterBuy = () => {
@@ -453,7 +493,7 @@ export class ResourceManager implements ISalvable {
       new MultiPrice([
         new Price(this.metal, 500, 2),
         new Price(this.crystal, 1000, 2),
-        new Price(this.habitableSpace, 1, 1)
+        new Price(this.habitableSpace, 1, 2)
       ])
     );
     buyExpansion.afterBuy = () => {
@@ -511,7 +551,10 @@ export class ResourceManager implements ISalvable {
       this.drone,
       this.droneFactory,
       this.navalCap,
-      this.inactiveDarkMatter
+      this.inactiveDarkMatter,
+      this.metalM,
+      this.crystalM,
+      this.energyM
     ];
     this.allResources.forEach(r => r.generateRefundActions());
     this.matGroup = new ResourceGroup(

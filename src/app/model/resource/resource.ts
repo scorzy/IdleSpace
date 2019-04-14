@@ -15,9 +15,10 @@ import { IAlert } from "../base/IAlert";
 import { SkillEffect } from "../prestige/skillEffects";
 import { PLUS_ADD } from "../prestige/allSkillEffects";
 import { ModStack } from "../mod/modStack";
+import { IResource } from "../base/iResource";
 
 export class Resource extends AbstractUnlockable
-  implements ISpendable, IBuyable {
+  implements ISpendable, IBuyable, IResource {
   constructor(public id: string) {
     super();
     this.name = descriptions.resources[id][0];
@@ -179,6 +180,9 @@ export class Resource extends AbstractUnlockable
     this.modStack.save();
     this.quantity = new Decimal(0);
     if (this.buyAction) this.buyAction.quantity = new Decimal(0);
+  }
+  getQuantity(): Decimal {
+    return this.quantity;
   }
   //#region Save and Load
   getSave(): any {
