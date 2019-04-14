@@ -86,14 +86,14 @@ export class AllSkillEffects {
           workers[i].name +
           "\n / " +
           workers[i].actions[1].name +
-          "\n 0.1 " +
+          "\n 0.3 " +
           workers[i].name +
           " output"
         );
       };
       tier1[i].name = workers[i].name + " Prestige";
       workers[i].productionMultiplier.additiveBonus.push(
-        new Bonus(tier1[i], 0.1, true)
+        new Bonus(tier1[i], 0.3, true)
       );
     }
     tier1.forEach(e => {
