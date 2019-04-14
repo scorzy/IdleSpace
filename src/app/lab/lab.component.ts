@@ -32,6 +32,7 @@ export class LabComponent implements OnInit, OnDestroy {
   constructor(public ms: MainService, private cd: ChangeDetectorRef) {}
 
   ngOnInit() {
+    this.ms.game.researchManager.isNew = false;
     this.subscriptions.push(
       this.ms.em.updateEmitter.subscribe(() => {
         this.resMulti = this.ms.game.researchBonus.getTotalBonus();

@@ -39,4 +39,17 @@
       <label for="enemy"></label>
     </div>
   </div>
+
+  <div class="form-group">
+    <label for="research">Open Modal when unlocking Laboratory</label>
+    <div class="toggle-switch">
+      <input
+        name="research"
+        type="checkbox"
+        id="research"
+        [(ngModel)]="OptionsService.researchModal"
+      />
+      <label for="research"></label>
+    </div>
+  </div>
 </form>

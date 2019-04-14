@@ -19,7 +19,7 @@ import { MainService } from "../main.service";
 })
 export class JobComponent implements OnInit, OnDestroy {
   @HostBinding("class")
-  card = "card drag-item";
+  card = "card drag-item movable";
   time = 0;
 
   @Input() job: IJob;

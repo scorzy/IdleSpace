@@ -11,6 +11,9 @@ import { MainService } from "src/app/main.service";
 import { FleetManager } from "../fleet/fleetManager";
 import { AllSkillEffects } from "../prestige/allSkillEffects";
 import { ModStack } from "../mod/modStack";
+import { Research } from "../research/research";
+import { ResearchManager } from "../research/researchManager";
+import { OptionsService } from "src/app/options.service";
 
 export class ResourceManager implements ISalvable {
   private static instance: ResourceManager;
@@ -724,8 +727,15 @@ export class ResourceManager implements ISalvable {
       this.metalX1.quantity.gte(5) &&
       this.crystalX1.quantity.gte(5)
     ) {
-      this.computing.unlock();
+      const unl = this.computing.unlock();
       this.computingX1.unlock();
+      if (unl) {
+        ResearchManager.getInstance().isNew = true;
+        if (OptionsService.researchModal) {
+          ResearchManager.getInstance().isNewModal = true;
+        }
+        MainService.toastr.info("Research tab unlocked");
+      }
     }
   }
 

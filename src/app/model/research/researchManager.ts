@@ -16,7 +16,8 @@ export class ResearchManager {
   toDo = new Array<Research>();
   backLog = new Array<Research>();
   completed = new Array<Research>();
-
+  isNew = false;
+  isNewModal = false;
   //#region Researches
   betterResearch: Research;
   energy: Research;

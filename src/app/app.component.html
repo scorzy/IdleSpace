@@ -17,7 +17,15 @@
         [routerLinkActive]="'active'"
         *ngIf="ms.game.resourceManager.computing.unlocked"
       >
-        <span class="nav-text"> <clr-icon shape="lightbulb"></clr-icon> </span>
+        <span class="nav-text">
+          <clr-icon
+            [ngClass]="{
+              'is-warning': ms.game.researchManager.isNew,
+              'is-solid': ms.game.researchManager.isNew
+            }"
+            shape="lightbulb"
+          ></clr-icon>
+        </span>
       </a>
 
       <a
@@ -166,4 +174,28 @@
   <app-material-list></app-material-list>
 
   <router-outlet></router-outlet>
+
+  <clr-modal [(clrModalOpen)]="ms.game.researchManager.isNewModal">
+    <h3 class="modal-title">
+      <clr-icon shape="lightbulb"></clr-icon>
+      Researches
+    </h3>
+    <div class="modal-body">
+      <p>
+        Congratulations on unlocking the Laboratory tab!<br />
+        It's the light bulb on top left.<br />
+        This message can be disabled from Options (cog, top right)->
+        Notifications -> Open Modal when unlocking Laboratory
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="ms.game.researchManager.isNewModal = false"
+      >
+        Ok
+      </button>
+    </div>
+  </clr-modal>
 </clr-main-container>
