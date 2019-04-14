@@ -12,7 +12,9 @@ import { EndInPipe } from "./end-in.pipe";
 declare let LZString: any;
 
 const UP_INTERVAL = 200; // 5 fps
-const SAVE_INTERVAL = 5 * 60 * 1000; // 5 fps
+const SAVE_INTERVAL_1 = 1 * 60 * 1000;
+const SAVE_INTERVAL_3 = 3 * 60 * 1000;
+const SAVE_INTERVAL_5 = 5 * 60 * 1000;
 
 export function getUrl() {
   return (
@@ -42,6 +44,8 @@ export class MainService {
   playFabLogged = false;
   theme: HTMLLinkElement;
   overviewTaActive = false;
+  lastSave = null;
+  autoSaveInterval = -1;
 
   constructor(
     public options: OptionsService,
@@ -78,20 +82,26 @@ export class MainService {
     MainService.endInPipe = new EndInPipe(this.options);
   }
   start() {
-    this.game = new Game();
-    this.setTheme();
-    this.show = true;
-
     const savedData = localStorage.getItem("save");
     if (savedData) {
       this.load(savedData);
       this.setTheme();
+    } else {
+      this.setTheme();
+      this.game = new Game();
     }
 
     setInterval(this.update.bind(this), UP_INTERVAL);
+    setTimeout(() => this.startAutoSave.bind(this), 1000 * 60);
+
     setTimeout(() => {
-      setInterval(this.save.bind(this, true), SAVE_INTERVAL);
-    }, SAVE_INTERVAL);
+      if (!this.game) {
+        this.setTheme();
+        this.game = new Game();
+      }
+    }, 5 * 1000);
+
+    this.show = true;
   }
 
   update() {
@@ -123,6 +133,7 @@ export class MainService {
   load2(data: any): any {
     if (data && data.g) {
       this.last = data.l;
+      this.lastSave = data.l;
       if ("o" in data) this.options.restore(data.o);
       this.setTheme();
       this.game = new Game();
@@ -133,9 +144,14 @@ export class MainService {
           MainService.endInPipe.transform(Date.now() - this.last),
         "Game Loaded"
       );
+      this.startAutoSave();
     } else {
       this.toastr.error("See console", "Load Failed");
       console.log(data);
+    }
+    if (!this.game) {
+      this.setTheme();
+      this.game = new Game();
     }
   }
   import(str: string) {
@@ -183,6 +199,7 @@ export class MainService {
         if (result.requestId === 0 || result.requestId === 10) {
           localStorage.setItem("save", result.zipped);
           localStorage.setItem("saveDate", Date());
+          this.lastSave = Date();
           if (result.requestId === 0 || this.options.autosaveNotification) {
             this.toastr.success("Game Saved");
           }
@@ -219,6 +236,34 @@ export class MainService {
     const myTheme =
       "assets/" + (this.options.dark ? "theme.dark.css" : "theme.light.css");
     if (myTheme !== this.theme.href) this.theme.href = myTheme;
+  }
+  startAutoSave() {
+    if (this.autoSaveInterval > -1) {
+      clearInterval(this.autoSaveInterval);
+    }
+
+    let interval = 5;
+    switch (this.options.autoSave) {
+      case "1":
+        interval = SAVE_INTERVAL_1;
+        break;
+      case "3":
+        interval = SAVE_INTERVAL_3;
+        break;
+      case "5":
+        interval = SAVE_INTERVAL_5;
+        break;
+      case "off":
+        interval = -1;
+        break;
+    }
+    if (interval > 0) {
+      console.log(interval);
+      this.autoSaveInterval = window.setInterval(
+        this.save.bind(this, true),
+        interval
+      );
+    }
   }
 }
 

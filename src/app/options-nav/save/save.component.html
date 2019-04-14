@@ -44,12 +44,56 @@
     Cloud Load
   </button>
 </div>
-<p>
-  <br />
-  Autosave every 5 minutes.
-  <br />
-  <!-- Last save: {{ ms.lastSave | date: "medium" }} -->
-</p>
+<br />
+<h3>Auto Save</h3>
+<div class="btn-group">
+  <div class="radio btn">
+    <input
+      type="radio"
+      name="btn-save-radios"
+      id="btn-demo-radio-1"
+      value="off"
+      (change)="changeAutoSave()"
+      [(ngModel)]="os.autoSave"
+    />
+    <label for="btn-demo-radio-1">OFF</label>
+  </div>
+  <div class="radio btn">
+    <input
+      type="radio"
+      name="btn-save-radios"
+      id="btn-demo-radio-2"
+      value="1"
+      (change)="changeAutoSave()"
+      [(ngModel)]="os.autoSave"
+    />
+    <label for="btn-demo-radio-2">1 minute</label>
+  </div>
+  <div class="radio btn">
+    <input
+      type="radio"
+      name="btn-save-radios"
+      id="btn-demo-radio-3"
+      value="3"
+      (change)="changeAutoSave()"
+      [(ngModel)]="os.autoSave"
+    />
+    <label for="btn-demo-radio-3">3 minutes</label>
+  </div>
+  <div class="radio btn">
+    <input
+      type="radio"
+      name="btn-save-radios"
+      id="btn-demo-radio-4"
+      value="5"
+      (change)="changeAutoSave()"
+      [(ngModel)]="os.autoSave"
+    />
+    <label for="btn-demo-radio-4">5 minutes</label>
+  </div>
+</div>
+
+<p>Last save: {{ ms.lastSave | date: "medium" }}</p>
 <h2>Export / Import Save</h2>
 <textarea name="raw" [(ngModel)]="exp" rows="3"></textarea>
 <div class="btn-group btn-primary">

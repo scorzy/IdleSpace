@@ -20,6 +20,7 @@ export class OptionsService {
   noResourceEndPopUp = false;
   timeFormatDetail = false;
   headerClass = "";
+  autoSave = "5";
 
   formatter: any;
   formatEmitter: EventEmitter<number> = new EventEmitter<number>();
