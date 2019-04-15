@@ -4,7 +4,7 @@
   routerLinkActive="active"
 >
   <span class="clr-row clr-justify-content-between">
-    <span class="resLeft">
+    <span class="clr-col clr-align-self-start resName">
       <clr-icon [attr.shape]="shape" *ngIf="shape"></clr-icon>&nbsp;
       <span class="resName">
         <clr-icon
@@ -35,14 +35,18 @@
         }}</span>
       </span>
     </span>
-    <span *ngIf="quantity.abs().gt(0.001)" class="qta" [class.notEnough]="cap">
-      <app-formatted-quantity [quantity]="quantity"> </app-formatted-quantity>
-    </span>
-    <span class="perSec monospace">
+    <span class="clr-col clr-align-self-center text-right">
       <span *ngIf="c.abs().gt(0.001)" [class.notEnough]="isEnding">
         <app-formatted-quantity [quantity]="c"> </app-formatted-quantity>
         /s
       </span>
+    </span>
+    <span class="clr-col clr-align-self-end text-right" [class.notEnough]="cap">
+      <app-formatted-quantity
+        *ngIf="quantity.abs().gt(0.001)"
+        [quantity]="quantity"
+      >
+      </app-formatted-quantity>
       &nbsp;
     </span>
   </span>

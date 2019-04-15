@@ -158,16 +158,17 @@ export class ResourceManager implements ISalvable {
     //      Warrior
     this.warriorX1 = new Resource("W1");
     this.navalCap.addGenerator(this.warriorX1);
-    this.energy.addGenerator(this.warriorX1, -1);
-    this.computing.addGenerator(this.warriorX1, -1);
+    this.energy.addGenerator(this.warriorX1, -0.5);
+    this.computing.addGenerator(this.warriorX1, -0.5);
 
     //  Drone
     this.drone = new Resource("D");
     this.drone.shape = "robot";
+    this.drone.workerPerMine = new Decimal(50);
     this.droneFactory = new Resource("F");
     this.drone.addGenerator(this.droneFactory);
-    this.alloy.addGenerator(this.droneFactory, -50);
-    this.energy.addGenerator(this.droneFactory, -10);
+    this.alloy.addGenerator(this.droneFactory, -100);
+    this.energy.addGenerator(this.droneFactory, -20);
 
     //      Space
     this.habitableSpace = new Resource("hs");
@@ -250,8 +251,8 @@ export class ResourceManager implements ISalvable {
     );
     this.metalM.generateBuyAction(
       new MultiPrice([
-        new Price(this.alloy, 1e3),
-        new Price(this.crystal, 1e4),
+        new Price(this.alloy, 1e3, 2),
+        new Price(this.crystal, 1e4, 2),
         new Price(this.habitableSpace, 1, 2)
       ])
     );
@@ -260,8 +261,8 @@ export class ResourceManager implements ISalvable {
     );
     this.crystalM.generateBuyAction(
       new MultiPrice([
-        new Price(this.alloy, 1e3),
-        new Price(this.crystal, 1e4),
+        new Price(this.alloy, 1e3, 2),
+        new Price(this.crystal, 1e4, 2),
         new Price(this.habitableSpace, 1, 2)
       ])
     );
@@ -270,8 +271,8 @@ export class ResourceManager implements ISalvable {
     );
     this.energyM.generateBuyAction(
       new MultiPrice([
-        new Price(this.alloy, 1e3),
-        new Price(this.crystal, 1e4),
+        new Price(this.alloy, 1e3, 2),
+        new Price(this.crystal, 1e4, 2),
         new Price(this.habitableSpace, 1, 2)
       ])
     );
@@ -566,7 +567,7 @@ export class ResourceManager implements ISalvable {
     this.tierGroups = [
       this.matGroup,
       new ResourceGroup("1", "Robots", "robot", this.tier1),
-      new ResourceGroup("2", "Factories", "cog", this.tier2),
+      new ResourceGroup("2", "Buildings", "cog", this.tier2),
       new ResourceGroup("4", "Districts", "world", this.districts)
     ];
     this.tier1.forEach(t => {

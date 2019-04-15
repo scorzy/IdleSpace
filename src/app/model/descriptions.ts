@@ -45,8 +45,17 @@ export const descriptions = {
     da: ["Dark Matter", "Dark Matter"],
 
     //  Buildings
-    mM: ["Mineral purification plant", ""],
-    cM: ["Crystal purification plant", ""],
-    eM: ["Electrical grid", ""]
+    mM: [
+      "Mineral purification plant",
+      "Increase production of Mining Drones by 100%, stack additive."
+    ],
+    cM: [
+      "Crystal purification plant",
+      "Increase production of Crystal Drones by 100%, stack additive."
+    ],
+    eM: [
+      "Electrical grid",
+      "Increase production of Technicians by 100%, stack additive."
+    ]
   }
 };
