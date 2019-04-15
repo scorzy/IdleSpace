@@ -51,7 +51,7 @@ export class Game {
     this.fleetManager.reload();
     this.resourceManager.metal.quantity = new Decimal(200);
     this.resourceManager.crystal.quantity = new Decimal(120);
-    this.resourceManager.habitableSpace.quantity = new Decimal(10);
+    this.resourceManager.habitableSpace.quantity = new Decimal(15);
     this.resourceManager.miningDistrict.quantity = new Decimal(2);
     this.resourceManager.crystalDistrict.quantity = new Decimal(2);
     // this.darkMatterManager.darkMatter.quantity = new Decimal(1e10);
@@ -96,14 +96,15 @@ export class Game {
           this.resourceManager.stopResource();
         }
       }
-      if (n > 49) console.log("This should not happening");
+      if (n > 49) {
+        console.log("This should not happening. Game loop is looping too much.");
+      }
 
       //  Convert computing to researches
       if (this.resourceManager.computing.quantity.gt(0)) {
         let computing = this.resourceManager.computing.quantity;
         computing = computing.times(this.researchBonus.getTotalBonus());
         this.researchManager.update(computing);
-
         this.resourceManager.computing.quantity = new Decimal(0);
       }
 

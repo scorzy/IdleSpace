@@ -92,7 +92,7 @@ export class AllSkillEffects {
         );
       };
       tier1[i].name = workers[i].name + " Prestige";
-      workers[i].productionMultiplier.additiveBonus.push(
+      workers[i].productionMultiplier.multiplicativeBonus.push(
         new Bonus(tier1[i], 0.3, true)
       );
     }

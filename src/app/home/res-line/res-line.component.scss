@@ -22,7 +22,7 @@
     display: inline-block;
   }
   .resName {
-    min-width: 5rem;
+    min-width: 7rem;
   }
   a {
     padding-left: 0.5rem;
@@ -39,4 +39,8 @@
 }
 clr-icon {
   height: auto;
+}
+:host /deep/ .nav-text {
+  margin-right: -0.1rem;
+  margin-left: -0.5rem;
 }

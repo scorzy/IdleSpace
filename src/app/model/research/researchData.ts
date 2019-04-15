@@ -16,7 +16,7 @@ export const ResearchData: IResearchData[] = [
     id: "E",
     name: "Energy",
     shape: "energy",
-    price: 1e3,
+    price: 5e3,
     description: "+10% energy",
     limit: Number.POSITIVE_INFINITY
   },
