@@ -309,9 +309,11 @@ export class EnemyManager implements ISalvable {
       }
     }
     try {
-      MainService.toastr.success(message, "Battle Win", {
-        enableHtml: true
-      });
+      if (OptionsService.battleWinNotification) {
+        MainService.toastr.success(message, "Battle Win", {
+          enableHtml: true
+        });
+      }
     } catch (ex) {}
   }
 
