@@ -10,6 +10,7 @@ import { Job } from "../model/shipyard/job";
 import { ShipDesign } from "../model/fleet/shipDesign";
 import { ShipTypes } from "../model/fleet/shipTypes";
 import { defaultImport } from "../app.component.spec";
+import { EndInPipe } from "../end-in.pipe";
 
 describe("JobComponent", () => {
   let component: JobComponent;
@@ -19,7 +20,12 @@ describe("JobComponent", () => {
     TestBed.configureTestingModule({
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: defaultImport(),
-      declarations: [JobComponent, ActionHeaderComponent, FormatPipe],
+      declarations: [
+        JobComponent,
+        ActionHeaderComponent,
+        FormatPipe,
+        EndInPipe
+      ],
       providers: [MainService, OptionsService]
     }).compileComponents();
   }));

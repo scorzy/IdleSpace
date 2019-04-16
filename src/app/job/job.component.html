@@ -29,15 +29,24 @@
       <div class="clr-row clr-justify-content-between no-margin-left">
         <p class="card-text">
           {{ job.getDescription() }}
+          <app-research-unlocks *ngIf="isResearch" [res]="job">
+          </app-research-unlocks>
         </p>
 
-        <button
-          class="btn btn-sm btn-link btn-danger"
-          *ngIf="job.deleteFun"
-          (click)="delete()"
-        >
-          Delete
-        </button>
+        <div>
+          <span class="time" *ngIf="job.getTime">{{
+            job.getTime() | endIn
+          }}</span>
+
+          <button
+            *ngIf="job.deleteFun"
+            (click)="delete()"
+            type="button"
+            class="btn btn-sm btn-icon btn-warning-outline"
+          >
+            <clr-icon shape="trash"></clr-icon>
+          </button>
+        </div>
       </div>
     </div>
   </div>

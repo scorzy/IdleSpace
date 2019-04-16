@@ -3,6 +3,7 @@ import { FleetManager } from "../fleet/fleetManager";
 import { IJob } from "../base/IJob";
 import { Shipyard } from "./shipyard";
 import { MainService } from "src/app/main.service";
+import { ResourceManager } from "../resource/resourceManager";
 
 export class Job implements IJob {
   private static lastId = 1;
@@ -21,6 +22,7 @@ export class Job implements IJob {
   progressPercent = 0;
   done = false;
   name: {};
+  timeToComplete = Number.POSITIVE_INFINITY;
 
   constructor() {
     this.id = Job.lastId + 1;
@@ -78,12 +80,12 @@ export class Job implements IJob {
   getName(): string {
     return this.design.name;
   }
-  getDescription?(): string {
+  getDescription(): string {
     return this.quantity && this.quantity.gt(0)
       ? "+ " + MainService.formatPipe.transform(this.quantity, true)
       : "Design Upgrade";
   }
-  getShape?(): string {
+  getShape(): string {
     return this.design.type.shape;
   }
   getTotal(): Decimal {
@@ -95,9 +97,22 @@ export class Job implements IJob {
   getProgressPercent(): number {
     return this.progressPercent;
   }
-  deleteFun?(): boolean {
+  deleteFun(): boolean {
     Shipyard.getInstance().deleteJob(this);
     return true;
+  }
+  getTime(): number {
+    return this.timeToComplete;
+  }
+  reloadTime() {
+    const progressPerSec = ResourceManager.getInstance().shipyardProgress.c;
+    this.timeToComplete = progressPerSec.gt(0)
+      ? this.total
+          .minus(this.progress)
+          .div(progressPerSec)
+          .times(1000)
+          .toNumber()
+      : Number.POSITIVE_INFINITY;
   }
   //#endregion
 

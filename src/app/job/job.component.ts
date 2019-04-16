@@ -10,6 +10,7 @@ import {
 import { IJob } from "../model/base/IJob";
 import { Subscription } from "rxjs";
 import { MainService } from "../main.service";
+import { Research } from "../model/research/research";
 
 @Component({
   selector: "app-job",
@@ -21,6 +22,7 @@ export class JobComponent implements OnInit, OnDestroy {
   @HostBinding("class")
   card = "card drag-item movable";
   time = 0;
+  isResearch = false;
 
   @Input() job: IJob;
 
@@ -29,10 +31,10 @@ export class JobComponent implements OnInit, OnDestroy {
   constructor(public ms: MainService, private cd: ChangeDetectorRef) {}
 
   ngOnInit() {
-    if (this.job.getTime) this.time = this.job.getTime();
+    this.isResearch = this.job instanceof Research && !this.job.firstDone;
     this.subscriptions.push(
       this.ms.em.updateEmitter.subscribe(() => {
-        if (this.job.getTime) this.time = this.job.getTime();
+        this.isResearch = this.job instanceof Research && !this.job.firstDone;
         this.cd.markForCheck();
       })
     );

@@ -1,5 +1,6 @@
 import { IJob } from "../base/IJob";
 import { EnemyManager } from "./enemyManager";
+import { ResourceManager } from "../resource/resourceManager";
 
 export class SearchJob implements IJob {
   private static lastId = 0;
@@ -15,6 +16,7 @@ export class SearchJob implements IJob {
   moreMetal = false;
   moreCrystal = false;
   moreHabitableSpace = false;
+  timeToComplete = Number.POSITIVE_INFINITY;
 
   level = 1;
   done = false;
@@ -115,6 +117,19 @@ export class SearchJob implements IJob {
       s => s !== this
     );
     return true;
+  }
+  getTime(): number {
+    return this.timeToComplete;
+  }
+  reloadTime() {
+    const progress = ResourceManager.getInstance().searchProgress.c;
+    this.timeToComplete = progress.gt(0)
+      ? this.total
+          .minus(this.progress)
+          .div(progress)
+          .times(1000)
+          .toNumber()
+      : Number.POSITIVE_INFINITY;
   }
   getSave(): any {
     const data: any = {};

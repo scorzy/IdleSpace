@@ -52,9 +52,10 @@ import { GroupTabComponent } from "./group-tab/group-tab.component";
 import { ResourceGroupComponent } from "./group-tab/resource-group/resource-group.component";
 import { ModdingComponent } from "./modding/modding.component";
 import { ToastrModule } from "ngx-toastr";
-import { NotificationsComponent } from './options-nav/notifications/notifications.component';
-import { DarkMatterComponent } from './dark-matter/dark-matter.component';
-import { InfoComponent } from './info/info.component';
+import { NotificationsComponent } from "./options-nav/notifications/notifications.component";
+import { DarkMatterComponent } from "./dark-matter/dark-matter.component";
+import { InfoComponent } from "./info/info.component";
+import { ResearchUnlocksComponent } from "./job/research-unlocks/research-unlocks.component";
 
 @NgModule({
   declarations: [
@@ -103,7 +104,8 @@ import { InfoComponent } from './info/info.component';
     ModdingComponent,
     NotificationsComponent,
     DarkMatterComponent,
-    InfoComponent
+    InfoComponent,
+    ResearchUnlocksComponent
   ],
   imports: [
     BrowserAnimationsModule,

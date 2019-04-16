@@ -27,6 +27,7 @@ export class Research extends AbstractUnlockable
   limit = new Decimal(1);
   quantity = new Decimal(0);
   ratio = 2;
+  timeToEnd = Number.POSITIVE_INFINITY;
 
   progressPercent = 0;
   done = false;
@@ -116,6 +117,19 @@ export class Research extends AbstractUnlockable
   }
   getProgressPercent(): number {
     return this.progressPercent;
+  }
+  getTime(): number {
+    return this.timeToEnd;
+  }
+  reloadTime() {
+    const resPerSec = ResearchManager.getInstance().researchPerSec;
+    this.timeToEnd = resPerSec.gt(0)
+      ? this.total
+          .minus(this.progress)
+          .div(resPerSec)
+          .times(1000)
+          .toNumber()
+      : Number.POSITIVE_INFINITY;
   }
   //#endregion
 

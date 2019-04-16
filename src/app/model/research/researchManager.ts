@@ -33,6 +33,7 @@ export class ResearchManager {
   battleship: Research;
   //#endregion
   //#endregion
+  researchPerSec = new Decimal(0);
 
   constructor() {
     ResearchManager.instance = this;
@@ -119,7 +120,7 @@ export class ResearchManager {
         description: "Unlock " + m.name
       };
       const research = Research.fromData(resData);
-      research.limit = new Decimal(100);
+      research.limit = new Decimal(1e4);
       research.toUnlock.push(m);
       m.research = research;
       moduleResearches.push(research);
@@ -224,5 +225,9 @@ export class ResearchManager {
             t.unlock();
           });
       });
+  }
+  reloadTimes() {
+    this.backLog.forEach(r => r.reloadTime());
+    this.toDo.forEach(r => r.reloadTime());
   }
 }

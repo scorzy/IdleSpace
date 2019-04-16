@@ -1,0 +1,6 @@
+<ul class="list-unstyled">
+  <li *ngFor="let unl of res.toUnlock; trackBy: getId">
+    <span class="font-weight-bold">Unlock {{ getType(unl) }}:</span>
+    {{ unl.name }}
+  </li>
+</ul>

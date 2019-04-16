@@ -101,22 +101,29 @@ export class Game {
       }
 
       //  Convert computing to researches
+      const totalResearchBonus = this.researchBonus.getTotalBonus();
+      this.researchManager.researchPerSec = this.resourceManager.computing.c.times(
+        totalResearchBonus
+      );
       if (this.resourceManager.computing.quantity.gt(0)) {
         let computing = this.resourceManager.computing.quantity;
-        computing = computing.times(this.researchBonus.getTotalBonus());
+        computing = computing.times(totalResearchBonus);
         this.researchManager.update(computing);
         this.resourceManager.computing.quantity = new Decimal(0);
       }
+      this.researchManager.reloadTimes();
 
       //  Convert ShipyardProgress to actual progress
       this.shipyard.addProgress(this.resourceManager.shipyardProgress.quantity);
       this.resourceManager.shipyardProgress.quantity = new Decimal(0);
+      this.shipyard.reloadTimes();
 
       //  Convert SearchProgress to actual searching
       this.enemyManager.addProgress(
         this.resourceManager.searchProgress.quantity
       );
       this.resourceManager.searchProgress.quantity = ZERO_DECIMAL_IMMUTABLE;
+      this.enemyManager.reloadTimes();
 
       //  Deploy Drones
       this.resourceManager.deployDrones();

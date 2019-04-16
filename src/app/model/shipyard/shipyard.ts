@@ -81,6 +81,9 @@ export class Shipyard implements ISalvable {
       }
     });
   }
+  reloadTimes() {
+    this.jobs.forEach(j => j.reloadTime());
+  }
   //#region Save and Load
   getSave(): any {
     const data: any = {};

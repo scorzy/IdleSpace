@@ -7,4 +7,5 @@ export interface IJob {
   getProgressPercent(): number;
   deleteFun?(): boolean;
   getTime?(): number;
+  reloadTime?(): void;
 }

@@ -367,6 +367,9 @@ export class EnemyManager implements ISalvable {
   getTotalEnemy(): number {
     return this.allEnemy.length + this.searchJobs.length;
   }
+  reloadTimes() {
+    this.searchJobs.forEach(j => j.reloadTime());
+  }
 
   //#region Save and Load
   getSave(): any {
