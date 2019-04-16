@@ -173,6 +173,7 @@ export class EnemyManager implements ISalvable {
     const resMan = ResourceManager.getInstance();
     let message = "";
     let gain = new Decimal();
+
     const addSpace = !!reward;
     if (!reward) {
       reward = sample(RANDOM_REWARDS);
@@ -184,16 +185,16 @@ export class EnemyManager implements ISalvable {
       prestigeMulti = prestigeMulti.times(
         AllSkillEffects.DOUBLE_BATTLE_GAIN.numOwned + 1
       );
-
+      const gainDistrict = prestigeMulti.times(this.currentEnemy.level);
       switch (reward) {
         case Reward.HabitableSpace:
           if (addSpace) {
             resMan.habitableSpace.quantity = resMan.habitableSpace.quantity.plus(
-              this.currentEnemy.level
+              gainDistrict
             );
             message =
               "+ " +
-              this.currentEnemy.level +
+              MainService.formatPipe.transform(gainDistrict) +
               " " +
               resMan.habitableSpace.name +
               "<br/>";
@@ -208,11 +209,11 @@ export class EnemyManager implements ISalvable {
         case Reward.MetalMine:
           if (addSpace) {
             resMan.miningDistrict.quantity = resMan.miningDistrict.quantity.plus(
-              this.currentEnemy.level
+              gainDistrict
             );
             message =
               "+ " +
-              this.currentEnemy.level +
+              MainService.formatPipe.transform(gainDistrict) +
               " " +
               resMan.miningDistrict.name +
               "<br/>";
@@ -232,11 +233,11 @@ export class EnemyManager implements ISalvable {
         case Reward.CrystalMine:
           if (addSpace) {
             resMan.crystalDistrict.quantity = resMan.crystalDistrict.quantity.plus(
-              this.currentEnemy.level
+              gainDistrict
             );
             message +=
               "+ " +
-              this.currentEnemy.level +
+              MainService.formatPipe.transform(gainDistrict) +
               " " +
               resMan.miningDistrict.name +
               "<br/>";

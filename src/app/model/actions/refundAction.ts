@@ -7,13 +7,20 @@ export class RefundAction extends Action {
   showTime = false;
   showNum = false;
   actionToRefund: Action;
+  growRate = 1.1;
+  basePrice = new Decimal(1);
 
   onBuy(number: Decimal): boolean {
     const owned =
       this.actionToRefund !== this.multiPrice.prices[0].spendable
         ? this.actionToRefund.quantity.minus(number)
         : this.actionToRefund.quantity;
-    const toRefund = Decimal.sumGeometricSeries(number, 1, 2, owned);
+    const toRefund = Decimal.sumGeometricSeries(
+      number,
+      this.basePrice,
+      this.growRate,
+      owned
+    );
     // console.log(toRefund.toNumber());
     // console.log(owned.toNumber());
 

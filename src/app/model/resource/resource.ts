@@ -101,6 +101,11 @@ export class Resource extends AbstractUnlockable
           );
 
           this.refundAction.actionToRefund = a;
+          const price = a.multiPrice.prices.find(
+            p => p.spendable === ResourceManager.getInstance().habitableSpace
+          );
+          this.refundAction.growRate = price.growRate;
+          this.refundAction.basePrice = price.cost;
           this.refundAction.name = "Refund " + a.name.replace("Buy ", "");
           this.actions.push(this.refundAction);
         }
