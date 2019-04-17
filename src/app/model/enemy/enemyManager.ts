@@ -287,11 +287,17 @@ export class EnemyManager implements ISalvable {
           if (this.allEnemy.length < MAX_ENEMY_LIST_SIZE) {
             const searchJob = new SearchJob();
             searchJob.level = this.currentEnemy.level;
-            if (prestigeMulti.gt(1)) {
-              searchJob.level++;
+            if (
+              prestigeMulti.gt(2) &&
+              this.allEnemy.length + 1 < MAX_ENEMY_LIST_SIZE
+            ) {
+              this.generate(searchJob);
+              this.generate(searchJob);
+              message += "new enemies found";
+            } else {
+              this.generate(searchJob);
+              message += "new enemy found";
             }
-            this.generate(searchJob);
-            message += "new enemy found";
           }
           break;
         case Reward.Shipyard:

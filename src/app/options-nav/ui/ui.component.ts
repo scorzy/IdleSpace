@@ -17,9 +17,6 @@ import { preventScroll } from "src/app/app.component";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UiComponent implements OnInit, AfterViewInit {
-  @HostBinding("class")
-  contentArea = "content-area";
-
   constructor(public ms: MainService, public os: OptionsService) {}
   ngAfterViewInit(): void {
     if (typeof preventScroll === typeof Function) preventScroll();

@@ -15,8 +15,6 @@ import { preventScroll } from "src/app/app.component";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NotificationsComponent implements OnInit, AfterViewInit {
-  @HostBinding("class")
-  contentArea = "content-area";
   OptionsService = OptionsService;
   constructor(public os: OptionsService) {}
   ngAfterViewInit(): void {

@@ -18,6 +18,9 @@ import { GroupTabComponent } from "./group-tab/group-tab.component";
 import { NotificationsComponent } from "./options-nav/notifications/notifications.component";
 import { DarkMatterComponent } from "./dark-matter/dark-matter.component";
 import { InfoComponent } from "./info/info.component";
+import { StartComponent } from "./info/start/start.component";
+import { LabInfoComponent } from "./info/lab-info/lab-info.component";
+import { ShipyardInfoComponent } from "./info/shipyard-info/shipyard-info.component";
 
 const routes: Routes = [
   {
@@ -94,7 +97,17 @@ const routes: Routes = [
   },
   {
     path: "info",
-    component: InfoComponent
+    redirectTo: "info/start",
+    pathMatch: "full"
+  },
+  {
+    path: "info",
+    component: InfoComponent,
+    children: [
+      { path: "start", component: StartComponent },
+      { path: "labInfo", component: LabInfoComponent },
+      { path: "shipyardInfo", component: ShipyardInfoComponent }
+    ]
   }
 ];
 

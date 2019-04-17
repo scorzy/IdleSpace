@@ -19,9 +19,6 @@ import { preventScroll } from "src/app/app.component";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SaveComponent implements OnInit, OnDestroy, AfterViewInit {
-  @HostBinding("class")
-  contentArea = "content-area";
-
   clearModal = false;
   exp = "";
   private subscriptions: Subscription[] = [];
