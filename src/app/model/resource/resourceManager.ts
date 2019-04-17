@@ -573,6 +573,11 @@ export class ResourceManager implements ISalvable {
       new ResourceGroup("2", "Buildings", "cog", this.tier2),
       new ResourceGroup("4", "Districts", "world", this.districts)
     ];
+    this.tierGroups[0].action1Name = "Buy Storage";
+    this.tierGroups[1].action1Name = "Buy Robots";
+    this.tierGroups[1].action2Name = "Increase Robot Storage";
+    this.tierGroups[2].action1Name = "Buy Buildings";
+
     this.tier1.forEach(t => {
       t.showPriority = true;
     });

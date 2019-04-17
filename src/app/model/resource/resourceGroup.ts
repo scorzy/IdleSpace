@@ -4,6 +4,8 @@ export class ResourceGroup {
   isExpanded = true;
   unlockedResources = new Array<Resource>();
   selected = new Array<Resource>();
+  action1Name = "";
+  action2Name = "";
 
   constructor(
     public id: string,

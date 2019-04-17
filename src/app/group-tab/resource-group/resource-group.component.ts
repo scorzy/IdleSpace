@@ -91,23 +91,23 @@ export class ResourceGroupComponent
     this.refundAction = null;
     this.actions = new Array<Action>();
 
-    if (
-      this.resourceGroup === this.ms.game.resourceManager.matGroup &&
-      this.ms.game.resourceManager.energy.unlockedActions.length > 0
-    ) {
-      if (this.ms.game.resourceManager.energy.actions[0].unlocked) {
-        this.buyAction = this.ms.game.resourceManager.energy.actions[0];
-        this.actions.push(this.buyAction);
-      }
+    // if (
+    //   this.resourceGroup === this.ms.game.resourceManager.matGroup &&
+    //   this.ms.game.resourceManager.energy.unlockedActions.length > 0
+    // ) {
+    //   if (this.ms.game.resourceManager.energy.actions[0].unlocked) {
+    //     this.buyAction = this.ms.game.resourceManager.energy.actions[0];
+    //     this.actions.push(this.buyAction);
+    //   }
 
-      if (this.ms.game.resourceManager.drone.unlocked) {
-        this.mineAction = this.ms.game.resourceManager.drone.actions[0];
-        this.actions.push(this.mineAction);
-        this.refundAction = this.ms.game.resourceManager.drone.actions[1];
-        this.actions.push(this.refundAction);
-      }
-      return true;
-    }
+    //   if (this.ms.game.resourceManager.drone.unlocked) {
+    //     this.mineAction = this.ms.game.resourceManager.drone.actions[0];
+    //     this.actions.push(this.mineAction);
+    //     this.refundAction = this.ms.game.resourceManager.drone.actions[1];
+    //     this.actions.push(this.refundAction);
+    //   }
+    //   return true;
+    // }
     if (
       this.resourceGroup ===
       this.ms.game.resourceManager.tierGroups[
@@ -118,18 +118,24 @@ export class ResourceGroupComponent
     }
 
     if (this.resourceGroup.selected.length > 0) {
-      this.buyAction = new MultiBuyAction(
-        this.resourceGroup.selected.map(r => r.buyAction)
-      );
-      this.actions.push(this.buyAction);
-      this.buyAction.name = "Buy Robots";
+      if (
+        this.resourceGroup.selected.findIndex(r => r.actions.length > 0) > -1
+      ) {
+        this.buyAction = new MultiBuyAction(
+          this.resourceGroup.selected
+            .filter(r => r.actions.length > 0)
+            .map(r => r.actions[0])
+        );
+        this.actions.push(this.buyAction);
+        this.buyAction.name = this.resourceGroup.action1Name;
+      }
 
       if (this.resourceGroup === this.ms.game.resourceManager.tierGroups[1]) {
         this.mineAction = new MultiBuyAction(
           this.resourceGroup.selected.map(r => r.actions[1])
         );
         this.actions.push(this.mineAction);
-        this.mineAction.name = "Increase Robot Storage";
+        this.mineAction.name = this.resourceGroup.action2Name;
       }
 
       const refundActions = this.resourceGroup.selected
