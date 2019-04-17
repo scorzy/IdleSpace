@@ -183,7 +183,7 @@ export class Resource extends AbstractUnlockable
   }
   saveMods() {
     this.modStack.save();
-    this.quantity = new Decimal(0);
+    this.quantity = new Decimal(1);
     if (this.buyAction) this.buyAction.quantity = new Decimal(0);
   }
   getQuantity(): Decimal {

@@ -32,6 +32,8 @@ export class BuyAction extends Action {
   }
 
   reload() {
+    this.quantity = Decimal.min(this.quantity, this.buyable.quantity);
+
     if (this.buyable.isCapped) {
       super.reload();
       this.canBuy = false;

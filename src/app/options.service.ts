@@ -69,7 +69,8 @@ export class OptionsService {
       r: OptionsService.researchNotification,
       a: OptionsService.enemyDefeatedNotification,
       q: OptionsService.researchModal,
-      b: OptionsService.battleWinNotification
+      b: OptionsService.battleWinNotification,
+      g: this.autoSave
     };
   }
   restore(data: any) {
@@ -87,6 +88,7 @@ export class OptionsService {
     if ("a" in data) OptionsService.enemyDefeatedNotification = data.a;
     if ("q" in data) OptionsService.researchModal = data.q;
     if ("b" in data) OptionsService.battleWinNotification = data.b;
+    if ("g" in data) this.autoSave = data.g;
     this.generateFormatter();
     this.reloadHeader();
   }
