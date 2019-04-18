@@ -29,8 +29,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     if (typeof preventScroll === typeof Function) preventScroll();
   }
   ngOnInit() {
+    this.reload();
     this.subscriptions.push(
       this.ms.em.updateEmitter.subscribe(() => {
+        this.reload();
         this.cd.markForCheck();
       })
     );
@@ -44,5 +46,12 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getResId(index, res: Resource) {
     return res.id;
+  }
+  reload() {
+    this.ms.game.resourceManager.unlockedResources
+      .filter(r => r.modStack)
+      .forEach(r => {
+        r.modStack.reload();
+      });
   }
 }

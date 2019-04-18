@@ -21,7 +21,7 @@ export class ModStack implements ISalvable {
   totalBonus = new BonusStack();
   maxPoints = new Decimal();
   usedPoint = new Decimal();
-  private unusedPoints = new Decimal();
+  unusedPoints = new Decimal();
 
   generateMods(resource: Resource) {
     this.resource = resource;
@@ -52,14 +52,14 @@ export class ModStack implements ISalvable {
       );
     }
   }
-  getTotal(): number {
+  getTotalUsed(): number {
     return this.mods
       .map(m => m.quantity_ui)
       .reduce((p: number, c: number) => p + c);
   }
   validate(): boolean {
-    const total = this.getTotal();
-    const max = ResearchManager.getInstance().modding.quantity.toNumber();
+    const total = this.getTotalUsed();
+    const max = this.getMax().toNumber();
     return total <= max;
   }
   save() {
@@ -76,19 +76,21 @@ export class ModStack implements ISalvable {
       .map(m => m.quantity)
       .reduce((p: Decimal, c: Decimal) => p.plus(c));
   }
-  getMax(): Decimal {
+  private getMax(): Decimal {
     return ResearchManager.getInstance()
       .modding.quantity.times(this.totalBonus.getTotalBonus())
       .plus(AllSkillEffects.MODDING_PLUS.numOwned * 5)
       .times(AllSkillEffects.DOUBLE_MODDING.numOwned + 1);
   }
-  getUnused(): Decimal {
-    const un = this.getMax().minus(this.usedPoint);
-    if (!this.unusedPoints.eq(un)) this.unusedPoints = un;
-    return this.unusedPoints;
-  }
   setPrice() {
     this.resource.standardPrice = new Decimal(0.9).pow(this.priceMod.quantity);
+  }
+  reload() {
+    const newMax = this.getMax();
+    if (!newMax.eq(this.maxPoints)) this.maxPoints = newMax;
+
+    const un = this.maxPoints.minus(this.usedPoint);
+    if (!this.unusedPoints.eq(un)) this.unusedPoints = un;
   }
 
   //#region Save and Load
