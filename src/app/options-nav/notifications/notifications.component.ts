@@ -2,7 +2,6 @@ import {
   Component,
   OnInit,
   ChangeDetectionStrategy,
-  HostBinding,
   AfterViewInit
 } from "@angular/core";
 import { OptionsService } from "src/app/options.service";

@@ -123,6 +123,7 @@ export class ResearchManager {
       research.limit = new Decimal(1e4);
       research.toUnlock.push(m);
       m.research = research;
+      research.module = m;
       moduleResearches.push(research);
       this.researches.push(research);
     });

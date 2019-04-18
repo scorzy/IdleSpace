@@ -29,7 +29,7 @@
       <div class="clr-row clr-justify-content-between no-margin-left">
         <p class="card-text">
           {{ job.getDescription() }}
-          <app-research-unlocks *ngIf="isResearch" [res]="job">
+          <app-research-unlocks *ngIf="showDetails && isResearch" [res]="job">
           </app-research-unlocks>
         </p>
 

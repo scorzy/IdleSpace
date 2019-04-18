@@ -25,16 +25,17 @@ export class JobComponent implements OnInit, OnDestroy {
   isResearch = false;
 
   @Input() job: IJob;
+  @Input() showDetails = true;
 
   private subscriptions: Subscription[] = [];
 
   constructor(public ms: MainService, private cd: ChangeDetectorRef) {}
 
   ngOnInit() {
-    this.isResearch = this.job instanceof Research && !this.job.firstDone;
+    this.isResearch = this.job instanceof Research;
     this.subscriptions.push(
       this.ms.em.updateEmitter.subscribe(() => {
-        this.isResearch = this.job instanceof Research && !this.job.firstDone;
+        this.isResearch = this.job instanceof Research;
         this.cd.markForCheck();
       })
     );

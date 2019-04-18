@@ -1,4 +1,5 @@
 import { IResearchData } from "./iResearchData";
+import { ShipTypes } from "../fleet/shipTypes";
 
 export const ResearchData: IResearchData[] = [
   //  Unlocked by default
@@ -9,7 +10,8 @@ export const ResearchData: IResearchData[] = [
     price: 200,
     description: "+20% researching speed",
     limit: Number.POSITIVE_INFINITY,
-    researchToUnlock: ["c", "E"]
+    researchToUnlock: ["c", "E"],
+    bonus: [["Research Speed", "+20%"]]
   },
   //    End of starting researches  ---------------
   {
@@ -18,7 +20,8 @@ export const ResearchData: IResearchData[] = [
     shape: "energy",
     price: 5e3,
     description: "+10% energy",
-    limit: Number.POSITIVE_INFINITY
+    limit: Number.POSITIVE_INFINITY,
+    bonus: [["Energy Gain", "+10%"]]
   },
   {
     id: "c",
@@ -27,7 +30,8 @@ export const ResearchData: IResearchData[] = [
     price: 2e3,
     description: "Unlock Corvette",
     resourceToUnlock: ["S1", "SP", "a", "a1"],
-    researchToUnlock: ["SC", "f", "X1", "W1", "mM", "cM", "eM"]
+    researchToUnlock: ["SC", "f", "X1", "W1", "mM", "cM", "eM"],
+    ship: ShipTypes[0]
   },
   {
     id: "SC",
@@ -35,7 +39,8 @@ export const ResearchData: IResearchData[] = [
     shape: "coin-bag",
     price: 5e3,
     description: "+10% resources from battle",
-    limit: Number.POSITIVE_INFINITY
+    limit: Number.POSITIVE_INFINITY,
+    bonus: [["Resources from battle", "+10%"]]
   },
   {
     id: "W1",
@@ -60,7 +65,9 @@ export const ResearchData: IResearchData[] = [
     shape: "rank2",
     price: 1e6,
     description: "Unlock frigate",
-    researchToUnlock: ["d"]
+    researchToUnlock: ["d"],
+    navalCapacity: ShipTypes[1].navalCapacity * 5,
+    ship: ShipTypes[1]
   },
   {
     id: "d",
@@ -68,7 +75,9 @@ export const ResearchData: IResearchData[] = [
     shape: "rank3",
     price: 1e8,
     description: "Unlock destroyer",
-    researchToUnlock: ["b"]
+    researchToUnlock: ["b"],
+    navalCapacity: ShipTypes[2].navalCapacity * 5,
+    ship: ShipTypes[2]
   },
   {
     id: "b",
@@ -76,7 +85,9 @@ export const ResearchData: IResearchData[] = [
     shape: "rank4",
     price: 1e11,
     description: "Unlock cruiser",
-    researchToUnlock: ["t"]
+    researchToUnlock: ["t"],
+    navalCapacity: ShipTypes[3].navalCapacity * 5,
+    ship: ShipTypes[3]
   },
   {
     id: "t",
@@ -84,14 +95,18 @@ export const ResearchData: IResearchData[] = [
     shape: "flask",
     price: 1e14,
     description: "Unlock battlecruiser",
-    researchToUnlock: ["s"]
+    researchToUnlock: ["s"],
+    navalCapacity: ShipTypes[4].navalCapacity * 5,
+    ship: ShipTypes[4]
   },
   {
     id: "s",
     name: "Battleship",
     shape: "flask",
     price: 1e19,
-    description: "Unlock battleship"
+    description: "Unlock battleship",
+    navalCapacity: ShipTypes[5].navalCapacity * 5,
+    ship: ShipTypes[5]
   },
   {
     id: "D",
@@ -108,7 +123,8 @@ export const ResearchData: IResearchData[] = [
     shape: "battery",
     price: 2e5,
     description: "+1 drone modding point",
-    limit: Number.POSITIVE_INFINITY
+    limit: Number.POSITIVE_INFINITY,
+    bonus: [["Modding Point", "+1"]]
   },
 
   {

@@ -29,6 +29,7 @@ export class LabComponent implements OnInit, OnDestroy, AfterViewInit {
   resMulti = new Decimal(1);
   resPerSec = new Decimal(1);
   infoModal = false;
+  showDetails = true;
 
   private subscriptions: Subscription[] = [];
 
@@ -75,5 +76,17 @@ export class LabComponent implements OnInit, OnDestroy, AfterViewInit {
     this.ms.game.researchManager.toDo.sort((a, b) =>
       a.total.minus(b.total).toNumber()
     );
+  }
+  allBacklog() {
+    this.ms.game.researchManager.backLog = this.ms.game.researchManager.backLog.concat(
+      this.ms.game.researchManager.toDo
+    );
+    this.ms.game.researchManager.toDo = [];
+  }
+  allToDo() {
+    this.ms.game.researchManager.toDo = this.ms.game.researchManager.toDo.concat(
+      this.ms.game.researchManager.backLog
+    );
+    this.ms.game.researchManager.backLog = [];
   }
 }

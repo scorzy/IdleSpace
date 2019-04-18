@@ -2,7 +2,6 @@ import {
   Component,
   OnInit,
   ChangeDetectionStrategy,
-  HostBinding,
   AfterViewInit
 } from "@angular/core";
 import { MainService } from "src/app/main.service";

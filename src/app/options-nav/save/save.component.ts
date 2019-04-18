@@ -4,8 +4,7 @@ import {
   ChangeDetectionStrategy,
   OnDestroy,
   AfterViewInit,
-  ChangeDetectorRef,
-  HostBinding
+  ChangeDetectorRef
 } from "@angular/core";
 import { MainService } from "src/app/main.service";
 import { Subscription } from "rxjs";

@@ -8,6 +8,8 @@ import { IJob } from "../base/IJob";
 import { MainService } from "src/app/main.service";
 import { OptionsService } from "src/app/options.service";
 import { IResource } from "../base/iResource";
+import { Module } from "../fleet/module";
+import { ShipType } from "../fleet/shipTypes";
 
 export class Research extends AbstractUnlockable
   implements IHasQuantity, IResource, IJob {
@@ -28,6 +30,10 @@ export class Research extends AbstractUnlockable
   quantity = new Decimal(0);
   ratio = 2;
   timeToEnd = Number.POSITIVE_INFINITY;
+  navalCapacity = 0;
+  module: Module;
+  ship: ShipType;
+  bonus: Array<[string, string]>;
 
   progressPercent = 0;
   done = false;
@@ -42,7 +48,10 @@ export class Research extends AbstractUnlockable
     ret.description = data.description;
     ret.cost = new Decimal(data.price);
     ret.total = new Decimal(ret.cost);
+    if (data.navalCapacity) ret.navalCapacity = data.navalCapacity;
     if (data.limit) ret.limit = new Decimal(data.limit);
+    if (data.ship) ret.ship = data.ship;
+    if (data.bonus) ret.bonus = data.bonus;
     return ret;
   }
 

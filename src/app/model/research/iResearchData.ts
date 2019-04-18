@@ -1,4 +1,5 @@
 import { IUnlockable } from "../base/IUnlockable";
+import { ShipType } from "../fleet/shipTypes";
 
 export interface IResearchData {
   id: string;
@@ -10,4 +11,7 @@ export interface IResearchData {
   researchToUnlock?: string[];
   otherToUnlock?: [() => IUnlockable];
   limit?: number;
+  navalCapacity?: number;
+  ship?: ShipType;
+  bonus?: Array<[string, string]>;
 }

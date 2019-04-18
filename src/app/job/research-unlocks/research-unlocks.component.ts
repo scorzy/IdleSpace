@@ -31,7 +31,9 @@ export class ResearchUnlocksComponent implements OnInit {
     } else if (unlock instanceof Resource) {
       ret = "Resource";
     }
-
     return ret;
+  }
+  getBonId(index: number, bonus: [string, string]) {
+    return index + bonus[0] + bonus[1];
   }
 }

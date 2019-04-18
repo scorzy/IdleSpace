@@ -35,6 +35,7 @@
                 trackBy: getResId
               "
               [job]="res"
+              [showDetails]="showDetails"
               cdkDrag
             >
             </app-job>
@@ -58,6 +59,7 @@
                 trackBy: getResId
               "
               [job]="res"
+              [showDetails]="showDetails"
               cdkDrag
             >
             </app-job>
@@ -78,9 +80,29 @@
         Research /s:
         <app-formatted-quantity [quantity]="resPerSec"></app-formatted-quantity>
       </p>
+
       <button class="btn btn-outline" (click)="sortPrice()">
         Sort by price
       </button>
+      <button class="btn btn-outline" (click)="allBacklog()">
+        All Backlog
+      </button>
+      <button class="btn btn-outline" (click)="allToDo()">
+        All In Progress
+      </button>
+
+      <br />
+      <clr-toggle-container>
+        <clr-toggle-wrapper>
+          <input
+            type="checkbox"
+            clrToggle
+            name="showDetails"
+            [(ngModel)]="showDetails"
+          />
+          <label>Show Details</label>
+        </clr-toggle-wrapper>
+      </clr-toggle-container>
     </div>
   </div>
 </div>
