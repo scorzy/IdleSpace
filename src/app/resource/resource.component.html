@@ -18,14 +18,14 @@
 <div>
   <clr-tabs *ngIf="res">
     <clr-tab>
-      <button clrTabLink id="link1">Overview</button>
-      <clr-tab-content id="content1" *clrIfActive>
+      <button clrTabLink>Overview</button>
+      <clr-tab-content *clrIfActive>
         <app-resource-overview [res]="res"></app-resource-overview>
       </clr-tab-content>
     </clr-tab>
 
     <clr-tab *ngIf="res.modStack && res.modStack.maxPoints.gt(0)">
-      <button clrTabLink id="link1">
+      <button clrTabLink>
         Mods
         <span class="badge badge-info" *ngIf="res.modStack.unusedPoints.gt(0)">
           <app-formatted-quantity
@@ -37,6 +37,13 @@
       </button>
       <clr-tab-content id="mod-" *clrIfActive>
         <app-modding [res]="res"></app-modding>
+      </clr-tab-content>
+    </clr-tab>
+
+    <clr-tab *ngFor="let auto of res.unlockedAutomators; trackBy: autoId">
+      <button clrTabLink>{{ auto.name }}</button>
+      <clr-tab-content *clrIfActive>
+        <app-automator [auto]="auto"></app-automator>
       </clr-tab-content>
     </clr-tab>
   </clr-tabs>

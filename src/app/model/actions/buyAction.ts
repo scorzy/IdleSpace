@@ -10,7 +10,7 @@ export class BuyAction extends Action {
     this.showTime = true;
   }
 
-  buy(number: Decimal) {
+  buy(number: Decimal): boolean {
     if (this.buyable.isLimited) {
       if (this.buyable.isCapped) return false;
       number = Decimal.min(
@@ -18,8 +18,7 @@ export class BuyAction extends Action {
         this.buyable.limit.minus(this.buyable.quantity)
       );
     }
-
-    super.buy(number);
+    return super.buy(number);
   }
 
   onBuy(number: Decimal): boolean {

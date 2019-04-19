@@ -12,6 +12,7 @@ import { MainService } from "../main.service";
 import { ActivatedRoute } from "@angular/router";
 import { Resource } from "../model/resource/resource";
 import { preventScroll } from "../app.component";
+import { Automator } from "../model/automators/automator";
 
 @Component({
   selector: "app-resource",
@@ -61,5 +62,9 @@ export class ResourceComponent implements OnInit, OnDestroy, AfterViewInit {
       this.ms.lastUnitUrl = "home/res/" + b.id;
     }
     this.cd.markForCheck();
+  }
+
+  autoId(index: number, automator: Automator): string {
+    return automator.id;
   }
 }

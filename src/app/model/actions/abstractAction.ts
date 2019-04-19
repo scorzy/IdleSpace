@@ -32,7 +32,7 @@ export class Action extends AbstractUnlockable
     this.setDefaultUnlocked();
   }
 
-  buy(number: Decimal) {
+  buy(number: Decimal): boolean {
     this.multiPrice.reload(this.quantity, this.numWanted);
     if (this.multiPrice.maxBuy.gte(number)) {
       if (this.multiPrice.buy(number, this.quantity)) {
@@ -41,8 +41,10 @@ export class Action extends AbstractUnlockable
         this.afterBuy(number);
 
         this.reload();
+        return true;
       }
     }
+    return false;
   }
   onBuy(number: Decimal): boolean {
     return true;

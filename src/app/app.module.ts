@@ -59,6 +59,7 @@ import { ResearchUnlocksComponent } from "./job/research-unlocks/research-unlock
 import { StartComponent } from './info/start/start.component';
 import { LabInfoComponent } from './info/lab-info/lab-info.component';
 import { ShipyardInfoComponent } from './info/shipyard-info/shipyard-info.component';
+import { AutomatorComponent } from './automator/automator.component';
 
 @NgModule({
   declarations: [
@@ -111,7 +112,8 @@ import { ShipyardInfoComponent } from './info/shipyard-info/shipyard-info.compon
     ResearchUnlocksComponent,
     StartComponent,
     LabInfoComponent,
-    ShipyardInfoComponent
+    ShipyardInfoComponent,
+    AutomatorComponent
   ],
   imports: [
     BrowserAnimationsModule,

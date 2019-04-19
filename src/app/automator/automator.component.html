@@ -1,0 +1,53 @@
+<div class="clr-row">
+  <div class="clr-col-md-7">
+    <h4>Settings</h4>
+    <form clrForm clrLayout="compact">
+      <clr-checkbox-container>
+        <label>Active</label>
+        <clr-checkbox-wrapper>
+          <label>On</label>
+          <input clrCheckbox type="checkbox" [(ngModel)]="auto.on" name="on" />
+        </clr-checkbox-wrapper>
+      </clr-checkbox-container>
+
+      <clr-select-container>
+        <label>Interval</label>
+        <select clrSelect name="interval" [(ngModel)]="auto.minInterval">
+          <option
+            *ngFor="let time of intervals; trackBy: timeId"
+            [value]="time"
+            >{{ time }}</option
+          >
+        </select>
+      </clr-select-container>
+
+      <clr-input-container>
+        <label>Priority</label>
+        <input
+          clrInput
+          type="number"
+          [(ngModel)]="auto.priority"
+          name="priority"
+        />
+      </clr-input-container>
+    </form>
+  </div>
+  <div class="clr-col-sm-6 clr-col-md-4 clr-col-lg-3">
+    <h4>Stats</h4>
+
+    <table class="table table-vertical table-noborder table-compact">
+      <tbody>
+        <tr>
+          <th>Last perform:</th>
+          <td>{{ auto.lastExec | date: "mediumTime" }}</td>
+        </tr>
+        <tr>
+          <th>Next perform:</th>
+          <td>
+            {{ auto.lastExec + auto.minInterval * 1000 | date: "mediumTime" }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

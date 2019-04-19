@@ -10,6 +10,7 @@ import { DarkMatterManager } from "./darkMatter/darkMatterManager";
 import { MainService } from "../main.service";
 import { OptionsService } from "../options.service";
 import { AllSkillEffects } from "./prestige/allSkillEffects";
+import { AutomatorManager } from "./automators/automatorManager";
 
 const ZERO_DECIMAL_IMMUTABLE = new Decimal(0);
 
@@ -24,6 +25,7 @@ export class Game {
   shipyard: Shipyard;
   prestigeManager: PrestigeManager;
   darkMatterManager: DarkMatterManager;
+  automatorManager: AutomatorManager;
   isPaused = false;
 
   constructor() {
@@ -43,6 +45,7 @@ export class Game {
     if (!prestige) {
       this.prestigeManager = new PrestigeManager();
       this.darkMatterManager = new DarkMatterManager(this);
+      this.automatorManager = new AutomatorManager();
     }
 
     this.researchManager.addOtherResearches();
@@ -63,6 +66,9 @@ export class Game {
     this.resourceManager.allResources.forEach(
       r => (r.unlockedActions = r.actions.filter(a => a.unlocked))
     );
+
+    if (!prestige) this.automatorManager.generateAutomators();
+    this.automatorManager.assignToResource();
   }
   /**
    * Main update loop
@@ -127,6 +133,11 @@ export class Game {
 
       //  Deploy Drones
       this.resourceManager.deployDrones();
+
+      //  Automation
+      if (!warp) {
+        this.automatorManager.update(Date.now());
+      }
     }
 
     this.resourceManager.navalCap.quantity = new Decimal(0);
@@ -178,6 +189,10 @@ export class Game {
     this.resourceManager.limitedResources.forEach(r => r.reloadLimit());
     this.prestigeManager.reloadPrestigeToEarn();
     AllSkillEffects.initialize(true);
+    this.resourceManager.allResources.forEach(r => {
+      r.unlockedAutomators = r.automators.filter(a => a.isUnlocked());
+    });
+    this.automatorManager.resetTimers();
   }
 
   //#region Save and Load
@@ -190,6 +205,7 @@ export class Game {
     save.s = this.shipyard.getSave();
     save.p = this.prestigeManager.getSave();
     save.d = this.darkMatterManager.getSave();
+    save.a = this.automatorManager.getSave();
     return save;
   }
   load(data: any) {
@@ -202,6 +218,8 @@ export class Game {
     if ("w" in data) this.enemyManager.load(data.w);
     if ("s" in data) this.shipyard.load(data.s);
     if ("d" in data) this.darkMatterManager.load(data.d);
+    if ("a" in data) this.automatorManager.load(data.a);
+
     this.researchManager.fixUnlocks();
 
     // this.resourceManager.habitableSpace.quantity = new Decimal(100);
@@ -214,12 +232,16 @@ export class Game {
     //   m.quantity = new Decimal(1e20);
     // });
     // this.enemyManager.maxLevel = 50;
-    // this.prestigeManager.totalPrestige = 100;
+    this.prestigeManager.totalPrestige = 100;
 
     this.fleetManager.upgradingCheck();
     this.resourceManager.limitedResources.forEach(r => r.reloadLimit());
     this.reload();
     this.prestigeManager.reloadPrestigeToEarn();
+    this.resourceManager.allResources.forEach(r => {
+      r.unlockedAutomators = r.automators.filter(a => a.isUnlocked());
+    });
+    this.automatorManager.resetTimers();
   }
   //#endregion
 }
