@@ -27,15 +27,20 @@ export class ModStack implements ISalvable {
     this.resource = resource;
 
     this.efficiency = new Mod("f");
-    this.production = new Mod("p");
-    this.priceMod = new Mod("s");
-    this.mods = [this.efficiency, this.production, this.priceMod];
+    this.mods = [this.efficiency];
     resource.productionMultiplier.additiveBonus.push(
       new Bonus(this.efficiency, MOD_EFFICIENCY, true)
     );
-    resource.productionMultiplier.additiveBonus.push(
-      new Bonus(this.production, MOD_PRODUCTION)
-    );
+
+    if (resource !== ResourceManager.getInstance().energyX1) {
+      this.production = new Mod("p");
+      this.mods.push(this.production);
+      resource.productionMultiplier.additiveBonus.push(
+        new Bonus(this.production, MOD_PRODUCTION)
+      );
+    }
+    this.priceMod = new Mod("s");
+    this.mods.push(this.priceMod);
 
     //  Energy
     if (resource !== ResourceManager.getInstance().energyX1) {
