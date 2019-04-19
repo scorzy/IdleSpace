@@ -39,7 +39,7 @@
           >used:
           <span
             [ngClass]="{
-              notEnough:
+              'text-danger':
                 design.editable.modules.length > design.type.moduleCount
             }"
             >{{ design.editable.modules.length }}/{{ design.type.moduleCount }}
@@ -49,7 +49,7 @@
           point:
           <span
             [ngClass]="{
-              notEnough:
+              'text-danger':
                 design.editable.usedModulePoint > design.type.modulePoint
             }"
             >{{ design.editable.usedModulePoint }}/{{ design.type.modulePoint }}
@@ -59,7 +59,7 @@
           energy:
           <span
             [ngClass]="{
-              notEnough: design.editable.totalEnergy.lt(0)
+              'text-danger': design.editable.totalEnergy.lt(0)
             }"
           >
             <app-formatted-quantity

@@ -11,7 +11,7 @@
       class="resIcon"
       [ngClass]="{ 'is-error': isEnding, 'is-info': cog }"
     ></clr-icon>
-    <span [class.notEnough]="cap">
+    <span [class.text-danger]="cap">
       <app-formatted-quantity
         *ngIf="showQta"
         [quantity]="quantity"
@@ -21,7 +21,7 @@
   </span>
 
   <span *ngIf="c" class="perSecTab clr-col clr-align-self-end">
-    <span *ngIf="c && c.abs().gt(0.001)" [ngClass]="{ notEnough: c.lt(0) }">
+    <span *ngIf="c && c.abs().gt(0.001)" [ngClass]="{ 'text-danger': c.lt(0) }">
       <app-formatted-quantity [quantity]="c" [integer]="integer">
       </app-formatted-quantity
       >/s

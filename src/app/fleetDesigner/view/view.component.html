@@ -10,8 +10,8 @@
       <td
         *ngIf="showDifference"
         [ngClass]="{
-          green: design.editable?.totalDamage.gt(design.totalDamage),
-          notEnough: design.editable?.totalDamage.lt(design.totalDamage)
+          'text-success': design.editable?.totalDamage.gt(design.totalDamage),
+          'text-danger': design.editable?.totalDamage.lt(design.totalDamage)
         }"
       >
         <app-formatted-quantity
@@ -30,8 +30,8 @@
       <td
         *ngIf="showDifference"
         [ngClass]="{
-          green: design.editable.totalArmor.gt(design.totalArmor),
-          notEnough: design.editable.totalArmor.lt(design.totalArmor)
+          'text-success': design.editable.totalArmor.gt(design.totalArmor),
+          'text-danger': design.editable.totalArmor.lt(design.totalArmor)
         }"
       >
         <app-formatted-quantity
@@ -50,8 +50,8 @@
       <td
         *ngIf="showDifference"
         [ngClass]="{
-          green: design.editable.totalShield.gt(design.totalShield),
-          notEnough: design.editable.totalShield.lt(design.totalShield)
+          'text-success': design.editable.totalShield.gt(design.totalShield),
+          'text-danger': design.editable.totalShield.lt(design.totalShield)
         }"
       >
         <app-formatted-quantity
@@ -71,8 +71,8 @@
         <app-formatted-quantity
           [quantity]="design.editable.totalEnergy"
           [ngClass]="{
-            green: design.editable.totalEnergy.gt(design.totalEnergy),
-            notEnough: design.editable.totalEnergy.lt(design.totalEnergy)
+            'text-success': design.editable.totalEnergy.gt(design.totalEnergy),
+            'text-danger': design.editable.totalEnergy.lt(design.totalEnergy)
           }"
         ></app-formatted-quantity>
       </td>
@@ -89,8 +89,10 @@
         <app-formatted-quantity
           [quantity]="design.editable.explosionChance"
           [ngClass]="{
-            notEnough: design.editable.explosionChance > design.explosionChance,
-            green: design.editable.explosionChance < design.explosionChance
+            'text-danger':
+              design.editable.explosionChance > design.explosionChance,
+            'text-success':
+              design.editable.explosionChance < design.explosionChance
           }"
         ></app-formatted-quantity>
       </td>
@@ -107,8 +109,8 @@
         <app-formatted-quantity
           [quantity]="design.editable.armorDamage"
           [ngClass]="{
-            green: design.editable.armorDamage.gt(design.armorDamage),
-            notEnough: design.editable.armorDamage.lt(design.armorDamage)
+            'text-success': design.editable.armorDamage.gt(design.armorDamage),
+            'text-danger': design.editable.armorDamage.lt(design.armorDamage)
           }"
         ></app-formatted-quantity>
       </td>
@@ -125,8 +127,10 @@
         <app-formatted-quantity
           [quantity]="design.editable.shieldDamage"
           [ngClass]="{
-            green: design.editable.shieldDamage.gt(design.shieldDamage),
-            notEnough: design.editable.shieldDamage.lt(design.shieldDamage)
+            'text-success': design.editable.shieldDamage.gt(
+              design.shieldDamage
+            ),
+            'text-danger': design.editable.shieldDamage.lt(design.shieldDamage)
           }"
         ></app-formatted-quantity>
       </td>
@@ -143,8 +147,8 @@
         <app-formatted-quantity
           [quantity]="design.editable.price"
           [ngClass]="{
-            green: design.editable.price.gt(design.price),
-            notEnough: design.editable.price.lt(design.price)
+            'text-success': design.editable.price.gt(design.price),
+            'text-danger': design.editable.price.lt(design.price)
           }"
         ></app-formatted-quantity>
       </td>

@@ -11,13 +11,13 @@
         </a>
       </clr-dg-cell>
       <clr-dg-cell>
-        <span [class.notEnough]="product.ratio.lt(0)" class="monospace">
+        <span [class.text-danger]="product.ratio.lt(0)" class="monospace">
           <app-formatted-quantity [quantity]="product.prodPerSec">
           </app-formatted-quantity>
         </span>
       </clr-dg-cell>
       <clr-dg-cell>
-        <span [class.notEnough]="product.ratio.lt(0)" class="monospace">
+        <span [class.text-danger]="product.ratio.lt(0)" class="monospace">
           <app-formatted-quantity
             [quantity]="product.prodPerSec.times(unit.quantity)"
           >
@@ -54,13 +54,13 @@
         </a>
       </clr-dg-cell>
       <clr-dg-cell>
-        <span [class.notEnough]="producer.ratio.lt(0)" class="monospace">
+        <span [class.text-danger]="producer.ratio.lt(0)" class="monospace">
           <app-formatted-quantity [quantity]="producer.prodPerSec">
           </app-formatted-quantity>
         </span>
       </clr-dg-cell>
       <clr-dg-cell>
-        <span [class.notEnough]="producer.ratio.lt(0)" class="monospace">
+        <span [class.text-danger]="producer.ratio.lt(0)" class="monospace">
           <app-formatted-quantity
             [quantity]="producer.prodPerSec.times(producer.producer.quantity)"
           >

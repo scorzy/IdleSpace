@@ -1,7 +1,7 @@
 <ul class="list-unstyled">
   <li *ngIf="res.navalCapacity > 0">
     <span class="font-weight-bold">Naval Capacity </span>
-    <span class="green"> +{{ res.navalCapacity }}</span>
+    <span class="text-success"> +{{ res.navalCapacity }}</span>
   </li>
   <li *ngIf="res.ship">
     <span class="font-weight-bold">New Ship Type:</span>
@@ -13,7 +13,7 @@
   </li>
   <li *ngFor="let bon of res.bonus; trackBy: getBonId">
     <span class="font-weight-bold"> {{ bon[0] }}: </span>
-    <span class="green">{{ bon[1] }}</span>
+    <span class="text-success">{{ bon[1] }}</span>
   </li>
   <ng-component *ngIf="!res.firstDone">
     <li *ngFor="let unl of res.toUnlock; trackBy: getId">

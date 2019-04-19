@@ -10,7 +10,7 @@
       <app-formatted-quantity
         [quantity]="ms.game.fleetManager.totalWantedNavalCap"
         [integer]="true"
-        [class.notEnough]="!ms.game.fleetManager.configurationValid"
+        [class.text-danger]="!ms.game.fleetManager.configurationValid"
       >
       </app-formatted-quantity>
       /

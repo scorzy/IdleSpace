@@ -36,12 +36,15 @@
       </span>
     </span>
     <span class="clr-col clr-align-self-center text-right">
-      <span *ngIf="c.abs().gt(0.001)" [class.notEnough]="isEnding">
+      <span *ngIf="c.abs().gt(0.001)" [class.text-danger]="isEnding">
         <app-formatted-quantity [quantity]="c"> </app-formatted-quantity>
         /s
       </span>
     </span>
-    <span class="clr-col clr-align-self-end text-right" [class.notEnough]="cap">
+    <span
+      class="clr-col clr-align-self-end text-right"
+      [class.text-danger]="cap"
+    >
       <app-formatted-quantity
         *ngIf="quantity.abs().gt(0.001)"
         [quantity]="quantity"

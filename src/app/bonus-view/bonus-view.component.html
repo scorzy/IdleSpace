@@ -15,7 +15,7 @@
       <td></td>
       <td>
         <app-formatted-quantity
-          [class.notEnough]="production.ratio.lt(0)"
+          [class.text-danger]="production.ratio.lt(0)"
           [quantity]="production.ratio"
         ></app-formatted-quantity>
       </td>

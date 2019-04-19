@@ -5,7 +5,7 @@
       <app-formatted-quantity
         [quantity]="used"
         [integer]="true"
-        [ngClass]="{ notEnough: !isValid }"
+        [ngClass]="{ 'text-danger': !isValid }"
       ></app-formatted-quantity>
       /
       <app-formatted-quantity
@@ -18,7 +18,10 @@
       <h6>
         {{ m.name }}:
         <span
-          [ngClass]="{ notEnough: m.quantity_ui < 0, green: m.quantity_ui > 0 }"
+          [ngClass]="{
+            'text-danger': m.quantity_ui < 0,
+            'text-success': m.quantity_ui > 0
+          }"
         >
           <app-formatted-quantity
             [quantity]="m.quantity_ui"
@@ -76,8 +79,8 @@
           <td
             class="monospace"
             [ngClass]="{
-              notEnough: m.quantity_ui < m.quantity,
-              green: m.quantity_ui > m.quantity
+              'text-danger': m.quantity_ui < m.quantity,
+              'text-success': m.quantity_ui > m.quantity
             }"
           >
             {{ m.getBonus(m.quantity_ui) }}

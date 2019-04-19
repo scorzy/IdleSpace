@@ -9,25 +9,6 @@
 // Clarity Component SCSS
 @import "../../node_modules/@clr/ui/src/utils/components.clarity";
 
-.notEnough {
-  color: #f54f47;
-  a:link :not(.noRed) {
-    color: #f54f47;
-  }
-  a:visited :not(.noRed) {
-    color: #f54f47;
-  }
-}
-.green {
-  color: #60b515;
-  a:link :not(.noGreen) {
-    color: #60b515;
-  }
-  a:visited :not(.noGreen) {
-    color: #60b515;
-  }
-}
-
 ::-webkit-scrollbar-thumb {
   background: rgb(50, 79, 97);
 }
