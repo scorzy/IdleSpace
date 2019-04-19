@@ -61,10 +61,10 @@
         ></app-formatted-quantity>
       </td>
       <td>
+        x
         <app-formatted-quantity
-          [quantity]="item.quantity.times(item.base.getQuantity()).times(100)"
-        ></app-formatted-quantity
-        >%
+          [quantity]="item.quantity.times(item.base.getQuantity()).plus(1)"
+        ></app-formatted-quantity>
       </td>
     </tr>
 
