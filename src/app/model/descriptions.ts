@@ -25,12 +25,12 @@ export const descriptions = {
     f1: ["Computing Unit", ""],
     N: ["Naval Capacity", ""],
     S1: ["Worker Drone", "Worker Drone makes ships and ships upgrades."],
-    SP: ["Shipyard Progress", "This represent work done by your Shipyard"],
+    SP: ["Shipyard Prog.", "This represent work done by your Shipyard"],
     X1: [
       "Searching Drone",
       "Searching Drone allow you to search for new enemies."
     ],
-    XP: ["Searching progress", ""],
+    XP: ["Searching Prog.", ""],
     W1: [
       "Warrior Drone",
       "Warrior Drone increase your maximum naval capacity, allowing you to make more ships."

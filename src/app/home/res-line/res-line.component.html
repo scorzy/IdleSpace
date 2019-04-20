@@ -35,10 +35,13 @@
         }}</span>
       </span>
     </span>
-    <span class="clr-col clr-align-self-center text-right">
-      <span *ngIf="c.abs().gt(0.001)" [class.text-danger]="isEnding">
+    <span
+      class="clr-col clr-align-self-center text-right"
+      *ngIf="c.abs().gt(0.001)"
+    >
+      <span [class.text-danger]="isEnding">
         <app-formatted-quantity [quantity]="c"> </app-formatted-quantity>
-        /s
+        <span class="monospace"> /s</span>
       </span>
     </span>
     <span
@@ -50,7 +53,6 @@
         [quantity]="quantity"
       >
       </app-formatted-quantity>
-      &nbsp;
     </span>
   </span>
 </a>
