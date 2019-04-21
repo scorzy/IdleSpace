@@ -7,6 +7,7 @@ export class RobotAutomator extends Automator {
     this.name = "Buy " + robot.name;
     this.resource = robot;
     this.stopWhenFactoryUi = true;
+    this.prestigeLevel = 6;
   }
   execCondition(): boolean {
     return !this.robot.isCapped;

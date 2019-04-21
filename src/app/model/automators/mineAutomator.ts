@@ -7,6 +7,7 @@ export class MineAutomator extends Automator {
     this.name = "Buy " + robot.actions[1].name;
     this.resource = robot;
     this.group = 2;
+    this.prestigeLevel = 12;
   }
   execCondition(): boolean {
     return this.robot.isCapped;

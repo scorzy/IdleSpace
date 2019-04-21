@@ -9,6 +9,7 @@ export class MineGroupAutomator extends GroupAutomator {
     this.name = "Exp " + i;
     this.stopWhenFactoryUi = false;
     this.description = "Multiple buy drones expansion";
+    this.prestigeLevel = 18 + (i - 1) * 9;
   }
   getAction(resource: Resource): Action {
     return resource.actions[1];

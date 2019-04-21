@@ -1,0 +1,22 @@
+<div class="content-area">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Level</th>
+        <th>Automators</th>
+        <th>Intervals</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pr of prestige; trackBy: prestigeId">
+        <td>{{ pr[0] }}</td>
+        <td>
+          <span *ngFor="let auto of pr[1]">{{ auto }}, </span>
+        </td>
+        <td>
+          <span *ngFor="let time of pr[2]">{{ time }} </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -8,6 +8,7 @@ export class StorageAutomator extends Automator {
     this.name = "Buy storage when full";
     this.resource = material;
     this.group = 2;
+    this.prestigeLevel = 4;
   }
   execCondition(): boolean {
     return this.material.isCapped;

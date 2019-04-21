@@ -7,6 +7,7 @@ export class BuildingAutomator extends Automator {
     this.name = "Buy " + building.name;
     this.resource = building;
     this.stopWhenFactoryUi = false;
+    this.prestigeLevel = 15;
   }
 
   doAction(): boolean {

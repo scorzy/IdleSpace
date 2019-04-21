@@ -9,6 +9,7 @@ export class BuildingGroupAutomator extends GroupAutomator {
     this.name = "Auto " + i;
     this.stopWhenFactoryUi = false;
     this.description = "Multiple buy buildings";
+    this.prestigeLevel = 21 + (i - 1) * 9;
   }
   getAction(resource: Resource): Action {
     return resource.actions[0];

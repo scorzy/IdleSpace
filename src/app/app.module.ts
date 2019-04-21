@@ -62,6 +62,7 @@ import { ShipyardInfoComponent } from "./info/shipyard-info/shipyard-info.compon
 import { AutomatorComponent } from "./automator-group/automator/automator.component";
 import { AutomatorGroupComponent } from "./automator-group/automator-group.component";
 import { GroupAutomatorComponent } from './group-tab/group-automator/group-automator.component';
+import { AutomatorTableComponent } from './prestige/automator-table/automator-table.component';
 
 @NgModule({
   declarations: [
@@ -117,7 +118,8 @@ import { GroupAutomatorComponent } from './group-tab/group-automator/group-autom
     ShipyardInfoComponent,
     AutomatorComponent,
     AutomatorGroupComponent,
-    GroupAutomatorComponent
+    GroupAutomatorComponent,
+    AutomatorTableComponent
   ],
   imports: [
     BrowserAnimationsModule,

@@ -11,7 +11,7 @@ import { RobotGroupAutomator } from "./robotGroupAutomator";
 import { MineGroupAutomator } from "./multipleMineAutomator";
 import { BuildingGroupAutomator } from "./buildingGroupAutomator";
 
-const TIME_LEVELS = [
+export const TIME_LEVELS = [
   [300, 0],
   [180, 0],
   [120, 0],
@@ -23,15 +23,15 @@ const TIME_LEVELS = [
   [20, 6],
   [15, 7],
   [12, 8],
-  [10, 6],
-  [8, 7],
-  [7, 8],
-  [6, 9],
-  [5, 10],
-  [4, 11],
-  [3, 12],
-  [2, 13],
-  [1, 14]
+  [10, 9],
+  [8, 10],
+  [7, 11],
+  [6, 12],
+  [5, 13],
+  [4, 14],
+  [3, 15],
+  [2, 16],
+  [1, 17]
 ];
 
 export class AutomatorManager implements ISalvable {

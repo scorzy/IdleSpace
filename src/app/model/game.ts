@@ -229,7 +229,8 @@ export class Game {
     // this.resourceManager.habitableSpace.quantity = new Decimal(100);
     // this.resourceManager.miningDistrict.quantity = new Decimal(100);
     // this.resourceManager.crystalDistrict.quantity = new Decimal(100);
-    // this.darkMatterManager.darkMatter.quantity = new Decimal(1e4);
+    this.darkMatterManager.darkMatter.quantity = new Decimal(1e4);
+    this.darkMatterManager.darkMatter.unlock();
     // this.resourceManager.metal.quantity = new Decimal();
 
     // this.resourceManager.materials.forEach(m => {

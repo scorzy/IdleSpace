@@ -21,6 +21,7 @@ import { InfoComponent } from "./info/info.component";
 import { StartComponent } from "./info/start/start.component";
 import { LabInfoComponent } from "./info/lab-info/lab-info.component";
 import { ShipyardInfoComponent } from "./info/shipyard-info/shipyard-info.component";
+import { AutomatorTableComponent } from "./prestige/automator-table/automator-table.component";
 
 const routes: Routes = [
   {
@@ -90,6 +91,10 @@ const routes: Routes = [
   {
     path: "prestige",
     component: PrestigeComponent
+  },
+  {
+    path: "autoTable",
+    component: AutomatorTableComponent
   },
   {
     path: "darkMatter",
