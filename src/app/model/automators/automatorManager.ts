@@ -7,6 +7,9 @@ import { RobotAutomator } from "./robotAutomator";
 import { RobotEndingAutomator } from "./robotEndingAutomator";
 import { MineAutomator } from "./mineAutomator";
 import { BuildingAutomator } from "./buildingAutomator";
+import { RobotGroupAutomator } from "./robotGroupAutomator";
+import { MineGroupAutomator } from "./multipleMineAutomator";
+import { BuildingGroupAutomator } from "./buildingGroupAutomator";
 
 const TIME_LEVELS = [
   [300, 0],
@@ -68,6 +71,24 @@ export class AutomatorManager implements ISalvable {
       const autoBuy = new BuildingAutomator(r);
       this.automatorGroups.push(autoBuy);
     });
+
+    //  Buy Drone Group
+    for (let i = 0; i < 3; i++) {
+      const autoGr1 = new RobotGroupAutomator(resMan.tierGroups[1], i + 1);
+      this.automatorGroups.push(autoGr1);
+    }
+
+    //  Buy Mine Group
+    for (let i = 0; i < 3; i++) {
+      const autoGr1 = new MineGroupAutomator(resMan.tierGroups[1], i + 1);
+      this.automatorGroups.push(autoGr1);
+    }
+
+    //  Buy Buildings Group
+    for (let i = 0; i < 3; i++) {
+      const autoGr1 = new BuildingGroupAutomator(resMan.tierGroups[2], i + 1);
+      this.automatorGroups.push(autoGr1);
+    }
   }
 
   update(now: number) {
@@ -99,7 +120,7 @@ export class AutomatorManager implements ISalvable {
     return save;
   }
   load(data: any): boolean {
-    if ("a" in data) return false;
+    if (!("a" in data)) return false;
     for (const autData of data.a) {
       if ("i" in autData) {
         const automator = this.automatorGroups.find(auto => auto.id === data.i);

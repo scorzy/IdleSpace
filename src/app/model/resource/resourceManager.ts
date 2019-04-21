@@ -570,7 +570,7 @@ export class ResourceManager implements ISalvable {
     this.tierGroups = [
       this.matGroup,
       new ResourceGroup("1", "Robots", "robot", this.tier1),
-      new ResourceGroup("2", "Buildings", "cog", this.tier2),
+      new ResourceGroup("2", "Buildings", "building", this.tier2),
       new ResourceGroup("4", "Districts", "world", this.districts)
     ];
     this.tierGroups[0].action1Name = "Buy Storage";

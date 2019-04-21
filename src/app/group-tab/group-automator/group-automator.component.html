@@ -1,0 +1,20 @@
+<div class="clr-row">
+  <div class="clr-col-md-6">
+    <app-automator [auto]="auto"></app-automator>
+  </div>
+  <div class="clr-col-md-6">
+    <clr-datagrid class="datagrid-compact" [(clrDgSelected)]="auto.units">
+      <clr-dg-column [clrDgField]="'unit.name'">Name</clr-dg-column>
+      <clr-dg-row
+        *clrDgItems="let unit of resourceGroup.unlockedResources"
+        [clrDgItem]="unit"
+      >
+        <clr-dg-cell>
+          <a [routerLink]="'/nav/unit/' + unit.id">
+            {{ unit.name }}
+          </a>
+        </clr-dg-cell>
+      </clr-dg-row>
+    </clr-datagrid>
+  </div>
+</div>

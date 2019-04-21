@@ -193,6 +193,9 @@ export class Game {
       r.unlockedAutomators = r.automators.filter(a => a.isUnlocked());
       r.unlockedAutomators2 = r.automators2.filter(a => a.isUnlocked());
     });
+    this.resourceManager.tierGroups.forEach(h => {
+      h.unlockedAutomators = h.automators.filter(g => g.isUnlocked());
+    });
     this.automatorManager.resetTimers();
   }
 
@@ -242,6 +245,9 @@ export class Game {
     this.resourceManager.allResources.forEach(r => {
       r.unlockedAutomators = r.automators.filter(a => a.isUnlocked());
       r.unlockedAutomators2 = r.automators2.filter(a => a.isUnlocked());
+    });
+    this.resourceManager.tierGroups.forEach(h => {
+      h.unlockedAutomators = h.automators.filter(g => g.isUnlocked());
     });
     this.automatorManager.resetTimers();
   }

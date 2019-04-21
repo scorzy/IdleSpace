@@ -18,10 +18,13 @@
     </clr-tab-content>
   </clr-tab>
 
-  <!-- <clr-tab *ngIf="ms.game.tabs.autoBuy.unlocked">
-    <button clrTabLink>Auto Buyers</button>
-    <clr-tab-content *clrIfActive="ms.prestigeTaActive">
-      <app-group-auto-buy [unitGroup]="unitGroup"></app-group-auto-buy>
+  <clr-tab *ngFor="let auto of unitGroup.unlockedAutomators; trackBy: autoId">
+    <button clrTabLink id="link1">{{ auto.name }}</button>
+    <clr-tab-content id="content1" *clrIfActive>
+      <app-group-automator
+        [resourceGroup]="unitGroup"
+        [auto]="auto"
+      ></app-group-automator>
     </clr-tab-content>
-  </clr-tab> -->
+  </clr-tab>
 </clr-tabs>

@@ -4,7 +4,8 @@ import {
   ChangeDetectionStrategy,
   Input,
   OnDestroy,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  HostBinding
 } from "@angular/core";
 import { Automator } from "../../model/automators/automator";
 import { MainService } from "../../main.service";
@@ -17,6 +18,8 @@ import { Subscription } from "rxjs";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AutomatorComponent implements OnInit, OnDestroy {
+  @HostBinding("class")
+  card = "card";
   @Input() auto: Automator;
   intervals = new Array<number>();
   progress = 50;

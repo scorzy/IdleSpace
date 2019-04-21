@@ -12,6 +12,7 @@ import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
 import { ResourceGroup } from "../model/resource/resourceGroup";
 import { preventScroll } from "../app.component";
+import { Automator } from "../model/automators/automator";
 
 @Component({
   selector: "app-group-tab",
@@ -61,5 +62,8 @@ export class GroupTabComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.bugs = uniq(this.unitGroup.unlocked.map(u => u.bugType));
 
     this.cd.markForCheck();
+  }
+  autoId(index: number, auto: Automator) {
+    return auto.id;
   }
 }

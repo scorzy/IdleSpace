@@ -1,4 +1,5 @@
 import { Resource } from "./resource";
+import { GroupAutomator } from "../automators/groupAutomator";
 
 export class ResourceGroup {
   isExpanded = true;
@@ -6,6 +7,8 @@ export class ResourceGroup {
   selected = new Array<Resource>();
   action1Name = "";
   action2Name = "";
+  automators = new Array<GroupAutomator>();
+  unlockedAutomators = new Array<GroupAutomator>();
 
   constructor(
     public id: string,
