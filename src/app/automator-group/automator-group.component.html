@@ -1,6 +1,6 @@
 <div class="clr-row">
-  <div class="clr-col-lg-6">
-    <div class="card" *ngFor="let auto of autoGrp; trackBy: autoId">
+  <div class="clr-col-lg-6" *ngFor="let auto of autoGrp; trackBy: autoId">
+    <div class="card">
       <app-automator [auto]="auto"></app-automator>
     </div>
   </div>

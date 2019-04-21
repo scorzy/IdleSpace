@@ -191,6 +191,7 @@ export class Game {
     AllSkillEffects.initialize(true);
     this.resourceManager.allResources.forEach(r => {
       r.unlockedAutomators = r.automators.filter(a => a.isUnlocked());
+      r.unlockedAutomators2 = r.automators2.filter(a => a.isUnlocked());
     });
     this.automatorManager.resetTimers();
   }
@@ -240,6 +241,7 @@ export class Game {
     this.prestigeManager.reloadPrestigeToEarn();
     this.resourceManager.allResources.forEach(r => {
       r.unlockedAutomators = r.automators.filter(a => a.isUnlocked());
+      r.unlockedAutomators2 = r.automators2.filter(a => a.isUnlocked());
     });
     this.automatorManager.resetTimers();
   }

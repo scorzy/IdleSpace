@@ -66,6 +66,10 @@ export class Resource extends AbstractUnlockable
   alwaysActive = false;
   automators = new Array<Automator>();
   unlockedAutomators = new Array<Automator>();
+  automators2 = new Array<Automator>();
+  unlockedAutomators2 = new Array<Automator>();
+  automation1Name = "Drone Automation";
+  automation2Name = "Expansion Automation";
 
   addGenerator(generator: Resource, ratio: DecimalSource = 1): void {
     const prod = new Production(generator, this, ratio);

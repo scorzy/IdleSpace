@@ -72,6 +72,9 @@ export class Price {
     if (this.spendable.quantity.lte(0)) {
       return new Decimal(0);
     }
+    if (this.spendable.id === "md" || this.spendable.id === "cd") {
+      percentToUse = 100;
+    }
     const resourceToUse = this.spendable.quantity.times(percentToUse / 100);
     return this.growRate === 1
       ? resourceToUse.div(this.cost).floor()

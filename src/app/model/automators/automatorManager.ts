@@ -3,6 +3,10 @@ import { ResourceManager } from "../resource/resourceManager";
 import { StorageAutomator } from "./storageAutomator";
 import { PrestigeManager } from "../prestige/prestigeManager";
 import { Automator } from "./automator";
+import { RobotAutomator } from "./robotAutomator";
+import { RobotEndingAutomator } from "./robotEndingAutomator";
+import { MineAutomator } from "./mineAutomator";
+import { BuildingAutomator } from "./buildingAutomator";
 
 const TIME_LEVELS = [
   [300, 0],
@@ -32,10 +36,37 @@ export class AutomatorManager implements ISalvable {
   times = new Array<number>();
 
   generateAutomators() {
+    //  Resource Storage
     const resMan = ResourceManager.getInstance()
     ;[resMan.metal, resMan.crystal, resMan.alloy, resMan.energy].forEach(m => {
       const autoStorage = new StorageAutomator(m);
       this.automatorGroups.push(autoStorage);
+    });
+
+    //  Buy Robot 1
+    resMan.tier1.forEach(r => {
+      const autoBuy = new RobotAutomator(r);
+      this.automatorGroups.push(autoBuy);
+    });
+
+    //  Buy Robot Ending
+    resMan.tier1.forEach(r => {
+      const material = r.products[0].product;
+      const autoBuy = new RobotEndingAutomator(r, material);
+      this.automatorGroups.push(autoBuy);
+    });
+
+    //  Mine Automators
+    resMan.tier1.forEach(r => {
+      const autoBuy = new MineAutomator(r);
+      this.automatorGroups.push(autoBuy);
+    });
+
+    //  Building 1
+    resMan.tier2.forEach(r => {
+      r.automation1Name = "Buildings Automation";
+      const autoBuy = new BuildingAutomator(r);
+      this.automatorGroups.push(autoBuy);
     });
   }
 

@@ -1,6 +1,7 @@
 import { ISalvable } from "../base/ISalvable";
 import { PrestigeManager } from "../prestige/prestigeManager";
 import { Resource } from "../resource/resource";
+import { ResourceManager } from "../resource/resourceManager";
 
 export class Automator implements ISalvable {
   name = "";
@@ -12,6 +13,9 @@ export class Automator implements ISalvable {
   lastExec = 0;
   resourcePercentToUse = 100;
   resource: Resource;
+  group = 1;
+  stopWhenFactory = false;
+  stopWhenFactoryUi = false;
   constructor(public id: string) {}
 
   isUnlocked(): boolean {
@@ -19,6 +23,12 @@ export class Automator implements ISalvable {
   }
 
   canExec(now: number): boolean {
+    if (
+      this.stopWhenFactory &&
+      ResourceManager.getInstance().droneFactory.quantity.gte(1)
+    ) {
+      return false;
+    }
     return this.lastExec + this.minInterval * 1000 < now;
   }
   execCondition(): boolean {
@@ -31,7 +41,8 @@ export class Automator implements ISalvable {
     if (this.doAction()) this.lastExec = Date.now();
   }
   assignToResource() {
-    if (this.resource) this.resource.automators.push(this);
+    if (this.resource && this.group === 1) this.resource.automators.push(this);
+    if (this.resource && this.group === 2) this.resource.automators2.push(this);
   }
   resetTimers() {
     this.lastExec = Date.now();
@@ -43,6 +54,7 @@ export class Automator implements ISalvable {
     if (this.priority !== 1) data.p = this.priority;
     if (this.minInterval !== 1) data.m = this.minInterval;
     if (this.on) data.o = this.on;
+    if (this.resourcePercentToUse !== 100) data.r = this.resourcePercentToUse;
     return data;
   }
   load(data: any): boolean {
@@ -50,6 +62,7 @@ export class Automator implements ISalvable {
     if ("p" in data) this.priority = data.p;
     if ("m" in data) this.minInterval = data.m;
     if ("o" in data) this.on = data.o;
+    if ("r" in data) this.resourcePercentToUse = data.r;
     return true;
   }
 }

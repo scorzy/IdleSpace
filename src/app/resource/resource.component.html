@@ -40,11 +40,20 @@
       </clr-tab-content>
     </clr-tab>
 
-    <clr-tab>
-      <button clrTabLink>Automation</button>
+    <clr-tab *ngIf="res.unlockedAutomators.length > 0">
+      <button clrTabLink>{{ res.automation1Name }}</button>
       <clr-tab-content *clrIfActive>
         <app-automator-group
           [autoGrp]="res.unlockedAutomators"
+        ></app-automator-group>
+      </clr-tab-content>
+    </clr-tab>
+
+    <clr-tab *ngIf="res.unlockedAutomators2.length > 0">
+      <button clrTabLink>{{ res.automation2Name }}</button>
+      <clr-tab-content *clrIfActive>
+        <app-automator-group
+          [autoGrp]="res.unlockedAutomators2"
         ></app-automator-group>
       </clr-tab-content>
     </clr-tab>

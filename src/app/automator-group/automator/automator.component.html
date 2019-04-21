@@ -3,7 +3,9 @@
     <div class="progress-meter" [attr.data-value]="progress"></div>
   </div>
   <div class="card-title">{{ auto.name }}</div>
-
+  <div class="card-text" *ngIf="auto.description !== ''">
+    {{ auto.description }}
+  </div>
   <form clrForm clrLayout="compact">
     <clr-checkbox-container>
       <label>Active</label>
@@ -15,6 +17,15 @@
           [(ngModel)]="auto.on"
           name="on"
           (change)="onActivationChange()"
+        />
+      </clr-checkbox-wrapper>
+      <clr-checkbox-wrapper *ngIf="auto.stopWhenFactoryUi">
+        <label>When not have Robot Factory</label>
+        <input
+          clrCheckbox
+          type="checkbox"
+          [(ngModel)]="auto.stopWhenFactory"
+          name="stopFactory"
         />
       </clr-checkbox-wrapper>
     </clr-checkbox-container>
@@ -41,16 +52,16 @@
     </clr-input-container>
 
     <clr-input-container>
-      <label
-        >Resource usage
-        <br />
+      <label class="clr-col-12 clr-col-md-3"
+        >Res.
         <app-formatted-quantity
           [quantity]="auto.resourcePercentToUse"
           [integer]="true"
-        ></app-formatted-quantity>
-        %
+        ></app-formatted-quantity
+        >%
       </label>
       <input
+        class="clr-col-12 clr-col-md-9"
         clrInput
         max="100"
         min="1"
