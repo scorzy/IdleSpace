@@ -28,7 +28,6 @@ export class Automator implements ISalvable {
   exec() {
     if (this.doAction()) this.lastExec = Date.now();
   }
-  assignToResource() {}
 
   getSave(): any {
     const data: any = {};

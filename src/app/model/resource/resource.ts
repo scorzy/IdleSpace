@@ -16,7 +16,7 @@ import { SkillEffect } from "../prestige/skillEffects";
 import { PLUS_ADD } from "../prestige/allSkillEffects";
 import { ModStack } from "../mod/modStack";
 import { IResource } from "../base/iResource";
-import { Automator } from "../automators/automator";
+import { AutomatorGroup } from "../automators/automatorGroup";
 
 export class Resource extends AbstractUnlockable
   implements ISpendable, IBuyable, IResource {
@@ -64,8 +64,8 @@ export class Resource extends AbstractUnlockable
   standardPrice = new Decimal(1);
   exponentialStorage = false;
   alwaysActive = false;
-  automators = new Array<Automator>();
-  unlockedAutomators = new Array<Automator>();
+  automators = new Array<AutomatorGroup>();
+  unlockedAutomators = new Array<AutomatorGroup>();
 
   addGenerator(generator: Resource, ratio: DecimalSource = 1): void {
     const prod = new Production(generator, this, ratio);

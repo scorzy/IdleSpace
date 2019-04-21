@@ -1,8 +1,8 @@
 import { ISalvable } from "../base/ISalvable";
-import { Automator } from "./automator";
 import { ResourceManager } from "../resource/resourceManager";
 import { StorageAutomator } from "./storageAutomator";
 import { PrestigeManager } from "../prestige/prestigeManager";
+import { AutomatorGroup } from "./automatorGroup";
 
 const TIME_LEVELS = [
   [60, 0],
@@ -25,18 +25,21 @@ const TIME_LEVELS = [
 ];
 
 export class AutomatorManager implements ISalvable {
-  automators = new Array<Automator>();
+  automatorGroups = new Array<AutomatorGroup>();
   times = new Array<number>();
 
   generateAutomators() {
     const resMan = ResourceManager.getInstance()
     ;[resMan.metal, resMan.crystal, resMan.alloy, resMan.energy].forEach(m => {
-      this.automators.push(new StorageAutomator(m));
+      const autGrp = new AutomatorGroup(m.id + "G");
+      autGrp.automators.push(new StorageAutomator(m));
+      this.automatorGroups.push(autGrp);
     });
   }
 
   update(now: number) {
-    const toDo = this.automators
+    const toDo = this.automatorGroups
+      .map(g => g.getCurrentAutomator())
       .filter(
         a => a.on && a.isUnlocked() && a.canExec(now) && a.execCondition()
       )
@@ -45,28 +48,29 @@ export class AutomatorManager implements ISalvable {
   }
 
   assignToResource() {
-    this.automators.forEach(a => a.assignToResource());
+    this.automatorGroups.forEach(a => a.assignToResource());
   }
   resetTimers() {
     const totalPrestige = PrestigeManager.getInstance().totalPrestige;
     this.times = TIME_LEVELS.filter(t => t[1] <= totalPrestige).map(t => t[0]);
-    const now = Date.now();
-    this.automators.forEach(a => {
-      a.lastExec = now;
+    this.automatorGroups.forEach(g => {
+      g.resetTimers();
     });
   }
 
   //#region Save and Load
   getSave() {
     const save: any = {};
-    save.a = this.automators.filter(a => a.isUnlocked()).map(a => a.getSave());
+    save.a = this.automatorGroups
+      .filter(a => a.isUnlocked())
+      .map(a => a.getSave());
     return save;
   }
   load(data: any): boolean {
     if ("a" in data) return false;
     for (const autData of data.a) {
       if ("i" in autData) {
-        const automator = this.automators.find(auto => auto.id === data.i);
+        const automator = this.automatorGroups.find(auto => auto.id === data.i);
         if (automator) automator.load(autData);
       }
     }

@@ -1,5 +1,5 @@
-import { Automator } from "./automator";
 import { Resource } from "../resource/resource";
+import { Automator } from "./automator";
 
 export class StorageAutomator extends Automator {
   constructor(public material: Resource) {
@@ -12,8 +12,5 @@ export class StorageAutomator extends Automator {
   }
   doAction(): boolean {
     return this.material.actions[0].buy(new Decimal(1));
-  }
-  assignToResource() {
-    this.material.automators.push(this);
   }
 }

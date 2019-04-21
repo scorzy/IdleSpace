@@ -56,10 +56,11 @@ import { NotificationsComponent } from "./options-nav/notifications/notification
 import { DarkMatterComponent } from "./dark-matter/dark-matter.component";
 import { InfoComponent } from "./info/info.component";
 import { ResearchUnlocksComponent } from "./job/research-unlocks/research-unlocks.component";
-import { StartComponent } from './info/start/start.component';
-import { LabInfoComponent } from './info/lab-info/lab-info.component';
-import { ShipyardInfoComponent } from './info/shipyard-info/shipyard-info.component';
-import { AutomatorComponent } from './automator/automator.component';
+import { StartComponent } from "./info/start/start.component";
+import { LabInfoComponent } from "./info/lab-info/lab-info.component";
+import { ShipyardInfoComponent } from "./info/shipyard-info/shipyard-info.component";
+import { AutomatorComponent } from "./automator-group/automator/automator.component";
+import { AutomatorGroupComponent } from "./automator-group/automator-group.component";
 
 @NgModule({
   declarations: [
@@ -113,7 +114,8 @@ import { AutomatorComponent } from './automator/automator.component';
     StartComponent,
     LabInfoComponent,
     ShipyardInfoComponent,
-    AutomatorComponent
+    AutomatorComponent,
+    AutomatorGroupComponent
   ],
   imports: [
     BrowserAnimationsModule,

@@ -40,10 +40,10 @@
       </clr-tab-content>
     </clr-tab>
 
-    <clr-tab *ngFor="let auto of res.unlockedAutomators; trackBy: autoId">
-      <button clrTabLink>{{ auto.name }}</button>
+    <clr-tab *ngFor="let autoGrp of res.unlockedAutomators; trackBy: autoId">
+      <button clrTabLink>{{ autoGrp.name }}</button>
       <clr-tab-content *clrIfActive>
-        <app-automator [auto]="auto"></app-automator>
+        <app-automator-group [autoGrp]="autoGrp"></app-automator-group>
       </clr-tab-content>
     </clr-tab>
   </clr-tabs>

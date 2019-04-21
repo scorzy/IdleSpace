@@ -2,10 +2,10 @@ import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { AutomatorComponent } from "./automator.component";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
-import { defaultImport } from "../app.component.spec";
-import { FormatPipe } from "../format.pipe";
-import { EndInPipe } from "../end-in.pipe";
-import { SizeNamePipe } from "../size-name.pipe";
+import { defaultImport } from "../../app.component.spec";
+import { FormatPipe } from "../../format.pipe";
+import { EndInPipe } from "../../end-in.pipe";
+import { SizeNamePipe } from "../../size-name.pipe";
 
 describe("AutomatorComponent", () => {
   let component: AutomatorComponent;
@@ -23,7 +23,8 @@ describe("AutomatorComponent", () => {
     fixture = TestBed.createComponent(AutomatorComponent);
     component = fixture.componentInstance;
     component.ms.start();
-    component.auto = component.ms.game.automatorManager.automators[0];
+    component.auto =
+      component.ms.game.automatorManager.automatorGroups[0].automators[0];
     fixture.detectChanges();
   });
 

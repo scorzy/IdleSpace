@@ -4,8 +4,8 @@ import {
   ChangeDetectionStrategy,
   Input
 } from "@angular/core";
-import { Automator } from "../model/automators/automator";
-import { MainService } from "../main.service";
+import { Automator } from "../../model/automators/automator";
+import { MainService } from "../../main.service";
 
 @Component({
   selector: "app-automator",
