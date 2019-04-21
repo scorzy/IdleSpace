@@ -4,8 +4,8 @@ import { Automator } from "./automator";
 export class StorageAutomator extends Automator {
   constructor(public material: Resource) {
     super(material.id + "A");
-    this.name = "Storage Automator";
-    this.description = "Buy Storage expansion automatically";
+    this.name = "Storage Automation";
+    this.resource = material;
   }
   execCondition(): boolean {
     return this.material.isCapped;

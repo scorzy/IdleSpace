@@ -1,3 +1,7 @@
-<p>
-  automator-group works!
-</p>
+<div class="clr-row">
+  <div class="clr-col-lg-6">
+    <div class="card" *ngFor="let auto of autoGrp; trackBy: autoId">
+      <app-automator [auto]="auto"></app-automator>
+    </div>
+  </div>
+</div>

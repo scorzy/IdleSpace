@@ -2,9 +2,12 @@ import { ISalvable } from "../base/ISalvable";
 import { ResourceManager } from "../resource/resourceManager";
 import { StorageAutomator } from "./storageAutomator";
 import { PrestigeManager } from "../prestige/prestigeManager";
-import { AutomatorGroup } from "./automatorGroup";
+import { Automator } from "./automator";
 
 const TIME_LEVELS = [
+  [300, 0],
+  [180, 0],
+  [120, 0],
   [60, 0],
   [50, 2],
   [40, 3],
@@ -25,21 +28,19 @@ const TIME_LEVELS = [
 ];
 
 export class AutomatorManager implements ISalvable {
-  automatorGroups = new Array<AutomatorGroup>();
+  automatorGroups = new Array<Automator>();
   times = new Array<number>();
 
   generateAutomators() {
     const resMan = ResourceManager.getInstance()
     ;[resMan.metal, resMan.crystal, resMan.alloy, resMan.energy].forEach(m => {
-      const autGrp = new AutomatorGroup(m.id + "G");
-      autGrp.automators.push(new StorageAutomator(m));
-      this.automatorGroups.push(autGrp);
+      const autoStorage = new StorageAutomator(m);
+      this.automatorGroups.push(autoStorage);
     });
   }
 
   update(now: number) {
     const toDo = this.automatorGroups
-      .map(g => g.getCurrentAutomator())
       .filter(
         a => a.on && a.isUnlocked() && a.canExec(now) && a.execCondition()
       )

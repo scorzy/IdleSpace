@@ -1,15 +1,16 @@
 import { ISalvable } from "../base/ISalvable";
 import { PrestigeManager } from "../prestige/prestigeManager";
+import { Resource } from "../resource/resource";
 
 export class Automator implements ISalvable {
   name = "";
   description = "";
-  lastExec = 0;
   on = false;
   prestigeLevel = 1;
   minInterval = 60;
   priority = 1;
-
+  lastExec = 0;
+  resource: Resource;
   constructor(public id: string) {}
 
   isUnlocked(): boolean {
@@ -27,6 +28,12 @@ export class Automator implements ISalvable {
   }
   exec() {
     if (this.doAction()) this.lastExec = Date.now();
+  }
+  assignToResource() {
+    if (this.resource) this.resource.automators.push(this);
+  }
+  resetTimers() {
+    this.lastExec = Date.now();
   }
 
   getSave(): any {

@@ -4,7 +4,7 @@ import {
   ChangeDetectionStrategy,
   Input
 } from "@angular/core";
-import { AutomatorGroup } from "../model/automators/automatorGroup";
+import { Automator } from "../model/automators/automator";
 
 @Component({
   selector: "app-automator-group",
@@ -13,9 +13,13 @@ import { AutomatorGroup } from "../model/automators/automatorGroup";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AutomatorGroupComponent implements OnInit {
-  @Input() autoGrp: AutomatorGroup;
+  @Input() autoGrp: Automator[];
 
   constructor() {}
 
   ngOnInit() {}
+
+  autoId(index: number, auto: Automator) {
+    return auto.id;
+  }
 }
