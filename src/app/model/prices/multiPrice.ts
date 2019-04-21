@@ -38,4 +38,9 @@ export class MultiPrice {
         .reduce((p, c) => p.max(c), new Decimal(0))
         .toNumber() * 1000;
   }
+  getMaxBuy(bought: Decimal, percentToUse: number): Decimal {
+    return this.prices
+      .map(pr => pr.getMaxBuy(bought, percentToUse))
+      .reduce((p, c) => p.min(c), new Decimal(Number.POSITIVE_INFINITY));
+  }
 }

@@ -65,4 +65,21 @@ export class Price {
       ? toBuy.times(this.cost)
       : Decimal.sumGeometricSeries(toBuy, this.cost, this.growRate, bought);
   }
+  /**
+   * Get max buy, percentToUse in % 1-100
+   */
+  getMaxBuy(bought: Decimal, percentToUse: number): Decimal {
+    if (this.spendable.quantity.lte(0)) {
+      return new Decimal(0);
+    }
+    const resourceToUse = this.spendable.quantity.times(percentToUse / 100);
+    return this.growRate === 1
+      ? resourceToUse.div(this.cost).floor()
+      : (this.maxBuy = Decimal.affordGeometricSeries(
+          resourceToUse,
+          this.cost,
+          this.growRate,
+          bought
+        ));
+  }
 }

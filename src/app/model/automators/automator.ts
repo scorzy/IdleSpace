@@ -10,6 +10,7 @@ export class Automator implements ISalvable {
   minInterval = 60;
   priority = 1;
   lastExec = 0;
+  resourcePercentToUse = 100;
   resource: Resource;
   constructor(public id: string) {}
 

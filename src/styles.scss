@@ -79,18 +79,22 @@ h4 {
   height: 100%;
   padding-top: 0.5rem;
 }
-
+input[type="range"]:focus,
+input[type="range"].clr-focus {
+  border-bottom: none !important;
+  background: none !important;
+  background-size: 0 !important;
+}
 input[type="range"] {
   -webkit-appearance: none;
   width: 100%;
   margin: 7.75px 0;
+  border-bottom: none !important;
+  background: none !important;
+  background-color: transparent !important;
+  background-size: 0 !important;
 }
-input[type="range"] {
-  -webkit-appearance: none;
-  width: 100%;
-  margin: 7.25px 0;
-  background-color: transparent;
-}
+
 input[type="range"]:focus {
   outline: none;
 }
@@ -162,7 +166,6 @@ input[type="range"]::-ms-fill-upper {
 input[type="range"]::-ms-thumb {
   box-shadow: 0.3px 0.3px 1px #000031, 0px 0px 0.3px #00004b;
   border: 1.5px solid #00001e;
-  height: 22px;
   width: 22px;
   border-radius: 15px;
   background: #ffffff;
