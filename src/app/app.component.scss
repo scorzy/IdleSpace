@@ -1,3 +1,9 @@
 app-material-list {
   min-height: fit-content;
+  overflow-y: auto;
+}
+@media screen and (max-width: 768px) {
+  app-material-list {
+    display: none;
+  }
 }

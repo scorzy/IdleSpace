@@ -77,6 +77,17 @@
           <clr-icon shape="star"></clr-icon>
         </span>
       </a>
+
+      <a
+        [routerLink]="'darkMatter'"
+        class="nav-link"
+        [routerLinkActive]="'active'"
+        *ngIf="ms.game.darkMatterManager.darkMatter.unlocked"
+      >
+        <span class="nav-text">
+          <clr-icon shape="darkMatter"></clr-icon>
+        </span>
+      </a>
     </div>
 
     <div class="header-actions">
