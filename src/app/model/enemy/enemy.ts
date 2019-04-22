@@ -1,8 +1,8 @@
 import { Zone } from "./zone";
 import { ShipDesign } from "../fleet/shipDesign";
 import { MAX_NAVAL_CAPACITY } from "../fleet/fleetManager";
-import { ShipTypes } from "../fleet/shipTypes";
-import { Presets, Preset, CORVETTE_PRESET } from "./preset";
+import { ShipTypes, DefenseTypes } from "../fleet/shipTypes";
+import { Presets, Preset, CORVETTE_PRESET, DefensePreset } from "./preset";
 import sample from "lodash-es/sample";
 import random from "lodash-es/random";
 import { Reward } from "./reward";
@@ -11,6 +11,10 @@ import { enemySuffixes } from "./enemySuffixes";
 import { enemyIcons } from "./enemyIcons";
 import { SearchJob } from "./searchJob";
 import { shuffle } from "lodash-es";
+
+const DEFENSE_START_LEVEL = 7;
+const DEFENSE_END_LEVEL = 40;
+const DEFENSE_MAX_PERCENT = 2.5;
 
 export class Enemy {
   constructor() {
@@ -71,6 +75,7 @@ export class Enemy {
     const maxShipTye = Math.floor(
       Math.min(Math.max(Math.log(level) / Math.log(1.8), 1), ShipTypes.length)
     );
+
     if (level > 1) {
       let shipToUse = [];
       for (let i = 0; i < maxShipTye; i++) shipToUse.push(ShipTypes[i]);
@@ -91,7 +96,6 @@ export class Enemy {
       navalCap = 20;
       enemy.addFromPreset(CORVETTE_PRESET);
     }
-
     const totalWeight = enemy.shipsDesign
       .map(s => s.weight)
       .reduce((p, c) => p + c, 0);
@@ -108,6 +112,64 @@ export class Enemy {
       });
       sd.reload(false);
     });
+
+    //#region Defense
+    if (level > DEFENSE_START_LEVEL + 1) {
+      const defensePercent =
+        1 +
+        (DEFENSE_MAX_PERCENT * (level - DEFENSE_START_LEVEL)) /
+          (DEFENSE_END_LEVEL - DEFENSE_START_LEVEL);
+      const defenseCap = navalCap * defensePercent;
+      const maxDefense =
+        level < DEFENSE_START_LEVEL
+          ? 0
+          : Math.floor(
+              Math.min(
+                Math.max(
+                  Math.log(level - DEFENSE_START_LEVEL + 1) / Math.log(2),
+                  1
+                ),
+                DefenseTypes.length
+              )
+            );
+
+      let defenseToUse = [];
+      for (let i = 0; i < maxDefense; i++) defenseToUse.push(DefenseTypes[i]);
+      defenseToUse = shuffle(defenseToUse);
+      // const numShipToUse = random(2, DefenseTypes.length - 1);
+      // while (defenseToUse.length > numShipToUse) defenseToUse.pop();
+      defenseToUse.forEach(shipType => {
+        let presets = DefensePreset.filter(p => p.type === shipType);
+        const pres = sample(presets);
+        enemy.addFromPreset(pres);
+        if (presets.length > 2 && Math.random() < 0.4) {
+          presets = presets.filter(p => p !== pres);
+          const pres2 = sample(presets);
+          enemy.addFromPreset(pres2);
+        }
+      });
+      const totalDefenseWeight = enemy.shipsDesign
+        .filter(s => s.type.defense)
+        .map(s => s.weight)
+        .reduce((p, c) => p + c, 0);
+      enemy.shipsDesign.forEach(sd => {
+        const numOfShips = Math.max(
+          Math.floor(
+            (defenseCap * sd.weight) /
+              totalDefenseWeight /
+              sd.type.navalCapacity
+          ),
+          1
+        );
+        sd.quantity = new Decimal(numOfShips);
+        sd.modules.forEach(m => {
+          m.level = moduleLevel;
+        });
+        sd.reload(false);
+      });
+    }
+    //#endregion
+
     enemy.setOrder();
     enemy.reload();
     return enemy;

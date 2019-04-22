@@ -1,4 +1,4 @@
-import { ShipType, ShipTypes } from "./shipTypes";
+import { ShipType, ShipTypes, DefenseTypes } from "./shipTypes";
 import { ISalvable } from "../base/ISalvable";
 import { DesignLine } from "./designLine";
 import { Action } from "../actions/abstractAction";
@@ -167,6 +167,8 @@ export class ShipDesign implements ISalvable, IBuyable {
       .plus(this.totalShield)
       .plus(this.totalArmor);
 
+    if (this.type.defense) this.totalEnergy = new Decimal(0);
+
     this.isValid =
       this.totalEnergy.gte(0) &&
       this.usedModulePoint <= this.type.modulePoint &&
@@ -201,6 +203,7 @@ export class ShipDesign implements ISalvable, IBuyable {
     this.id = data.i;
     if ("q" in data) this.shipQuantity = Decimal.fromDecimal(data.q);
     this.type = ShipTypes.find(t => t.id === data.t);
+    if (!this.type) this.type = DefenseTypes.find(t => t.id === data.t);
     this.name = data.n;
     if ("m" in data) {
       for (const modData of data.m) {

@@ -1,4 +1,4 @@
-import { ShipTypes, ShipType } from "../fleet/shipTypes";
+import { ShipTypes, ShipType, DefenseTypes } from "../fleet/shipTypes";
 import { Sizes } from "../fleet/module";
 
 export class Preset {
@@ -394,6 +394,97 @@ export const Presets: Preset[] = [
       },
       {
         id: ["s"],
+        size: Sizes.ExtraLarge
+      }
+    ]
+  }
+];
+
+export const DefensePreset: Preset[] = [
+  {
+    name: "Small",
+    type: DefenseTypes[0],
+    modules: [
+      {
+        id: RANDOM_WEAPON,
+        size: Sizes.Small
+      },
+      {
+        id: ["s"],
+        size: Sizes.Small
+      },
+      {
+        id: ["a"],
+        size: Sizes.Small
+      },
+      {
+        id: ["a"],
+        size: Sizes.Small
+      }
+    ]
+  },
+  {
+    name: "Medium",
+    type: DefenseTypes[1],
+    modules: [
+      {
+        id: RANDOM_WEAPON,
+        size: Sizes.Medium
+      },
+      {
+        id: ["s"],
+        size: Sizes.Medium
+      },
+      {
+        id: ["a"],
+        size: Sizes.Medium
+      },
+      {
+        id: ["a"],
+        size: Sizes.Medium
+      }
+    ]
+  },
+  {
+    name: "Large",
+    type: DefenseTypes[2],
+    modules: [
+      {
+        id: RANDOM_WEAPON,
+        size: Sizes.Large
+      },
+      {
+        id: ["s"],
+        size: Sizes.Large
+      },
+      {
+        id: ["a"],
+        size: Sizes.Large
+      },
+      {
+        id: ["a"],
+        size: Sizes.Large
+      }
+    ]
+  },
+  {
+    name: "Extra Large",
+    type: DefenseTypes[3],
+    modules: [
+      {
+        id: RANDOM_WEAPON,
+        size: Sizes.ExtraLarge
+      },
+      {
+        id: ["s"],
+        size: Sizes.ExtraLarge
+      },
+      {
+        id: ["a"],
+        size: Sizes.ExtraLarge
+      },
+      {
+        id: ["a"],
         size: Sizes.ExtraLarge
       }
     ]

@@ -9,7 +9,8 @@ export class ShipType {
     public moduleCount: number,
     public modulePoint: number,
     public shape: string,
-    public navalCapacity: number
+    public navalCapacity: number,
+    public defense = false
   ) {}
 }
 export const ShipTypes = [
@@ -72,5 +73,52 @@ export const ShipTypes = [
     14,
     "rank4",
     32
+  )
+];
+
+export const DefenseTypes = [
+  new ShipType(
+    "D1",
+    "Small",
+    new Decimal(10),
+    new Decimal(BASE_ARMOR),
+    4,
+    4,
+    "rank1",
+    1,
+    true
+  ),
+  new ShipType(
+    "D3",
+    "Medium",
+    new Decimal(40),
+    new Decimal(BASE_ARMOR * 3.5),
+    6,
+    8,
+    "rank3",
+    4,
+    true
+  ),
+  new ShipType(
+    "D5",
+    "Large",
+    new Decimal(160),
+    new Decimal(BASE_ARMOR * 6),
+    8,
+    12,
+    "rank4",
+    16,
+    true
+  ),
+  new ShipType(
+    "D7",
+    "Extra Large",
+    new Decimal(640),
+    new Decimal(BASE_ARMOR * 8.5),
+    10,
+    16,
+    "rank4",
+    64,
+    true
   )
 ];
