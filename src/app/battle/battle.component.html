@@ -11,12 +11,12 @@
     {{ ms.game.enemyManager.currentEnemy?.name }}
   </h1>
   <div class="clr-row" *ngIf="ms.game.enemyManager.currentEnemy">
-    <div class="clr-col-6">
-      <p>Level: {{ ms.game.enemyManager.currentEnemy.level }}</p>
+    <div class="clr-col-12 clr-col-md-7">
+      <!-- <p>Level: {{ ms.game.enemyManager.currentEnemy.level }}</p> -->
 
-      <div class="btn-group btn-success">
+      <div class="btn-group ">
         <button
-          class="btn"
+          class="btn btn-success"
           (click)="startBattle()"
           [disabled]="ms.game.enemyManager.inBattle"
           [disabled]="!ms.game.fleetManager.fightEnabled"
@@ -24,7 +24,24 @@
           <clr-icon shape="floppy"></clr-icon>
           Fight
         </button>
-        <button class="btn btn-warning" (click)="surrenderModal = true">
+        <button
+          class="btn btn-primary"
+          [ngClass]="{
+            'btn-success': ms.game.enemyManager.nukeAction.nukeAll,
+            'btn-primary': !ms.game.enemyManager.nukeAction.nukeAll
+          }"
+          *ngIf="ms.game.enemyManager.currentEnemy.level > 8"
+          [disabled]="ms.game.enemyManager.nukeAction.maxBuy.lte(0)"
+          (click)="nuke(ms.game.enemyManager.nukeAction.maxBuy)"
+        >
+          <clr-icon shape="missile"></clr-icon>
+          Nuke
+          <app-formatted-quantity
+            [quantity]="ms.game.enemyManager.nukeAction.maxBuy"
+            [integer]="true"
+          ></app-formatted-quantity>
+        </button>
+        <button class="btn btn-danger" (click)="surrenderModal = true">
           <clr-icon shape="trash"></clr-icon>
           Surrender
         </button>
@@ -47,6 +64,17 @@
           />
           <label for="btn-demo-check-2">Auto Reinforce</label>
         </div>
+        <div
+          class="checkbox btn"
+          *ngIf="ms.game.enemyManager.currentEnemy.level > 8"
+        >
+          <input
+            type="checkbox"
+            id="check-3"
+            [(ngModel)]="ms.game.enemyManager.autoNuke"
+          />
+          <label for="check-3">Auto Nuke</label>
+        </div>
       </div>
 
       <br />
@@ -55,7 +83,7 @@
         [enemy]="ms.game.enemyManager.currentEnemy"
       ></app-battlefield>
     </div>
-    <div class="clr-col-6">
+    <div class="clr-col-12 clr-col-md-5">
       <clr-tabs>
         <clr-tab>
           <button clrTabLink>You</button>

@@ -230,6 +230,12 @@ export class FleetManager implements ISalvable {
         this.autoFight &&
         (this.fullStrength || !this.autoReinforce)
       ) {
+        if (enemyManager.autoNuke) {
+          enemyManager.nukeAction.reload();
+          if (enemyManager.nukeAction.maxBuy.gt(0)) {
+            enemyManager.nukeAction.buy(enemyManager.nukeAction.maxBuy);
+          }
+        }
         enemyManager.startBattle();
       }
     }

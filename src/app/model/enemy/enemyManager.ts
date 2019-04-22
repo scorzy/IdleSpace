@@ -15,6 +15,9 @@ import { OptionsService } from "src/app/options.service";
 import { MainService } from "src/app/main.service";
 import { ResearchManager } from "../research/researchManager";
 import { sample } from "lodash-es";
+import { NukeAction } from "../actions/nukeAction";
+import { BonusStack } from "../bonus/bonusStack";
+import { ZERO_DECIMAL_IMMUTABLE } from "../game";
 
 export const MAX_ENEMY_LIST_SIZE = 20;
 const DARK_MATTER_START_LEVEL = 2;
@@ -25,6 +28,7 @@ const ALLOY_REWARD = 500;
 const RESEARCH_REWARD = 3e3;
 const ROBOT_REWARD = 1;
 const SHIPYARD_REWARD = 300;
+const MISSILE_DAMAGE = 2500;
 
 const RANDOM_REWARDS = [
   Reward.HabitableSpace,
@@ -52,16 +56,20 @@ export class EnemyManager implements ISalvable {
   moreCrystal = false;
   moreHabitable = false;
 
+  nukeAction: NukeAction;
+  missileDamageBonus = new BonusStack();
+  autoNuke = false;
+
   static getInstance(): EnemyManager {
     return EnemyManager.instance;
   }
   constructor() {
     EnemyManager.instance = this;
+    this.nukeAction = new NukeAction();
   }
   generate(searchJob: SearchJob) {
     this.allEnemy.push(Enemy.generate(searchJob));
   }
-
   attack(enemy: Enemy): boolean {
     if (this.currentEnemy) return false;
     this.currentEnemy = enemy;
@@ -69,7 +77,6 @@ export class EnemyManager implements ISalvable {
     this.currentEnemy.generateZones();
     return true;
   }
-
   startBattle() {
     if (this.inBattle || !this.currentEnemy) return false;
     this.fightEnemy = this.currentEnemy;
@@ -330,7 +337,6 @@ export class EnemyManager implements ISalvable {
   surrender() {
     this.currentEnemy = null;
   }
-
   getRequiredSearch(level: number): Decimal {
     level =
       level +
@@ -368,13 +374,52 @@ export class EnemyManager implements ISalvable {
   getTotalToDo(): Decimal {
     return this.searchJobs
       .map(s => s.total.minus(s.progress))
-      .reduce((p, c) => p.plus(c.max(1)), new Decimal(0));
+      .reduce((p, c) => p.plus(c.max(1)), ZERO_DECIMAL_IMMUTABLE);
   }
   getTotalEnemy(): number {
     return this.allEnemy.length + this.searchJobs.length;
   }
   reloadTimes() {
     this.searchJobs.forEach(j => j.reloadTime());
+  }
+  nuke(missile: Decimal) {
+    if (!this.currentEnemy || !this.currentEnemy.currentZone) return;
+    const defense = this.currentEnemy.currentZone.ships
+      .filter(s => s.type.defense)
+      .sort((d, b) => d.type.navalCapacity - b.type.navalCapacity);
+    if (defense.length === 0) return;
+    let totalDamage = this.missileDamageBonus
+      .getTotalBonus()
+      .times(MISSILE_DAMAGE)
+      .times(missile);
+    defense.forEach(d => {
+      const armor = d.totalShield.plus(d.totalArmor);
+      const toDestroy = totalDamage.div(armor).min(d.quantity);
+      d.quantity = d.quantity.minus(toDestroy);
+      totalDamage = totalDamage.minus(toDestroy.times(armor));
+    });
+    this.currentEnemy.currentZone.ships = this.currentEnemy.currentZone.ships.filter(
+      s => s.quantity.gt(0)
+    );
+    this.currentEnemy.currentZone.reload();
+  }
+  getMaxNuke(): Decimal {
+    if (!this.currentEnemy || !this.currentEnemy.currentZone) {
+      return ZERO_DECIMAL_IMMUTABLE;
+    }
+    const defense = this.currentEnemy.currentZone.ships
+      .filter(s => s.type.defense)
+      .map(d => d.quantity.times(d.totalArmor.plus(d.totalShield)))
+      .reduce((p, c) => p.plus(c), ZERO_DECIMAL_IMMUTABLE);
+
+    if (defense.lt(1)) return ZERO_DECIMAL_IMMUTABLE;
+    const missileDamage = this.missileDamageBonus
+      .getTotalBonus()
+      .times(MISSILE_DAMAGE);
+    return defense
+      .ceil()
+      .div(missileDamage)
+      .ceil();
   }
 
   //#region Save and Load
@@ -386,6 +431,7 @@ export class EnemyManager implements ISalvable {
     if (this.searchJobs.length > 0) {
       data.j = this.searchJobs.map(j => j.getSave());
     }
+    if (this.autoNuke) data.n = this.autoNuke;
 
     return data;
   }
@@ -421,6 +467,7 @@ export class EnemyManager implements ISalvable {
       this.currentEnemy.setOrder();
       if (this.currentEnemy.currentZone) this.currentEnemy.currentZone.reload();
     }
+    if ("n" in data) this.autoNuke = data.n;
     return true;
   }
   //#endregion

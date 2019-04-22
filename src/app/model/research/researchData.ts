@@ -115,7 +115,7 @@ export const ResearchData: IResearchData[] = [
     price: 1e5,
     description: "Drone Factory",
     resourceToUnlock: ["D", "F"],
-    researchToUnlock: ["M"]
+    researchToUnlock: ["M", "i"]
   },
   {
     id: "M",
@@ -126,7 +126,14 @@ export const ResearchData: IResearchData[] = [
     limit: Number.POSITIVE_INFINITY,
     bonus: [["Modding Point", "+1"]]
   },
-
+  {
+    id: "i",
+    name: "Missiles",
+    shape: "battery",
+    price: 1e6,
+    description: "Anti Defense interplanetary missile",
+    resourceToUnlock: ["i", "i1"]
+  },
   {
     id: "mM",
     name: "Mineral purification plant",

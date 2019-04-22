@@ -15,6 +15,7 @@ export const descriptions = {
       "Computing is processing power. It cannot be stored but instead, if unused, is used for researching."
     ],
     b: ["Battery", "Battery"],
+    i: ["Missile", ""],
     m1: ["Mining Drone", "Metal Mining Drone, yields metal."],
     c1: ["Crystal Drone", "Crystal Mining Drone, yields crystal."],
     a1: ["Foundry Drone", "Foundry Drone convert metal and crystal to alloy."],
@@ -35,6 +36,7 @@ export const descriptions = {
       "Warrior Drone",
       "Warrior Drone increase your maximum naval capacity, allowing you to make more ships."
     ],
+    i1: ["Missile Factory", ""],
     F: ["Robot Factory", "Robot Factory make robots."],
     D: [
       "Robot",

@@ -64,7 +64,7 @@ export class Enemy {
     enemy.generateIcon();
     const moduleLevelMulti = sample([1, 1.1, 1.2]);
     const moduleLevel = Math.floor(
-      10 * Math.pow(1.1, level - 1) * moduleLevelMulti
+      10 * Math.pow(1.12, level - 1) * moduleLevelMulti
     );
     let navalCap = Math.ceil(
       (MAX_NAVAL_CAPACITY * level) /
@@ -76,6 +76,7 @@ export class Enemy {
       Math.min(Math.max(Math.log(level) / Math.log(1.8), 1), ShipTypes.length)
     );
 
+    //#region Ships
     if (level > 1) {
       let shipToUse = [];
       for (let i = 0; i < maxShipTye; i++) shipToUse.push(ShipTypes[i]);
@@ -112,7 +113,7 @@ export class Enemy {
       });
       sd.reload(false);
     });
-
+    //#endregion
     //#region Defense
     if (level > DEFENSE_START_LEVEL + 1) {
       const defensePercent =

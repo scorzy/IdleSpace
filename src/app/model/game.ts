@@ -12,7 +12,7 @@ import { OptionsService } from "../options.service";
 import { AllSkillEffects } from "./prestige/allSkillEffects";
 import { AutomatorManager } from "./automators/automatorManager";
 
-const ZERO_DECIMAL_IMMUTABLE = new Decimal(0);
+export const ZERO_DECIMAL_IMMUTABLE = new Decimal(0);
 
 export class Game {
   private static instance: Game;
@@ -165,9 +165,9 @@ export class Game {
     this.fleetManager.isBuildingCheckAll();
     this.fleetManager.setFight();
     this.fleetManager.doAutoFight();
-
     this.shipyard.adjust();
     this.darkMatterManager.reload();
+    this.enemyManager.nukeAction.reload();
   }
   reload() {
     this.resourceManager.loadPolynomial();
@@ -229,15 +229,15 @@ export class Game {
     // this.resourceManager.habitableSpace.quantity = new Decimal(100);
     // this.resourceManager.miningDistrict.quantity = new Decimal(100);
     // this.resourceManager.crystalDistrict.quantity = new Decimal(100);
-    this.darkMatterManager.darkMatter.quantity = new Decimal(1e4);
-    this.darkMatterManager.darkMatter.unlock();
+    // this.darkMatterManager.darkMatter.quantity = new Decimal(1e4);
+    // this.darkMatterManager.darkMatter.unlock();
     // this.resourceManager.metal.quantity = new Decimal();
 
     // this.resourceManager.materials.forEach(m => {
     //   m.quantity = new Decimal(1e20);
     // });
     // this.enemyManager.maxLevel = 50;
-    this.prestigeManager.totalPrestige = 100;
+    // this.prestigeManager.totalPrestige = 100;
 
     this.fleetManager.upgradingCheck();
     this.resourceManager.limitedResources.forEach(r => r.reloadLimit());

@@ -50,4 +50,8 @@ export class BattleMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     this.ms.game.enemyManager.surrender();
     this.surrenderModal = false;
   }
+  nuke(num: Decimal) {
+    this.ms.game.enemyManager.nukeAction.buy(num);
+    this.ms.em.battleEndEmitter.emit(55);
+  }
 }

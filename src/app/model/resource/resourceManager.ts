@@ -41,6 +41,7 @@ export class ResourceManager implements ISalvable {
   drone: Resource;
   navalCap: Resource;
   inactiveDarkMatter: Resource;
+  missile: Resource;
 
   metalX1: Resource;
   crystalX1: Resource;
@@ -52,6 +53,7 @@ export class ResourceManager implements ISalvable {
   searchX1: Resource;
   searchProgress: Resource;
   warriorX1: Resource;
+  missileX1: Resource;
 
   metalM: Resource;
   crystalM: Resource;
@@ -109,6 +111,9 @@ export class ResourceManager implements ISalvable {
     this.metalM = new Resource("mM");
     this.crystalM = new Resource("cM");
     this.energyM = new Resource("eM");
+
+    this.missile = new Resource("i");
+    this.missile.shape = "missile";
     //#endregion
     //#region Declarations
 
@@ -169,9 +174,15 @@ export class ResourceManager implements ISalvable {
     this.drone.shape = "robot";
     this.drone.workerPerMine = new Decimal(50);
     this.droneFactory = new Resource("F");
-    this.drone.addGenerator(this.droneFactory);
+    this.drone.addGenerator(this.droneFactory, 0.01);
     this.alloy.addGenerator(this.droneFactory, -100);
     this.energy.addGenerator(this.droneFactory, -20);
+
+    //      Missile
+    this.missileX1 = new Resource("i1");
+    this.missile.addGenerator(this.missileX1, 0.01);
+    this.alloy.addGenerator(this.missileX1, -2);
+    this.energy.addGenerator(this.missileX1, -1);
 
     //      Space
     this.habitableSpace = new Resource("hs");
@@ -200,7 +211,8 @@ export class ResourceManager implements ISalvable {
       this.shipyardProgress,
       this.searchProgress,
       this.drone,
-      this.navalCap
+      this.navalCap,
+      this.missile
     ];
     this.tier1 = [
       this.metalX1,
@@ -212,7 +224,13 @@ export class ResourceManager implements ISalvable {
       this.warriorX1,
       this.searchX1
     ];
-    this.tier2 = [this.droneFactory, this.metalM, this.crystalM, this.energyM];
+    this.tier2 = [
+      this.droneFactory,
+      this.metalM,
+      this.crystalM,
+      this.energyM,
+      this.missileX1
+    ];
     //#endregion
     //#region Buy
     this.metalX1.generateBuyAction(
@@ -246,7 +264,17 @@ export class ResourceManager implements ISalvable {
     this.warriorX1.generateBuyAction(
       new MultiPrice([new Price(this.alloy, 200)])
     );
+
+    //
+    //  Buildings
+    //
     this.droneFactory.generateBuyAction(
+      new MultiPrice([
+        new Price(this.alloy, 1e3, BUILDING_EXP),
+        new Price(this.habitableSpace, 1, BUILDING_EXP)
+      ])
+    );
+    this.missileX1.generateBuyAction(
       new MultiPrice([
         new Price(this.alloy, 1e3, BUILDING_EXP),
         new Price(this.habitableSpace, 1, BUILDING_EXP)
@@ -491,6 +519,8 @@ export class ResourceManager implements ISalvable {
       m.alwaysActive = true;
       m.workerPerMine = new Decimal(1000);
     });
+
+    //  Energy
     this.energy.isLimited = true;
     const buyExpansion = new Action(
       "L",
@@ -509,6 +539,25 @@ export class ResourceManager implements ISalvable {
     this.energy.exponentialStorage = true;
     this.energy.alwaysActive = true;
     this.energy.workerPerMine = new Decimal(200);
+
+    //  Missile
+    this.missile.isLimited = true;
+    const missileSilo = new Action(
+      "L",
+      new MultiPrice([
+        new Price(this.metal, 5000, 2),
+        new Price(this.crystal, 10000, 2),
+        new Price(this.habitableSpace, 10, MINE_EXP)
+      ])
+    );
+    missileSilo.afterBuy = () => {
+      this.missile.reloadLimit();
+    };
+    missileSilo.name = "Missile Silo";
+    this.missile.actions.push(missileSilo);
+    this.missile.limitStorage = missileSilo;
+    this.missile.exponentialStorage = true;
+    this.missile.workerPerMine = new Decimal(10);
     //#endregion
     //#region Arrays
     this.limited = [
@@ -526,7 +575,8 @@ export class ResourceManager implements ISalvable {
       this.searchX1,
       this.searchProgress,
       this.warriorX1,
-      this.drone
+      this.drone,
+      this.missile
     ];
     this.limited.forEach(rl => {
       rl.isLimited = true;
@@ -558,7 +608,9 @@ export class ResourceManager implements ISalvable {
       this.inactiveDarkMatter,
       this.metalM,
       this.crystalM,
-      this.energyM
+      this.energyM,
+      this.missile,
+      this.missileX1
     ];
     this.allResources.forEach(r => r.generateRefundActions());
     this.matGroup = new ResourceGroup(
