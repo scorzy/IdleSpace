@@ -195,6 +195,26 @@
             <clr-alert-item>
               <span class="alert-text">
                 This design is not valid!
+                <ng-container
+                  *ngIf="
+                    design.editable.modules.length > design.type.moduleCount
+                  "
+                >
+                  <br />
+                  Too many module
+                </ng-container>
+                <ng-container
+                  *ngIf="
+                    design.editable.usedModulePoint > design.type.modulePoint
+                  "
+                >
+                  <br />
+                  Too many module points
+                </ng-container>
+                <ng-container *ngIf="design.editable.totalEnergy.lt(0)">
+                  <br />
+                  No enoughs energy
+                </ng-container>
               </span>
             </clr-alert-item>
           </clr-alert>
