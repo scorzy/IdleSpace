@@ -142,8 +142,7 @@ export class Resource extends AbstractUnlockable
         prod.prodPerSec = new Decimal(0);
       });
     }
-    this.isCapped =
-      this.isLimited && this.quantity.ceil().gte(this.limit.floor());
+    this.isCapped = this.isLimited && this.quantity.gte(this.limit.floor());
   }
   reloadLimit() {
     if (this.isLimited) {

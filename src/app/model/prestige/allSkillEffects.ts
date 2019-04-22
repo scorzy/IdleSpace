@@ -3,7 +3,7 @@ import { ResourceManager } from "../resource/resourceManager";
 import { Bonus } from "../bonus/bonus";
 import { Game } from "../game";
 
-export const PLUS_ADD = 5;
+export const PLUS_ADD = 10;
 export class AllSkillEffects {
   static effectList = new Array<SkillEffect>();
 
@@ -17,6 +17,7 @@ export class AllSkillEffects {
   static readonly PLUS_SEARCH = new SkillEffect();
   static readonly PLUS_WARRIOR = new SkillEffect();
   static readonly PLUS_BATTERY = new SkillEffect();
+  static readonly DRONE_MULTI = new SkillEffect();
   //#endregion
   //#region Combat
   static readonly FAST_COMBAT = new SkillEffect();
@@ -24,6 +25,7 @@ export class AllSkillEffects {
   static readonly DOUBLE_DARK_MATTER = new SkillEffect();
   static readonly MODULE_LEVEL = new SkillEffect();
   static readonly DOUBLE_BATTLE_GAIN = new SkillEffect();
+  static readonly DOUBLE_MISSILE = new SkillEffect();
   //#endregion
   //#region Robot Modding
   static readonly FACTORY_BONUS = new SkillEffect();
@@ -76,6 +78,10 @@ export class AllSkillEffects {
       AllSkillEffects.PLUS_WORKER,
       AllSkillEffects.PLUS_SEARCH
     ];
+    AllSkillEffects.DRONE_MULTI.getDescription = (num = 1) => {
+      return "Drones yield and consume\n" + 150 * num + "% more resource";
+    };
+    AllSkillEffects.DRONE_MULTI.name = "Drone Prestige";
     for (let i = 0; i < 7; i++) {
       tier1[i].shape = resources[i].shape;
       tier1[i].getDescription = (num = 1) => {
@@ -86,14 +92,19 @@ export class AllSkillEffects {
           workers[i].name +
           "\n / " +
           workers[i].actions[1].name +
-          "\n 0.3 " +
+          "\n " +
+          50 * num +
+          "% " +
           workers[i].name +
           " output"
         );
       };
       tier1[i].name = workers[i].name + " Prestige";
       workers[i].productionMultiplier.multiplicativeBonus.push(
-        new Bonus(tier1[i], 0.3, true)
+        new Bonus(tier1[i], 0.5, true)
+      );
+      workers[i].productionMultiplier.multiplicativeBonus.push(
+        new Bonus(AllSkillEffects.DRONE_MULTI, 1.5)
       );
     }
     tier1.forEach(e => {
@@ -125,107 +136,111 @@ export class AllSkillEffects {
     //#region Combat
     AllSkillEffects.FAST_COMBAT.shape = "clock";
     AllSkillEffects.FAST_COMBAT.getDescription = (num = 1) => {
-      return "- " + 0.2 * num + "s fight time";
+      return "- " + 0.4 * num + "s fight time";
     };
     AllSkillEffects.DOUBLE_NAVAL_CAPACITY.getDescription = (num = 1) => {
-      return "+ " + 100 * num + "%\nnaval capacity";
+      return "+ " + 200 * num + "%\nnaval capacity";
     };
     AllSkillEffects.DOUBLE_DARK_MATTER.getDescription = (num = 1) => {
-      return "+ " + 100 * num + "%\nDark Matter";
+      return "+ " + 200 * num + "%\nDark Matter";
     };
     AllSkillEffects.MODULE_LEVEL.getDescription = (num = 1) => {
-      return "+ " + 50 * num + "%\nShip Module Level";
+      return "+ " + 200 * num + "%\nShip Module Level";
     };
     AllSkillEffects.DOUBLE_BATTLE_GAIN.getDescription = (num = 1) => {
-      return "+ " + 100 * num + "%\nResource gain from battle";
+      return "+ " + 200 * num + "%\nResource gain from battle";
     };
+    AllSkillEffects.DOUBLE_MISSILE.getDescription = (num = 1) => {
+      return "+ " + 200 * num + "%\nDamage from missiles";
+    };
+    AllSkillEffects.DOUBLE_MISSILE.name = "Missile Prestige";
     //#endregion
     //#region Robot Modding
     AllSkillEffects.FACTORY_BONUS.getDescription = (num = 1) => {
-      return "+ " + 100 * num + "%\n" + resMan.droneFactory.name + " output";
+      return "+ " + 500 * num + "%\n" + resMan.droneFactory.name + " output";
     };
     ResourceManager.getInstance().droneFactory.productionMultiplier.multiplicativeBonus.push(
-      new Bonus(AllSkillEffects.FACTORY_BONUS, 1, true)
+      new Bonus(AllSkillEffects.FACTORY_BONUS, 5, true)
     );
     AllSkillEffects.MODDING_PLUS.getDescription = (num = 1) => {
-      return "+ " + 5 * num + "\n Modding points";
+      return "+ " + 10 * num + "\n Modding points";
     };
     AllSkillEffects.DOUBLE_MODDING.getDescription = (num = 1) => {
-      return "+ " + 100 * num + "%\n Modding points";
+      return "+ " + 200 * num + "%\n Modding points";
     };
     //#endregion
     //#region Search
     AllSkillEffects.SEARCH_MULTI.getDescription = (num = 1) => {
-      return "+ " + 100 * num + "%\n Searching";
+      return "+ " + 300 * num + "%\n Searching";
     };
     AllSkillEffects.SEARCH_MULTI.name = "Prestige search multi";
     resMan.searchX1.productionMultiplier.multiplicativeBonus.push(
-      new Bonus(AllSkillEffects.SEARCH_MULTI, 1, true)
+      new Bonus(AllSkillEffects.SEARCH_MULTI, 3, true)
     );
 
     AllSkillEffects.SEARCH_METAL.getDescription = (num = 1) => {
-      return "+ " + 0.1 * num + " Searching\ncan search for metal district";
+      return "+ " + 50 * num + "% Searching\ncan search for metal district";
     };
     AllSkillEffects.SEARCH_METAL.name = "Prestige search metal";
     resMan.searchX1.productionMultiplier.additiveBonus.push(
-      new Bonus(AllSkillEffects.SEARCH_METAL, 0.1, true)
+      new Bonus(AllSkillEffects.SEARCH_METAL, 0.5, true)
     );
 
     AllSkillEffects.SEARCH_CRY.getDescription = (num = 1) => {
-      return "+ " + 0.1 * num + " Searching\ncan search for crystal district";
+      return "+ " + 50 * num + "% Searching\ncan search for crystal district";
     };
     AllSkillEffects.SEARCH_CRY.name = "Prestige search crystal";
     resMan.searchX1.productionMultiplier.additiveBonus.push(
-      new Bonus(AllSkillEffects.SEARCH_CRY, 0.1, true)
+      new Bonus(AllSkillEffects.SEARCH_CRY, 0.5, true)
     );
 
     AllSkillEffects.SEARCH_HAB.getDescription = (num = 1) => {
-      return "+ " + 0.1 * num + " Searching\ncan search for habitable space";
+      return "+ " + 50 * num + "% Searching\ncan search for habitable space";
     };
     AllSkillEffects.SEARCH_HAB.name = "Prestige search habitable space";
     resMan.searchX1.productionMultiplier.additiveBonus.push(
-      new Bonus(AllSkillEffects.SEARCH_HAB, 0.1, true)
+      new Bonus(AllSkillEffects.SEARCH_HAB, 0.5, true)
     );
     //#endregion
     //#region Gain Multi
     AllSkillEffects.ENERGY_MULTI.getDescription = (num = 1) => {
-      return "+ " + 100 * num + "%\n Energy";
+      return "+ " + 200 * num + "%\n Energy";
     };
     AllSkillEffects.ENERGY_MULTI.name = "Prestige energy multi";
     resMan.energyX1.productionMultiplier.multiplicativeBonus.push(
-      new Bonus(AllSkillEffects.ENERGY_MULTI, 1, true)
+      new Bonus(AllSkillEffects.ENERGY_MULTI, 2, true)
     );
 
     AllSkillEffects.ALLOY_MULTI.getDescription = (num = 1) => {
-      return "+ " + 100 * num + "%\n Alloy";
+      return "+ " + 200 * num + "%\n Alloy";
     };
     AllSkillEffects.ALLOY_MULTI.name = "Prestige alloy multi";
     resMan.alloyX1.productionMultiplier.multiplicativeBonus.push(
-      new Bonus(AllSkillEffects.ALLOY_MULTI, 1, true)
+      new Bonus(AllSkillEffects.ALLOY_MULTI, 2, true)
     );
 
     AllSkillEffects.COMPUTING_MULTI.getDescription = (num = 1) => {
-      return "+ " + 100 * num + "%\n Computing";
+      return "+ " + 200 * num + "%\n Computing";
     };
     AllSkillEffects.COMPUTING_MULTI.name = "Prestige computing multi";
     resMan.computingX1.productionMultiplier.multiplicativeBonus.push(
-      new Bonus(AllSkillEffects.COMPUTING_MULTI, 1, true)
+      new Bonus(AllSkillEffects.COMPUTING_MULTI, 2, true)
     );
 
     AllSkillEffects.SHIPYARD_MULTI.getDescription = (num = 1) => {
-      return "+ " + 100 * num + "%\n Shipyard Progress";
+      return "+ " + 200 * num + "%\n Shipyard Progress";
     };
     AllSkillEffects.SHIPYARD_MULTI.name = "Prestige Shipyard Progress multi";
     resMan.shipyardX1.productionMultiplier.multiplicativeBonus.push(
-      new Bonus(AllSkillEffects.SHIPYARD_MULTI, 1, true)
+      new Bonus(AllSkillEffects.SHIPYARD_MULTI, 2, true)
     );
 
     AllSkillEffects.RESEARCH_MULTI.getDescription = (num = 1) => {
-      return "+ " + 100 * num + "%\n Research";
+      return "+ " + 400 * num + "%\n Research";
     };
     AllSkillEffects.RESEARCH_MULTI.name = "Prestige Research multi";
     Game.getInstance().researchBonus.multiplicativeBonus.push(
-      new Bonus(AllSkillEffects.RESEARCH_MULTI, 1, true)
+      new Bonus(AllSkillEffects.RESEARCH_MULTI, 4, true)
     );
     //#endregion
 
@@ -254,7 +269,9 @@ export class AllSkillEffects {
       AllSkillEffects.DOUBLE_MODDING,
       AllSkillEffects.RESEARCH_MULTI,
       AllSkillEffects.MODULE_LEVEL,
-      AllSkillEffects.DOUBLE_BATTLE_GAIN
+      AllSkillEffects.DOUBLE_BATTLE_GAIN,
+      AllSkillEffects.DOUBLE_MISSILE,
+      AllSkillEffects.DRONE_MULTI
     ];
     if (!prestige) {
       AllSkillEffects.effectList.forEach(e => {

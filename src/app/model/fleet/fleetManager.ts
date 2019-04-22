@@ -78,7 +78,7 @@ export class FleetManager implements ISalvable {
         .reduce((a, b) => a + b, 0)
     );
     this.totalNavalCapacity = this.totalNavalCapacity.times(
-      AllSkillEffects.DOUBLE_NAVAL_CAPACITY.numOwned + 1
+      AllSkillEffects.DOUBLE_NAVAL_CAPACITY.numOwned * 2 + 1
     );
 
     this.totalShips = this.ships

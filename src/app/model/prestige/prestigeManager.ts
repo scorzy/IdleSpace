@@ -19,10 +19,10 @@ export class PrestigeManager implements ISalvable {
     AllSkillEffects.initialize();
 
     this.visSkills = new DataSet([
-      new Skill(1, AllSkillEffects.PLUS_METAL_MINER, true),
-      new Skill(2, AllSkillEffects.PLUS_CRYSTAL_MINER, true),
+      new Skill(1, AllSkillEffects.PLUS_METAL_MINER),
+      new Skill(2, AllSkillEffects.PLUS_CRYSTAL_MINER),
       new Skill(3, AllSkillEffects.PLUS_ALLOY),
-      new Skill(4, AllSkillEffects.PLUS_ENERGY, true),
+      new Skill(4, AllSkillEffects.PLUS_ENERGY),
       new Skill(6, AllSkillEffects.PLUS_CPU),
       new Skill(7, AllSkillEffects.PLUS_WORKER),
       new Skill(8, AllSkillEffects.PLUS_WARRIOR),
@@ -52,7 +52,13 @@ export class PrestigeManager implements ISalvable {
       new Skill(33, AllSkillEffects.RESEARCH_MULTI),
       new Skill(34, AllSkillEffects.MODULE_LEVEL),
       new Skill(35, AllSkillEffects.DOUBLE_BATTLE_GAIN, true),
-      new Skill(36, AllSkillEffects.DOUBLE_BATTLE_GAIN)
+      new Skill(36, AllSkillEffects.DOUBLE_BATTLE_GAIN),
+      new Skill(37, AllSkillEffects.DOUBLE_MISSILE),
+      new Skill(38, AllSkillEffects.DOUBLE_MISSILE),
+      new Skill(39, AllSkillEffects.DRONE_MULTI, true),
+      new Skill(40, AllSkillEffects.DOUBLE_DARK_MATTER, true),
+      new Skill(41, AllSkillEffects.DOUBLE_NAVAL_CAPACITY),
+      new Skill(42, AllSkillEffects.FACTORY_BONUS)
     ]);
 
     this.visEdge = new DataSet([
@@ -88,10 +94,16 @@ export class PrestigeManager implements ISalvable {
       { from: 9, to: 32 },
       { from: 21, to: 33 },
       { from: 11, to: 34 },
-      { from: 35, to: 1 },
-      { from: 35, to: 2 },
-      { from: 35, to: 4 },
-      { from: 8, to: 36 }
+      { from: 39, to: 1 },
+      { from: 39, to: 2 },
+      { from: 39, to: 4 },
+      { from: 8, to: 36 },
+      { from: 11, to: 37 },
+      { from: 37, to: 38 },
+      { from: 8, to: 35 },
+      { from: 18, to: 40 },
+      { from: 11, to: 41 },
+      { from: 12, to: 42 }
     ]);
 
     this.maxPrestigePoints = this.visSkills.length;

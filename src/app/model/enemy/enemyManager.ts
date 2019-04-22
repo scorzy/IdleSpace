@@ -18,6 +18,7 @@ import { sample } from "lodash-es";
 import { NukeAction } from "../actions/nukeAction";
 import { BonusStack } from "../bonus/bonusStack";
 import { ZERO_DECIMAL_IMMUTABLE } from "../game";
+import { Bonus } from "../bonus/bonus";
 
 export const MAX_ENEMY_LIST_SIZE = 20;
 const DARK_MATTER_START_LEVEL = 2;
@@ -66,6 +67,9 @@ export class EnemyManager implements ISalvable {
   constructor() {
     EnemyManager.instance = this;
     this.nukeAction = new NukeAction();
+    this.missileDamageBonus.multiplicativeBonus.push(
+      new Bonus(AllSkillEffects.DOUBLE_MISSILE, 2)
+    );
   }
   generate(searchJob: SearchJob) {
     this.allEnemy.push(Enemy.generate(searchJob));
@@ -87,7 +91,7 @@ export class EnemyManager implements ISalvable {
     this.currentEnemy.currentZone.reload();
 
     const battleRequest = new BattleRequest();
-    battleRequest.minTime = 1 - 0.2 * AllSkillEffects.FAST_COMBAT.numOwned;
+    battleRequest.minTime = 1 - 0.4 * AllSkillEffects.FAST_COMBAT.numOwned;
     battleRequest.playerFleet = FleetManager.getInstance().ships.map(s =>
       s.getShipData()
     );
@@ -141,7 +145,7 @@ export class EnemyManager implements ISalvable {
         darkMatter.quantity = darkMatter.quantity.plus(
           this.currentEnemy.level *
             DARK_MATTER_MULTI *
-            (AllSkillEffects.DOUBLE_DARK_MATTER.numOwned + 1)
+            (AllSkillEffects.DOUBLE_DARK_MATTER.numOwned * 2 + 1)
         );
       }
       //#endregion
@@ -190,7 +194,7 @@ export class EnemyManager implements ISalvable {
         ResearchManager.getInstance().scavenger.quantity.times(0.1)
       );
       prestigeMulti = prestigeMulti.times(
-        AllSkillEffects.DOUBLE_BATTLE_GAIN.numOwned + 1
+        AllSkillEffects.DOUBLE_BATTLE_GAIN.numOwned * 2 + 1
       );
       const gainDistrict = prestigeMulti.times(this.currentEnemy.level);
       switch (reward) {
