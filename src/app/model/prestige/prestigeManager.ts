@@ -13,53 +13,13 @@ export class PrestigeManager implements ISalvable {
   visEdge: DataSet<{ from: number; to: number }>;
   maxPrestigePoints = 1;
   prestigeToEarn = 0;
+  ascension = 0;
 
   constructor() {
     PrestigeManager.instance = this;
     AllSkillEffects.initialize();
 
-    this.visSkills = new DataSet([
-      new Skill(1, AllSkillEffects.PLUS_METAL_MINER),
-      new Skill(2, AllSkillEffects.PLUS_CRYSTAL_MINER),
-      new Skill(3, AllSkillEffects.PLUS_ALLOY),
-      new Skill(4, AllSkillEffects.PLUS_ENERGY),
-      new Skill(6, AllSkillEffects.PLUS_CPU),
-      new Skill(7, AllSkillEffects.PLUS_WORKER),
-      new Skill(8, AllSkillEffects.PLUS_WARRIOR),
-      new Skill(9, AllSkillEffects.PLUS_SEARCH),
-      new Skill(10, AllSkillEffects.FAST_COMBAT),
-      new Skill(11, AllSkillEffects.DOUBLE_NAVAL_CAPACITY),
-      new Skill(12, AllSkillEffects.FACTORY_BONUS),
-      new Skill(13, AllSkillEffects.MODDING_PLUS),
-      new Skill(14, AllSkillEffects.SEARCH_MULTI),
-      new Skill(15, AllSkillEffects.SEARCH_METAL),
-      new Skill(16, AllSkillEffects.SEARCH_CRY),
-      new Skill(17, AllSkillEffects.SEARCH_HAB),
-      new Skill(18, AllSkillEffects.DOUBLE_DARK_MATTER),
-      new Skill(19, AllSkillEffects.ENERGY_MULTI),
-      new Skill(20, AllSkillEffects.ALLOY_MULTI),
-      new Skill(21, AllSkillEffects.COMPUTING_MULTI),
-      new Skill(22, AllSkillEffects.SHIPYARD_MULTI),
-      new Skill(23, AllSkillEffects.DOUBLE_MODDING),
-      new Skill(24, AllSkillEffects.PLUS_METAL_MINER),
-      new Skill(25, AllSkillEffects.PLUS_CRYSTAL_MINER),
-      new Skill(26, AllSkillEffects.PLUS_ALLOY),
-      new Skill(27, AllSkillEffects.PLUS_ENERGY),
-      new Skill(29, AllSkillEffects.PLUS_CPU),
-      new Skill(30, AllSkillEffects.PLUS_WORKER),
-      new Skill(31, AllSkillEffects.PLUS_WARRIOR),
-      new Skill(32, AllSkillEffects.PLUS_SEARCH),
-      new Skill(33, AllSkillEffects.RESEARCH_MULTI),
-      new Skill(34, AllSkillEffects.MODULE_LEVEL),
-      new Skill(35, AllSkillEffects.DOUBLE_BATTLE_GAIN, true),
-      new Skill(36, AllSkillEffects.DOUBLE_BATTLE_GAIN),
-      new Skill(37, AllSkillEffects.DOUBLE_MISSILE),
-      new Skill(38, AllSkillEffects.DOUBLE_MISSILE),
-      new Skill(39, AllSkillEffects.DRONE_MULTI, true),
-      new Skill(40, AllSkillEffects.DOUBLE_DARK_MATTER, true),
-      new Skill(41, AllSkillEffects.DOUBLE_NAVAL_CAPACITY),
-      new Skill(42, AllSkillEffects.FACTORY_BONUS)
-    ]);
+    this.visSkills = new DataSet(this.getDataset());
 
     this.visEdge = new DataSet([
       { from: 1, to: 2 },
@@ -111,6 +71,50 @@ export class PrestigeManager implements ISalvable {
   static getInstance(): PrestigeManager {
     return PrestigeManager.instance;
   }
+  getDataset(): Skill[] {
+    return [
+      new Skill(1, AllSkillEffects.PLUS_METAL_MINER),
+      new Skill(2, AllSkillEffects.PLUS_CRYSTAL_MINER),
+      new Skill(3, AllSkillEffects.PLUS_ALLOY),
+      new Skill(4, AllSkillEffects.PLUS_ENERGY),
+      new Skill(6, AllSkillEffects.PLUS_CPU),
+      new Skill(7, AllSkillEffects.PLUS_WORKER),
+      new Skill(8, AllSkillEffects.PLUS_WARRIOR),
+      new Skill(9, AllSkillEffects.PLUS_SEARCH),
+      new Skill(10, AllSkillEffects.FAST_COMBAT),
+      new Skill(11, AllSkillEffects.DOUBLE_NAVAL_CAPACITY),
+      new Skill(12, AllSkillEffects.FACTORY_BONUS),
+      new Skill(13, AllSkillEffects.MODDING_PLUS),
+      new Skill(14, AllSkillEffects.SEARCH_MULTI),
+      new Skill(15, AllSkillEffects.SEARCH_METAL),
+      new Skill(16, AllSkillEffects.SEARCH_CRY),
+      new Skill(17, AllSkillEffects.SEARCH_HAB),
+      new Skill(18, AllSkillEffects.DOUBLE_DARK_MATTER),
+      new Skill(19, AllSkillEffects.ENERGY_MULTI),
+      new Skill(20, AllSkillEffects.ALLOY_MULTI),
+      new Skill(21, AllSkillEffects.COMPUTING_MULTI),
+      new Skill(22, AllSkillEffects.SHIPYARD_MULTI),
+      new Skill(23, AllSkillEffects.DOUBLE_MODDING),
+      new Skill(24, AllSkillEffects.PLUS_METAL_MINER),
+      new Skill(25, AllSkillEffects.PLUS_CRYSTAL_MINER),
+      new Skill(26, AllSkillEffects.PLUS_ALLOY),
+      new Skill(27, AllSkillEffects.PLUS_ENERGY),
+      new Skill(29, AllSkillEffects.PLUS_CPU),
+      new Skill(30, AllSkillEffects.PLUS_WORKER),
+      new Skill(31, AllSkillEffects.PLUS_WARRIOR),
+      new Skill(32, AllSkillEffects.PLUS_SEARCH),
+      new Skill(33, AllSkillEffects.RESEARCH_MULTI),
+      new Skill(34, AllSkillEffects.MODULE_LEVEL),
+      new Skill(35, AllSkillEffects.DOUBLE_BATTLE_GAIN, true),
+      new Skill(36, AllSkillEffects.DOUBLE_BATTLE_GAIN),
+      new Skill(37, AllSkillEffects.DOUBLE_MISSILE),
+      new Skill(38, AllSkillEffects.DOUBLE_MISSILE),
+      new Skill(39, AllSkillEffects.DRONE_MULTI, true),
+      new Skill(40, AllSkillEffects.DOUBLE_DARK_MATTER, true),
+      new Skill(41, AllSkillEffects.DOUBLE_NAVAL_CAPACITY),
+      new Skill(42, AllSkillEffects.FACTORY_BONUS)
+    ];
+  }
   buySkill(skillId: number): boolean {
     if (this.usedPrestige >= this.totalPrestige) return false;
 
@@ -123,7 +127,8 @@ export class PrestigeManager implements ISalvable {
     const effect = AllSkillEffects.effectList.find(
       eff => eff.id === skill.effectId
     );
-    effect.numOwned++;
+    const toAdd = Math.pow(2, this.ascension);
+    effect.numOwned += toAdd;
     effect.afterBuy();
     this.unlockOther(skill);
 
@@ -165,10 +170,22 @@ export class PrestigeManager implements ISalvable {
       0
     );
   }
+  canAscend(): boolean {
+    return this.totalPrestige >= 20 * (1 + this.ascension);
+  }
+  ascend() {
+    this.ascension++;
+    this.visSkills.update(this.getDataset());
+    this.totalPrestige = this.ascension;
+    AllSkillEffects.effectList.forEach(e => {
+      e.numOwned = 0;
+    });
+  }
 
   //#region Save and Load
   getSave(): any {
     const save: any = {};
+    if (this.ascension > 0) save.a = this.ascension;
     save.t = this.totalPrestige;
     save.o = this.visSkills
       .get({
@@ -181,10 +198,10 @@ export class PrestigeManager implements ISalvable {
   }
   load(data: any): boolean {
     if ("t" in data) this.totalPrestige = data.t;
+    if ("a" in data) this.ascension = data.a;
     if ("o" in data) {
       data.o.forEach(o => this.buySkill(o));
     }
-
     return true;
   }
   //#endregion

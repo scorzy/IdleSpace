@@ -23,12 +23,12 @@ import { Bonus } from "../bonus/bonus";
 export const MAX_ENEMY_LIST_SIZE = 20;
 const DARK_MATTER_START_LEVEL = 2;
 const DARK_MATTER_MULTI = 3;
-const METAL_REWARD = 1e3;
-const CRYSTAL_REWARD = 7e2;
-const ALLOY_REWARD = 500;
-const RESEARCH_REWARD = 3e3;
-const ROBOT_REWARD = 1;
-const SHIPYARD_REWARD = 300;
+const METAL_REWARD = 500;
+const CRYSTAL_REWARD = 350;
+const ALLOY_REWARD = 250;
+const RESEARCH_REWARD = 2e3;
+const ROBOT_REWARD = 0.5;
+const SHIPYARD_REWARD = 200;
 const MISSILE_DAMAGE = 2500;
 
 const RANDOM_REWARDS = [
@@ -188,6 +188,12 @@ export class EnemyManager implements ISalvable {
     const addSpace = !!reward;
     if (!reward) {
       reward = sample(RANDOM_REWARDS);
+      if (
+        reward === Reward.Enemy &&
+        EnemyManager.getInstance().allEnemy.length > 6
+      ) {
+        reward = Reward.MetalMine;
+      }
     }
     if (reward) {
       let prestigeMulti = new Decimal(1).plus(

@@ -182,6 +182,7 @@ export class Game {
     this.darkMatterManager.darkMatter.quantity = this.darkMatterManager.darkMatter.quantity.plus(
       this.resourceManager.inactiveDarkMatter.quantity
     );
+
     this.prestigeManager.totalPrestige = Math.max(
       this.prestigeManager.totalPrestige,
       this.enemyManager.maxLevel - 1
@@ -190,6 +191,7 @@ export class Game {
       this.prestigeManager.totalPrestige,
       this.prestigeManager.maxPrestigePoints
     );
+
     this.init(true);
     this.resourceManager.limitedResources.forEach(r => r.reloadLimit());
     this.prestigeManager.reloadPrestigeToEarn();
@@ -202,6 +204,12 @@ export class Game {
       h.unlockedAutomators = h.automators.filter(g => g.isUnlocked());
     });
     this.automatorManager.resetTimers();
+  }
+  ascend() {
+    if (!this.prestigeManager.canAscend()) return false;
+    this.prestigeManager.ascend();
+    this.prestige();
+    this.reload();
   }
 
   //#region Save and Load

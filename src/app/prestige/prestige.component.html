@@ -26,13 +26,23 @@
       <!-- [disabled]="
           ms.game.enemyManager.maxLevel <= ms.game.prestigeManager.totalPrestige
         " -->
-      <button class="btn btn-primary" (click)="prestigeModal = true">
-        Prestige
-        <span *ngIf="ms.game.prestigeManager.prestigeToEarn > 0"
-          >+
-          {{ ms.game.prestigeManager.prestigeToEarn }}
-        </span>
-      </button>
+      <div class="btn-group btn-primary">
+        <button class="btn btn-primary" (click)="prestigeModal = true">
+          Prestige
+          <span *ngIf="ms.game.prestigeManager.prestigeToEarn > 0"
+            >+
+            {{ ms.game.prestigeManager.prestigeToEarn }}
+          </span>
+        </button>
+        <button
+          *ngIf="canAscend"
+          class="btn btn-success"
+          (click)="ascendModal = true"
+        >
+          Ascend
+        </button>
+      </div>
+
       <ul class="list" *ngFor="let desc of skillsList; trackBy: descID">
         <li>{{ desc }}</li>
       </ul>
@@ -95,6 +105,28 @@
       Cancel
     </button>
     <button type="button" class="btn btn-primary" (click)="prestige()">
+      Ok
+    </button>
+  </div>
+</clr-modal>
+
+<!-- Ascend Modal -->
+<clr-modal [(clrModalOpen)]="ascendModal">
+  <h3 class="modal-title">
+    Ascension
+  </h3>
+  <div class="modal-body">
+    <p>
+      Everything including prestige Skills but Dark Matter will reset.
+      <br />
+      You will get double effects from Skill Points
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="ascendModal = false">
+      Cancel
+    </button>
+    <button type="button" class="btn btn-primary" (click)="ascend()">
       Ok
     </button>
   </div>

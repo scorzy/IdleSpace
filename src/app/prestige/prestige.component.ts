@@ -7,7 +7,8 @@ import {
   ViewChild,
   ElementRef,
   AfterViewInit,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  SimpleChanges
 } from "@angular/core";
 import { MainService } from "../main.service";
 import { Skill } from "../model/prestige/skill";
@@ -35,30 +36,29 @@ export class PrestigeComponent implements OnInit, OnChanges, AfterViewInit {
   effect: SkillEffect;
   skillsList: string[];
   prestigeModal = false;
+  ascendModal = false;
   node: any;
   exp = "";
+  canAscend = false;
 
   constructor(public ms: MainService, private cd: ChangeDetectorRef) {}
 
-  ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
     this.reloadList();
   }
-
   ngOnInit() {
+    this.canAscend = this.ms.game.prestigeManager.canAscend();
     this.reloadList();
   }
-
   getClass(skill: Skill): string {
     return "";
   }
-
   trackByRow(index: number, row: Skill[]) {
     return index;
   }
   trackByCell(index: number, skill: Skill) {
     return skill.id;
   }
-
   openBuyModal(skill: Skill) {
     if (
       skill.owned ||
@@ -92,7 +92,14 @@ export class PrestigeComponent implements OnInit, OnChanges, AfterViewInit {
   }
   prestige() {
     this.ms.game.prestige();
+    this.canAscend = this.ms.game.prestigeManager.canAscend();
     this.prestigeModal = false;
+  }
+  ascend() {
+    this.ms.game.ascend();
+    this.canAscend = this.ms.game.prestigeManager.canAscend();
+    this.ascendModal = false;
+    this.reloadList();
   }
 
   ngAfterViewInit() {
