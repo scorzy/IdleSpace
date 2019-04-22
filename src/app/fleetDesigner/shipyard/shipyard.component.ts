@@ -2,7 +2,6 @@ import {
   Component,
   OnInit,
   ChangeDetectionStrategy,
-  HostBinding,
   ChangeDetectorRef,
   OnDestroy,
   AfterViewInit
@@ -21,8 +20,6 @@ import { preventScroll } from "src/app/app.component";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ShipyardComponent implements OnInit, OnDestroy, AfterViewInit {
-  @HostBinding("class")
-  contentArea = "content-area";
   totalPrice = new Decimal(0);
 
   private subscriptions: Subscription[] = [];

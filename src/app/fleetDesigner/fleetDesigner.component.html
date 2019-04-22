@@ -1,4 +1,6 @@
-<router-outlet></router-outlet>
+<div class="content-area">
+  <router-outlet></router-outlet>
+</div>
 <clr-vertical-nav
   [clrVerticalNavCollapsible]="true"
   [clr-nav-level]="2"
@@ -10,7 +12,10 @@
     <clr-icon shape="slider"></clr-icon>
     Shipyard
   </a>
-
+  <a clrVerticalNavLink routerLink="/fleet/autoShip" routerLinkActive="active">
+    <clr-icon shape="ruler-pencil"></clr-icon>
+    Automation
+  </a>
   <a
     clrVerticalNavLink
     routerLink="/fleet/design/new"
@@ -19,7 +24,6 @@
     <clr-icon shape="plus"></clr-icon>
     Add Design
   </a>
-
   <a
     clrVerticalNavLink
     cdkDrag

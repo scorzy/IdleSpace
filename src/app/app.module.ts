@@ -61,8 +61,9 @@ import { LabInfoComponent } from "./info/lab-info/lab-info.component";
 import { ShipyardInfoComponent } from "./info/shipyard-info/shipyard-info.component";
 import { AutomatorComponent } from "./automator-group/automator/automator.component";
 import { AutomatorGroupComponent } from "./automator-group/automator-group.component";
-import { GroupAutomatorComponent } from './group-tab/group-automator/group-automator.component';
-import { AutomatorTableComponent } from './prestige/automator-table/automator-table.component';
+import { GroupAutomatorComponent } from "./group-tab/group-automator/group-automator.component";
+import { AutomatorTableComponent } from "./prestige/automator-table/automator-table.component";
+import { AutoShipComponent } from "./fleetDesigner/auto-ship/auto-ship.component";
 
 @NgModule({
   declarations: [
@@ -119,7 +120,8 @@ import { AutomatorTableComponent } from './prestige/automator-table/automator-ta
     AutomatorComponent,
     AutomatorGroupComponent,
     GroupAutomatorComponent,
-    AutomatorTableComponent
+    AutomatorTableComponent,
+    AutoShipComponent
   ],
   imports: [
     BrowserAnimationsModule,

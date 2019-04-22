@@ -1,7 +1,6 @@
 import {
   Component,
   OnInit,
-  HostBinding,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   OnDestroy,
@@ -23,8 +22,6 @@ import { preventScroll } from "src/app/app.component";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DesignComponent implements OnInit, OnDestroy, AfterViewInit {
-  @HostBinding("class")
-  contentArea = "content-area";
   design: ShipDesign;
 
   name = "";

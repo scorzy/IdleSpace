@@ -22,6 +22,7 @@ import { StartComponent } from "./info/start/start.component";
 import { LabInfoComponent } from "./info/lab-info/lab-info.component";
 import { ShipyardInfoComponent } from "./info/shipyard-info/shipyard-info.component";
 import { AutomatorTableComponent } from "./prestige/automator-table/automator-table.component";
+import { AutoShipComponent } from "./fleetDesigner/auto-ship/auto-ship.component";
 
 const routes: Routes = [
   {
@@ -52,6 +53,7 @@ const routes: Routes = [
     component: FleetDesignerComponent,
     children: [
       { path: "shipyard", component: ShipyardComponent },
+      { path: "autoShip", component: AutoShipComponent },
       { path: "design", component: DesignComponent },
       { path: "design/:id", component: DesignComponent }
     ]

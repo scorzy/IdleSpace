@@ -256,12 +256,15 @@ export class ShipDesign implements ISalvable, IBuyable {
     this.editable.modules.splice(i, 1);
     this.editable.reload();
   }
-  maxAll() {
+  maxAll(): boolean {
+    let done = false;
     this.editable.modules.forEach(m => {
+      done = done || m.level < m.maxLevel;
       m.level = m.maxLevel;
       m.levelUi = m.level;
     });
     this.editable.reload();
+    return done;
   }
   /**
    * Return true if an upgrade is queued

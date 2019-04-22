@@ -10,6 +10,7 @@ import { BuildingAutomator } from "./buildingAutomator";
 import { RobotGroupAutomator } from "./robotGroupAutomator";
 import { MineGroupAutomator } from "./multipleMineAutomator";
 import { BuildingGroupAutomator } from "./buildingGroupAutomator";
+import { FleetAutomator } from "./fleetAutomator";
 
 export const TIME_LEVELS = [
   [300, 0],
@@ -37,6 +38,7 @@ export const TIME_LEVELS = [
 export class AutomatorManager implements ISalvable {
   automatorGroups = new Array<Automator>();
   times = new Array<number>();
+  autoFleetUp: FleetAutomator;
 
   generateAutomators() {
     //  Resource Storage
@@ -89,6 +91,10 @@ export class AutomatorManager implements ISalvable {
       const autoGr1 = new BuildingGroupAutomator(resMan.tierGroups[2], i + 1);
       this.automatorGroups.push(autoGr1);
     }
+
+    //  Auto Upgrade
+    this.autoFleetUp = new FleetAutomator();
+    this.automatorGroups.push(this.autoFleetUp);
   }
 
   update(now: number) {
