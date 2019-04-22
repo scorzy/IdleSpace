@@ -112,6 +112,11 @@ export class ShipDesign implements ISalvable, IBuyable {
       .map(s => s.quantity.times(s.type.navalCapacity))
       .reduce((p, c) => p.plus(c), new Decimal(0));
   }
+  static GetWantNavalCap(ships: ShipDesign[]): Decimal {
+    return ships
+      .map(s => s.wantQuantity.times(s.type.navalCapacity))
+      .reduce((p, c) => p.plus(c), new Decimal(0));
+  }
 
   reload(isPlayer = true) {
     this.totalDamage = new Decimal(0);

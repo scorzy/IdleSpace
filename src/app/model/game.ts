@@ -11,6 +11,7 @@ import { MainService } from "../main.service";
 import { OptionsService } from "../options.service";
 import { AllSkillEffects } from "./prestige/allSkillEffects";
 import { AutomatorManager } from "./automators/automatorManager";
+import { ShipDesign } from "./fleet/shipDesign";
 
 export const ZERO_DECIMAL_IMMUTABLE = new Decimal(0);
 
@@ -27,6 +28,7 @@ export class Game {
   darkMatterManager: DarkMatterManager;
   automatorManager: AutomatorManager;
   isPaused = false;
+  overNavalCap = false;
 
   constructor() {
     Game.instance = this;
@@ -168,6 +170,9 @@ export class Game {
     this.shipyard.adjust();
     this.darkMatterManager.reload();
     this.enemyManager.nukeAction.reload();
+    this.overNavalCap = ShipDesign.GetWantNavalCap(this.fleetManager.ships).gt(
+      this.fleetManager.totalNavalCapacity
+    );
   }
   reload() {
     this.resourceManager.loadPolynomial();

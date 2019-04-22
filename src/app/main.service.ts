@@ -17,6 +17,7 @@ const UP_INTERVAL = 200; // 5 fps
 const SAVE_INTERVAL_1 = 1 * 60 * 1000;
 const SAVE_INTERVAL_3 = 3 * 60 * 1000;
 const SAVE_INTERVAL_5 = 5 * 60 * 1000;
+const NO_REINFORCE_INTERVAL = 60 * 1000;
 
 export function getUrl() {
   return (
@@ -35,6 +36,7 @@ export class MainService {
   static formatPipe: FormatPipe;
   static endInPipe: EndInPipe;
   static toastr: ToastrService;
+  static navalCapReinforceToast = false;
 
   zipWorker: ITypedWorker<CompressRequest, CompressRequest2>;
   game: Game;
@@ -50,6 +52,7 @@ export class MainService {
   kongregate: any;
   readonly titleId = "BE193";
   playFabId = -1;
+  lastNavalCapMessage = 0;
 
   constructor(
     public options: OptionsService,
@@ -139,6 +142,17 @@ export class MainService {
     this.game.update(diff);
     this.last = now;
     this.em.updateEmitter.emit(diff);
+
+    if (
+      MainService.navalCapReinforceToast &&
+      this.lastNavalCapMessage + NO_REINFORCE_INTERVAL < now
+    ) {
+      this.lastNavalCapMessage = now;
+      MainService.toastr.warning(
+        "Fleet not reinforced. Manual configuration needed!",
+        "Exceeding naval capacity"
+      );
+    }
   }
   reload() {
     this.game.reload();

@@ -16,7 +16,7 @@ import { MainService } from "src/app/main.service";
 export const MAX_NAVAL_CAPACITY = 1e4;
 export const MAX_DESIGN = 20;
 const DISBAND_INTERVAL = 60 * 1000 * 5; //  5 minutes
-const DISBAND_PERCENT = 0.1;
+const DISBAND_PERCENT = 0.3;
 
 export class FleetManager implements ISalvable {
   private static instance: FleetManager;
@@ -218,9 +218,17 @@ export class FleetManager implements ISalvable {
       this.ships.findIndex(s => s.quantity.lt(s.wantQuantity)) === -1;
   }
   doAutoFight() {
+    MainService.navalCapReinforceToast = false;
     this.checkStatus();
+    const overNavalCap = ShipDesign.GetWantNavalCap(this.ships).gt(
+      this.totalNavalCapacity
+    );
     if (this.autoReinforce && !this.fullStrength) {
-      this.make();
+      if (!overNavalCap) {
+        this.make();
+      } else {
+        MainService.navalCapReinforceToast = true;
+      }
     }
 
     if (this.fightEnabled) {
@@ -228,7 +236,7 @@ export class FleetManager implements ISalvable {
       if (
         !enemyManager.inBattle &&
         this.autoFight &&
-        (this.fullStrength || !this.autoReinforce)
+        (this.fullStrength || !this.autoReinforce || overNavalCap)
       ) {
         if (enemyManager.autoNuke) {
           enemyManager.nukeAction.reload();

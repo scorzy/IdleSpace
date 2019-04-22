@@ -35,7 +35,10 @@
         *ngIf="ms.game.researchManager.corvette.firstDone"
       >
         <span class="nav-text">
-          <clr-icon shape="ruler-pencil"></clr-icon>
+          <clr-icon
+            shape="cog"
+            [ngClass]="{ 'has-alert': ms.game.overNavalCap }"
+          ></clr-icon>
         </span>
       </a>
 
