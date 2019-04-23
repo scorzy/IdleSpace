@@ -7,6 +7,7 @@ export class SearchAutomator extends Automator {
     this.name = "Auto Enemy Search";
     this.description = "Automatically search enemy of max level.";
     this.prestigeLevel = 3;
+    this.showResourceUsage = false;
   }
   execCondition(): boolean {
     const em = EnemyManager.getInstance();

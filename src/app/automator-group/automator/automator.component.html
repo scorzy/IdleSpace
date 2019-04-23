@@ -51,7 +51,7 @@
       />
     </clr-input-container>
 
-    <clr-input-container>
+    <clr-input-container *ngIf="auto.showResourceUsage">
       <label class="clr-col-12 clr-col-md-3"
         >Res.
         <app-formatted-quantity

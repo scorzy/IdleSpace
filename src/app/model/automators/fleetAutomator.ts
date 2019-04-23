@@ -9,6 +9,7 @@ export class FleetAutomator extends Automator {
     this.stopWhenFactoryUi = false;
     this.description = "Auto Fleet Upgrade";
     this.prestigeLevel = 16;
+    this.showResourceUsage = false;
   }
   doAction(): boolean {
     const fleetMan = FleetManager.getInstance();

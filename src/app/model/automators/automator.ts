@@ -16,6 +16,7 @@ export class Automator implements ISalvable {
   group = 1;
   stopWhenFactory = false;
   stopWhenFactoryUi = false;
+  showResourceUsage = true;
   constructor(public id: string) {}
 
   isUnlocked(): boolean {

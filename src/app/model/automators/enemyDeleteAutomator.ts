@@ -7,6 +7,7 @@ export class EnemyDeleteAutomator extends Automator {
     this.name = "Auto Delete Enemy";
     this.description = "Automatically delete enemy of lower level when full.";
     this.prestigeLevel = 3;
+    this.showResourceUsage = false;
   }
   execCondition(): boolean {
     const em = EnemyManager.getInstance();
