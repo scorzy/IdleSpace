@@ -313,7 +313,7 @@ export class MainService {
     }
     if (data) {
       this.playFabId = data.data.PlayFabId;
-      PlayFab.settings.titleId = "E86B";
+      PlayFab.settings.titleId = "BE193";
       this.playFabLogged = true;
       Emitters.getInstance().saveEmitter.emit("logged");
       console.log("Logged in to playFab");
@@ -406,7 +406,7 @@ export class MainService {
               return val.Value;
             })
             .join("");
-          console.log(raw);
+          // console.log(raw);
           this.import(raw);
         }
       }
@@ -443,7 +443,7 @@ export class MainService {
         break;
     }
     if (interval > 0) {
-      console.log(interval);
+      // console.log(interval);
       this.autoSaveInterval = window.setInterval(
         this.save.bind(this, true),
         interval
