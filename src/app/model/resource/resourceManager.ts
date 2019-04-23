@@ -326,6 +326,8 @@ export class ResourceManager implements ISalvable {
       this.metalX1.reloadLimit();
     };
     buyMetalMine.name = "Metal Mine";
+    buyMetalMine.description =
+      "An Metal Mine allows you to buy more mining drones";
     this.metalX1.actions.push(buyMetalMine);
     this.metalX1.limitStorage = buyMetalMine;
     this.metalX1.prestigeLimit = AllSkillEffects.PLUS_METAL_MINER;
@@ -343,6 +345,8 @@ export class ResourceManager implements ISalvable {
       this.crystalX1.reloadLimit();
     };
     buyCrystalMine.name = "Crystal Mine";
+    buyCrystalMine.description =
+      "An Crystal Mine allows you to buy more crystal drones";
     this.crystalX1.actions.push(buyCrystalMine);
     this.crystalX1.limitStorage = buyCrystalMine;
     this.crystalX1.prestigeLimit = AllSkillEffects.PLUS_CRYSTAL_MINER;
@@ -360,6 +364,8 @@ export class ResourceManager implements ISalvable {
       this.energyX1.reloadLimit();
     };
     buyEnergyPlant.name = "Energy Plant";
+    buyEnergyPlant.description =
+      "An Energy Plant allows you to buy more technicians";
     this.energyX1.actions.push(buyEnergyPlant);
     this.energyX1.limitStorage = buyEnergyPlant;
     this.energyX1.prestigeLimit = AllSkillEffects.PLUS_ENERGY;
@@ -377,6 +383,8 @@ export class ResourceManager implements ISalvable {
       this.computingX1.reloadLimit();
     };
     buySuperComputer.name = "Super Computer";
+    buySuperComputer.description =
+      "An Super Computer allows you to buy more computing units";
     this.computingX1.actions.push(buySuperComputer);
     this.computingX1.limitStorage = buySuperComputer;
     this.computingX1.prestigeLimit = AllSkillEffects.PLUS_CPU;
@@ -394,6 +402,8 @@ export class ResourceManager implements ISalvable {
       this.alloyX1.reloadLimit();
     };
     buyFoundry.name = "Alloy Foundry";
+    buyFoundry.description =
+      "An Alloy Foundry allows you to buy more foundry drones";
     this.alloyX1.actions.push(buyFoundry);
     this.alloyX1.limitStorage = buyFoundry;
     this.alloyX1.prestigeLimit = AllSkillEffects.PLUS_ALLOY;
@@ -411,6 +421,7 @@ export class ResourceManager implements ISalvable {
       this.shipyardX1.reloadLimit();
     };
     buyShipyard.name = "Shipyard";
+    buyShipyard.description = "A Shipyard allows you to buy more worker drones";
     this.shipyardX1.actions.push(buyShipyard);
     this.shipyardX1.limitStorage = buyShipyard;
     this.shipyardX1.prestigeLimit = AllSkillEffects.PLUS_WORKER;
@@ -439,6 +450,8 @@ export class ResourceManager implements ISalvable {
       this.searchX1.reloadLimit();
     };
     buyTelescope.name = "Telescope";
+    buyTelescope.description =
+      "A Telescope allows you to buy more searching drones";
     this.searchX1.actions.push(buyTelescope);
     this.searchX1.limitStorage = buyTelescope;
     this.searchX1.prestigeLimit = AllSkillEffects.PLUS_SEARCH;
@@ -467,6 +480,8 @@ export class ResourceManager implements ISalvable {
       this.warriorX1.reloadLimit();
     };
     buyStronghold.name = "Stronghold";
+    buyStronghold.description =
+      "A Stronghold allows you to buy more warrior drones";
     this.warriorX1.actions.push(buyStronghold);
     this.warriorX1.limitStorage = buyStronghold;
     this.warriorX1.prestigeLimit = AllSkillEffects.PLUS_WARRIOR;

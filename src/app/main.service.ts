@@ -465,6 +465,7 @@ export class MainService {
         "Ascension",
         this.game.prestigeManager.ascension
       );
+      this.kongregate.stats.submit("MaxEnemy", this.game.enemyManager.maxLevel);
     } catch (ex) {}
   }
 }
