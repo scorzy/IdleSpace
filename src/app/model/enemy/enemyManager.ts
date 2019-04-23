@@ -30,6 +30,7 @@ const RESEARCH_REWARD = 2e3;
 const ROBOT_REWARD = 0.5;
 const SHIPYARD_REWARD = 200;
 const MISSILE_DAMAGE = 2500;
+const SEARCH_REWARD = 300;
 
 const RANDOM_REWARDS = [
   Reward.HabitableSpace,
@@ -188,12 +189,6 @@ export class EnemyManager implements ISalvable {
     const addSpace = !!reward;
     if (!reward) {
       reward = sample(RANDOM_REWARDS);
-      if (
-        reward === Reward.Enemy &&
-        EnemyManager.getInstance().allEnemy.length > 6
-      ) {
-        reward = Reward.MetalMine;
-      }
     }
     if (reward) {
       let prestigeMulti = new Decimal(1).plus(
@@ -301,21 +296,16 @@ export class EnemyManager implements ISalvable {
           break;
 
         case Reward.Enemy:
-          if (this.allEnemy.length < MAX_ENEMY_LIST_SIZE) {
-            const searchJob = new SearchJob();
-            searchJob.level = this.currentEnemy.level;
-            if (
-              prestigeMulti.gt(2) &&
-              this.allEnemy.length + 1 < MAX_ENEMY_LIST_SIZE
-            ) {
-              this.generate(searchJob);
-              this.generate(searchJob);
-              message += "new enemies found";
-            } else {
-              this.generate(searchJob);
-              message += "new enemy found";
-            }
-          }
+          gain = new Decimal(SEARCH_REWARD * this.currentEnemy.level).times(
+            prestigeMulti
+          );
+          this.addProgress(gain);
+          message +=
+            "+ " +
+            MainService.formatPipe.transform(gain) +
+            " " +
+            resMan.searchProgress.name;
+
           break;
         case Reward.Shipyard:
           gain = new Decimal(SHIPYARD_REWARD * this.currentEnemy.level).times(
