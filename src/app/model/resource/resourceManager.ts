@@ -547,7 +547,7 @@ export class ResourceManager implements ISalvable {
       new MultiPrice([
         new Price(this.metal, 5000, 2),
         new Price(this.crystal, 10000, 2),
-        new Price(this.habitableSpace, 10, MINE_EXP)
+        new Price(this.habitableSpace, 5, MINE_EXP)
       ])
     );
     missileSilo.afterBuy = () => {

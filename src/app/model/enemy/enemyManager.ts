@@ -20,7 +20,7 @@ import { BonusStack } from "../bonus/bonusStack";
 import { ZERO_DECIMAL_IMMUTABLE } from "../game";
 import { Bonus } from "../bonus/bonus";
 
-export const MAX_ENEMY_LIST_SIZE = 20;
+export const MAX_ENEMY_LIST_SIZE = 10;
 const DARK_MATTER_START_LEVEL = 2;
 const DARK_MATTER_MULTI = 3;
 const METAL_REWARD = 500;
