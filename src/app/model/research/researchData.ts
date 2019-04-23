@@ -57,7 +57,7 @@ export const ResearchData: IResearchData[] = [
     price: 1e4,
     description: "Unlock Telescope",
     resourceToUnlock: ["X1", "XP"],
-    researchToUnlock: ["D"]
+    researchToUnlock: ["M", "D"]
   },
   {
     id: "f",
@@ -112,10 +112,10 @@ export const ResearchData: IResearchData[] = [
     id: "D",
     name: "Drone Factory",
     shape: "battery",
-    price: 1e5,
+    price: 1e6,
     description: "Drone Factory",
     resourceToUnlock: ["D", "F"],
-    researchToUnlock: ["M", "i"]
+    researchToUnlock: ["i"]
   },
   {
     id: "M",
@@ -130,7 +130,7 @@ export const ResearchData: IResearchData[] = [
     id: "i",
     name: "Missiles",
     shape: "battery",
-    price: 1e6,
+    price: 1e7,
     description: "Anti Defense interplanetary missile",
     resourceToUnlock: ["i", "i1"]
   },

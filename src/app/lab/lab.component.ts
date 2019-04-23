@@ -30,6 +30,7 @@ export class LabComponent implements OnInit, OnDestroy, AfterViewInit {
   resPerSec = new Decimal(1);
   infoModal = false;
   showDetails = true;
+  bonus = false;
 
   private subscriptions: Subscription[] = [];
 

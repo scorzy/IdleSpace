@@ -90,6 +90,9 @@
       <button class="btn btn-outline" (click)="allToDo()">
         All In Progress
       </button>
+      <button class="btn btn-outline" (click)="bonus = true">
+        Show Bonus
+      </button>
 
       <br />
       <clr-toggle-container>
@@ -103,9 +106,6 @@
           <label>Show Details</label>
         </clr-toggle-wrapper>
       </clr-toggle-container>
-
-      <!-- <h6>Research Bonus:</h6>
-      <app-bonus-view [bonus]="ms.game.researchBonus"></app-bonus-view> -->
     </div>
   </div>
 </div>
@@ -114,5 +114,13 @@
   <h3 class="modal-title">Laboratory</h3>
   <div class="modal-body">
     <p>ToDo</p>
+  </div>
+</clr-modal>
+
+<!-- Bonus Modal -->
+<clr-modal [(clrModalOpen)]="bonus">
+  <h3 class="modal-title">Research Bonus</h3>
+  <div class="modal-body">
+    <app-bonus-view [bonus]="ms.game.researchBonus"></app-bonus-view>
   </div>
 </clr-modal>
