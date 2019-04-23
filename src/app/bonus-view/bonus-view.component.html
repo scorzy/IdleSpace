@@ -9,7 +9,7 @@
   </thead>
   <tbody>
     <!-- Base -->
-    <tr>
+    <tr *ngIf="production">
       <td class="left">Base</td>
       <td></td>
       <td></td>
@@ -69,7 +69,7 @@
     </tr>
 
     <!-- Operativity -->
-    <tr>
+    <tr *ngIf="production">
       <td class="left">
         Operativity
       </td>

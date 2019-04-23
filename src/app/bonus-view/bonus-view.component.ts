@@ -8,6 +8,7 @@ import {
 } from "@angular/core";
 import { Production } from "../model/production";
 import { Bonus } from "../model/bonus/bonus";
+import { BonusStack } from "../model/bonus/bonusStack";
 
 @Component({
   selector: "app-bonus-view",
@@ -17,6 +18,8 @@ import { Bonus } from "../model/bonus/bonus";
 })
 export class BonusViewComponent implements OnInit, OnChanges {
   @Input() production: Production;
+  @Input() bonus: BonusStack;
+
   bonusAdd: Bonus[];
   bonusMulti: Bonus[];
 
@@ -24,20 +27,26 @@ export class BonusViewComponent implements OnInit, OnChanges {
 
   ngOnInit() {}
   ngOnChanges(changes: SimpleChanges) {
-    this.bonusAdd = this.production.producer.productionMultiplier.additiveBonus.filter(
+    if (this.production) {
+      this.bonus = this.production.producer.productionMultiplier;
+    }
+
+    this.bonusAdd = this.bonus.additiveBonus.filter(
       t =>
-        (!t.positiveOnly || this.production.ratio.gt(0)) &&
+        (!this.production || !t.positiveOnly || this.production.ratio.gt(0)) &&
         !t.base.getQuantity().eq(0)
     );
-    this.bonusMulti = this.production.producer.productionMultiplier.multiplicativeBonus
+    this.bonusMulti = this.bonus.multiplicativeBonus
       .concat(
-        this.production.productionMultiplier
+        this.production && this.production.productionMultiplier
           ? this.production.productionMultiplier.multiplicativeBonus
           : []
       )
       .filter(
         t =>
-          (!t.positiveOnly || this.production.ratio.gt(0)) &&
+          (!this.production ||
+            !t.positiveOnly ||
+            this.production.ratio.gt(0)) &&
           !t.base.getQuantity().eq(0)
       );
   }
