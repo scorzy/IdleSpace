@@ -70,6 +70,7 @@ import { PrestigeInfoComponent } from './info/prestige-info/prestige-info.compon
 import { InfoModComponent } from './info/info-mod/info-mod.component';
 import { AutoInfoComponent } from './info/auto-info/auto-info.component';
 import { AscendInfoComponent } from './info/ascend-info/ascend-info.component';
+import { CreditsComponent } from './options-nav/credits/credits.component';
 
 @NgModule({
   declarations: [
@@ -133,7 +134,8 @@ import { AscendInfoComponent } from './info/ascend-info/ascend-info.component';
     PrestigeInfoComponent,
     InfoModComponent,
     AutoInfoComponent,
-    AscendInfoComponent
+    AscendInfoComponent,
+    CreditsComponent
   ],
   imports: [
     BrowserAnimationsModule,

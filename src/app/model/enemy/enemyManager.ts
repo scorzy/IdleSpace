@@ -92,7 +92,8 @@ export class EnemyManager implements ISalvable {
     this.currentEnemy.currentZone.reload();
 
     const battleRequest = new BattleRequest();
-    battleRequest.minTime = 1 - 0.4 * AllSkillEffects.FAST_COMBAT.numOwned;
+    battleRequest.minTime = 1 - 0.3 * AllSkillEffects.FAST_COMBAT.numOwned;
+    battleRequest.minTime = Math.max(battleRequest.minTime, 0);
     battleRequest.playerFleet = FleetManager.getInstance().ships.map(s =>
       s.getShipData()
     );

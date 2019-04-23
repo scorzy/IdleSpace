@@ -136,7 +136,7 @@ export class AllSkillEffects {
     //#region Combat
     AllSkillEffects.FAST_COMBAT.shape = "clock";
     AllSkillEffects.FAST_COMBAT.getDescription = (num = 1) => {
-      return "- " + 0.4 * num + "s fight time";
+      return "- " + 0.3 * num + "s fight time";
     };
     AllSkillEffects.DOUBLE_NAVAL_CAPACITY.getDescription = (num = 1) => {
       return "+ " + 200 * num + "%\nnaval capacity";
