@@ -461,6 +461,10 @@ export class MainService {
         "Prestige",
         this.game.prestigeManager.totalPrestige
       );
+      this.kongregate.stats.submit(
+        "Ascension",
+        this.game.prestigeManager.ascension
+      );
     } catch (ex) {}
   }
 }
