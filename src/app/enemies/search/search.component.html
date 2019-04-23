@@ -2,146 +2,230 @@
   <clr-icon shape="world" size="48" class="resIcon"></clr-icon>
   Search new worlds
 </h1>
-<div class="clr-row">
-  <div class="clr-col-12	clr-col-sm-12	clr-col-md-12	clr-col-lg-6 clr-col-xl-6">
-    <p>
-      Here you can search for new worlds.
-    </p>
 
-    <clr-alert
-      *ngIf="ms.game.resourceManager.searchX1.quantity.lte(0); else progress"
-      [clrAlertType]="'warning'"
-      [clrAlertClosable]="false"
-    >
-      <clr-alert-item>
-        <span class="alert-text">
-          You don't have any
-          <a [routerLink]="'/home/res/X1'"
-            >{{ ms.game.resourceManager.searchX1.name }}
-          </a>
-        </span>
-      </clr-alert-item>
-    </clr-alert>
-
-    <ng-template #progress>
-      Progress:
-      <app-polynom [c]="ms.game.resourceManager.searchProgress.c"></app-polynom>
-      <br />
-    </ng-template>
-
-    <form clrForm>
-      <clr-input-container>
-        <label
-          >Level
-          <span> (max:{{ ms.game.enemyManager.maxLevel }}) </span>
-          :</label
+<clr-tabs>
+  <clr-tab>
+    <button clrTabLink>Searching</button>
+    <clr-tab-content *clrIfActive>
+      <div class="clr-row">
+        <div
+          class="clr-col-12	clr-col-sm-12	clr-col-md-12	clr-col-lg-6 clr-col-xl-6"
         >
-        <input
-          clrInput
-          type="number"
-          [(ngModel)]="userLevel"
-          name="level"
-          required
-          [max]="ms.game.enemyManager.maxLevel"
-          min="1"
-        />
-        <clr-control-error
-          >Must be a number (1 -
-          {{ ms.game.enemyManager.maxLevel }})</clr-control-error
-        ></clr-input-container
-      >
-      <input
-        type="range"
-        [name]="'sln'"
-        min="1"
-        [max]="ms.game.enemyManager.maxLevel"
-        step="1"
-        [(ngModel)]="userLevel"
-      />
-    </form>
+          <p>
+            Here you can search for new worlds.
+          </p>
 
-    <!-- Search options -->
-    <div class="btn-group" *ngIf="moreSearch">
-      <div class="checkbox btn" *ngIf="metal">
-        <input
-          type="checkbox"
-          id="btn-mmd"
-          [(ngModel)]="ms.game.enemyManager.moreMetal"
-        />
-        <label for="btn-mmd">
-          <clr-icon
-            [attr.shape]="ms.game.resourceManager.miningDistrict.shape"
-          ></clr-icon>
-        </label>
+          <clr-alert
+            *ngIf="
+              ms.game.resourceManager.searchX1.quantity.lte(0);
+              else progress
+            "
+            [clrAlertType]="'warning'"
+            [clrAlertClosable]="false"
+          >
+            <clr-alert-item>
+              <span class="alert-text">
+                You don't have any
+                <a [routerLink]="'/home/res/X1'"
+                  >{{ ms.game.resourceManager.searchX1.name }}
+                </a>
+              </span>
+            </clr-alert-item>
+          </clr-alert>
+
+          <ng-template #progress>
+            Progress:
+            <app-polynom
+              [c]="ms.game.resourceManager.searchProgress.c"
+            ></app-polynom>
+            <br />
+          </ng-template>
+
+          <form clrForm>
+            <clr-input-container>
+              <label
+                >Level
+                <span> (max:{{ ms.game.enemyManager.maxLevel }}) </span>
+              </label>
+              <input
+                clrInput
+                type="number"
+                [(ngModel)]="userLevel"
+                name="level"
+                required
+                [max]="ms.game.enemyManager.maxLevel"
+                min="1"
+              />
+              <clr-control-error
+                >Must be a number (1 -
+                {{ ms.game.enemyManager.maxLevel }})</clr-control-error
+              ></clr-input-container
+            >
+            <input
+              type="range"
+              [name]="'sln'"
+              min="1"
+              [max]="ms.game.enemyManager.maxLevel"
+              step="1"
+              [(ngModel)]="userLevel"
+            />
+          </form>
+
+          <!-- Search options -->
+          <div class="btn-group" *ngIf="moreSearch">
+            <div class="checkbox btn" *ngIf="metal">
+              <input
+                type="checkbox"
+                id="btn-mmd"
+                [(ngModel)]="ms.game.enemyManager.moreMetal"
+              />
+              <label for="btn-mmd">
+                <clr-icon
+                  [attr.shape]="ms.game.resourceManager.miningDistrict.shape"
+                ></clr-icon>
+              </label>
+            </div>
+            <div class="checkbox btn" *ngIf="cry">
+              <input
+                type="checkbox"
+                id="btn-mcd"
+                [(ngModel)]="ms.game.enemyManager.moreCrystal"
+              />
+              <label for="btn-mcd">
+                <clr-icon
+                  [attr.shape]="ms.game.resourceManager.crystalDistrict.shape"
+                ></clr-icon
+              ></label>
+            </div>
+            <div class="checkbox btn" *ngIf="hab">
+              <input
+                type="checkbox"
+                id="btn-mhs"
+                [(ngModel)]="ms.game.enemyManager.moreHabitable"
+              />
+              <label for="btn-mhs">
+                <clr-icon
+                  [attr.shape]="ms.game.resourceManager.habitableSpace.shape"
+                ></clr-icon
+              ></label>
+            </div>
+          </div>
+
+          <clr-alert
+            *ngIf="!limited"
+            [clrAlertType]="'warning'"
+            [clrAlertClosable]="false"
+            class="smallMarginBot"
+          >
+            <clr-alert-item>
+              <span class="alert-text">
+                Limit reached, you can have a maximum of 20 enemy at time.
+              </span>
+            </clr-alert-item>
+          </clr-alert>
+
+          <clr-alert
+            *ngIf="valid"
+            [clrAlertType]="'info'"
+            [clrAlertClosable]="false"
+            class="smallMarginBot"
+          >
+            <clr-alert-item>
+              <span class="alert-text">
+                Searching will cost:
+                <app-price-line
+                  [canBuy]="true"
+                  [unit]="ms.game.resourceManager.searchProgress"
+                  [price]="ms.game.enemyManager.getRequiredSearch(userLevel)"
+                ></app-price-line>
+              </span>
+            </clr-alert-item>
+          </clr-alert>
+
+          <div class="btn-group smallMarginBot">
+            <button
+              class="btn btn-success"
+              (click)="generate()"
+              [disabled]="!isValid()"
+            >
+              Search
+            </button>
+            <button
+              class="btn btn-warning"
+              (click)="deleteModal = true"
+              [disabled]="ms.game.enemyManager.allEnemy.length === 0"
+            >
+              Mass Delete
+            </button>
+          </div>
+          <br />
+          <div class="btn-group smallMarginBot">
+            <button
+              class="btn btn"
+              (click)="sortAsc()"
+              [disabled]="ms.game.enemyManager.allEnemy.length === 0"
+            >
+              Sort Asc
+            </button>
+            <button
+              class="btn btn"
+              (click)="sortDesc()"
+              [disabled]="ms.game.enemyManager.allEnemy.length === 0"
+            >
+              Sort Desc
+            </button>
+          </div>
+        </div>
+
+        <div
+          class="clr-col-12	clr-col-sm-12	clr-col-md-12	clr-col-lg-6 clr-col-xl-6"
+        >
+          <h4>Jobs:</h4>
+          <div
+            cdkDropList
+            (cdkDropListDropped)="drop($event)"
+            class="myBg drag-list"
+          >
+            <app-job
+              cdkDrag
+              *ngFor="
+                let job of ms.game.enemyManager.searchJobs;
+                trackBy: getJobId
+              "
+              [job]="job"
+            ></app-job>
+          </div>
+        </div>
       </div>
-      <div class="checkbox btn" *ngIf="cry">
-        <input
-          type="checkbox"
-          id="btn-mcd"
-          [(ngModel)]="ms.game.enemyManager.moreCrystal"
-        />
-        <label for="btn-mcd">
-          <clr-icon
-            [attr.shape]="ms.game.resourceManager.crystalDistrict.shape"
-          ></clr-icon
-        ></label>
-      </div>
-      <div class="checkbox btn" *ngIf="hab">
-        <input
-          type="checkbox"
-          id="btn-mhs"
-          [(ngModel)]="ms.game.enemyManager.moreHabitable"
-        />
-        <label for="btn-mhs">
-          <clr-icon
-            [attr.shape]="ms.game.resourceManager.habitableSpace.shape"
-          ></clr-icon
-        ></label>
-      </div>
-    </div>
+    </clr-tab-content>
+  </clr-tab>
+  <clr-tab *ngIf="automatorTab">
+    <button clrTabLink>Automation</button>
+    <clr-tab-content *clrIfActive>
+      <app-search-auto></app-search-auto>
+    </clr-tab-content>
+  </clr-tab>
+</clr-tabs>
 
-    <clr-alert
-      *ngIf="!limited"
-      [clrAlertType]="'warning'"
-      [clrAlertClosable]="false"
-    >
-      <clr-alert-item>
-        <span class="alert-text">
-          Limit reached, you can have a maximum of 20 enemy at time.
-        </span>
-      </clr-alert-item>
-    </clr-alert>
-
-    <clr-alert *ngIf="valid" [clrAlertType]="'info'" [clrAlertClosable]="false">
-      <clr-alert-item>
-        <span class="alert-text">
-          Searching will cost:
-          <app-price-line
-            [canBuy]="true"
-            [unit]="ms.game.resourceManager.searchProgress"
-            [price]="ms.game.enemyManager.getRequiredSearch(userLevel)"
-          ></app-price-line>
-        </span>
-      </clr-alert-item>
-    </clr-alert>
-
-    <button
-      class="btn btn-success"
-      (click)="generate()"
-      [disabled]="!isValid()"
-    >
-      Search
+<!-- Delete Modal -->
+<clr-modal [(clrModalOpen)]="deleteModal" [clrModalSize]="'sm'">
+  <h3 class="modal-title">Mass Delete</h3>
+  <div class="modal-body">
+    <p>
+      Delete all enemy with level lower than
+      <app-formatted-quantity
+        [quantity]="userLevel"
+        [integer]="true"
+      ></app-formatted-quantity
+      >?
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="deleteModal = false">
+      Cancel
+    </button>
+    <button type="button" class="btn btn-warning" (click)="massDelete()">
+      Ok
     </button>
   </div>
-
-  <div class="clr-col-12	clr-col-sm-12	clr-col-md-12	clr-col-lg-6 clr-col-xl-6">
-    <h4>Jobs:</h4>
-    <div cdkDropList (cdkDropListDropped)="drop($event)" class="myBg drag-list">
-      <app-job
-        cdkDrag
-        *ngFor="let job of ms.game.enemyManager.searchJobs; trackBy: getJobId"
-        [job]="job"
-      ></app-job>
-    </div>
-  </div>
-</div>
+</clr-modal>

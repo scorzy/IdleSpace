@@ -11,6 +11,8 @@ import { RobotGroupAutomator } from "./robotGroupAutomator";
 import { MineGroupAutomator } from "./multipleMineAutomator";
 import { BuildingGroupAutomator } from "./buildingGroupAutomator";
 import { FleetAutomator } from "./fleetAutomator";
+import { EnemyDeleteAutomator } from "./enemyDeleteAutomator";
+import { SearchAutomator } from "./searchAutomator";
 
 export const TIME_LEVELS = [
   [300, 0],
@@ -39,6 +41,9 @@ export class AutomatorManager implements ISalvable {
   automatorGroups = new Array<Automator>();
   times = new Array<number>();
   autoFleetUp: FleetAutomator;
+  searchAutomator: SearchAutomator;
+  enemyDeleteAutomator: EnemyDeleteAutomator;
+  searchAutomators: Automator[];
 
   generateAutomators() {
     //  Resource Storage
@@ -95,6 +100,15 @@ export class AutomatorManager implements ISalvable {
     //  Auto Upgrade
     this.autoFleetUp = new FleetAutomator();
     this.automatorGroups.push(this.autoFleetUp);
+
+    //  Enemy Search
+    this.searchAutomator = new SearchAutomator();
+    this.automatorGroups.push(this.searchAutomator);
+
+    //  Enemy Delete
+    this.enemyDeleteAutomator = new EnemyDeleteAutomator();
+    this.automatorGroups.push(this.enemyDeleteAutomator);
+    this.searchAutomators = [this.searchAutomator, this.enemyDeleteAutomator];
   }
 
   update(now: number) {

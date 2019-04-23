@@ -26,17 +26,23 @@ export class SearchComponent implements OnInit, AfterViewInit {
   searchValid = true;
   valid = true;
   limited = false;
-
+  deleteModal = false;
   moreSearch = false;
   metal = false;
   cry = false;
   hab = false;
+  automatorTab = false;
 
   private subscriptions: Subscription[] = [];
 
   constructor(public ms: MainService, private cd: ChangeDetectorRef) {}
 
   ngOnInit() {
+    this.automatorTab =
+      this.ms.game.automatorManager.searchAutomators.findIndex(a =>
+        a.isUnlocked()
+      ) > -1;
+
     this.moreSearch =
       AllSkillEffects.SEARCH_CRY.numOwned > 0 ||
       AllSkillEffects.SEARCH_METAL.numOwned > 0 ||
@@ -84,5 +90,17 @@ export class SearchComponent implements OnInit, AfterViewInit {
         this.userLevel >= 1 &&
         this.userLevel <= this.ms.game.enemyManager.maxLevel)
     );
+  }
+  sortAsc() {
+    this.ms.game.enemyManager.allEnemy.sort((a, b) => a.level - b.level);
+  }
+  sortDesc() {
+    this.ms.game.enemyManager.allEnemy.sort((a, b) => b.level - a.level);
+  }
+  massDelete() {
+    this.ms.game.enemyManager.allEnemy = this.ms.game.enemyManager.allEnemy.filter(
+      a => a.level >= this.userLevel
+    );
+    this.deleteModal = false;
   }
 }

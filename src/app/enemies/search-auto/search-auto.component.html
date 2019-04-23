@@ -1,0 +1,8 @@
+<div class="clr-row">
+  <div
+    *ngFor="let auto of automators; trackBy: autoId"
+    class="clr-col-12 clr-col-md-6"
+  >
+    <app-automator [auto]="auto"></app-automator>
+  </div>
+</div>

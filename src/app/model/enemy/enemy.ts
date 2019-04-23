@@ -142,11 +142,13 @@ export class Enemy {
       defenseToUse.forEach(shipType => {
         let presets = DefensePreset.filter(p => p.type === shipType);
         const pres = sample(presets);
-        enemy.addFromPreset(pres);
+        const def = enemy.addFromPreset(pres);
+        def.name = def.name + " " + def.modules[0].module.name;
         if (presets.length > 2 && Math.random() < 0.4) {
           presets = presets.filter(p => p !== pres);
           const pres2 = sample(presets);
-          enemy.addFromPreset(pres2);
+          const def2 = enemy.addFromPreset(pres2);
+          def2.name = def2.name + " " + def2.modules[0].module.name;
         }
       });
       const totalDefenseWeight = enemy.shipsDesign
@@ -301,11 +303,12 @@ export class Enemy {
       this.zones.forEach(z => z.reload());
     }
   }
-  private addFromPreset(pres: Preset) {
+  private addFromPreset(pres: Preset): ShipDesign {
     const design = ShipDesign.fromPreset(pres);
     design.weight = random(1, 5);
     design.id = this.id + "-" + this.shipsDesign.length;
     this.shipsDesign.push(design);
+    return design;
   }
   getSave() {
     const data: any = {};

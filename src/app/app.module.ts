@@ -64,6 +64,7 @@ import { AutomatorGroupComponent } from "./automator-group/automator-group.compo
 import { GroupAutomatorComponent } from "./group-tab/group-automator/group-automator.component";
 import { AutomatorTableComponent } from "./prestige/automator-table/automator-table.component";
 import { AutoShipComponent } from "./fleetDesigner/auto-ship/auto-ship.component";
+import { SearchAutoComponent } from './enemies/search-auto/search-auto.component';
 
 @NgModule({
   declarations: [
@@ -121,7 +122,8 @@ import { AutoShipComponent } from "./fleetDesigner/auto-ship/auto-ship.component
     AutomatorGroupComponent,
     GroupAutomatorComponent,
     AutomatorTableComponent,
-    AutoShipComponent
+    AutoShipComponent,
+    SearchAutoComponent
   ],
   imports: [
     BrowserAnimationsModule,
