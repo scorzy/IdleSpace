@@ -110,7 +110,7 @@ export class PrestigeManager implements ISalvable {
       new Skill(37, AllSkillEffects.DOUBLE_MISSILE),
       new Skill(38, AllSkillEffects.DOUBLE_MISSILE),
       new Skill(39, AllSkillEffects.DRONE_MULTI, true),
-      new Skill(40, AllSkillEffects.DOUBLE_DARK_MATTER, true),
+      new Skill(40, AllSkillEffects.DOUBLE_DARK_MATTER),
       new Skill(41, AllSkillEffects.DOUBLE_NAVAL_CAPACITY),
       new Skill(42, AllSkillEffects.FACTORY_BONUS)
     ];
