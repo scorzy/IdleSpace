@@ -65,6 +65,11 @@ import { GroupAutomatorComponent } from "./group-tab/group-automator/group-autom
 import { AutomatorTableComponent } from "./prestige/automator-table/automator-table.component";
 import { AutoShipComponent } from "./fleetDesigner/auto-ship/auto-ship.component";
 import { SearchAutoComponent } from './enemies/search-auto/search-auto.component';
+import { EnemyInfoComponent } from './info/enemy-info/enemy-info.component';
+import { PrestigeInfoComponent } from './info/prestige-info/prestige-info.component';
+import { InfoModComponent } from './info/info-mod/info-mod.component';
+import { AutoInfoComponent } from './info/auto-info/auto-info.component';
+import { AscendInfoComponent } from './info/ascend-info/ascend-info.component';
 
 @NgModule({
   declarations: [
@@ -123,7 +128,12 @@ import { SearchAutoComponent } from './enemies/search-auto/search-auto.component
     GroupAutomatorComponent,
     AutomatorTableComponent,
     AutoShipComponent,
-    SearchAutoComponent
+    SearchAutoComponent,
+    EnemyInfoComponent,
+    PrestigeInfoComponent,
+    InfoModComponent,
+    AutoInfoComponent,
+    AscendInfoComponent
   ],
   imports: [
     BrowserAnimationsModule,

@@ -23,6 +23,11 @@ import { LabInfoComponent } from "./info/lab-info/lab-info.component";
 import { ShipyardInfoComponent } from "./info/shipyard-info/shipyard-info.component";
 import { AutomatorTableComponent } from "./prestige/automator-table/automator-table.component";
 import { AutoShipComponent } from "./fleetDesigner/auto-ship/auto-ship.component";
+import { EnemyInfoComponent } from "./info/enemy-info/enemy-info.component";
+import { PrestigeInfoComponent } from "./info/prestige-info/prestige-info.component";
+import { InfoModComponent } from "./info/info-mod/info-mod.component";
+import { AutoInfoComponent } from "./info/auto-info/auto-info.component";
+import { AscendInfoComponent } from "./info/ascend-info/ascend-info.component";
 
 const routes: Routes = [
   {
@@ -113,7 +118,12 @@ const routes: Routes = [
     children: [
       { path: "start", component: StartComponent },
       { path: "labInfo", component: LabInfoComponent },
-      { path: "shipyardInfo", component: ShipyardInfoComponent }
+      { path: "shipyardInfo", component: ShipyardInfoComponent },
+      { path: "eneInfo", component: EnemyInfoComponent },
+      { path: "modInfo", component: InfoModComponent },
+      { path: "prestigeInfo", component: PrestigeInfoComponent },
+      { path: "autoInfo", component: AutoInfoComponent },
+      { path: "ascendInfo", component: AscendInfoComponent }
     ]
   }
 ];

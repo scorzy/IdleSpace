@@ -1,5 +1,11 @@
 <div class="content-area">
-  <router-outlet></router-outlet>
+  <div class="clr-row clr-justify-content-center">
+    <div
+      class="clr-col-12 clr-col-sm-12 clr-col-md-11 clr-col-lg-11 clr-col-xl-9"
+    >
+      <router-outlet></router-outlet>
+    </div>
+  </div>
 </div>
 <clr-vertical-nav>
   <a clrVerticalNavLink routerLink="/info/start" routerLinkActive="active">
@@ -13,6 +19,25 @@
     routerLink="/info/shipyardInfo"
     routerLinkActive="active"
   >
-    Shipyard
+    Fleets &amp; Battle
+  </a>
+  <a clrVerticalNavLink routerLink="/info/eneInfo" routerLinkActive="active">
+    Enemy
+  </a>
+  <a clrVerticalNavLink routerLink="/info/modInfo" routerLinkActive="active">
+    Drone Factory &amp; Modding
+  </a>
+  <a
+    clrVerticalNavLink
+    routerLink="/info/prestigeInfo"
+    routerLinkActive="active"
+  >
+    Prestige
+  </a>
+  <a clrVerticalNavLink routerLink="/info/autoInfo" routerLinkActive="active">
+    Automators
+  </a>
+  <a clrVerticalNavLink routerLink="/info/ascendInfo" routerLinkActive="active">
+    Ascension
   </a>
 </clr-vertical-nav>

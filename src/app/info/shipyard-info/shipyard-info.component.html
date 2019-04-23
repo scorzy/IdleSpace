@@ -1,120 +1,89 @@
-<div class="clr-row clr-justify-content-center">
-  <div
-    class="clr-col-12 clr-col-sm-12 clr-col-md-11 clr-col-lg-10 clr-col-xl-9"
-  >
-    <h1>Info</h1>
-    <h3>Start</h3>
-    <p>
-      The first thing to do is to buy Mining Drones and Crystal Drones and
-      Technicians as needed. Than you should buy an Energy Plant to be able to
-      get more Technician. Than buy some Computing Unit, Research tab will
-      appear. Unused computing will be converted to Research, research Corvette
-      and you will be ready to start battle.
-    </p>
-    <h3>Fleet</h3>
-    <p>
-      In the ruler-pencil tab you can reinforce your fleet and make new ship
-      design. For now just drag the Corvette slider to max and click Reinforce
-      fleet. You must have Foundry Drones and Worker Drones to complete the job.
-    </p>
-    <h3>Ship Design</h3>
-    <p>
-      You can create and modify ships design. Ships have this specifications:
-    </p>
-    <ul class="list">
-      <li>Armor: health, you now</li>
-      <li>Shield: take damage before Armor</li>
-      <li>Energy: must be positive, has no effect in battle</li>
-      <li>Damage: average damage, see modules for more info</li>
-      <li>
-        Explosion Chance: the armor threshold where your ship may explode (lower
-        is better)
-      </li>
-      <li>Price: price of one ship in Alloy</li>
-    </ul>
-    <p>
-      Ships design are a list of modules, bigger ships can have more modules.
-      Design are limited by module count and module points, module can have
-      different size and bigger size cost more points.
-    </p>
-    Weapons:
-    <ul class="list">
-      <li>
-        Laser: starting weapon, anti armor, 75% vs shield, 125% vs armor
-      </li>
-      <li>Plasma: anti armor, 30% vs shield, 170% vs armor</li>
-      <li>Mass Driver: anti shield, 125% vs shield, 75% vs armor</li>
-      <li>Gauss rifle: anti shield, 170% vs shield, 30% vs armor</li>
-    </ul>
-    Energy:
-    <ul class="list">
-      <li>Solar Panel: cheap and doesn't increase explosion chance</li>
-      <li>
-        RTG: give more energy but cost more and increase explosion chance
-      </li>
-      <li>
-        Fusion Reactor: give even more energy but is more expensive and increase
-        explosion chance
-      </li>
-    </ul>
-    Defense:
-    <ul class="list">
-      <li>Armor: basic defense, doesn't consume energy</li>
-      <li>Shield: take damage before armor, consume energy</li>
-    </ul>
-    <h3>Battle</h3>
-    <p>
-      Battle calculate every ship individually, so if you have 1000 ships 1000
-      will be simulated. Battle consist of up to five rounds, fleets start with
-      maximum armor and shields. In each round, all participating units randomly
-      choose a target enemy unit.
-      <br />
-      For each weapon of each ship:
-    </p>
-    <ul class="list">
-      <li>
-        If the damage * shield percent is lower than 0.1% of target shield no
-        damage is done.
-      </li>
-      <li>
-        Enemy shield get damaged, than if shield is zero damage is done to Armor
-        (with armor damage percent of the weapon)
-      </li>
-      <li>
-        If target armor percent is less than 100% - target Explosion Chance
-        there is a chance that target explode (armor set to -1; can still be
-        shot by the other units on this round)
-      </li>
-    </ul>
-    <p>
-      Death units are removed and a new round start. Note tha explosion chance
-      is calculated on each shot and ships may waste attacks of exploded ships.
-      Finally if one side has ero ships the other wins. Enemy do not rebuild
-      ships.
-    </p>
-    <h3>Enemy</h3>
-    <p>
-      Every enemy come with 100 cells. Some cells will give you habitable space
-      or mining districts. You can search fo new enemy in the search tab, after
-      defeating an enemy the next is auto attacked. Enemy of higher level yields
-      more districts and Dark Matter. Max level for enemy is max level defeated
-      +1
-    </p>
-    <h3>Prestige</h3>
-    <p>
-      Prestige tab is unlocked by completely defeated the first enemy (all 100
-      cells). Prestige will give you Skill point based on max enemy level. Do
-      get more Skills you will need to defeat higher level enemy. By defeating
-      enemy of level >=2 you will gain Inactive Dark Matter, prestige activate
-      the Dark Matter. Dark Matter can be used to time warp.
-    </p>
-    <h3>Drone Factory and Modding</h3>
-    <p>
-      Robot Factory is a structure that make robots, robots will automatically
-      available jobs (mining, technicians...) based on percent of missing worker
-      and the priority bar.<br />
-      Drone modding allows you to customize your Drones. You will get mod point
-      by completing Drone Modding research.
-    </p>
-  </div>
-</div>
+<h1>Fleet</h1>
+<p>
+  In the ruler-pencil tab you can reinforce your fleet and make new ship design.
+  For now just drag the Corvette slider to max and click Reinforce fleet. You
+  must have Foundry Drones and Worker Drones to complete the job.
+</p>
+<h3>Ship Design</h3>
+<p>
+  You can create and modify ships design. Ships have those specifications:
+</p>
+<ul class="list">
+  <li>Armor: health, you now</li>
+  <li>Shield: take damage before Armor</li>
+  <li>Energy: must be positive, has no effect in battle</li>
+  <li>Damage: average damage, see modules for more info</li>
+  <li>
+    Explosion Chance: the armor threshold where your ship may explode (lower is
+    better)
+  </li>
+  <li>Price: price of one ship in Alloy</li>
+</ul>
+<p>
+  Ships design are a list of modules, bigger ships can have more modules. Design
+  are limited by module count and module points, module can have different size
+  and bigger size cost more points.
+</p>
+<h6>Weapons</h6>
+<ul class="list">
+  <li>
+    Laser: starting weapon, anti armor, 75% vs shield, 125% vs armor
+  </li>
+  <li>Plasma: anti armor, 30% vs shield, 170% vs armor</li>
+  <li>Mass Driver: anti shield, 125% vs shield, 75% vs armor</li>
+  <li>Gauss rifle: anti shield, 170% vs shield, 30% vs armor</li>
+</ul>
+<h6>Energy</h6>
+<ul class="list">
+  <li>Solar Panel: cheap and doesn't increase explosion chance</li>
+  <li>
+    RTG: give more energy but cost more and increase explosion chance
+  </li>
+  <li>
+    Fusion Reactor: give even more energy but is more expensive and increase
+    explosion chance
+  </li>
+</ul>
+<h6>Defense</h6>
+<ul class="list">
+  <li>Armor: basic defense, doesn't consume energy</li>
+  <li>Shield: take damage before armor, consume energy</li>
+</ul>
+<h3>Battle</h3>
+<p>
+  Battle calculate every ship individually, so if you have 1000 ships 1000 will
+  be simulated. Battle consist of up to five rounds, fleets start with maximum
+  armor and shields. In each round, all participating units randomly choose a
+  target enemy unit.
+  <br />
+  For each weapon of each ship:
+</p>
+<ul class="list">
+  <li>
+    If the damage * shield percent is lower than 0.1% of target shield no damage
+    is done.
+  </li>
+  <li>
+    Enemy shield get damaged, than if shield is zero damage is done to Armor
+    (with armor damage percent of the weapon)
+  </li>
+  <li>
+    If target armor percent is less than 100% - target Explosion Chance there is
+    a chance that target explode (armor set to -1; can still be shot by the
+    other units on this round)
+  </li>
+</ul>
+<p>
+  Death units are removed and a new round start. Note tha explosion chance is
+  calculated on each shot and ships may waste attacks of exploded ships. Finally
+  if one side has ero ships the other wins. Enemy do not rebuild ships.
+</p>
+<h3>Planetary Defense</h3>
+<p>
+  From level 9 enemy will have planetary defenses in addition to regular fleets.
+  In battler Planetary Defense work exactly like fleets. Planetary defense can
+  also be destroyed by your Missiles. Missiles are unlocked with a research. You
+  can manually nuke or use the Auto Nuke options. Nuke will use the minimum
+  number of missile to destroy all enemy defenses, if the nuke button is green
+  you have enoughs missile to destroy all enemy defenses.
+</p>

@@ -1,0 +1,26 @@
+<h1>Automators</h1>
+<p>
+  Automators are unlocked by prestige level
+  <a [routerLink]="'/autoTable'">Automators</a>
+  <br />
+  Automators can automate some aspect of the game, for example auto buy storage
+  when a resource is full.
+</p>
+<h6>Automators Stats</h6>
+<ul class="list">
+  <li><strong>Active: On</strong> Turn Automator on or off</li>
+  <li>
+    <strong>Active: When not have Robot Factory</strong> Turn Automator off if
+    you have at least one Drone Factory
+  </li>
+  <li>
+    <strong>Interval</strong>Minimum interval, unlock lower interval with
+    prestige level. You should put higher interval on low priority automators to
+    avoid Priority inversion
+  </li>
+  <li><strong>Priority</strong>Higher number equal higher priority</li>
+  <li>
+    <strong>Res %</strong>Percent of resource to use. With 100% automators will
+    use 100% of available resource
+  </li>
+</ul>
