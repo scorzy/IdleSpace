@@ -8,8 +8,8 @@ export class BuildingGroupAutomator extends GroupAutomator {
     super("2" + i, robots);
     this.name = "Auto " + i;
     this.stopWhenFactoryUi = false;
-    this.description = "Multiple buy buildings";
-    this.prestigeLevel = 21 + (i - 1) * 9;
+    this.description = "Multiple buy buildings at same time";
+    this.prestigeLevel = 22 + (i - 1) * 11;
   }
   getAction(resource: Resource): Action {
     return resource.actions[0];

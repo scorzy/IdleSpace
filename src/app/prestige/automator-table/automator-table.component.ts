@@ -17,21 +17,25 @@ export class AutomatorTableComponent implements OnInit {
   @HostBinding("class")
   contentContainer = "content-container";
 
-  prestige = new Array<[number, string[], number[]]>();
+  prestige = new Array<[number, string[][], number[]]>();
   constructor(public ms: MainService) {}
 
   ngOnInit() {
-    for (let i = 0; i < this.ms.game.prestigeManager.maxPrestigePoints; i++) {
+    for (
+      let i = 0;
+      i < this.ms.game.prestigeManager.maxPrestigePoints * 4;
+      i++
+    ) {
       const auto = this.ms.game.automatorManager.automatorGroups
         .filter(a => a.prestigeLevel === i)
-        .map(a => (a.description === "" ? a.name : a.description));
+        .map(a => [a.name, a.description]);
       const timer = TIME_LEVELS.filter(t => t[1] === i).map(a => a[0]);
       if (auto.length > 0 || timer.length > 0) {
         this.prestige.push([i, auto, timer]);
       }
     }
   }
-  prestigeId(index: number, row: [number, string[], number[]]) {
+  prestigeId(index: number, row: [number, string[][], number[]]) {
     return row[0];
   }
 }

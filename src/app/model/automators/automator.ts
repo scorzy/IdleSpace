@@ -19,7 +19,11 @@ export class Automator implements ISalvable {
   constructor(public id: string) {}
 
   isUnlocked(): boolean {
-    return this.prestigeLevel <= PrestigeManager.getInstance().totalPrestige;
+    const ascensionMulti = 1 - PrestigeManager.getInstance().ascension * 0.25;
+    return (
+      this.prestigeLevel * ascensionMulti <=
+      PrestigeManager.getInstance().totalPrestige
+    );
   }
 
   canExec(now: number): boolean {

@@ -5,9 +5,10 @@ export class BuildingAutomator extends Automator {
   constructor(public building: Resource) {
     super(building.id + "R");
     this.name = "Buy " + building.name;
+    this.description = "Automatically buy " + building.name;
     this.resource = building;
     this.stopWhenFactoryUi = false;
-    this.prestigeLevel = 15;
+    this.prestigeLevel = 17;
   }
 
   doAction(): boolean {

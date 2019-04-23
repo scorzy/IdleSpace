@@ -209,6 +209,7 @@ export class Game {
     if (!this.prestigeManager.canAscend()) return false;
     this.prestigeManager.ascend();
     this.prestige();
+    this.prestigeManager.totalPrestige = 1;
     this.reload();
   }
 

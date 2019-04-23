@@ -6,6 +6,8 @@ export class StorageAutomator extends Automator {
   constructor(public material: Resource) {
     super(material.id + "A");
     this.name = "Buy storage when full";
+    this.description =
+      "Automatically buy " + material.name + " storage when full";
     this.resource = material;
     this.group = 2;
     this.prestigeLevel = 4;

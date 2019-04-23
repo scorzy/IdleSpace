@@ -5,9 +5,10 @@ export class MineAutomator extends Automator {
   constructor(public robot: Resource) {
     super(robot.id + "M");
     this.name = "Buy " + robot.actions[1].name;
+    this.description = "Automatically buy " + robot.actions[1].name;
     this.resource = robot;
     this.group = 2;
-    this.prestigeLevel = 12;
+    this.prestigeLevel = 13;
   }
   execCondition(): boolean {
     return this.robot.isCapped;

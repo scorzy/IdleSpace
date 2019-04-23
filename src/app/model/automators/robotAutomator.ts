@@ -5,6 +5,7 @@ export class RobotAutomator extends Automator {
   constructor(public robot: Resource) {
     super(robot.id + "R");
     this.name = "Buy " + robot.name;
+    this.description = "Automatically buy " + robot.name;
     this.resource = robot;
     this.stopWhenFactoryUi = true;
     this.prestigeLevel = 6;

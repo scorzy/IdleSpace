@@ -2,7 +2,7 @@
   <table class="table">
     <thead>
       <tr>
-        <th>Level</th>
+        <th>Prestige Lv</th>
         <th>Automators</th>
         <th>Intervals</th>
       </tr>
@@ -11,7 +11,11 @@
       <tr *ngFor="let pr of prestige; trackBy: prestigeId">
         <td>{{ pr[0] }}</td>
         <td>
-          <span *ngFor="let auto of pr[1]">{{ auto }}, </span>
+          <ul *ngIf="pr[1].length > 0" class="list list-unstyled">
+            <li *ngFor="let auto of pr[1]">
+              <strong>{{ auto[0] }}</strong> {{ auto[1] }}
+            </li>
+          </ul>
         </td>
         <td>
           <span *ngFor="let time of pr[2]">{{ time }} </span>

@@ -21,20 +21,20 @@ export const TIME_LEVELS = [
   [60, 0],
   [50, 2],
   [40, 3],
-  [30, 4],
-  [25, 5],
-  [20, 6],
-  [15, 7],
-  [12, 8],
-  [10, 9],
-  [8, 10],
-  [7, 11],
-  [6, 12],
-  [5, 13],
-  [4, 14],
-  [3, 15],
-  [2, 16],
-  [1, 17]
+  [30, 5],
+  [25, 7],
+  [20, 9],
+  [15, 11],
+  [12, 13],
+  [10, 15],
+  [8, 18],
+  [7, 22],
+  [6, 26],
+  [5, 30],
+  [4, 35],
+  [3, 40],
+  [2, 50],
+  [1, 60]
 ];
 
 export class AutomatorManager implements ISalvable {
@@ -124,8 +124,11 @@ export class AutomatorManager implements ISalvable {
     this.automatorGroups.forEach(a => a.assignToResource());
   }
   resetTimers() {
+    const ascensionMulti = 1 - PrestigeManager.getInstance().ascension * 0.25;
     const totalPrestige = PrestigeManager.getInstance().totalPrestige;
-    this.times = TIME_LEVELS.filter(t => t[1] <= totalPrestige).map(t => t[0]);
+    this.times = TIME_LEVELS.filter(
+      t => t[1] * ascensionMulti <= totalPrestige
+    ).map(t => t[0]);
     this.automatorGroups.forEach(g => {
       g.resetTimers();
     });

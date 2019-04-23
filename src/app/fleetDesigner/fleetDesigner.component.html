@@ -12,7 +12,12 @@
     <clr-icon shape="slider"></clr-icon>
     Shipyard
   </a>
-  <a clrVerticalNavLink routerLink="/fleet/autoShip" routerLinkActive="active">
+  <a
+    clrVerticalNavLink
+    routerLink="/fleet/autoShip"
+    routerLinkActive="active"
+    *ngIf="ms.game.automatorManager.autoFleetUp.isUnlocked()"
+  >
     <clr-icon shape="ruler-pencil"></clr-icon>
     Automation
   </a>

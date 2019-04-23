@@ -5,9 +5,10 @@ export class FleetAutomator extends Automator {
   constructor() {
     super("fla");
     this.name = "Auto Fleet Upgrade";
+    this.description = "Automatically maximize ships modules";
     this.stopWhenFactoryUi = false;
     this.description = "Auto Fleet Upgrade";
-    this.prestigeLevel = 15;
+    this.prestigeLevel = 16;
   }
   doAction(): boolean {
     const fleetMan = FleetManager.getInstance();

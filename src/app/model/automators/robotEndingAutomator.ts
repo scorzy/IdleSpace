@@ -15,7 +15,7 @@ export class RobotEndingAutomator extends Automator {
       " operativity is 100%";
     this.resource = robot;
     this.stopWhenFactoryUi = true;
-    this.prestigeLevel = 9;
+    this.prestigeLevel = 10;
   }
   execCondition(): boolean {
     return (

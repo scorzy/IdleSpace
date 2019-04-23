@@ -8,8 +8,8 @@ export class MineGroupAutomator extends GroupAutomator {
     super("1" + i, robots);
     this.name = "Exp " + i;
     this.stopWhenFactoryUi = false;
-    this.description = "Multiple buy drones expansion";
-    this.prestigeLevel = 18 + (i - 1) * 9;
+    this.description = "Multiple buy drones expansion at same time";
+    this.prestigeLevel = 20 + (i - 1) * 11;
   }
   getAction(resource: Resource): Action {
     return resource.actions[1];

@@ -13,6 +13,14 @@
       [integer]="true"
     ></app-formatted-quantity>
   </h1>
+  <h1>
+    Ascension
+    <app-formatted-quantity
+      [quantity]="ms.game.prestigeManager.ascension"
+      [integer]="true"
+    ></app-formatted-quantity>
+    /2
+  </h1>
 
   <div class="clr-row full-height">
     <div class="clr-col">
@@ -42,6 +50,7 @@
           Ascend
         </button>
       </div>
+      <a [routerLink]="'/autoTable'">Automators</a>
 
       <ul class="list" *ngFor="let desc of skillsList; trackBy: descID">
         <li>{{ desc }}</li>
@@ -105,7 +114,7 @@
       Cancel
     </button>
     <button type="button" class="btn btn-primary" (click)="prestige()">
-      Ok
+      Prestige
     </button>
   </div>
 </clr-modal>
@@ -119,7 +128,8 @@
     <p>
       Everything including prestige Skills but Dark Matter will reset.
       <br />
-      You will get double effects from Skill Points
+      You will get double effects from Skill Points and -25% prestige
+      requirements for timers and automators.
     </p>
   </div>
   <div class="modal-footer">
@@ -127,7 +137,7 @@
       Cancel
     </button>
     <button type="button" class="btn btn-primary" (click)="ascend()">
-      Ok
+      Ascend
     </button>
   </div>
 </clr-modal>
