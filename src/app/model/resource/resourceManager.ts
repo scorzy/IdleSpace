@@ -521,7 +521,7 @@ export class ResourceManager implements ISalvable {
       const buyExpansion1 = new Action(
         "L",
         new MultiPrice([
-          new Price(m, 900, 2),
+          new Price(m, 1800, 2),
           new Price(this.habitableSpace, 1, MINE_EXP)
         ])
       );
@@ -533,7 +533,7 @@ export class ResourceManager implements ISalvable {
       m.limitStorage = buyExpansion1;
       m.exponentialStorage = true;
       m.alwaysActive = true;
-      m.workerPerMine = new Decimal(1000);
+      m.workerPerMine = new Decimal(2000);
     });
 
     //  Energy
@@ -554,7 +554,7 @@ export class ResourceManager implements ISalvable {
     this.energy.limitStorage = buyExpansion;
     this.energy.exponentialStorage = true;
     this.energy.alwaysActive = true;
-    this.energy.workerPerMine = new Decimal(200);
+    this.energy.workerPerMine = new Decimal(500);
 
     //  Missile
     this.missile.isLimited = true;
@@ -573,7 +573,7 @@ export class ResourceManager implements ISalvable {
     this.missile.actions.push(missileSilo);
     this.missile.limitStorage = missileSilo;
     this.missile.exponentialStorage = true;
-    this.missile.workerPerMine = new Decimal(10);
+    this.missile.workerPerMine = new Decimal(50);
     //#endregion
     //#region Arrays
     this.limited = [
