@@ -426,6 +426,7 @@ export class MainService {
     if (myTheme !== this.theme.href) this.theme.href = myTheme;
   }
   startAutoSave() {
+    console.log("A " + this.options.autoSave);
     if (this.autoSaveInterval > -1) {
       clearInterval(this.autoSaveInterval);
     }
@@ -445,6 +446,7 @@ export class MainService {
         interval = -1;
         break;
     }
+
     if (interval > 0) {
       console.log("AutoSave: " + interval);
       this.autoSaveInterval = window.setInterval(
