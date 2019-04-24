@@ -38,8 +38,8 @@ const RANDOM_REWARDS = [
   Reward.CrystalMine,
   Reward.Robot,
   Reward.Alloy,
-  Reward.Enemy,
-  Reward.Shipyard
+  Reward.Enemy
+  // Reward.Shipyard
 ];
 export class EnemyManager implements ISalvable {
   private static instance: EnemyManager;
