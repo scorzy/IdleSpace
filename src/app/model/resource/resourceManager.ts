@@ -71,6 +71,7 @@ export class ResourceManager implements ISalvable {
   //#endregion
 
   unitZero: Resource;
+  unitZero2: Resource;
   maxTime: number = Number.POSITIVE_INFINITY;
 
   constructor() {
@@ -773,7 +774,7 @@ export class ResourceManager implements ISalvable {
           const min = d.div(unit.c);
           if (this.maxTime > min.toNumber()) {
             this.maxTime = min.toNumber();
-            this.unitZero = unit;
+            this.unitZero2 = unit;
           }
           unit.fullIn = Math.min(min.times(1000).toNumber(), unit.fullIn);
         }
@@ -825,8 +826,9 @@ export class ResourceManager implements ISalvable {
         });
       this.unitZero.isEnding = false;
     }
-    if (this.unitZero && !this.unitZero.isEnding) {
-      this.unitZero.isCapped = true;
+    if (this.unitZero2) {
+      this.unitZero2.isCapped = true;
+      this.unitZero2.quantity = this.unitZero2.limit;
     }
   }
   /**
