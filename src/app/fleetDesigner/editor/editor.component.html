@@ -238,48 +238,45 @@
             <br />
           </div>
         </ng-template>
-
-        <clr-button-group class="btn-primary">
+      </form>
+      <clr-button-group class="btn-primary">
+        <clr-button
+          class="btn btn-outline"
+          (click)="addModule()"
+          [disabled]="design.editable.modules.length >= design.type.moduleCount"
+        >
+          <clr-icon shape="plus"></clr-icon>
+          Add
+        </clr-button>
+        <clr-button class="btn btn-outline" (click)="maxAll()">
+          <clr-icon shape="angle"></clr-icon>
+          Max All
+        </clr-button>
+        <clr-button
+          *ngIf="design.quantity.lt(1); else upgradeBtn"
+          class="btn btn"
+          [disabled]="!design.editable.isValid || design.isUpgrading"
+          (click)="save()"
+          ><clr-icon shape="floppy"></clr-icon>Save</clr-button
+        >
+        <ng-template #upgradeBtn>
           <clr-button
-            class="btn btn-outline"
-            (click)="addModule()"
-            [disabled]="
-              design.editable.modules.length >= design.type.moduleCount
-            "
-          >
-            <clr-icon shape="plus"></clr-icon>
-            Add
-          </clr-button>
-          <clr-button class="btn btn-outline" (click)="maxAll()">
-            <clr-icon shape="angle"></clr-icon>
-            Max All
-          </clr-button>
-          <clr-button
-            *ngIf="design.quantity.lt(1); else upgradeBtn"
             class="btn btn"
             [disabled]="!design.editable.isValid || design.isUpgrading"
             (click)="save()"
-            ><clr-icon shape="floppy"></clr-icon>Save</clr-button
+            ><clr-icon shape="angle-double"></clr-icon>Upgrade</clr-button
           >
-          <ng-template #upgradeBtn>
-            <clr-button
-              class="btn btn"
-              [disabled]="!design.editable.isValid || design.isUpgrading"
-              (click)="save()"
-              ><clr-icon shape="angle-double"></clr-icon>Upgrade</clr-button
-            >
-          </ng-template>
-          <clr-button
-            class="btn btn-success"
-            [disabled]="changed"
-            (click)="revert()"
-            ><clr-icon shape="undo"></clr-icon>Cancel</clr-button
-          >
-          <clr-button class="btn btn-warning" (click)="deleteModal = true"
-            ><clr-icon shape="trash"></clr-icon>Delete</clr-button
-          >
-        </clr-button-group>
-      </form>
+        </ng-template>
+        <clr-button
+          class="btn btn-success"
+          [disabled]="changed"
+          (click)="revert()"
+          ><clr-icon shape="undo"></clr-icon>Cancel</clr-button
+        >
+        <clr-button class="btn btn-warning" (click)="deleteModal = true"
+          ><clr-icon shape="trash"></clr-icon>Delete</clr-button
+        >
+      </clr-button-group>
     </div>
   </div>
 

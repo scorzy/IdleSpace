@@ -47,16 +47,15 @@
           <!-- <clr-control-helper>Helper text</clr-control-helper> -->
           <clr-control-error>This field is required!</clr-control-error>
         </clr-select-container>
-
-        <button
-          class="btn btn-primary"
-          type="submit"
-          (click)="generate()"
-          [disabled]="isDisabled()"
-        >
-          Create
-        </button>
       </form>
+      <button
+        class="btn btn-primary"
+        type="submit"
+        (click)="generate()"
+        [disabled]="isDisabled()"
+      >
+        Create
+      </button>
     </div>
     <div class="clr-col-auto">
       <table class="table table-vertical">
