@@ -64,7 +64,7 @@ export class Enemy {
     enemy.generateIcon();
     const moduleLevelMulti = sample([1, 1.1, 1.2]);
     const moduleLevel = Math.floor(
-      10 * Math.pow(1.12, level - 1) * moduleLevelMulti
+      10 * Math.pow(1.1, level - 1) * moduleLevelMulti
     );
     let navalCap = Math.ceil(
       (MAX_NAVAL_CAPACITY * level) /
