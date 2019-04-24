@@ -53,6 +53,7 @@ export class MainService {
   readonly titleId = "BE193";
   playFabId = -1;
   lastNavalCapMessage = 0;
+  webWorker = true;
 
   constructor(
     public options: OptionsService,
@@ -61,6 +62,7 @@ export class MainService {
     public toastr: ToastrService
   ) {
     MainService.toastr = this.toastr;
+    this.webWorker = typeof Worker !== "undefined";
     this.battleService.em = this.em;
     this.theme = this.document.createElement("link");
     this.theme.rel = "stylesheet";
@@ -443,7 +445,7 @@ export class MainService {
         break;
     }
     if (interval > 0) {
-      // console.log(interval);
+      console.log(interval);
       this.autoSaveInterval = window.setInterval(
         this.save.bind(this, true),
         interval

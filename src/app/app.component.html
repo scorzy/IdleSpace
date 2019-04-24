@@ -1,4 +1,4 @@
-<clr-main-container *ngIf="ms.show && ms.game" [@fadeInOut]>
+<clr-main-container *ngIf="ms.webWorker && ms.show && ms.game" [@fadeInOut]>
   <!-- Header -->
   <clr-header class="header" [ngClass]="os.headerClass">
     <div class="header-nav" [clr-nav-level]="1">
@@ -213,3 +213,11 @@
     </div>
   </clr-modal>
 </clr-main-container>
+
+<div *ngIf="!ms.webWorker">
+  <p>
+    Sorry! No web worker support.
+    <br />
+    Try with chrome or firefox
+  </p>
+</div>

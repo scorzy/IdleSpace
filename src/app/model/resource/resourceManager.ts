@@ -144,7 +144,7 @@ export class ResourceManager implements ISalvable {
     this.energyX1 = new Resource("e1");
     this.energyX1.unlocked = true;
     this.energyX1.quantity = new Decimal(3);
-    this.energy.addGenerator(this.energyX1);
+    this.energy.addGenerator(this.energyX1, 2);
 
     //      Computing
     this.computingX1 = new Resource("f1");
