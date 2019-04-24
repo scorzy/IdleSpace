@@ -101,7 +101,8 @@ export class MainService {
     }
 
     setInterval(this.update.bind(this), UP_INTERVAL);
-    setTimeout(() => this.startAutoSave.bind(this), 1000 * 60);
+    // setTimeout(() => this.startAutoSave.bind(this), 1000 * 60);
+    this.startAutoSave();
 
     setTimeout(() => {
       if (!this.game) {
@@ -445,7 +446,7 @@ export class MainService {
         break;
     }
     if (interval > 0) {
-      console.log(interval);
+      console.log("AutoSave: " + interval);
       this.autoSaveInterval = window.setInterval(
         this.save.bind(this, true),
         interval
