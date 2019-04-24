@@ -31,12 +31,12 @@ export class Price {
     this.maxBuy =
       this.growRate === 1
         ? this.spendable.quantity.div(this.cost).floor()
-        : (this.maxBuy = Decimal.affordGeometricSeries(
-            this.spendable.quantity,
+        : Decimal.affordGeometricSeries(
+            this.spendable.quantity.ceil(),
             this.cost,
             this.growRate,
             bought
-          ));
+          );
 
     this.canBuy = this.maxBuy.gte(1);
     this.canBuyMulti = this.multiCost.lte(this.spendable.quantity);
