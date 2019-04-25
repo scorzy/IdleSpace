@@ -743,6 +743,7 @@ export class ResourceManager implements ISalvable {
   loadEndTime(): number {
     this.maxTime = Number.POSITIVE_INFINITY;
     this.unitZero = null;
+    this.unitZero2 = null;
 
     //  Reset
     this.unlockedProdResources.forEach(unit => {
