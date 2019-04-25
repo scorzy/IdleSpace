@@ -509,7 +509,7 @@ export class ResourceManager implements ISalvable {
           ? new Decimal(0)
           : this.tierGroups[1].unlockedResources
               .filter(r => !r.isCapped && r !== this.drone)
-              .map(r => r.limit.minus(r.quantity))
+              .map(r => r.limit.minus(r.quantity).times(r.standardPrice))
               .reduce((c, p) => c.plus(p), new Decimal(0))
       );
     }
