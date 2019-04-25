@@ -115,11 +115,11 @@ export class PrestigeManager implements ISalvable {
       new Skill(42, AllSkillEffects.FACTORY_BONUS)
     ];
   }
-  buySkill(skillId: number): boolean {
+  buySkill(skillId: number, fromSave = false): boolean {
     if (this.usedPrestige >= this.totalPrestige) return false;
 
     const skill = this.visSkills.get(skillId);
-    if (skill.owned || !skill.buyable) return false;
+    if (skill.owned || (!skill.buyable && !fromSave)) return false;
 
     this.usedPrestige++;
     skill.owned = true;
@@ -200,7 +200,7 @@ export class PrestigeManager implements ISalvable {
     if ("t" in data) this.totalPrestige = data.t;
     if ("a" in data) this.ascension = data.a;
     if ("o" in data) {
-      data.o.forEach(o => this.buySkill(o));
+      data.o.forEach(o => this.buySkill(o, true));
     }
     return true;
   }
