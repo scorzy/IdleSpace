@@ -328,7 +328,7 @@ export class ResourceManager implements ISalvable {
     };
     buyMetalMine.name = "Metal Mine";
     buyMetalMine.description =
-      "An Metal Mine allows you to buy more mining drones";
+      "A Metal Mine allows you to buy more mining drones";
     this.metalX1.actions.push(buyMetalMine);
     this.metalX1.limitStorage = buyMetalMine;
     this.metalX1.prestigeLimit = AllSkillEffects.PLUS_METAL_MINER;
