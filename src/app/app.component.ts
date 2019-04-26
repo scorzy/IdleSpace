@@ -117,6 +117,7 @@ export class AppComponent implements AfterViewInit {
 
   @HostListener("window:keyup", ["$event"])
   onKey(event: KeyboardEvent) {
+    if (!this.ms.hotkeyEnabled) return;
     // with type info
     switch (event.key) {
       case "m":

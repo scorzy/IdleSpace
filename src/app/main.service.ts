@@ -54,6 +54,7 @@ export class MainService {
   playFabId = -1;
   lastNavalCapMessage = 0;
   webWorker = true;
+  hotkeyEnabled = true;
 
   constructor(
     public options: OptionsService,

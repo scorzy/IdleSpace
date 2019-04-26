@@ -6,6 +6,18 @@
   <br />
 
   <clr-alert
+    class="smallMarginBot"
+    [clrAlertType]="'info'"
+    [(clrAlertClosed)]="ms.options.hotKeyAlert"
+  >
+    <clr-alert-item>
+      <span class="alert-text">
+        HotKeys disabled
+      </span></clr-alert-item
+    >
+  </clr-alert>
+
+  <clr-alert
     [clrAlertType]="'warning'"
     [clrAlertClosable]="false"
     *ngIf="ms.game.fleetManager.ships.length >= 20"

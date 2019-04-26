@@ -22,6 +22,7 @@ export class OptionsService {
   timeFormatDetail = false;
   headerClass = "";
   autoSave = "5";
+  hotKeyAlert = false;
 
   formatter: any;
   formatEmitter: EventEmitter<number> = new EventEmitter<number>();
@@ -70,7 +71,8 @@ export class OptionsService {
       a: OptionsService.enemyDefeatedNotification,
       q: OptionsService.researchModal,
       b: OptionsService.battleWinNotification,
-      g: this.autoSave
+      g: this.autoSave,
+      k: this.hotKeyAlert
     };
   }
   restore(data: any) {
@@ -89,6 +91,7 @@ export class OptionsService {
     if ("q" in data) OptionsService.researchModal = data.q;
     if ("b" in data) OptionsService.battleWinNotification = data.b;
     if ("g" in data) this.autoSave = data.g;
+    if ("k" in data) this.hotKeyAlert = data.k;
     this.generateFormatter();
     this.reloadHeader();
   }

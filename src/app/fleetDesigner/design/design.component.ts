@@ -42,6 +42,7 @@ export class DesignComponent implements OnInit, OnDestroy, AfterViewInit {
     if (typeof preventScroll === typeof Function) preventScroll();
   }
   ngOnInit() {
+    this.ms.hotkeyEnabled = false;
     this.unlockedShips = [];
     if (ResearchManager.getInstance().corvette.firstDone) {
       this.unlockedShips.push(ShipTypes[0]);
@@ -68,6 +69,7 @@ export class DesignComponent implements OnInit, OnDestroy, AfterViewInit {
     );
   }
   ngOnDestroy() {
+    this.ms.hotkeyEnabled = true;
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
 
