@@ -775,6 +775,7 @@ export class ResourceManager implements ISalvable {
           const min = d.div(unit.c);
           if (this.maxTime > min.toNumber()) {
             this.maxTime = min.toNumber();
+            this.unitZero = null;
             this.unitZero2 = unit;
           }
           unit.fullIn = Math.min(min.times(1000).toNumber(), unit.fullIn);
