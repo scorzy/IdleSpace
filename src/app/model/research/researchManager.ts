@@ -63,6 +63,7 @@ export class ResearchManager {
         .allModules.filter(m => m.start)
         .forEach(m => {
           m.research.quantity = new Decimal(1);
+          m.research.firstDone = true;
           m.research.reloadNum();
           m.unlock();
         });

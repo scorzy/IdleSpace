@@ -84,7 +84,7 @@ export class Module extends AbstractUnlockable {
   }
 
   reload() {
-    this.unlocked = !this.research || this.research.firstDone;
+    this.unlocked = this.start || (!this.research || this.research.firstDone);
   }
   unlock(): boolean {
     if (!super.unlock()) return false;
