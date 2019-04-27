@@ -20,6 +20,7 @@ describe("ResourceOverviewComponent", () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ResourceOverviewComponent);
     component = fixture.componentInstance;
+    component.ms.start();
     fixture.detectChanges();
   });
 
