@@ -260,7 +260,7 @@ export class Game {
     // });
     // this.enemyManager.maxLevel = 50;
     // this.prestigeManager.totalPrestige = 100;
-    this.prestigeManager.ascension = 0;
+    // this.prestigeManager.ascension = 0;
 
     this.fleetManager.upgradingCheck();
     this.resourceManager.limitedResources.forEach(r => r.reloadLimit());
