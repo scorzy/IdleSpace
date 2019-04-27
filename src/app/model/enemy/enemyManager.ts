@@ -29,7 +29,7 @@ const ALLOY_REWARD = 250;
 const RESEARCH_REWARD = 2e3;
 const ROBOT_REWARD = 0.5;
 const SHIPYARD_REWARD = 200;
-const MISSILE_DAMAGE = 2500;
+export const MISSILE_DAMAGE = 2500;
 const SEARCH_REWARD = 300;
 
 const RANDOM_REWARDS = [
@@ -69,7 +69,7 @@ export class EnemyManager implements ISalvable {
     EnemyManager.instance = this;
     this.nukeAction = new NukeAction();
     this.missileDamageBonus.multiplicativeBonus.push(
-      new Bonus(AllSkillEffects.DOUBLE_MISSILE, 2)
+      new Bonus(AllSkillEffects.DOUBLE_MISSILE, 2.5)
     );
   }
   generate(searchJob: SearchJob) {

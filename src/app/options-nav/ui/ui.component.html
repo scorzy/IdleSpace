@@ -122,4 +122,17 @@
       <label for="hot"></label>
     </div>
   </div>
+
+  <div class="form-group">
+    <label for="navCap">Max Naval cap message on warrior page</label>
+    <div class="toggle-switch">
+      <input
+        name="navCap"
+        type="checkbox"
+        id="navCap"
+        [(ngModel)]="OptionsService.navalCapNotification"
+      />
+      <label for="navCap"></label>
+    </div>
+  </div>
 </form>

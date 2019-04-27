@@ -14,6 +14,7 @@ import { MainService } from "../main.service";
 import { Action } from "../model/actions/abstractAction";
 import { IAlert } from "../model/base/IAlert";
 import { preventScroll } from "../app.component";
+import { MISSILE_DAMAGE } from "../model/enemy/enemyManager";
 
 @Component({
   selector: "app-resource-overview",
@@ -27,16 +28,28 @@ export class ResourceOverviewComponent
   private subscriptions: Subscription[] = [];
   alerts: IAlert[];
   isFinite = Number.isFinite;
+  missileDamage = new Decimal(0);
 
   constructor(public ms: MainService, private cd: ChangeDetectorRef) {}
   ngAfterViewInit(): void {
     if (typeof preventScroll === typeof Function) preventScroll();
   }
   ngOnInit() {
+    if (this.res === this.ms.game.resourceManager.missile) {
+      this.missileDamage = this.ms.game.enemyManager.missileDamageBonus
+        .getTotalBonus()
+        .times(MISSILE_DAMAGE);
+    }
+
     this.setAlerts();
     this.subscriptions.push(
       this.ms.em.updateEmitter.subscribe(() => {
         this.setAlerts();
+        if (this.res === this.ms.game.resourceManager.missile) {
+          this.missileDamage = this.ms.game.enemyManager.missileDamageBonus
+            .getTotalBonus()
+            .times(MISSILE_DAMAGE);
+        }
         this.cd.markForCheck();
       })
     );

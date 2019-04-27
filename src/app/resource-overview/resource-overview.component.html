@@ -79,5 +79,18 @@
   </div>
   <div class="clr-col-sm-12 clr-col-md-6">
     <app-production-tables [unit]="res"></app-production-tables>
+    <ng-container *ngIf="res.id === 'i'">
+      <h6>
+        Missile Damage
+        <app-formatted-quantity
+          [quantity]="missileDamage"
+          [integer]="true"
+        ></app-formatted-quantity>
+      </h6>
+
+      <app-bonus-view
+        [bonus]="ms.game.enemyManager.missileDamageBonus"
+      ></app-bonus-view>
+    </ng-container>
   </div>
 </div>

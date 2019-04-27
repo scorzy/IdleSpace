@@ -10,6 +10,7 @@ export class OptionsService {
   static enemyDefeatedNotification = true;
   static researchModal = true;
   static battleWinNotification = true;
+  static navalCapNotification = true;
 
   usaFormat = true;
   numFormat = "scientific";
@@ -72,7 +73,8 @@ export class OptionsService {
       q: OptionsService.researchModal,
       b: OptionsService.battleWinNotification,
       g: this.autoSave,
-      k: this.hotKeyAlert
+      k: this.hotKeyAlert,
+      c: OptionsService.navalCapNotification
     };
   }
   restore(data: any) {
@@ -92,6 +94,7 @@ export class OptionsService {
     if ("b" in data) OptionsService.battleWinNotification = data.b;
     if ("g" in data) this.autoSave = data.g;
     if ("k" in data) this.hotKeyAlert = data.k;
+    if ("c" in data) OptionsService.navalCapNotification = data.c;
     this.generateFormatter();
     this.reloadHeader();
   }

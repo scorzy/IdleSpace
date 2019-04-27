@@ -151,7 +151,7 @@ export class AllSkillEffects {
       return "+ " + 200 * num + "%\nResource gain from battle";
     };
     AllSkillEffects.DOUBLE_MISSILE.getDescription = (num = 1) => {
-      return "+ " + 200 * num + "%\nDamage from missiles";
+      return "+ " + 250 * num + "%\nDamage from missiles";
     };
     AllSkillEffects.DOUBLE_MISSILE.name = "Missile Prestige";
     //#endregion

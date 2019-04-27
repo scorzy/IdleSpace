@@ -69,6 +69,10 @@ export class Game {
       r => (r.unlockedActions = r.actions.filter(a => a.unlocked))
     );
 
+    this.enemyManager.missileDamageBonus.additiveBonus.push(
+      new Bonus(this.researchManager.missile, 0.2)
+    );
+
     if (!prestige) this.automatorManager.generateAutomators();
     this.automatorManager.assignToResource();
   }

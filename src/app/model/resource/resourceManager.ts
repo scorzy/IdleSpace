@@ -182,8 +182,8 @@ export class ResourceManager implements ISalvable {
     //      Missile
     this.missileX1 = new Resource("i1");
     this.missile.addGenerator(this.missileX1, 0.01);
-    this.alloy.addGenerator(this.missileX1, -2);
-    this.energy.addGenerator(this.missileX1, -1);
+    this.alloy.addGenerator(this.missileX1, -1);
+    this.energy.addGenerator(this.missileX1, -0.5);
 
     //      Space
     this.habitableSpace = new Resource("hs");
@@ -573,7 +573,7 @@ export class ResourceManager implements ISalvable {
     this.missile.actions.push(missileSilo);
     this.missile.limitStorage = missileSilo;
     this.missile.exponentialStorage = true;
-    this.missile.workerPerMine = new Decimal(50);
+    this.missile.workerPerMine = new Decimal(1000);
     //#endregion
     //#region Arrays
     this.limited = [
@@ -689,7 +689,7 @@ export class ResourceManager implements ISalvable {
         id: "4",
         getType: () => "warning",
         getMessage: () => "Naval capacity is hard limited to 10k",
-        getCondition: () => true
+        getCondition: () => OptionsService.navalCapNotification
       }
     ];
     this.navalCap.alerts = [

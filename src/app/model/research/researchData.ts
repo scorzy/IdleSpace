@@ -112,7 +112,7 @@ export const ResearchData: IResearchData[] = [
     id: "D",
     name: "Drone Factory",
     shape: "battery",
-    price: 1e6,
+    price: 1e7,
     description: "Drone Factory",
     resourceToUnlock: ["D", "F"],
     researchToUnlock: ["i"]
@@ -129,10 +129,12 @@ export const ResearchData: IResearchData[] = [
   {
     id: "i",
     name: "Missiles",
-    shape: "battery",
+    shape: "missile",
     price: 1e7,
     description: "Anti Defense interplanetary missile",
-    resourceToUnlock: ["i", "i1"]
+    resourceToUnlock: ["i", "i1"],
+    limit: Number.POSITIVE_INFINITY,
+    bonus: [["Missile Damage", "+20%"]]
   },
   {
     id: "mM",

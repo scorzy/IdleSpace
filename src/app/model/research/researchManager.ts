@@ -24,6 +24,7 @@ export class ResearchManager {
   modding: Research;
   telescope: Research;
   scavenger: Research;
+  missile: Research;
   //#region Ship Types
   corvette: Research;
   frigate: Research;
@@ -52,6 +53,7 @@ export class ResearchManager {
     this.telescope = this.researches.find(r => r.id === "X1");
     this.energy = this.researches.find(r => r.id === "E");
     this.scavenger = this.researches.find(r => r.id === "SC");
+    this.missile = this.researches.find(r => r.id === "i");
     ResourceManager.getInstance().energyX1.productionMultiplier.additiveBonus.push(
       new Bonus(this.energy, 0.1)
     );
@@ -209,6 +211,14 @@ export class ResearchManager {
           }
         }
       }
+    }
+
+    if (this.missile.completed) {
+      this.missile.completed = false;
+    }
+    if (this.completed.findIndex(r => r === this.missile) > -1) {
+      this.completed = this.completed.filter(r => r !== this.missile);
+      this.toDo.push(this.missile);
     }
 
     return true;
