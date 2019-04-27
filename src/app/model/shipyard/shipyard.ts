@@ -7,6 +7,9 @@ export class Shipyard implements ISalvable {
   private static instance: Shipyard;
   jobs = new Array<Job>();
 
+  //  total time in millisec
+  totalTime = 0;
+
   constructor() {
     Shipyard.instance = this;
   }
@@ -83,6 +86,9 @@ export class Shipyard implements ISalvable {
   }
   reloadTimes() {
     this.jobs.forEach(j => j.reloadTime());
+    this.totalTime = this.jobs
+      .map(j => j.timeToComplete)
+      .reduce((p, c) => p + c, 0);
   }
   //#region Save and Load
   getSave(): any {

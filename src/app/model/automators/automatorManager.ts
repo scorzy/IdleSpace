@@ -13,6 +13,7 @@ import { BuildingGroupAutomator } from "./buildingGroupAutomator";
 import { FleetAutomator } from "./fleetAutomator";
 import { EnemyDeleteAutomator } from "./enemyDeleteAutomator";
 import { SearchAutomator } from "./searchAutomator";
+import { ShipyardWarp } from "./shipyardWarpAutomator";
 
 export const TIME_LEVELS = [
   [300, 0],
@@ -41,6 +42,7 @@ export class AutomatorManager implements ISalvable {
   automatorGroups = new Array<Automator>();
   times = new Array<number>();
   autoFleetUp: FleetAutomator;
+  shipyardWarp: ShipyardWarp;
   searchAutomator: SearchAutomator;
   enemyDeleteAutomator: EnemyDeleteAutomator;
   searchAutomators: Automator[];
@@ -100,6 +102,8 @@ export class AutomatorManager implements ISalvable {
     //  Auto Upgrade
     this.autoFleetUp = new FleetAutomator();
     this.automatorGroups.push(this.autoFleetUp);
+    this.shipyardWarp = new ShipyardWarp();
+    this.automatorGroups.push(this.shipyardWarp);
 
     //  Enemy Search
     this.searchAutomator = new SearchAutomator();
