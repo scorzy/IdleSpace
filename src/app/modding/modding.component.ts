@@ -3,14 +3,15 @@ import {
   OnInit,
   ChangeDetectionStrategy,
   Input,
-  OnChanges,
-  SimpleChanges,
-  AfterViewInit
+  AfterViewInit,
+  ChangeDetectorRef,
+  OnDestroy
 } from "@angular/core";
 import { Resource } from "../model/resource/resource";
 import { Mod } from "../model/mod/mod";
 import { MainService } from "../main.service";
 import { preventScroll } from "../app.component";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-modding",
@@ -18,22 +19,29 @@ import { preventScroll } from "../app.component";
   styleUrls: ["./modding.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ModdingComponent implements OnInit, OnChanges, AfterViewInit {
+export class ModdingComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() res: Resource;
   isValid = true;
   used = 0;
   max = 0;
   min = 0;
-  constructor(public ms: MainService) {}
+  private subscriptions: Subscription[] = [];
+
+  constructor(public ms: MainService, private cd: ChangeDetectorRef) {}
+
   ngAfterViewInit(): void {
     if (typeof preventScroll === typeof Function) preventScroll();
   }
   ngOnInit() {
     this.cancel();
     this.reload();
+    this.ms.em.updateEmitter.subscribe(() => {
+      this.reload();
+      this.cd.markForCheck();
+    });
   }
-  ngOnChanges(changes: SimpleChanges) {
-    this.reload();
+  ngOnDestroy() {
+    this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
   save() {
     this.res.saveMods();
@@ -50,7 +58,7 @@ export class ModdingComponent implements OnInit, OnChanges, AfterViewInit {
     this.min = Math.ceil(this.max / -2);
   }
   modID(index: number, mod: Mod) {
-    return mod.id + index;
+    return mod.resId + mod.id + index;
   }
   getMin(mod: Mod): number {
     return Math.max(mod.min, this.min);

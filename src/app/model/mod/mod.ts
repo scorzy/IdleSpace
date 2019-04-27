@@ -7,6 +7,7 @@ export class Mod implements ISalvable, IResource {
   quantity_ui = 0;
   name = "";
   description = "";
+  resId = "";
   max: number = Number.POSITIVE_INFINITY;
   min: number = Number.NEGATIVE_INFINITY;
 

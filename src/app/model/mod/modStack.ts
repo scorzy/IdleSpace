@@ -56,6 +56,9 @@ export class ModStack implements ISalvable {
         new Bonus(this.energyMod, MOD_ENERGY)
       );
     }
+    this.mods.forEach(m => {
+      m.resId = resource.id;
+    });
   }
   getTotalUsed(): number {
     return this.mods
