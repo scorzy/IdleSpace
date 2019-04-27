@@ -17,6 +17,7 @@
     </clr-dg-cell>
     <clr-dg-cell>
       <app-formatted-quantity
+        *ngIf="ship.modules[0]"
         [quantity]="ship.modules[0].level"
       ></app-formatted-quantity>
     </clr-dg-cell>
@@ -42,10 +43,10 @@
               <tbody>
                 <tr *ngFor="let mod of ship.modules">
                   <td>
-                    {{ mod.module.name }}
+                    {{ mod?.module?.name }}
                   </td>
                   <td>
-                    {{ mod.size | sizeName }}
+                    {{ mod?.size | sizeName }}
                   </td>
                   <td>
                     <app-formatted-quantity
