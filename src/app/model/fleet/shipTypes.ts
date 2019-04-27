@@ -10,6 +10,7 @@ export class ShipType {
     public modulePoint: number,
     public shape: string,
     public navalCapacity: number,
+    public enemyNavalCapacity: number = navalCapacity,
     public defense = false
   ) {}
 }
@@ -22,6 +23,7 @@ export const ShipTypes = [
     4,
     4,
     "rank1",
+    1,
     1
   ),
   new ShipType(
@@ -32,6 +34,7 @@ export const ShipTypes = [
     5,
     6,
     "rank2",
+    1.5,
     2
   ),
   new ShipType(
@@ -42,6 +45,7 @@ export const ShipTypes = [
     6,
     8,
     "rank3",
+    2.25,
     4
   ),
   new ShipType(
@@ -52,6 +56,7 @@ export const ShipTypes = [
     7,
     10,
     "rank4",
+    3.7,
     8
   ),
   new ShipType(
@@ -62,6 +67,7 @@ export const ShipTypes = [
     8,
     12,
     "rank4",
+    5,
     16
   ),
   new ShipType(
@@ -72,6 +78,7 @@ export const ShipTypes = [
     9,
     14,
     "rank4",
+    7.5,
     32
   )
 ];
@@ -86,6 +93,7 @@ export const DefenseTypes = [
     4,
     "rank1",
     1,
+    1,
     true
   ),
   new ShipType(
@@ -96,6 +104,7 @@ export const DefenseTypes = [
     6,
     8,
     "rank3",
+    4,
     4,
     true
   ),
@@ -108,6 +117,7 @@ export const DefenseTypes = [
     12,
     "rank4",
     16,
+    16,
     true
   ),
   new ShipType(
@@ -118,6 +128,7 @@ export const DefenseTypes = [
     10,
     16,
     "rank4",
+    64,
     64,
     true
   )

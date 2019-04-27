@@ -103,7 +103,7 @@ export class Enemy {
     enemy.shipsDesign.forEach(sd => {
       const numOfShips = Math.max(
         Math.floor(
-          (navalCap * sd.weight) / totalWeight / sd.type.navalCapacity
+          (navalCap * sd.weight) / totalWeight / sd.type.enemyNavalCapacity
         ),
         1
       );

@@ -53,8 +53,9 @@
             <option
               *ngFor="let tp of unlockedShips; trackBy: typeId"
               [ngValue]="tp.id"
-              >{{ tp.name }}</option
             >
+              {{ tp.name }}
+            </option>
           </select>
           <!-- <clr-control-helper>Helper text</clr-control-helper> -->
           <clr-control-error>This field is required!</clr-control-error>
@@ -101,6 +102,20 @@
               >
               </app-formatted-quantity>
             </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="clr-col-auto">
+      <table class="table table-vertical table-noborder table-compact">
+        <tbody>
+          <tr>
+            <th>Ship</th>
+            <th>Naval Capacity</th>
+          </tr>
+          <tr *ngFor="let tp of unlockedShips; trackBy: typeId">
+            <th>{{ tp.name }}</th>
+            <td>{{ tp.navalCapacity }}</td>
           </tr>
         </tbody>
       </table>

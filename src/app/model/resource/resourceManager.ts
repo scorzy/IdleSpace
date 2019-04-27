@@ -684,6 +684,20 @@ export class ResourceManager implements ISalvable {
           " naval capacity",
         getCondition: () =>
           ResourceManager.getInstance().warriorX1.quantity.gte(1)
+      },
+      {
+        id: "4",
+        getType: () => "warning",
+        getMessage: () => "Naval capacity is hard limited to 10k",
+        getCondition: () => true
+      }
+    ];
+    this.navalCap.alerts = [
+      {
+        id: "4",
+        getType: () => "warning",
+        getMessage: () => "Naval capacity is hard limited to 10k",
+        getCondition: () => true
       }
     ];
     //#endregion

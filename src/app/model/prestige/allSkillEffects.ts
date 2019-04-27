@@ -139,7 +139,7 @@ export class AllSkillEffects {
       return "- " + 0.3 * num + "s fight time";
     };
     AllSkillEffects.DOUBLE_NAVAL_CAPACITY.getDescription = (num = 1) => {
-      return "+ " + 200 * num + "%\nnaval capacity";
+      return "+ " + 50 * num + "%\nnaval capacity";
     };
     AllSkillEffects.DOUBLE_DARK_MATTER.getDescription = (num = 1) => {
       return "+ " + 200 * num + "%\nDark Matter";

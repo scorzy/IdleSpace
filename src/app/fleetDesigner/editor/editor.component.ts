@@ -6,7 +6,8 @@ import {
   OnChanges,
   SimpleChanges,
   ChangeDetectorRef,
-  AfterViewInit
+  AfterViewInit,
+  OnDestroy
 } from "@angular/core";
 import { ShipDesign } from "src/app/model/fleet/shipDesign";
 import { Module, Sizes, getSizeName } from "src/app/model/fleet/module";
@@ -22,7 +23,8 @@ import { preventScroll } from "src/app/app.component";
   styleUrls: ["./editor.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EditorComponent implements OnInit, OnChanges, AfterViewInit {
+export class EditorComponent
+  implements OnInit, OnDestroy, OnChanges, AfterViewInit {
   @Input() design: ShipDesign;
 
   getSizeName = getSizeName;
@@ -46,6 +48,7 @@ export class EditorComponent implements OnInit, OnChanges, AfterViewInit {
     }
   }
   ngOnInit() {
+    this.ms.hotkeyEnabled = false;
     if (this.design.modules.length === 0) {
       this.edit();
     }
@@ -55,6 +58,10 @@ export class EditorComponent implements OnInit, OnChanges, AfterViewInit {
         this.cd.markForCheck();
       })
     );
+  }
+  ngOnDestroy() {
+    this.ms.hotkeyEnabled = true;
+    this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
 
   addModule() {
