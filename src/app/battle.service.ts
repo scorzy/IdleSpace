@@ -84,7 +84,9 @@ export class BattleService {
         const targets = battleFleets[(num + 1) % 2];
         if (targets.length < 1 || ships.length < 1) break;
 
-        ships.forEach(ship => {
+        let n = 0;
+        for (const ship of ships) {
+          n++;
           const target = targets[Math.floor(Math.random() * targets.length)];
           ship.modules.forEach(weapon => {
             let damageToDo = weapon.damage;
@@ -145,7 +147,11 @@ export class BattleService {
               }
             }
           });
-        });
+          if (n % 10 === 0 && targets.findIndex(t => t.armor.gt(0)) < 0) {
+            // console.log("break");
+            break;
+          }
+        }
       }
       //  Remove death ships
       playerShips = playerShips.filter(s => s.armor.gt(0));
@@ -160,6 +166,7 @@ export class BattleService {
       //   });
 
       battleFleets = [playerShips, enemyShip]; //  just to be sure
+      if (playerShips.length === 0 || enemyShip.length === 0) break;
     }
     //#endregion
     //#region Return
