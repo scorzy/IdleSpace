@@ -18,6 +18,7 @@
   <h6>
     {{ ms.game.darkMatterManager.darkMatter.description }}
   </h6>
+
   <p>
     You can prestige to get
     <app-formatted-quantity
@@ -28,6 +29,14 @@
 
     {{ ms.game.darkMatterManager.darkMatter.name }}
   </p>
+
+  <clr-alert [clrAlertType]="'info'" [clrAlertClosable]="false">
+    <clr-alert-item>
+      <span class="alert-text">
+        Time warps don't affect battle
+      </span></clr-alert-item
+    >
+  </clr-alert>
 
   <app-action
     *ngFor="let act of ms.game.darkMatterManager.actions; trackBy: getActId"
