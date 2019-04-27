@@ -15,9 +15,11 @@ export class ShipyardWarp extends Automator {
   doAction(): boolean {
     let requiredWarp = Shipyard.getInstance().totalTime;
     requiredWarp = Math.ceil(requiredWarp / (60 * 1000));
-    console.log(requiredWarp);
-    return DarkMatterManager.getInstance().warpMin.buy(
-      new Decimal(requiredWarp)
+    const maxWarp = DarkMatterManager.getInstance().warpMin.multiPrice.getMaxBuy(
+      new Decimal(0),
+      this.resourcePercentToUse
     );
+    const toWarp = Decimal.min(requiredWarp, maxWarp);
+    return DarkMatterManager.getInstance().warpMin.buy(new Decimal(toWarp));
   }
 }
