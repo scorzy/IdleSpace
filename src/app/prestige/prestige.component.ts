@@ -94,6 +94,7 @@ export class PrestigeComponent implements OnInit, OnChanges, AfterViewInit {
     this.ms.game.prestige();
     this.canAscend = this.ms.game.prestigeManager.canAscend();
     this.prestigeModal = false;
+    this.reloadList();
   }
   ascend() {
     this.ms.game.ascend();

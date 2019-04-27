@@ -175,8 +175,13 @@ export class PrestigeManager implements ISalvable {
   }
   ascend() {
     this.ascension++;
-    this.visSkills.update(this.getDataset());
     this.totalPrestige = this.ascension;
+    this.reset();
+
+    this.reset();
+  }
+  reset() {
+    this.visSkills.update(this.getDataset());
     this.usedPrestige = 0;
     AllSkillEffects.effectList.forEach(e => {
       e.numOwned = 0;

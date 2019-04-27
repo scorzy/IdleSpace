@@ -52,7 +52,18 @@
         </button>
       </div>
       <a [routerLink]="'/autoTable'">Automators</a>
-
+      <clr-checkbox-container>
+        <clr-checkbox-wrapper>
+          <input
+            type="checkbox"
+            clrCheckbox
+            value="resetPr"
+            name="resetPr"
+            [(ngModel)]="ms.game.resetPrestige"
+          />
+          <label>Reset Prestige</label>
+        </clr-checkbox-wrapper>
+      </clr-checkbox-container>
       <ul class="list" *ngFor="let desc of skillsList; trackBy: descID">
         <li>{{ desc }}</li>
       </ul>

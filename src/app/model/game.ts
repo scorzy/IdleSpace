@@ -29,6 +29,7 @@ export class Game {
   automatorManager: AutomatorManager;
   isPaused = false;
   overNavalCap = false;
+  resetPrestige = false;
 
   constructor() {
     Game.instance = this;
@@ -197,6 +198,9 @@ export class Game {
     );
 
     this.init(true);
+    if (this.resetPrestige) {
+      this.prestigeManager.reset();
+    }
     this.resourceManager.limitedResources.forEach(r => r.reloadLimit());
     this.prestigeManager.reloadPrestigeToEarn();
     AllSkillEffects.initialize(true);
@@ -256,6 +260,7 @@ export class Game {
     // });
     // this.enemyManager.maxLevel = 50;
     // this.prestigeManager.totalPrestige = 100;
+    this.prestigeManager.ascension = 0;
 
     this.fleetManager.upgradingCheck();
     this.resourceManager.limitedResources.forEach(r => r.reloadLimit());
