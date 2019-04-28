@@ -30,6 +30,7 @@ export class Game {
   isPaused = false;
   overNavalCap = false;
   resetPrestige = false;
+  userSearchLevel = 1;
 
   constructor() {
     Game.instance = this;

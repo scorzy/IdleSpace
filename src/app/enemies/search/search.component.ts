@@ -22,7 +22,6 @@ import { preventScroll } from "src/app/app.component";
 export class SearchComponent implements OnInit, AfterViewInit {
   @HostBinding("class")
   contentArea = "content-area";
-  userLevel = 1;
   searchValid = true;
   valid = true;
   limited = false;
@@ -32,6 +31,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
   cry = false;
   hab = false;
   automatorTab = false;
+  deleteAllModal = false;
 
   private subscriptions: Subscription[] = [];
 
@@ -52,7 +52,6 @@ export class SearchComponent implements OnInit, AfterViewInit {
     this.cry = AllSkillEffects.SEARCH_CRY.numOwned > 0;
     this.hab = AllSkillEffects.SEARCH_HAB.numOwned > 0;
 
-    this.userLevel = this.ms.game.enemyManager.maxLevel;
     this.validate();
 
     this.subscriptions.push(
@@ -66,7 +65,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
     if (typeof preventScroll === typeof Function) preventScroll();
   }
   generate() {
-    this.ms.game.enemyManager.startSearching(this.userLevel);
+    this.ms.game.enemyManager.startSearching(this.ms.game.userSearchLevel);
   }
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(
@@ -86,9 +85,9 @@ export class SearchComponent implements OnInit, AfterViewInit {
   isValid(): boolean {
     return (
       this.ms.game.enemyManager.getTotalEnemy() < MAX_ENEMY_LIST_SIZE &&
-      (Number.isInteger(this.userLevel) &&
-        this.userLevel >= 1 &&
-        this.userLevel <= this.ms.game.enemyManager.maxLevel)
+      (Number.isInteger(this.ms.game.userSearchLevel) &&
+        this.ms.game.userSearchLevel >= 1 &&
+        this.ms.game.userSearchLevel <= this.ms.game.enemyManager.maxLevel)
     );
   }
   sortAsc() {
@@ -99,8 +98,12 @@ export class SearchComponent implements OnInit, AfterViewInit {
   }
   massDelete() {
     this.ms.game.enemyManager.allEnemy = this.ms.game.enemyManager.allEnemy.filter(
-      a => a.level >= this.userLevel
+      a => a.level >= this.ms.game.userSearchLevel
     );
     this.deleteModal = false;
+  }
+  deleteAll() {
+    this.ms.game.enemyManager.allEnemy = [];
+    this.deleteAllModal = false;
   }
 }

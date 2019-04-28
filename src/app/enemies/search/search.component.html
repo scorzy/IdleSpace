@@ -50,7 +50,7 @@
               <input
                 clrInput
                 type="number"
-                [(ngModel)]="userLevel"
+                [(ngModel)]="ms.game.userSearchLevel"
                 name="level"
                 required
                 [max]="ms.game.enemyManager.maxLevel"
@@ -67,7 +67,7 @@
               min="1"
               [max]="ms.game.enemyManager.maxLevel"
               step="1"
-              [(ngModel)]="userLevel"
+              [(ngModel)]="ms.game.userSearchLevel"
             />
           </form>
 
@@ -136,7 +136,11 @@
                 <app-price-line
                   [canBuy]="true"
                   [unit]="ms.game.resourceManager.searchProgress"
-                  [price]="ms.game.enemyManager.getRequiredSearch(userLevel)"
+                  [price]="
+                    ms.game.enemyManager.getRequiredSearch(
+                      ms.game.userSearchLevel
+                    )
+                  "
                 ></app-price-line>
               </span>
             </clr-alert-item>
@@ -156,6 +160,13 @@
               [disabled]="ms.game.enemyManager.allEnemy.length === 0"
             >
               Mass Delete
+            </button>
+            <button
+              class="btn btn-danger"
+              (click)="deleteAllModal = true"
+              [disabled]="ms.game.enemyManager.allEnemy.length === 0"
+            >
+              Delete All
             </button>
           </div>
           <br />
@@ -214,7 +225,7 @@
     <p>
       Delete all enemy with level lower than
       <app-formatted-quantity
-        [quantity]="userLevel"
+        [quantity]="ms.game.userSearchLevel"
         [integer]="true"
       ></app-formatted-quantity
       >?
@@ -225,7 +236,29 @@
       Cancel
     </button>
     <button type="button" class="btn btn-warning" (click)="massDelete()">
-      Ok
+      Delete
+    </button>
+  </div>
+</clr-modal>
+
+<!-- Delete All Modal -->
+<clr-modal [(clrModalOpen)]="deleteAllModal" [clrModalSize]="'sm'">
+  <h3 class="modal-title">Delete All</h3>
+  <div class="modal-body">
+    <p>
+      Delete all enemy?
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline"
+      (click)="deleteAllModal = false"
+    >
+      Cancel
+    </button>
+    <button type="button" class="btn btn-warning" (click)="deleteAll()">
+      Delete
     </button>
   </div>
 </clr-modal>
