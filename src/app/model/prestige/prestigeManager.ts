@@ -90,7 +90,7 @@ export class PrestigeManager implements ISalvable {
       new Skill(16, AllSkillEffects.SEARCH_CRY),
       new Skill(17, AllSkillEffects.SEARCH_HAB),
       new Skill(18, AllSkillEffects.DOUBLE_DARK_MATTER),
-      new Skill(19, AllSkillEffects.ENERGY_MULTI),
+      new Skill(19, AllSkillEffects.RESEARCH_MULTI),
       new Skill(20, AllSkillEffects.ALLOY_MULTI),
       new Skill(21, AllSkillEffects.COMPUTING_MULTI),
       new Skill(22, AllSkillEffects.SHIPYARD_MULTI),
