@@ -8,7 +8,7 @@ import { BonusStack } from "../bonus/bonusStack";
 import { AllSkillEffects } from "../prestige/allSkillEffects";
 
 export const MOD_EFFICIENCY = 0.1;
-export const MOD_PRODUCTION = 0.3;
+export const MOD_PRODUCTION = 0.2;
 export const MOD_ENERGY = -0.05;
 
 export class ModStack implements ISalvable {

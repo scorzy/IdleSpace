@@ -11,7 +11,8 @@ export const ModData = {
         Decimal.multiply(MOD_EFFICIENCY, num).times(100) +
         "%"
       );
-    }
+    },
+    min: -9
   },
   p: {
     name: "Unproductive / Productive",
@@ -22,7 +23,8 @@ export const ModData = {
         Decimal.multiply(MOD_PRODUCTION, num).times(100) +
         "%"
       );
-    }
+    },
+    min: -3
   },
   e: {
     name: "Energy-intensive / Energy-saving",
