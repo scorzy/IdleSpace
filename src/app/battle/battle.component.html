@@ -2,17 +2,17 @@
   class="content-area"
   *ngIf="ms.game.enemyManager.currentEnemy; else noEnemy"
 >
-  <h1>
-    <clr-icon
-      [attr.shape]="ms.game.enemyManager.currentEnemy?.shape"
-      size="48"
-      class="resIcon"
-    ></clr-icon>
-    {{ ms.game.enemyManager.currentEnemy?.name }}
-  </h1>
-  <br />
   <div class="clr-row" *ngIf="ms.game.enemyManager.currentEnemy">
     <div class="clr-col-12 clr-col-md-7">
+      <h1>
+        <clr-icon
+          [attr.shape]="ms.game.enemyManager.currentEnemy?.shape"
+          size="48"
+          class="resIcon"
+        ></clr-icon>
+        {{ ms.game.enemyManager.currentEnemy?.name }}
+      </h1>
+      <br />
       <!-- <p>Level: {{ ms.game.enemyManager.currentEnemy.level }}</p> -->
 
       <div class="btn-group ">
@@ -78,31 +78,18 @@
         </div>
       </div>
 
-      <br />
-      <br />
+      <br /><br />
       <app-battlefield
         [enemy]="ms.game.enemyManager.currentEnemy"
       ></app-battlefield>
     </div>
     <div class="clr-col-12 clr-col-md-5">
-      <clr-tabs>
-        <clr-tab>
-          <button clrTabLink>You</button>
-          <clr-tab-content *clrIfActive>
-            <app-fleet-table
-              [fleet]="ms.game.fleetManager.ships"
-            ></app-fleet-table>
-          </clr-tab-content>
-        </clr-tab>
-        <clr-tab>
-          <button clrTabLink>Enemy</button>
-          <clr-tab-content *clrIfActive>
-            <app-fleet-table
-              [fleet]="ms.game.enemyManager.currentEnemy.currentZone.ships"
-            ></app-fleet-table>
-          </clr-tab-content>
-        </clr-tab>
-      </clr-tabs>
+      <h4>You</h4>
+      <app-fleet-table [fleet]="ms.game.fleetManager.ships"></app-fleet-table>
+      <h4>Enemy</h4>
+      <app-fleet-table
+        [fleet]="ms.game.enemyManager.currentEnemy.currentZone.ships"
+      ></app-fleet-table>
     </div>
   </div>
 </div>
