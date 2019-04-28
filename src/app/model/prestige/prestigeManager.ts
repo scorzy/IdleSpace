@@ -177,8 +177,6 @@ export class PrestigeManager implements ISalvable {
     this.ascension++;
     this.totalPrestige = this.ascension;
     this.reset();
-
-    this.reset();
   }
   reset() {
     this.visSkills.update(this.getDataset());

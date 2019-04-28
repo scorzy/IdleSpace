@@ -13,7 +13,6 @@ import { FleetAutomator } from "./fleetAutomator";
 import { EnemyDeleteAutomator } from "./enemyDeleteAutomator";
 import { SearchAutomator } from "./searchAutomator";
 import { ShipyardWarp } from "./shipyardWarpAutomator";
-import { EnemyManager } from "../enemy/enemyManager";
 
 export const TIME_LEVELS = [
   [300, 0],
@@ -142,10 +141,10 @@ export class AutomatorManager implements ISalvable {
       g.resetTimers();
     });
   }
-  setAutomatorLevel() {
+  setAutomatorLevel(oldPrestige = 0) {
     AutomatorManager.automatorLevel = Math.max(
       AutomatorManager.automatorLevel,
-      PrestigeManager.getInstance().totalPrestige *
+      Math.max(oldPrestige, PrestigeManager.getInstance().totalPrestige) *
         (1 + 0.3 * PrestigeManager.getInstance().ascension)
     );
   }

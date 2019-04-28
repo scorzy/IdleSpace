@@ -217,7 +217,9 @@ export class Game {
   }
   ascend() {
     if (!this.prestigeManager.canAscend()) return false;
+    const oldPrstige = this.prestigeManager.totalPrestige;
     this.prestigeManager.ascend();
+    this.automatorManager.setAutomatorLevel(oldPrstige);
     this.prestige();
     this.prestigeManager.totalPrestige = 1;
     this.reload();
