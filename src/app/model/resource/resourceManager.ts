@@ -512,29 +512,29 @@ export class ResourceManager implements ISalvable {
               .map(r => r.limit.minus(r.quantity).times(r.standardPrice))
               .reduce((c, p) => c.plus(p), new Decimal(0))
       );
-    }
+    };
 
     //#endregion
     //#region Storage
-    ;[this.metal, this.crystal, this.alloy].forEach(m => {
-      m.isLimited = true;
-      const buyExpansion1 = new Action(
-        "L",
-        new MultiPrice([
-          new Price(m, 1800, 2),
-          new Price(this.habitableSpace, 1, MINE_EXP)
-        ])
-      );
-      buyExpansion1.afterBuy = () => {
-        m.reloadLimit();
-      };
-      buyExpansion1.name = m.name + " Storage";
-      m.actions.push(buyExpansion1);
-      m.limitStorage = buyExpansion1;
-      m.exponentialStorage = true;
-      m.alwaysActive = true;
-      m.workerPerMine = new Decimal(2000);
-    });
+    // ;[this.metal, this.crystal, this.alloy].forEach(m => {
+    //   m.isLimited = true;
+    //   const buyExpansion1 = new Action(
+    //     "L",
+    //     new MultiPrice([
+    //       new Price(m, 1800, 2),
+    //       new Price(this.habitableSpace, 1, MINE_EXP)
+    //     ])
+    //   );
+    //   buyExpansion1.afterBuy = () => {
+    //     m.reloadLimit();
+    //   };
+    //   buyExpansion1.name = m.name + " Storage";
+    //   m.actions.push(buyExpansion1);
+    //   m.limitStorage = buyExpansion1;
+    //   m.exponentialStorage = true;
+    //   m.alwaysActive = true;
+    //   m.workerPerMine = new Decimal(2000);
+    // });
 
     //  Energy
     this.energy.isLimited = true;
@@ -577,9 +577,9 @@ export class ResourceManager implements ISalvable {
     //#endregion
     //#region Arrays
     this.limited = [
-      this.metal,
-      this.crystal,
-      this.alloy,
+      // this.metal,
+      // this.crystal,
+      // this.alloy,
       this.metalX1,
       this.crystalX1,
       this.alloyX1,
