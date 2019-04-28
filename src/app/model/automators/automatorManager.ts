@@ -152,7 +152,9 @@ export class AutomatorManager implements ISalvable {
     if (!("a" in data)) return false;
     for (const autData of data.a) {
       if ("i" in autData) {
-        const automator = this.automatorGroups.find(auto => auto.id === data.i);
+        const automator = this.automatorGroups.find(
+          auto => auto.id === autData.i
+        );
         if (automator) automator.load(autData);
       }
     }

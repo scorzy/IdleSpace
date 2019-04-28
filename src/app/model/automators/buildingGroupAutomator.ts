@@ -5,7 +5,7 @@ import { Action } from "../actions/abstractAction";
 
 export class BuildingGroupAutomator extends GroupAutomator {
   constructor(public robots: ResourceGroup, i: number) {
-    super("2" + i, robots);
+    super("b" + i, robots);
     this.name = "Auto " + i;
     this.stopWhenFactoryUi = false;
     this.description = "Multiple buy buildings at same time";

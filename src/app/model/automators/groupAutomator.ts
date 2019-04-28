@@ -7,7 +7,7 @@ import { Action } from "../actions/abstractAction";
 export abstract class GroupAutomator extends Automator {
   units = new Array<Resource>();
   constructor(id: string, public resourceGroup: ResourceGroup) {
-    super(resourceGroup.id + id);
+    super("h" + resourceGroup.id + id);
   }
   assignToResource() {
     this.resourceGroup.automators.push(this);

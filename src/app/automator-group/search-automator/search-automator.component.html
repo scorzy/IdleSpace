@@ -1,0 +1,29 @@
+<clr-checkbox-container>
+  <label>Max Level</label>
+  <clr-checkbox-wrapper>
+    <label>On</label>
+    <input
+      clrCheckbox
+      type="checkbox"
+      [(ngModel)]="auto.maxLevel"
+      name="maxL"
+    />
+  </clr-checkbox-wrapper>
+</clr-checkbox-container>
+
+<clr-input-container>
+  <label>Level</label>
+  <input
+    clrInput
+    type="number"
+    [disabled]="auto.maxLevel"
+    [(ngModel)]="auto.userLevel"
+    name="level"
+    min="1"
+    [max]="ms.game.enemyManager.maxLevel"
+  />
+
+  <clr-control-error
+    >Must be a number (1 - {{ ms.game.enemyManager.maxLevel }})
+  </clr-control-error></clr-input-container
+>

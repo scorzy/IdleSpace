@@ -70,5 +70,9 @@
         name="resToUse"
         [(ngModel)]="auto.resourcePercentToUse"
     /></clr-input-container>
+
+    <app-search-automator
+      *ngIf="auto === ms.game.automatorManager.searchAutomator"
+    ></app-search-automator>
   </form>
 </div>

@@ -3,7 +3,7 @@ import { Resource } from "../resource/resource";
 
 export class RobotAutomator extends Automator {
   constructor(public robot: Resource) {
-    super(robot.id + "R");
+    super(robot.id + "p");
     this.name = "Buy " + robot.name;
     this.description = "Automatically buy " + robot.name;
     this.resource = robot;

@@ -71,6 +71,7 @@ import { InfoModComponent } from './info/info-mod/info-mod.component';
 import { AutoInfoComponent } from './info/auto-info/auto-info.component';
 import { AscendInfoComponent } from './info/ascend-info/ascend-info.component';
 import { CreditsComponent } from './options-nav/credits/credits.component';
+import { SearchAutomatorComponent } from './automator-group/search-automator/search-automator.component';
 
 @NgModule({
   declarations: [
@@ -135,7 +136,8 @@ import { CreditsComponent } from './options-nav/credits/credits.component';
     InfoModComponent,
     AutoInfoComponent,
     AscendInfoComponent,
-    CreditsComponent
+    CreditsComponent,
+    SearchAutomatorComponent
   ],
   imports: [
     BrowserAnimationsModule,
