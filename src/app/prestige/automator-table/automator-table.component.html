@@ -1,8 +1,15 @@
 <div class="content-area">
+  <h4>
+    Automator Level:
+    <app-formatted-quantity
+      [quantity]="AutomatorManager.automatorLevel"
+      [integer]="true"
+    ></app-formatted-quantity>
+  </h4>
   <table class="table">
     <thead>
       <tr>
-        <th>Prestige Lv</th>
+        <th>Automator Lv</th>
         <th>Automators</th>
         <th>Intervals</th>
       </tr>

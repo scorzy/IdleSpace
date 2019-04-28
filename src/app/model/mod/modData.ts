@@ -38,11 +38,11 @@ export const ModData = {
   },
   s: {
     name: "Expensive / Economic",
-    description: "Standard Price",
-    max: 10,
+    description: "Robot Price",
+    max: 7,
     getBonus: (num: DecimalSource) => {
       return MainService.formatPipe.transform(
-        new Decimal(0.9).pow(new Decimal(num))
+        new Decimal(1).plus(new Decimal(num).times(-0.1))
       );
     }
   }

@@ -1,6 +1,5 @@
 import { ISalvable } from "../base/ISalvable";
 import { ResourceManager } from "../resource/resourceManager";
-import { StorageAutomator } from "./storageAutomator";
 import { PrestigeManager } from "../prestige/prestigeManager";
 import { Automator } from "./automator";
 import { RobotAutomator } from "./robotAutomator";
@@ -14,6 +13,7 @@ import { FleetAutomator } from "./fleetAutomator";
 import { EnemyDeleteAutomator } from "./enemyDeleteAutomator";
 import { SearchAutomator } from "./searchAutomator";
 import { ShipyardWarp } from "./shipyardWarpAutomator";
+import { EnemyManager } from "../enemy/enemyManager";
 
 export const TIME_LEVELS = [
   [300, 0],
@@ -39,6 +39,8 @@ export const TIME_LEVELS = [
 ];
 
 export class AutomatorManager implements ISalvable {
+  static automatorLevel = 0;
+
   automatorGroups = new Array<Automator>();
   times = new Array<number>();
   autoFleetUp: FleetAutomator;
@@ -47,6 +49,9 @@ export class AutomatorManager implements ISalvable {
   enemyDeleteAutomator: EnemyDeleteAutomator;
   searchAutomators: Automator[];
 
+  constructor() {
+    AutomatorManager.automatorLevel = 0;
+  }
   generateAutomators() {
     //  Resource Storage
     // const resMan = ResourceManager.getInstance()
@@ -130,14 +135,19 @@ export class AutomatorManager implements ISalvable {
     this.automatorGroups.forEach(a => a.assignToResource());
   }
   resetTimers() {
-    const ascensionMulti = 1 - PrestigeManager.getInstance().ascension * 0.25;
-    const totalPrestige = PrestigeManager.getInstance().totalPrestige;
     this.times = TIME_LEVELS.filter(
-      t => t[1] * ascensionMulti <= totalPrestige
+      t => AutomatorManager.automatorLevel >= t[1]
     ).map(t => t[0]);
     this.automatorGroups.forEach(g => {
       g.resetTimers();
     });
+  }
+  setAutomatorLevel() {
+    AutomatorManager.automatorLevel = Math.max(
+      AutomatorManager.automatorLevel,
+      PrestigeManager.getInstance().totalPrestige *
+        (1 + 0.3 * PrestigeManager.getInstance().ascension)
+    );
   }
 
   //#region Save and Load
@@ -146,10 +156,13 @@ export class AutomatorManager implements ISalvable {
     save.a = this.automatorGroups
       .filter(a => a.isUnlocked())
       .map(a => a.getSave());
+    save.l = AutomatorManager.automatorLevel;
     return save;
   }
   load(data: any): boolean {
     if (!("a" in data)) return false;
+    this.setAutomatorLevel();
+    if ("l" in data) AutomatorManager.automatorLevel = data.l;
     for (const autData of data.a) {
       if ("i" in autData) {
         const automator = this.automatorGroups.find(

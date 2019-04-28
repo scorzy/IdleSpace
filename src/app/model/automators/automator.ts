@@ -2,6 +2,7 @@ import { ISalvable } from "../base/ISalvable";
 import { PrestigeManager } from "../prestige/prestigeManager";
 import { Resource } from "../resource/resource";
 import { ResourceManager } from "../resource/resourceManager";
+import { AutomatorManager } from "./automatorManager";
 
 export class Automator implements ISalvable {
   name = "";
@@ -20,9 +21,8 @@ export class Automator implements ISalvable {
   constructor(public id: string) {}
 
   isUnlocked(): boolean {
-    const ascensionMulti = 1 - PrestigeManager.getInstance().ascension * 0.25;
     return (
-      this.prestigeLevel * ascensionMulti <=
+      AutomatorManager.automatorLevel >=
       PrestigeManager.getInstance().totalPrestige
     );
   }

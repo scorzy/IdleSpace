@@ -5,7 +5,10 @@ import {
   HostBinding
 } from "@angular/core";
 import { MainService } from "src/app/main.service";
-import { TIME_LEVELS } from "src/app/model/automators/automatorManager";
+import {
+  TIME_LEVELS,
+  AutomatorManager
+} from "src/app/model/automators/automatorManager";
 
 @Component({
   selector: "app-automator-table",
@@ -18,6 +21,8 @@ export class AutomatorTableComponent implements OnInit {
   contentContainer = "content-container";
 
   prestige = new Array<[number, string[][], number[]]>();
+  AutomatorManager = AutomatorManager;
+
   constructor(public ms: MainService) {}
 
   ngOnInit() {

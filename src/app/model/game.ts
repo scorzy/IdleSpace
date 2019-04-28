@@ -212,6 +212,7 @@ export class Game {
     this.resourceManager.tierGroups.forEach(h => {
       h.unlockedAutomators = h.automators.filter(g => g.isUnlocked());
     });
+    this.automatorManager.setAutomatorLevel();
     this.automatorManager.resetTimers();
   }
   ascend() {
@@ -245,6 +246,7 @@ export class Game {
     if ("w" in data) this.enemyManager.load(data.w);
     if ("s" in data) this.shipyard.load(data.s);
     if ("d" in data) this.darkMatterManager.load(data.d);
+
     if ("a" in data) this.automatorManager.load(data.a);
 
     this.researchManager.fixUnlocks();

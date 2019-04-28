@@ -91,7 +91,9 @@ export class ModStack implements ISalvable {
       .times(AllSkillEffects.DOUBLE_MODDING.numOwned * 2 + 1);
   }
   setPrice() {
-    this.resource.standardPrice = new Decimal(0.9).pow(this.priceMod.quantity);
+    this.resource.standardPrice = new Decimal(1).plus(
+      this.priceMod.quantity.times(-0.1)
+    );
   }
   reload() {
     const newMax = this.getMax();

@@ -31,6 +31,7 @@ export class Mod implements ISalvable, IResource {
   load(data: any): boolean {
     if (!("i" in data && data.i === this.id)) return false;
     if ("q" in data) this.quantity = Decimal.fromDecimal(data.q);
+    this.quantity = this.quantity.min(this.max);
     return true;
   }
   getBonus(num: DecimalSource): string {

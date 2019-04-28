@@ -39,8 +39,8 @@ export const descriptions = {
     i1: ["Missile Factory", ""],
     F: ["Robot Factory", "Robot Factory make robots."],
     D: [
-      "Robot",
-      "Standard multipurpose robot, automatically fit in available jobs."
+      "Robot c.",
+      "Standard multipurpose robot components, when enough a new Drone is deployed to available jobs."
     ],
     n: ["Naval Capacity", "Naval Capacity"],
     d: ["Inactive Dark Matter", "Inactive Dark Matter"],
