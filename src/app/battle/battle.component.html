@@ -87,7 +87,34 @@
         </div>
       </div>
 
-      <br /><br />
+      <form clrForm clrLayout="compact">
+        <clr-input-container>
+          <label
+            >Auto Fight min %
+            <!-- <clr-signpost>
+              <clr-signpost-content *clrIfOpen>
+                <h3>Auto Fight %</h3>
+                <p>
+                  Minimum percentage of actual fleet capacity needed to auto
+                  fight. 100 equals to fight only at full fleet.
+                </p>
+              </clr-signpost-content>
+            </clr-signpost> -->
+          </label>
+
+          <input
+            clrInput
+            placeholder="100"
+            name="autoPerc"
+            type="number"
+            min="0"
+            max="100"
+            [(ngModel)]="ms.game.fleetManager.autoFightPer"
+          />
+        </clr-input-container>
+      </form>
+
+      <!-- <br /><br /> -->
       <app-battlefield
         [enemy]="ms.game.enemyManager.currentEnemy"
       ></app-battlefield>

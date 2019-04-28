@@ -12,6 +12,7 @@ import { ResearchManager } from "../research/researchManager";
 import { AllSkillEffects } from "../prestige/allSkillEffects";
 import sample from "lodash-es/sample";
 import { MainService } from "src/app/main.service";
+import { isNumber } from "util";
 
 export const MAX_NAVAL_CAPACITY = 1e4;
 export const MAX_DESIGN = 20;
@@ -40,6 +41,7 @@ export class FleetManager implements ISalvable {
   fullStrength = false;
   fightEnabled = false;
   lastFleetDisband = Date.now();
+  autoFightPer = 100;
 
   constructor() {
     FleetManager.instance = this;
@@ -121,6 +123,7 @@ export class FleetManager implements ISalvable {
     data.s = this.ships.map(s => s.getSave());
     if (this.autoFight) data.f = this.autoFight;
     if (this.autoReinforce) data.r = this.autoReinforce;
+    if (this.autoFightPer !== 100) data.a = this.autoFightPer;
     return data;
   }
   load(data: any): boolean {
@@ -133,6 +136,7 @@ export class FleetManager implements ISalvable {
     }
     if ("f" in data) this.autoFight = data.f;
     if ("r" in data) this.autoReinforce = data.r;
+    if ("a" in data) this.autoFightPer = data.a;
     this.reload();
     this.reloadNavalCapacity();
     return true;
@@ -235,10 +239,22 @@ export class FleetManager implements ISalvable {
 
     if (this.fightEnabled) {
       const enemyManager = EnemyManager.getInstance();
+
+      let autoFightOk = this.fullStrength;
+      if (!this.fullStrength) {
+        const percent = isNaN(this.autoFightPer)
+          ? 100
+          : Math.max(Math.min(this.autoFightPer, 100), 0);
+        const navalCapPercent = ShipDesign.GetTotalNavalCap(this.ships).div(
+          ShipDesign.GetWantNavalCap(this.ships)
+        );
+        autoFightOk = Decimal.gte(percent / 100, navalCapPercent);
+      }
+
       if (
         !enemyManager.inBattle &&
         this.autoFight &&
-        (this.fullStrength || !this.autoReinforce || overNavalCap)
+        (autoFightOk || !this.autoReinforce || overNavalCap)
       ) {
         if (enemyManager.autoNuke) {
           enemyManager.nukeAction.reload();
