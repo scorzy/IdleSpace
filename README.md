@@ -1,7 +1,7 @@
 # IdleSpace
 [![Build Status](https://travis-ci.org/scorzy/IdleSpace.svg?branch=master)](https://travis-ci.org/scorzy/IdleSpace)
 
-This is an idle game about space comabat. 
+This is an idle game about space combat. 
 
 
 
