@@ -72,6 +72,7 @@ import { AutoInfoComponent } from './info/auto-info/auto-info.component';
 import { AscendInfoComponent } from './info/ascend-info/ascend-info.component';
 import { CreditsComponent } from './options-nav/credits/credits.component';
 import { SearchAutomatorComponent } from './automator-group/search-automator/search-automator.component';
+import { ChangelogComponent } from './info/changelog/changelog.component';
 
 @NgModule({
   declarations: [
@@ -137,7 +138,8 @@ import { SearchAutomatorComponent } from './automator-group/search-automator/sea
     AutoInfoComponent,
     AscendInfoComponent,
     CreditsComponent,
-    SearchAutomatorComponent
+    SearchAutomatorComponent,
+    ChangelogComponent
   ],
   imports: [
     BrowserAnimationsModule,

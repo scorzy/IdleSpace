@@ -29,6 +29,7 @@ import { InfoModComponent } from "./info/info-mod/info-mod.component";
 import { AutoInfoComponent } from "./info/auto-info/auto-info.component";
 import { AscendInfoComponent } from "./info/ascend-info/ascend-info.component";
 import { CreditsComponent } from "./options-nav/credits/credits.component";
+import { ChangelogComponent } from "./info/changelog/changelog.component";
 
 const routes: Routes = [
   {
@@ -125,7 +126,8 @@ const routes: Routes = [
       { path: "modInfo", component: InfoModComponent },
       { path: "prestigeInfo", component: PrestigeInfoComponent },
       { path: "autoInfo", component: AutoInfoComponent },
-      { path: "ascendInfo", component: AscendInfoComponent }
+      { path: "ascendInfo", component: AscendInfoComponent },
+      { path: "changelog", component: ChangelogComponent }
     ]
   }
 ];
