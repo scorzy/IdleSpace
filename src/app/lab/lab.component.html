@@ -35,7 +35,7 @@
                 trackBy: getResId
               "
               [job]="res"
-              [showDetails]="showDetails"
+              [showDetails]="ms.showDetails"
               cdkDrag
             >
             </app-job>
@@ -101,7 +101,7 @@
             type="checkbox"
             clrToggle
             name="showDetails"
-            [(ngModel)]="showDetails"
+            [(ngModel)]="ms.showDetails"
           />
           <label>Show Details</label>
         </clr-toggle-wrapper>

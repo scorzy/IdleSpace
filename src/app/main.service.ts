@@ -55,6 +55,7 @@ export class MainService {
   lastNavalCapMessage = 0;
   webWorker = true;
   hotkeyEnabled = true;
+  showDetails = true;
 
   constructor(
     public options: OptionsService,
