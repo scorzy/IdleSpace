@@ -128,6 +128,7 @@ export class EnemyManager implements ISalvable {
     result.playerLost.forEach(e => {
       const ship = FleetManager.getInstance().ships.find(s => s.id === e[0]);
       ship.quantity = ship.quantity.minus(Decimal.fromDecimal(e[1]));
+      ship.quantity = ship.quantity.max(0);
     });
     this.currentEnemy.currentZone.reload();
 
