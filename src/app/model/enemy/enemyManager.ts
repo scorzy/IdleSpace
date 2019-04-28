@@ -61,6 +61,7 @@ export class EnemyManager implements ISalvable {
   nukeAction: NukeAction;
   missileDamageBonus = new BonusStack();
   autoNuke = false;
+  autoNext = true;
 
   static getInstance(): EnemyManager {
     return EnemyManager.instance;
@@ -155,7 +156,9 @@ export class EnemyManager implements ISalvable {
       if (this.currentEnemy.currentZone.number >= 99) {
         this.maxLevel = Math.max(this.maxLevel, this.currentEnemy.level + 1);
         this.currentEnemy = null;
-        if (this.allEnemy.length > 0) this.attack(this.allEnemy[0]);
+        if (this.autoNext && this.allEnemy.length > 0) {
+          this.attack(this.allEnemy[0]);
+        }
         PrestigeManager.getInstance().reloadPrestigeToEarn();
 
         try {
@@ -440,6 +443,7 @@ export class EnemyManager implements ISalvable {
       data.j = this.searchJobs.map(j => j.getSave());
     }
     if (this.autoNuke) data.n = this.autoNuke;
+    data.x = this.autoNext;
 
     return data;
   }
@@ -476,6 +480,7 @@ export class EnemyManager implements ISalvable {
       if (this.currentEnemy.currentZone) this.currentEnemy.currentZone.reload();
     }
     if ("n" in data) this.autoNuke = data.n;
+    if ("x" in data) this.autoNext = data.x;
     return true;
   }
   //#endregion
