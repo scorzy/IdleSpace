@@ -42,6 +42,7 @@ export class FleetManager implements ISalvable {
   fightEnabled = false;
   lastFleetDisband = Date.now();
   autoFightPer = 100;
+  isUsed = false;
 
   constructor() {
     FleetManager.instance = this;

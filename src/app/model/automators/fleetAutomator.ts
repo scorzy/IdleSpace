@@ -13,6 +13,7 @@ export class FleetAutomator extends Automator {
   }
   doAction(): boolean {
     const fleetMan = FleetManager.getInstance();
+    if (fleetMan.isUsed) return false;
     let done = false;
     fleetMan.ships
       .filter(s => !s.isUpgrading)

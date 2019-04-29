@@ -48,6 +48,7 @@ export class EditorComponent
     }
   }
   ngOnInit() {
+    this.ms.game.fleetManager.isUsed = true;
     this.ms.hotkeyEnabled = false;
     if (this.design.modules.length === 0) {
       this.edit();
@@ -60,6 +61,7 @@ export class EditorComponent
     );
   }
   ngOnDestroy() {
+    this.ms.game.fleetManager.isUsed = false;
     this.ms.hotkeyEnabled = true;
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
