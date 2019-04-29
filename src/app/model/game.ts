@@ -142,6 +142,9 @@ export class Game {
       //  Deploy Drones
       this.resourceManager.deployDrones();
 
+      //  Reload End times
+      this.resourceManager.loadPolynomial();
+      this.resourceManager.loadEndTime();
       //  Automation
       if (!warp) {
         this.automatorManager.update(Date.now());
