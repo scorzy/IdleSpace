@@ -13,8 +13,8 @@ import { SearchJob } from "./searchJob";
 import { shuffle } from "lodash-es";
 
 const DEFENSE_START_LEVEL = 7;
-const DEFENSE_END_LEVEL = 40;
-const DEFENSE_MAX_PERCENT = 1.5;
+const DEFENSE_END_LEVEL = 80;
+const DEFENSE_MAX_PERCENT = 1;
 
 export class Enemy {
   constructor() {
@@ -62,7 +62,7 @@ export class Enemy {
     enemy.level = level;
     enemy.name = sample(enemyNames) + " " + sample(enemySuffixes);
     enemy.generateIcon();
-    const moduleLevelMulti = sample([1, 1.1, 1.2]);
+    const moduleLevelMulti = sample([1, 1.05, 1.1]);
     const moduleLevel = Math.floor(
       10 * Math.pow(1.1, level - 1) * moduleLevelMulti
     );
@@ -116,10 +116,13 @@ export class Enemy {
     //#endregion
     //#region Defense
     if (level > DEFENSE_START_LEVEL + 1) {
-      const defensePercent =
-        1 +
+      let defensePercent =
+        0.1 +
         (DEFENSE_MAX_PERCENT * (level - DEFENSE_START_LEVEL)) /
           (DEFENSE_END_LEVEL - DEFENSE_START_LEVEL);
+
+      defensePercent = Math.min(defensePercent, DEFENSE_MAX_PERCENT);
+
       const defenseCap = navalCap * defensePercent;
       const maxDefense =
         level < DEFENSE_START_LEVEL
@@ -155,21 +158,23 @@ export class Enemy {
         .filter(s => s.type.defense)
         .map(s => s.weight)
         .reduce((p, c) => p + c, 0);
-      enemy.shipsDesign.forEach(sd => {
-        const numOfShips = Math.max(
-          Math.floor(
-            (defenseCap * sd.weight) /
-              totalDefenseWeight /
-              sd.type.navalCapacity
-          ),
-          1
-        );
-        sd.quantity = new Decimal(numOfShips);
-        sd.modules.forEach(m => {
-          m.level = moduleLevel;
+      enemy.shipsDesign
+        .filter(s => s.type.defense)
+        .forEach(sd => {
+          const numOfShips = Math.max(
+            Math.floor(
+              (defenseCap * sd.weight) /
+                totalDefenseWeight /
+                sd.type.navalCapacity
+            ),
+            1
+          );
+          sd.quantity = new Decimal(numOfShips);
+          sd.modules.forEach(m => {
+            m.level = moduleLevel;
+          });
+          sd.reload(false);
         });
-        sd.reload(false);
-      });
     }
     //#endregion
 

@@ -35,7 +35,7 @@ export const ShipTypes = [
     6,
     "rank2",
     1.5,
-    2
+    1.8
   ),
   new ShipType(
     "3",
@@ -46,7 +46,7 @@ export const ShipTypes = [
     8,
     "rank3",
     2.25,
-    4
+    3.24
   ),
   new ShipType(
     "4",
@@ -57,7 +57,7 @@ export const ShipTypes = [
     10,
     "rank4",
     3.7,
-    8
+    5.9
   ),
   new ShipType(
     "5",
@@ -68,7 +68,7 @@ export const ShipTypes = [
     12,
     "rank4",
     5,
-    16
+    11
   ),
   new ShipType(
     "6",
@@ -79,7 +79,7 @@ export const ShipTypes = [
     14,
     "rank4",
     7.5,
-    32
+    20
   )
 ];
 
@@ -92,8 +92,8 @@ export const DefenseTypes = [
     4,
     4,
     "rank1",
-    1,
-    1,
+    2,
+    2,
     true
   ),
   new ShipType(
@@ -104,8 +104,8 @@ export const DefenseTypes = [
     6,
     8,
     "rank3",
-    4,
-    4,
+    6,
+    6,
     true
   ),
   new ShipType(
@@ -116,8 +116,8 @@ export const DefenseTypes = [
     8,
     12,
     "rank4",
-    16,
-    16,
+    24,
+    24,
     true
   ),
   new ShipType(
@@ -128,8 +128,8 @@ export const DefenseTypes = [
     10,
     16,
     "rank4",
-    64,
-    64,
+    80,
+    80,
     true
   )
 ];
