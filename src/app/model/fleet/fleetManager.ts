@@ -250,7 +250,7 @@ export class FleetManager implements ISalvable {
           this.usedNavalCapacity
         );
         // console.log(percent / 100 + "  " + navalCapPercent.toNumber());
-        autoFightOk = Decimal.gte(percent / 100, navalCapPercent);
+        autoFightOk = Decimal.gte(navalCapPercent, percent / 100);
       }
 
       if (
