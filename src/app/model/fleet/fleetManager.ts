@@ -245,9 +245,11 @@ export class FleetManager implements ISalvable {
         const percent = isNaN(this.autoFightPer)
           ? 100
           : Math.max(Math.min(this.autoFightPer, 100), 0);
+
         const navalCapPercent = ShipDesign.GetTotalNavalCap(this.ships).div(
-          ShipDesign.GetWantNavalCap(this.ships)
+          this.usedNavalCapacity
         );
+        // console.log(percent / 100 + "  " + navalCapPercent.toNumber());
         autoFightOk = Decimal.gte(percent / 100, navalCapPercent);
       }
 
