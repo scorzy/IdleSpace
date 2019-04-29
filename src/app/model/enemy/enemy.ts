@@ -14,7 +14,7 @@ import { shuffle } from "lodash-es";
 
 const DEFENSE_START_LEVEL = 7;
 const DEFENSE_END_LEVEL = 40;
-const DEFENSE_MAX_PERCENT = 3;
+const DEFENSE_MAX_PERCENT = 1.5;
 
 export class Enemy {
   constructor() {
