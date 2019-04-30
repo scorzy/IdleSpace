@@ -103,7 +103,7 @@ export const ResearchData: IResearchData[] = [
     id: "s",
     name: "Battleship",
     shape: "flask",
-    price: 1e19,
+    price: 1e17,
     description: "Unlock battleship",
     navalCapacity: ShipTypes[5].navalCapacity * 5,
     ship: ShipTypes[5]
