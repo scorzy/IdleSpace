@@ -43,6 +43,24 @@
         Delete
       </button>
     </div>
+    <br />
+    <br />
+    <clr-alert
+      [clrAlertType]="'info'"
+      *ngIf="ms.game.enemyManager.currentEnemy"
+    >
+      <clr-alert-item>
+        <span class="alert-text">
+          You cannot attack {{ enemy.name }} because you are already at war with
+          <a [routerLink]="'/battle'"
+            >{{ ms.game.enemyManager.currentEnemy.name }}
+          </a>
+          <br />
+          You can surrender and change enemy anytime on the
+          <a [routerLink]="'/battle'">battle page</a>
+        </span>
+      </clr-alert-item>
+    </clr-alert>
   </div>
   <div class="clr-col-6">
     <h4>Ships:</h4>
