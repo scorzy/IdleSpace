@@ -182,7 +182,7 @@ export class ShipDesign implements ISalvable, IBuyable {
 
     this.upgradePrice = !!this.original
       ? this.price
-          .minus(this.original.price.div(2))
+          .minus(this.original.price)
           .max(0)
           .times(
             this.original.quantity.plus(
