@@ -64,6 +64,10 @@ export class ModdingComponent implements OnInit, OnDestroy, AfterViewInit {
     return Math.max(mod.min, this.min);
   }
   getMax(mod: Mod): number {
-    return Math.min(mod.max, this.max);
+    return Math.min(
+      mod.max,
+      this.max,
+      mod.quantity_ui + this.res.modStack.maxPoints.toNumber() - this.used
+    );
   }
 }

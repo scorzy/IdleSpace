@@ -14,32 +14,37 @@
       ></app-formatted-quantity>
     </h4>
 
-    <div *ngFor="let m of res.modStack.mods; trackBy: modID">
-      <h6>
-        {{ m.name }}:
-        <span
-          [ngClass]="{
-            'text-danger': m.quantity_ui < 0,
-            'text-success': m.quantity_ui > 0
-          }"
-        >
-          <app-formatted-quantity
-            [quantity]="m.quantity_ui"
-            [integer]="true"
-          ></app-formatted-quantity>
-        </span>
-      </h6>
+    <form clrForm clrLayout="compact">
+      <ng-container *ngFor="let m of res.modStack.mods; trackBy: modID">
+        <clr-input-container>
+          <label class="clr-col-12 clr-col-md-3">{{ m.name }}</label>
 
-      <input
-        type="range"
-        [name]="'slr' + res.id + m.id"
-        [min]="getMin(m)"
-        [max]="getMax(m)"
-        step="1"
-        [(ngModel)]="m.quantity_ui"
-        (ngModelChange)="reload()"
-      />
-    </div>
+          <input
+            class="clr-col-12 clr-col-md-9"
+            type="number"
+            clrInput
+            [min]="getMin(m)"
+            [max]="getMax(m)"
+            [name]="'slr-n' + res.id + m.id"
+            [(ngModel)]="m.quantity_ui"
+            [ngClass]="{
+              'text-danger': m.quantity_ui < 0,
+              'text-success': m.quantity_ui > 0
+            }"
+          />
+        </clr-input-container>
+
+        <input
+          type="range"
+          [name]="'slr' + res.id + m.id"
+          [min]="getMin(m)"
+          [max]="getMax(m)"
+          step="1"
+          [(ngModel)]="m.quantity_ui"
+          (ngModelChange)="reload()"
+        />
+      </ng-container>
+    </form>
 
     <br />
 
