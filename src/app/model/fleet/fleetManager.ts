@@ -12,7 +12,6 @@ import { ResearchManager } from "../research/researchManager";
 import { AllSkillEffects } from "../prestige/allSkillEffects";
 import sample from "lodash-es/sample";
 import { MainService } from "src/app/main.service";
-import { isNumber } from "util";
 
 export const MAX_NAVAL_CAPACITY = 1e4;
 export const MAX_DESIGN = 20;

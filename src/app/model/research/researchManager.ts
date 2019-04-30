@@ -8,7 +8,6 @@ import { SearchJob } from "../enemy/searchJob";
 import { ShipDesign } from "../fleet/shipDesign";
 import { CORVETTE_PRESET } from "../enemy/preset";
 import { Bonus } from "../bonus/bonus";
-import { PrestigeManager } from "../prestige/prestigeManager";
 
 export class ResearchManager {
   private static instance: ResearchManager;
