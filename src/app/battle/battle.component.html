@@ -12,6 +12,14 @@
         ></clr-icon>
         {{ ms.game.enemyManager.currentEnemy?.name }}
       </h1>
+      <span>
+        Level
+        <app-formatted-quantity
+          [quantity]="ms.game.enemyManager.currentEnemy.level"
+          [integer]="true"
+        ></app-formatted-quantity>
+      </span>
+
       <br />
       <!-- <p>Level: {{ ms.game.enemyManager.currentEnemy.level }}</p> -->
 
