@@ -86,30 +86,38 @@
       </clr-alert>
     </ng-template>
 
-    <div *ngFor="let ds of ms.game.fleetManager.ships; trackBy: designId">
-      <h4>
-        <clr-icon shape="angle-double" *ngIf="ds.isUpgrading"></clr-icon>
-        <clr-icon shape="cog" *ngIf="ds.isBuilding"></clr-icon>
+    <form clrForm>
+      <div *ngFor="let ds of ms.game.fleetManager.ships; trackBy: designId">
+        <clr-input-container>
+          <label class="clr-col-12 clr-col-md-3">
+            <clr-icon shape="angle-double" *ngIf="ds.isUpgrading"></clr-icon>
+            <clr-icon shape="cog" *ngIf="ds.isBuilding"></clr-icon>
+            <clr-icon [attr.shape]="ds.type.shape"></clr-icon>
+            {{ ds.name }}
+          </label>
 
-        <clr-icon [attr.shape]="ds.type.shape"></clr-icon>
+          <input
+            class="clr-col-12 clr-col-md-9"
+            type="number"
+            clrInput
+            min="0"
+            [name]="ds.id"
+            [attr.max]="ds.sliderOptions.ceil / ds.sliderOptions.step"
+            [(ngModel)]="ds.wantQuantityTemp"
+          />
+        </clr-input-container>
 
-        {{ ds.name }}
-
-        <app-formatted-quantity
-          [quantity]="ds.wantQuantityTemp"
-          [integer]="true"
-        ></app-formatted-quantity>
-      </h4>
-      <input
-        type="range"
-        [name]="'sl' + ds.id"
-        [min]="ds.sliderOptions.floor"
-        [max]="ds.sliderOptions.ceil"
-        [step]="ds.sliderOptions.step"
-        [(ngModel)]="ds.wantQuantityTemp"
-        (change)="onSliderChange()"
-      />
-    </div>
+        <input
+          type="range"
+          [name]="'sl' + ds.id"
+          [min]="ds.sliderOptions.floor"
+          [max]="ds.sliderOptions.ceil"
+          [step]="ds.sliderOptions.step"
+          [(ngModel)]="ds.wantQuantityTemp"
+          (change)="onSliderChange()"
+        />
+      </div>
+    </form>
   </div>
   <div class="clr-col-12	clr-col-sm-12	clr-col-md-12	clr-col-lg-6 clr-col-xl-6">
     <h4>Jobs:</h4>
