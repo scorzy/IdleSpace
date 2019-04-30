@@ -8,6 +8,7 @@ import { SearchJob } from "../enemy/searchJob";
 import { ShipDesign } from "../fleet/shipDesign";
 import { CORVETTE_PRESET } from "../enemy/preset";
 import { Bonus } from "../bonus/bonus";
+import { PrestigeManager } from "../prestige/prestigeManager";
 
 export class ResearchManager {
   private static instance: ResearchManager;
@@ -35,6 +36,8 @@ export class ResearchManager {
   //#endregion
   //#endregion
   researchPerSec = new Decimal(0);
+
+  corvetteModal = false;
 
   constructor() {
     ResearchManager.instance = this;
@@ -72,6 +75,8 @@ export class ResearchManager {
       const corvetteDesign = ShipDesign.fromPreset(CORVETTE_PRESET);
       corvetteDesign.id = "0";
       FleetManager.getInstance().ships.push(corvetteDesign);
+
+      this.corvetteModal = true;
     };
 
     this.toDo = [this.betterResearch];

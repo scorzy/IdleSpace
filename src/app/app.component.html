@@ -212,6 +212,35 @@
       </button>
     </div>
   </clr-modal>
+
+  <ng-container *ngIf="ms.game.prestigeManager.totalPrestige < 1">
+    <clr-modal [(clrModalOpen)]="ms.game.researchManager.corvetteModal">
+      <h3 class="modal-title">
+        <clr-icon shape="rank1"></clr-icon>
+        Corvette
+      </h3>
+      <div class="modal-body">
+        <p>
+          Congratulations on unlocking Corvettes!<br />
+          Corvettes will allow you to win battles and obtain more districts
+          (habitable space, mining districts and crystal districts).<br />
+          To make Corvettes you will need alloy and worker drones. Worker drones
+          works only when you make ships. Then click on the cog on top left and
+          make 20 corvettes. To attack the first enemy click the crosshairs
+          icon.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="ms.game.researchManager.corvetteModal = false"
+        >
+          Ok
+        </button>
+      </div>
+    </clr-modal>
+  </ng-container>
 </clr-main-container>
 
 <div *ngIf="!ms.webWorker">

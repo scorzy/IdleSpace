@@ -107,6 +107,7 @@ export class AppComponent implements AfterViewInit {
     this.ms.game.resourceManager.unlockedResources.forEach(r => {
       r.operativity = operativity;
     });
+    this.ms.game.resourceManager.energyX1.operativity = 100;
   }
   skip(minute: number) {
     this.ms.game.darkMatterManager.warpMin.buy(new Decimal(minute));
