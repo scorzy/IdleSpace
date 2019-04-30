@@ -91,7 +91,7 @@
         *ngFor="let ds of ms.game.fleetManager.ships; trackBy: designId"
       >
         <clr-input-container>
-          <label class="clr-col-12 clr-col-md-3">
+          <label class="clr-col-12 clr-col-md-8">
             <clr-icon shape="angle-double" *ngIf="ds.isUpgrading"></clr-icon>
             <clr-icon shape="cog" *ngIf="ds.isBuilding"></clr-icon>
             <clr-icon [attr.shape]="ds.type.shape"></clr-icon>
@@ -99,7 +99,7 @@
           </label>
 
           <input
-            class="clr-col-12 clr-col-md-9"
+            class="clr-col-12 clr-col-md-4"
             type="number"
             clrInput
             min="0"

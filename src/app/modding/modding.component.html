@@ -17,10 +17,10 @@
     <form clrForm clrLayout="compact">
       <ng-container *ngFor="let m of res.modStack.mods; trackBy: modID">
         <clr-input-container>
-          <label class="clr-col-12 clr-col-md-3">{{ m.name }}</label>
+          <label class="clr-col-12 clr-col-md-8">{{ m.name }}</label>
 
           <input
-            class="clr-col-12 clr-col-md-9"
+            class="clr-col-12 clr-col-md-4"
             type="number"
             clrInput
             [min]="getMin(m)"
