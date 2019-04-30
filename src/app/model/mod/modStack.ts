@@ -68,7 +68,11 @@ export class ModStack implements ISalvable {
   validate(): boolean {
     const total = this.getTotalUsed();
     const max = this.getMax().toNumber();
-    return total <= max;
+    return (
+      total <= max &&
+      this.mods.findIndex(m => m.quantity_ui < m.min) === -1 &&
+      this.mods.findIndex(m => isNaN(m.quantity_ui)) === -1
+    );
   }
   save() {
     if (this.validate()) {

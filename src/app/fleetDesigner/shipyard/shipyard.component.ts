@@ -36,6 +36,7 @@ export class ShipyardComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subscriptions.push(
       this.ms.em.updateEmitter.subscribe(() => {
         this.onSliderChange();
+        this.ms.game.fleetManager.reloadSliders();
         const newPrice = this.ms.game.fleetManager.getTotalPrice();
         if (!newPrice.eq(this.totalPrice)) this.totalPrice = newPrice;
         this.cd.markForCheck();

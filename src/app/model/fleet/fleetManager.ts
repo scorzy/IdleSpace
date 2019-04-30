@@ -163,9 +163,16 @@ export class FleetManager implements ISalvable {
     });
   }
   reloadSliders() {
-    const av = Math.floor(this.totalNavalCapacity.toNumber());
+    const av = Math.floor(
+      this.totalNavalCapacity.minus(this.totalWantedNavalCap).toNumber()
+    );
     this.ships.forEach(s => {
-      s.sliderOptions.ceil = Math.floor(av / s.type.navalCapacity);
+      s.sliderOptions.ceil = Math.min(
+        s.wantQuantityTemp + Math.floor(av / s.type.navalCapacity),
+        Math.floor(
+          Math.floor(this.totalNavalCapacity.toNumber()) / s.type.navalCapacity
+        )
+      );
       s.sliderOptions.step = 1;
     });
   }
@@ -176,6 +183,10 @@ export class FleetManager implements ISalvable {
     this.configurationValid = this.totalNavalCapacity.gte(
       this.totalWantedNavalCap
     );
+    this.configurationValid =
+      this.configurationValid &&
+      this.ships.findIndex(s => s.wantQuantityTemp < 0) === -1 &&
+      this.ships.findIndex(s => isNaN(s.wantQuantityTemp)) === -1;
   }
   save(): boolean {
     this.sliderChange();
