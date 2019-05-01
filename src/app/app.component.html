@@ -202,6 +202,7 @@
 
   <router-outlet></router-outlet>
 
+  <!-- Modals -->
   <clr-modal [(clrModalOpen)]="ms.game.researchManager.isNewModal">
     <h3 class="modal-title">
       <clr-icon shape="lightbulb"></clr-icon>
@@ -254,6 +255,31 @@
       </div>
     </clr-modal>
   </ng-container>
+
+  <clr-modal [(clrModalOpen)]="ms.game.enemyManager.prestigeModal">
+    <h3 class="modal-title">
+      <clr-icon shape="info"></clr-icon>
+      Prestige
+    </h3>
+    <div class="modal-body">
+      <p>
+        By defeating the first enemy you have unlocked prestige.<br />
+        You can prestige now to get one prestige point but you may want to get
+        more prestige point before prestige. To obtain more prestige point
+        defeat high level enemy, prestige point are equals to the max level of
+        defeated enemy.
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="ms.game.enemyManager.prestigeModal = false"
+      >
+        Ok
+      </button>
+    </div>
+  </clr-modal>
 </clr-main-container>
 
 <div *ngIf="!ms.webWorker">

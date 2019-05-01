@@ -63,6 +63,8 @@ export class EnemyManager implements ISalvable {
   autoNuke = false;
   autoNext = true;
 
+  prestigeModal = false;
+
   static getInstance(): EnemyManager {
     return EnemyManager.instance;
   }
@@ -154,6 +156,10 @@ export class EnemyManager implements ISalvable {
       }
       //#endregion
       if (this.currentEnemy.currentZone.number >= 99) {
+        if (this.currentEnemy.level === 1 && this.maxLevel === 1) {
+          this.prestigeModal = true;
+        }
+
         this.maxLevel = Math.max(this.maxLevel, this.currentEnemy.level + 1);
         this.currentEnemy = null;
         if (this.autoNext && this.allEnemy.length > 0) {
