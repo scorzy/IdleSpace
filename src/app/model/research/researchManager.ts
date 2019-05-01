@@ -174,7 +174,12 @@ export class ResearchManager {
     }
   }
   sortPrice() {
-    this.toDo.sort((a, b) => a.total.minus(b.total).toNumber());
+    this.toDo.sort((a, b) =>
+      a.total
+        .minus(a.progress)
+        .minus(b.total.minus(b.progress))
+        .toNumber()
+    );
   }
   addAvailable(res: Research) {
     if (!res.completed && !this.toDo.includes(res)) this.toDo.push(res);
