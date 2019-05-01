@@ -171,7 +171,10 @@ export class PrestigeManager implements ISalvable {
     );
   }
   canAscend(): boolean {
-    return this.totalPrestige >= 20 * (1 + this.ascension) && this.ascension < 2;
+    return (
+      this.prestigeToEarn + this.totalPrestige >= 20 * (1 + this.ascension) &&
+      this.ascension < 2
+    );
   }
   ascend() {
     this.ascension++;

@@ -65,6 +65,17 @@
       </a>
 
       <a
+        [routerLink]="'darkMatter'"
+        class="nav-link"
+        [routerLinkActive]="'active'"
+        *ngIf="ms.game.darkMatterManager.darkMatter.unlocked"
+      >
+        <span class="nav-text">
+          <clr-icon shape="darkMatter"></clr-icon>
+        </span>
+      </a>
+
+      <a
         [routerLink]="'prestige'"
         class="nav-link"
         [routerLinkActive]="'active'"
@@ -74,18 +85,20 @@
         "
       >
         <span class="nav-text">
-          <clr-icon shape="star"></clr-icon>
-        </span>
-      </a>
+          Prestige
+          <!-- <clr-icon shape="star"></clr-icon> -->
 
-      <a
-        [routerLink]="'darkMatter'"
-        class="nav-link"
-        [routerLinkActive]="'active'"
-        *ngIf="ms.game.darkMatterManager.darkMatter.unlocked"
-      >
-        <span class="nav-text">
-          <clr-icon shape="darkMatter"></clr-icon>
+          <span
+            class="badge badge-info"
+            *ngIf="ms.game.prestigeManager.prestigeToEarn > 0"
+            >{{ ms.game.prestigeManager.prestigeToEarn }}
+          </span>
+          <span
+            class="badge badge-success"
+            *ngIf="this.ms.game.prestigeManager.canAscend()"
+          >
+            Ascend
+          </span>
         </span>
       </a>
     </div>
