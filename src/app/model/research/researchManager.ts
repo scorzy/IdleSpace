@@ -161,12 +161,15 @@ export class ResearchManager {
       if (res.completed) {
         this.toDo.shift();
         this.completed.push(res);
+        if (this.autoSort) {
+          this.sortPrice();
+        }
       } else if (progress.gt(0)) {
         this.toDo.shift();
         this.toDo.push(res);
-      }
-      if (this.autoSort) {
-        this.sortPrice();
+        if (this.autoSort) {
+          this.sortPrice();
+        }
       }
     }
   }
