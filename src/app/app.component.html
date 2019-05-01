@@ -90,7 +90,10 @@
 
           <span
             class="badge badge-info"
-            *ngIf="ms.game.prestigeManager.prestigeToEarn > 0"
+            *ngIf="
+              ms.game.prestigeManager.prestigeToEarn > 0 &&
+              !this.ms.game.prestigeManager.canAscend()
+            "
             >{{ ms.game.prestigeManager.prestigeToEarn }}
           </span>
           <span
@@ -275,6 +278,31 @@
         type="button"
         class="btn btn-primary"
         (click)="ms.game.enemyManager.prestigeModal = false"
+      >
+        Ok
+      </button>
+    </div>
+  </clr-modal>
+
+  <clr-modal [(clrModalOpen)]="ms.game.enemyManager.ascendModal">
+    <h3 class="modal-title">
+      <clr-icon shape="info"></clr-icon>
+      Ascension
+    </h3>
+    <div class="modal-body">
+      <p>
+        At Prestige level >= 20 and >=40 you can ascend, ascensions are not
+        skippable, you should ascend now.<br />
+        Ascension reset Prestige to 1 but you will get double effect from
+        prestige skill (stack multi x2 x4) and increase Automator Level by 30%
+        (stack additive)
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="ms.game.enemyManager.ascendModal = false"
       >
         Ok
       </button>

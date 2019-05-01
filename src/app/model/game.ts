@@ -266,9 +266,9 @@ export class Game {
     // this.resourceManager.materials.forEach(m => {
     //   m.quantity = new Decimal(1e20);
     // });
-    // this.enemyManager.maxLevel = 50;
-    // this.prestigeManager.totalPrestige = 100;
-    // this.prestigeManager.ascension = 0;
+    // this.enemyManager.maxLevel = 20;
+    // this.prestigeManager.totalPrestige = 10;
+    // this.prestigeManager.ascension = 1;
 
     this.fleetManager.upgradingCheck();
     this.resourceManager.limitedResources.forEach(r => r.reloadLimit());
