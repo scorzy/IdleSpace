@@ -31,7 +31,6 @@ export class EditorComponent
   deleteModal = false;
   changed = false;
   canUpgrade = false;
-  mega = Sizes[5];
   private subscriptions: Subscription[] = [];
 
   constructor(

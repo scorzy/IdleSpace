@@ -105,19 +105,8 @@ export const ResearchData: IResearchData[] = [
     shape: "flask",
     price: 1e17,
     description: "Unlock battleship",
-    researchToUnlock: ["N"],
     navalCapacity: ShipTypes[5].navalCapacity * 5,
     ship: ShipTypes[5]
-  },
-  {
-    id: "N",
-    name: "Titan",
-    shape: "flask",
-    price: 1e20,
-    description:
-      "Unlock titan. Always the same but can host mega (XXL) modules.",
-    navalCapacity: ShipTypes[6].navalCapacity * 5,
-    ship: ShipTypes[6]
   },
   {
     id: "D",

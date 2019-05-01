@@ -34,7 +34,7 @@ export const ShipTypes = [
     5,
     6,
     "rank2",
-    1.4,
+    1.5,
     1.8
   ),
   new ShipType(
@@ -45,7 +45,7 @@ export const ShipTypes = [
     6,
     8,
     "rank3",
-    1.96,
+    2.25,
     3.24
   ),
   new ShipType(
@@ -56,7 +56,7 @@ export const ShipTypes = [
     7,
     10,
     "rank4",
-    2.75,
+    3.7,
     5.9
   ),
   new ShipType(
@@ -67,7 +67,7 @@ export const ShipTypes = [
     8,
     12,
     "rank4",
-    3.8,
+    5,
     11
   ),
   new ShipType(
@@ -78,19 +78,8 @@ export const ShipTypes = [
     9,
     14,
     "rank4",
-    5.35,
-    20
-  ),
-  new ShipType(
-    "7",
-    "Titan",
-    new Decimal(640),
-    new Decimal(BASE_ARMOR * 8.5),
-    10,
-    16,
-    "rank4",
     7.5,
-    30
+    20
   )
 ];
 

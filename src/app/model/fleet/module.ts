@@ -6,8 +6,7 @@ export enum Sizes {
   Small = 1,
   Medium,
   Large,
-  ExtraLarge,
-  Mega
+  ExtraLarge
 }
 export const ALL_SIZES = [
   Sizes.Small,
@@ -19,8 +18,7 @@ const sizeNames = [
   ["S", "Small"],
   ["M", "Medium"],
   ["L", "Large"],
-  ["XL", "ExtraLarge"],
-  ["XXL", "Mega"]
+  ["XL", "ExtraLarge"]
 ];
 export function getSizeName(size: Sizes, short = false): string {
   return sizeNames[size - 1][short ? 0 : 1];
