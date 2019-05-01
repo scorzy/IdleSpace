@@ -77,6 +77,7 @@ export class Game {
 
     if (!prestige) this.automatorManager.generateAutomators();
     this.automatorManager.assignToResource();
+    this.userSearchLevel = 1;
   }
   /**
    * Main update loop
