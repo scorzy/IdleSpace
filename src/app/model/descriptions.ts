@@ -9,7 +9,7 @@ export const descriptions = {
       "Alloy",
       "Alloy used to build ships and some buildings, it's made from metal and crystal."
     ],
-    e: ["Energy", "Drones consume energy to to their jobs."],
+    e: ["Energy", "Drones consume energy to do their jobs."],
     f: [
       "Computing",
       "Computing is processing power. It cannot be stored but instead, if unused, is used for researching."
