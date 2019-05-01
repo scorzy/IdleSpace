@@ -73,9 +73,7 @@ export class LabComponent implements OnInit, OnDestroy, AfterViewInit {
     return res.id;
   }
   sortPrice() {
-    this.ms.game.researchManager.toDo.sort((a, b) =>
-      a.total.minus(b.total).toNumber()
-    );
+    this.ms.game.researchManager.sortPrice();
   }
   allBacklog() {
     this.ms.game.researchManager.backLog = this.ms.game.researchManager.backLog.concat(

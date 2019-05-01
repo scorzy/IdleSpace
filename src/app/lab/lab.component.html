@@ -106,6 +106,23 @@
           <label>Show Details</label>
         </clr-toggle-wrapper>
       </clr-toggle-container>
+
+      <clr-toggle-container>
+        <clr-toggle-wrapper>
+          <input
+            type="checkbox"
+            clrToggle
+            name="autoSort"
+            [(ngModel)]="ms.game.researchManager.autoSort"
+          />
+          <label>Auto Sort</label>
+        </clr-toggle-wrapper>
+      </clr-toggle-container>
+      <div class="clr-subtext-wrapper">
+        <span class="clr-subtext"
+          >Auto Sort: sort researches after completion</span
+        >
+      </div>
     </div>
   </div>
 </div>

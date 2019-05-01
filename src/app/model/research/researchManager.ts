@@ -35,6 +35,7 @@ export class ResearchManager {
   //#endregion
   //#endregion
   researchPerSec = new Decimal(0);
+  autoSort = false;
 
   corvetteModal = false;
 
@@ -164,7 +165,13 @@ export class ResearchManager {
         this.toDo.shift();
         this.toDo.push(res);
       }
+      if (this.autoSort) {
+        this.sortPrice();
+      }
     }
+  }
+  sortPrice() {
+    this.toDo.sort((a, b) => a.total.minus(b.total).toNumber());
   }
   addAvailable(res: Research) {
     if (!res.completed && !this.toDo.includes(res)) this.toDo.push(res);
@@ -175,12 +182,14 @@ export class ResearchManager {
     save.t = this.toDo.map(r => r.getSave());
     save.b = this.backLog.map(r => r.getSave());
     save.c = this.completed.map(r => r.getSave());
+    save.s = this.autoSort;
     return save;
   }
   load(data: any): boolean {
     this.toDo = [];
     this.backLog = [];
     this.completed = [];
+    if ("s" in data) this.autoSort = data.s;
 
     if ("t" in data) {
       for (const res of data.t) {
