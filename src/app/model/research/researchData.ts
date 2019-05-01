@@ -110,10 +110,10 @@ export const ResearchData: IResearchData[] = [
   },
   {
     id: "D",
-    name: "Drone Factory",
+    name: "Robot Factory",
     shape: "battery",
     price: 1e7,
-    description: "Drone Factory",
+    description: "Robot Factory",
     resourceToUnlock: ["D", "F"],
     researchToUnlock: ["i"]
   },
