@@ -96,6 +96,7 @@
             <clr-icon shape="cog" *ngIf="ds.isBuilding"></clr-icon>
             <clr-icon [attr.shape]="ds.type.shape"></clr-icon>
             {{ ds.name }}
+            <small> ({{ ds.type.navalCapacity }}) </small>
           </label>
 
           <input
