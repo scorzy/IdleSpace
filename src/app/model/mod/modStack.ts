@@ -71,6 +71,7 @@ export class ModStack implements ISalvable {
     return (
       total <= max &&
       this.mods.findIndex(m => m.quantity_ui < m.min) === -1 &&
+      this.mods.findIndex(m => m.quantity_ui < Math.ceil(max / -2)) === -1 &&
       this.mods.findIndex(m => isNaN(m.quantity_ui)) === -1
     );
   }
