@@ -57,9 +57,14 @@
 
     <!-- Priority -->
     <div *ngIf="res.showPriority && ms.game.resourceManager.drone.unlocked">
-      <h6>
-        Priority:
+      <h6 role="tooltip" aria-haspopup="true" class="tooltip tooltip-lg">
+        Robot Priority:
         <span class="monospace"> {{ res.priority }}</span> %
+
+        <span class="tooltip-content"
+          >Priority is calculated as "missing drones" * "priority slider
+          value"</span
+        >
       </h6>
 
       <input
