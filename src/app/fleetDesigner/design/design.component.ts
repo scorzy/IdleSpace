@@ -62,6 +62,9 @@ export class DesignComponent implements OnInit, OnDestroy, AfterViewInit {
     if (ResearchManager.getInstance().battleship.firstDone) {
       this.unlockedShips.push(ShipTypes[5]);
     }
+    if (ResearchManager.getInstance().titan.firstDone) {
+      this.unlockedShips.push(ShipTypes[6]);
+    }
 
     this.type = "1";
     this.subscriptions.push(
