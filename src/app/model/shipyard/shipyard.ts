@@ -50,7 +50,10 @@ export class Shipyard implements ISalvable {
       .reduce((p, c) => p.plus(c), new Decimal(0));
   }
   getNumOfShip(): number {
-    return this.jobs.map(j => j.quantity.toNumber()).reduce((p, c) => p + c, 0);
+    return this.jobs
+      .filter(j => j.quantity)
+      .map(j => j.quantity.toNumber())
+      .reduce((p, c) => p + c, 0);
   }
   isUpgrading(design: ShipDesign): boolean {
     return (
