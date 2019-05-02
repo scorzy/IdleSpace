@@ -688,7 +688,7 @@ export class ResourceManager implements ISalvable {
       {
         id: "4",
         getType: () => "warning",
-        getMessage: () => "Naval capacity is hard limited to 10k",
+        getMessage: () => "Ship Quantity is hard limited to 10k",
         getCondition: () => OptionsService.navalCapNotification
       }
     ];
@@ -696,7 +696,7 @@ export class ResourceManager implements ISalvable {
       {
         id: "4",
         getType: () => "warning",
-        getMessage: () => "Naval capacity is hard limited to 10k",
+        getMessage: () => "Ship Quantity is hard limited to 10k",
         getCondition: () => true
       }
     ];

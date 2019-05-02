@@ -5,26 +5,39 @@
 
 <div class="clr-row">
   <div class="clr-col-12	clr-col-sm-12	clr-col-md-12	clr-col-lg-6 clr-col-xl-6">
-    <p>
-      Naval Capacity:
-      <app-formatted-quantity
-        [quantity]="ms.game.fleetManager.totalWantedNavalCap"
-        [integer]="true"
-        [class.text-danger]="!ms.game.fleetManager.configurationValid"
-      >
-      </app-formatted-quantity>
-      /
-      <app-formatted-quantity
-        [quantity]="ms.game.fleetManager.totalNavalCapacity"
-        [integer]="true"
-      >
-      </app-formatted-quantity>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Progress:
-      <app-polynom
-        [c]="ms.game.resourceManager.shipyardProgress.c"
-      ></app-polynom>
-      <br />
-    </p>
+    <div class="clr-row">
+      <div class="clr-col-6">
+        Naval Capacity:
+        <app-formatted-quantity
+          [quantity]="ms.game.fleetManager.totalWantedNavalCap"
+          [integer]="true"
+          [class.text-danger]="
+            ms.game.fleetManager.totalWantedNavalCap.gt(
+              ms.game.fleetManager.totalNavalCapacity
+            )
+          "
+        >
+        </app-formatted-quantity>
+        /
+        <app-formatted-quantity
+          [quantity]="ms.game.fleetManager.totalNavalCapacity"
+          [integer]="true"
+        ></app-formatted-quantity>
+      </div>
+
+      <div class="clr-col-6">
+        Ship:
+        <app-formatted-quantity
+          [quantity]="ms.game.fleetManager.totalShipWant"
+          [integer]="true"
+          [class.text-danger]="ms.game.fleetManager.totalShipWant > 1e4"
+        >
+        </app-formatted-quantity>
+        /
+        <app-formatted-quantity [quantity]="1e4" [integer]="true">
+        </app-formatted-quantity>
+      </div>
+    </div>
 
     <ng-container *ngIf="ms.game.resourceManager.shipyardX1.quantity.lte(0)">
       <clr-alert [clrAlertType]="'warning'" [clrAlertClosable]="false">
@@ -123,7 +136,13 @@
     </form>
   </div>
   <div class="clr-col-12	clr-col-sm-12	clr-col-md-12	clr-col-lg-6 clr-col-xl-6">
-    <h4>Jobs:</h4>
+    <h4>
+      Jobs:
+
+      <app-polynom
+        [c]="ms.game.resourceManager.shipyardProgress.c"
+      ></app-polynom>
+    </h4>
     <div cdkDropList (cdkDropListDropped)="drop($event)" class="myBg drag-list">
       <app-job
         cdkDrag

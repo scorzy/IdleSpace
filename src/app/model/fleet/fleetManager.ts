@@ -17,6 +17,7 @@ export const MAX_NAVAL_CAPACITY = 1e4;
 export const MAX_DESIGN = 20;
 const DISBAND_INTERVAL = 60 * 1000 * 5; //  5 minutes
 const DISBAND_PERCENT = 0.3;
+const MAX_SHIP = 1e4;
 
 export class FleetManager implements ISalvable {
   private static instance: FleetManager;
@@ -32,7 +33,7 @@ export class FleetManager implements ISalvable {
   unlockedModules = new Array<Module>();
   armor: Module;
 
-  totalWantedNavalCap = 0;
+  totalWantedNavalCap = new Decimal(0);
   configurationValid = true;
 
   autoFight = false;
@@ -42,6 +43,7 @@ export class FleetManager implements ISalvable {
   lastFleetDisband = Date.now();
   autoFightPer = 100;
   isUsed = false;
+  totalShipWant = 0;
 
   constructor() {
     FleetManager.instance = this;
@@ -83,7 +85,7 @@ export class FleetManager implements ISalvable {
       AllSkillEffects.DOUBLE_NAVAL_CAPACITY.numOwned * 0.5 + 1
     );
 
-    this.totalNavalCapacity = this.totalNavalCapacity.min(MAX_NAVAL_CAPACITY);
+    // this.totalNavalCapacity = this.totalNavalCapacity.min(MAX_NAVAL_CAPACITY);
 
     this.totalShips = this.ships
       .map(s => s.quantity)
@@ -161,29 +163,46 @@ export class FleetManager implements ISalvable {
       s.wantQuantityTemp = s.wantQuantity.toNumber();
     });
   }
+  getTotalShip(): number {
+    return Shipyard.getInstance().getNumOfShip();
+    // return (
+    //   this.ships.map(s => s.quantity.toNumber()).reduce((p, c) => p + c, 0) +
+    //   Shipyard.getInstance().getNumOfShip()
+    // );
+  }
+  getWantShip(): number {
+    return this.ships.map(s => s.wantQuantityTemp).reduce((p, c) => p + c, 0);
+  }
   reloadSliders() {
     const av = this.totalNavalCapacity
       .minus(this.totalWantedNavalCap)
       .toNumber();
+    this.totalShipWant = this.getTotalShip() + this.getWantShip();
+    const availableQty = MAX_SHIP - this.totalShipWant;
 
     this.ships.forEach(s => {
       s.sliderOptions.ceil = Math.min(
         s.wantQuantityTemp + Math.floor(av / s.type.navalCapacity),
         Math.floor(
           Math.floor(this.totalNavalCapacity.toNumber()) / s.type.navalCapacity
-        )
+        ),
+        availableQty + s.wantQuantityTemp
       );
+
       s.sliderOptions.step = 1;
     });
   }
   sliderChange() {
     this.totalWantedNavalCap = this.ships
-      .map(s => s.type.navalCapacity * s.wantQuantityTemp)
-      .reduce((p, c) => p + c, 0);
+      .map(s => new Decimal(s.type.navalCapacity).times(s.wantQuantityTemp))
+      .reduce((p, c) => p.plus(c), new Decimal(0));
     this.configurationValid = this.totalNavalCapacity.gte(
       this.totalWantedNavalCap
     );
+    const totalWantShip = this.getTotalShip() + this.getWantShip();
+
     this.configurationValid =
+      totalWantShip <= MAX_SHIP &&
       this.configurationValid &&
       this.ships.findIndex(s => s.wantQuantityTemp < 0) === -1 &&
       this.ships.findIndex(s => isNaN(s.wantQuantityTemp)) === -1;

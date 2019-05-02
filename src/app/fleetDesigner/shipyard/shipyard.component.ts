@@ -21,6 +21,7 @@ import { preventScroll } from "src/app/app.component";
 })
 export class ShipyardComponent implements OnInit, OnDestroy, AfterViewInit {
   totalPrice = new Decimal(0);
+  totalShip = 0;
 
   private subscriptions: Subscription[] = [];
 
