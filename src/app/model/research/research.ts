@@ -62,6 +62,7 @@ export class Research extends AbstractUnlockable
     let ret = new Decimal(0);
 
     if (this.progress.gte(this.total)) {
+      const name = this.getName();
       ret = toAdd.minus(diff);
       this.done = true;
       this.firstDone = true;
@@ -73,7 +74,7 @@ export class Research extends AbstractUnlockable
 
       //  Notification
       if (OptionsService.researchNotification) {
-        MainService.toastr.show("", this.getName(), {}, "toast-research");
+        MainService.toastr.show("", name, {}, "toast-research");
       }
     }
 
