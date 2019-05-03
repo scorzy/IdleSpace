@@ -26,12 +26,20 @@
   <div class="clr-row full-height">
     <div class="clr-col">
       <h4>
-        Available Points:
+        Available Points
+        <a role="tooltip" aria-haspopup="true" class="tooltip tooltip-sm">
+          <clr-icon shape="info-circle" size="24"></clr-icon>
+          <span class="tooltip-content"
+            >Get more prestige points by defeating MAX LEVEL enemies</span
+          >
+        </a>
+        :
         {{
           ms.game.prestigeManager.totalPrestige -
             ms.game.prestigeManager.usedPrestige
         }}
       </h4>
+
       <!-- [disabled]="
           ms.game.enemyManager.maxLevel <= ms.game.prestigeManager.totalPrestige
         " -->
