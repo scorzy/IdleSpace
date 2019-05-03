@@ -369,7 +369,7 @@ export class EnemyManager implements ISalvable {
       (this.moreMetal ? 1 : 0) +
       (this.moreCrystal ? 1 : 0) +
       (this.moreHabitable ? 1 : 0);
-    return new Decimal(5e3).times(Decimal.pow(1.25, level - 1));
+    return new Decimal(5e3).times(Decimal.pow(1.2, level - 1));
   }
   /**
    * Start searching a new enemy
