@@ -9,6 +9,12 @@ export abstract class GroupAutomator extends Automator {
   constructor(id: string, public resourceGroup: ResourceGroup) {
     super("h" + resourceGroup.id + id);
   }
+  execCondition(): boolean {
+    return (
+      this.units.findIndex(u => !u.unlocked) === -1 &&
+      this.units.findIndex(u => u.isCapped) === -1
+    );
+  }
   assignToResource() {
     this.resourceGroup.automators.push(this);
   }
@@ -25,6 +31,7 @@ export abstract class GroupAutomator extends Automator {
     ) {
       return multiBuy.buy(new Decimal(1));
     }
+    return false;
   }
 
   getSave(): any {

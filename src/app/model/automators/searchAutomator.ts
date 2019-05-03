@@ -1,5 +1,6 @@
 import { Automator } from "./automator";
 import { EnemyManager, MAX_ENEMY_LIST_SIZE } from "../enemy/enemyManager";
+import { ResourceManager } from "../resource/resourceManager";
 
 export class SearchAutomator extends Automator {
   maxLevel = true;
@@ -12,6 +13,8 @@ export class SearchAutomator extends Automator {
     this.showResourceUsage = false;
   }
   execCondition(): boolean {
+    if (!ResourceManager.getInstance().searchX1.unlocked) return false;
+
     const em = EnemyManager.getInstance();
     return (
       em.searchJobs.length === 0 && em.allEnemy.length < MAX_ENEMY_LIST_SIZE

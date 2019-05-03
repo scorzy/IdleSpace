@@ -11,6 +11,10 @@ export class BuildingAutomator extends Automator {
     this.prestigeLevel = 17;
   }
 
+  execCondition(): boolean {
+    return this.building.unlocked;
+  }
+
   doAction(): boolean {
     const maxBuy = this.building.buyAction.multiPrice.getMaxBuy(
       this.building.buyAction.quantity,

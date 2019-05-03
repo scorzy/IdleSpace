@@ -1,5 +1,4 @@
 import { Automator } from "./automator";
-import { Shipyard } from "../shipyard/shipyard";
 import { DarkMatterManager } from "../darkMatter/darkMatterManager";
 import { ResourceManager } from "../resource/resourceManager";
 import { EnemyManager } from "../enemy/enemyManager";
