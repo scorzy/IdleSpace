@@ -1,5 +1,5 @@
 <div class="clr-row">
-  <div class="clr-col-lg-6" *ngFor="let auto of autoGrp; trackBy: autoId">
+  <div [ngClass]="classes" *ngFor="let auto of autoGrp; trackBy: autoId">
     <app-automator [auto]="auto"></app-automator>
   </div>
 </div>

@@ -65,6 +65,17 @@
       </a>
 
       <a
+        [routerLink]="'auto'"
+        class="nav-link"
+        [routerLinkActive]="'active'"
+        *ngIf="AutomatorManager.automatorLevel >= 3"
+      >
+        <span class="nav-text">
+          <clr-icon shape="applications"></clr-icon>
+        </span>
+      </a>
+
+      <a
         [routerLink]="'darkMatter'"
         class="nav-link"
         [routerLinkActive]="'active'"

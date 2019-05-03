@@ -30,6 +30,7 @@ import { AutoInfoComponent } from "./info/auto-info/auto-info.component";
 import { AscendInfoComponent } from "./info/ascend-info/ascend-info.component";
 import { CreditsComponent } from "./options-nav/credits/credits.component";
 import { ChangelogComponent } from "./info/changelog/changelog.component";
+import { AutomatorsComponent } from "./automator-group/automators/automators.component";
 
 const routes: Routes = [
   {
@@ -129,6 +130,10 @@ const routes: Routes = [
       { path: "ascendInfo", component: AscendInfoComponent },
       { path: "changelog", component: ChangelogComponent }
     ]
+  },
+  {
+    path: "auto",
+    component: AutomatorsComponent
   }
 ];
 

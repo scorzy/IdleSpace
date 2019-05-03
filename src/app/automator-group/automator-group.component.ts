@@ -14,6 +14,7 @@ import { Automator } from "../model/automators/automator";
 })
 export class AutomatorGroupComponent implements OnInit {
   @Input() autoGrp: Automator[];
+  @Input() classes = "clr-col-lg-6";
 
   constructor() {}
 

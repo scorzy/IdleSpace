@@ -21,6 +21,7 @@ describe("ResourceOverviewComponent", () => {
     fixture = TestBed.createComponent(ResourceOverviewComponent);
     component = fixture.componentInstance;
     component.ms.start();
+    component.res = component.ms.game.resourceManager.alloy;
     fixture.detectChanges();
   });
 

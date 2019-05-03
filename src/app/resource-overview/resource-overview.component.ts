@@ -15,7 +15,6 @@ import { Action } from "../model/actions/abstractAction";
 import { IAlert } from "../model/base/IAlert";
 import { preventScroll } from "../app.component";
 import { MISSILE_DAMAGE } from "../model/enemy/enemyManager";
-import { Options } from "selenium-webdriver/firefox";
 import { OptionsService } from "../options.service";
 import { RefundAction } from "../model/actions/refundAction";
 

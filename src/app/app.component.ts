@@ -3,6 +3,7 @@ import { MainService } from "./main.service";
 import { trigger, transition, style, animate } from "@angular/animations";
 import { OptionsService } from "./options.service";
 import { Router } from "@angular/router";
+import { AutomatorManager } from "./model/automators/automatorManager";
 
 declare let ClarityIcons;
 export let preventScroll: any;
@@ -22,6 +23,8 @@ export let preventScroll: any;
   ]
 })
 export class AppComponent implements AfterViewInit {
+  AutomatorManager = AutomatorManager;
+
   constructor(
     public ms: MainService,
     public os: OptionsService,
