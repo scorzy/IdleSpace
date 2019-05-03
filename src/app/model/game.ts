@@ -31,6 +31,7 @@ export class Game {
   overNavalCap = false;
   resetPrestige = false;
   userSearchLevel = 1;
+  requiredWarp = ZERO_DECIMAL_IMMUTABLE;
 
   constructor() {
     Game.instance = this;
@@ -85,6 +86,8 @@ export class Game {
    * @param warp true if time warp
    */
   update(diff: number, warp = false): void {
+    this.requiredWarp = ZERO_DECIMAL_IMMUTABLE;
+
     if (!this.isPaused || warp) {
       if (warp && OptionsService.warpNotification) {
         MainService.toastr.show(
@@ -149,6 +152,9 @@ export class Game {
       //  Automation
       if (!warp) {
         this.automatorManager.update(Date.now());
+        if (this.requiredWarp.gt(0)) {
+          this.darkMatterManager.warpMin.buy(this.requiredWarp);
+        }
       }
     }
 
@@ -183,6 +189,13 @@ export class Game {
     this.overNavalCap = ShipDesign.GetWantNavalCap(this.fleetManager.ships).gt(
       this.fleetManager.totalNavalCapacity
     );
+  }
+  setRequiredWarp(warp: Decimal): boolean {
+    if (warp.lte(0)) return false;
+    this.requiredWarp = this.requiredWarp.eq(0)
+      ? warp
+      : Decimal.min(warp, this.requiredWarp);
+    return this.requiredWarp.gte(warp);
   }
   reload() {
     this.resourceManager.loadPolynomial();

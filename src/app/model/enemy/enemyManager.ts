@@ -65,6 +65,7 @@ export class EnemyManager implements ISalvable {
 
   prestigeModal = false;
   ascendModal = false;
+  totalTime = 0;
 
   static getInstance(): EnemyManager {
     return EnemyManager.instance;
@@ -406,6 +407,9 @@ export class EnemyManager implements ISalvable {
   }
   reloadTimes() {
     this.searchJobs.forEach(j => j.reloadTime());
+    this.totalTime = this.searchJobs
+      .map(j => j.timeToComplete)
+      .reduce((p, c) => p + c, 0);
   }
   nuke(missile: Decimal) {
     if (!this.currentEnemy || !this.currentEnemy.currentZone) return;

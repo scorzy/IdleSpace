@@ -2,24 +2,25 @@ import { Automator } from "./automator";
 import { Shipyard } from "../shipyard/shipyard";
 import { DarkMatterManager } from "../darkMatter/darkMatterManager";
 import { ResourceManager } from "../resource/resourceManager";
+import { EnemyManager } from "../enemy/enemyManager";
 import { Game } from "../game";
 
-export class ShipyardWarp extends Automator {
+export class SearchWarpAutomator extends Automator {
   constructor() {
-    super("SyA");
-    this.name = "Auto Shipyard Jobs Warp";
-    this.description = "Automatically warp to complete jobs; max warp is 1 hour";
-    this.prestigeLevel = 15;
+    super("SWA");
+    this.name = "Auto Search Warp";
+    this.description =
+      "Automatically warp to complete searching; max warp is 1 hour";
+    this.prestigeLevel = 25;
   }
   execCondition(): boolean {
     return (
-      Shipyard.getInstance().totalTime > 1000 &&
-      Shipyard.getInstance().totalTime < Number.POSITIVE_INFINITY &&
-      ResourceManager.getInstance().alloy.quantity.gt(1)
+      EnemyManager.getInstance().totalTime > 1000 &&
+      EnemyManager.getInstance().totalTime < Number.POSITIVE_INFINITY
     );
   }
   doAction(): boolean {
-    let requiredWarp = Shipyard.getInstance().totalTime;
+    let requiredWarp = EnemyManager.getInstance().totalTime;
     requiredWarp = Math.min(requiredWarp, ResourceManager.getInstance().maxTime);
 
     requiredWarp = Math.ceil(requiredWarp / (60 * 1000));
@@ -30,6 +31,5 @@ export class ShipyardWarp extends Automator {
     maxWarp = maxWarp.min(60);
     const toWarp = Decimal.min(requiredWarp, maxWarp);
     return Game.getInstance().setRequiredWarp(toWarp);
-    // return DarkMatterManager.getInstance().warpMin.buy(new Decimal(toWarp));
   }
 }
