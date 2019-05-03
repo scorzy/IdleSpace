@@ -34,6 +34,9 @@ export class BattleMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subscriptions.push(
       this.ms.em.battleEndEmitter.subscribe(() => {
         this.cd.markForCheck();
+      }),
+      this.ms.em.updateEmitter.subscribe(() => {
+        this.cd.markForCheck();
       })
     );
   }

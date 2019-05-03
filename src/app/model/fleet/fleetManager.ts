@@ -268,9 +268,8 @@ export class FleetManager implements ISalvable {
       }
     }
 
+    const enemyManager = EnemyManager.getInstance();
     if (this.fightEnabled) {
-      const enemyManager = EnemyManager.getInstance();
-
       let autoFightOk = this.fullStrength;
       if (!this.fullStrength) {
         const percent = isNaN(this.autoFightPer)
@@ -297,6 +296,14 @@ export class FleetManager implements ISalvable {
         }
         enemyManager.startBattle();
       }
+    }
+
+    if (
+      enemyManager.autoNext &&
+      !enemyManager.currentEnemy &&
+      enemyManager.allEnemy.length > 0
+    ) {
+      enemyManager.attack(enemyManager.allEnemy[0]);
     }
   }
   setFight() {

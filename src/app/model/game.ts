@@ -176,7 +176,7 @@ export class Game {
     this.fleetManager.disbandShips();
     this.fleetManager.isBuildingCheckAll();
     this.fleetManager.setFight();
-    this.fleetManager.doAutoFight();
+    if (!this.isPaused) this.fleetManager.doAutoFight();
     this.shipyard.adjust();
     this.darkMatterManager.reload();
     this.enemyManager.nukeAction.reload();
