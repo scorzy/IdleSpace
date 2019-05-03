@@ -24,6 +24,7 @@ export class OptionsService {
   headerClass = "";
   autoSave = "5";
   hotKeyAlert = false;
+  hideRefund = false;
 
   formatter: any;
   formatEmitter: EventEmitter<number> = new EventEmitter<number>();
@@ -74,7 +75,8 @@ export class OptionsService {
       b: OptionsService.battleWinNotification,
       g: this.autoSave,
       k: this.hotKeyAlert,
-      c: OptionsService.navalCapNotification
+      c: OptionsService.navalCapNotification,
+      v: this.hideRefund
     };
   }
   restore(data: any) {
@@ -95,6 +97,7 @@ export class OptionsService {
     if ("g" in data) this.autoSave = data.g;
     if ("k" in data) this.hotKeyAlert = data.k;
     if ("c" in data) OptionsService.navalCapNotification = data.c;
+    if ("v" in data) this.hideRefund = data.v;
     this.generateFormatter();
     this.reloadHeader();
   }

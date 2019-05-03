@@ -15,6 +15,9 @@ import { Action } from "../model/actions/abstractAction";
 import { IAlert } from "../model/base/IAlert";
 import { preventScroll } from "../app.component";
 import { MISSILE_DAMAGE } from "../model/enemy/enemyManager";
+import { Options } from "selenium-webdriver/firefox";
+import { OptionsService } from "../options.service";
+import { RefundAction } from "../model/actions/refundAction";
 
 @Component({
   selector: "app-resource-overview",
@@ -29,8 +32,13 @@ export class ResourceOverviewComponent
   alerts: IAlert[];
   isFinite = Number.isFinite;
   missileDamage = new Decimal(0);
+  unlockedActions = new Array<Action>();
 
-  constructor(public ms: MainService, private cd: ChangeDetectorRef) {}
+  constructor(
+    public ms: MainService,
+    private cd: ChangeDetectorRef,
+    public os: OptionsService
+  ) {}
   ngAfterViewInit(): void {
     if (typeof preventScroll === typeof Function) preventScroll();
   }
@@ -40,7 +48,7 @@ export class ResourceOverviewComponent
         .getTotalBonus()
         .times(MISSILE_DAMAGE);
     }
-
+    this.setActions();
     this.setAlerts();
     this.subscriptions.push(
       this.ms.em.updateEmitter.subscribe(() => {
@@ -54,9 +62,18 @@ export class ResourceOverviewComponent
       })
     );
   }
+  setActions() {
+    this.unlockedActions = this.res.unlockedActions;
+    if (this.os.hideRefund) {
+      this.res.unlockedActions = this.res.unlockedActions.filter(
+        a => !(a instanceof RefundAction)
+      );
+    }
+  }
 
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
     this.setAlerts();
+    this.setActions();
   }
 
   ngOnDestroy() {
