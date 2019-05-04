@@ -32,6 +32,15 @@ export class AllSkillEffects {
   static readonly FACTORY_BONUS = new SkillEffect();
   static readonly MODDING_PLUS = new SkillEffect();
   static readonly DOUBLE_MODDING = new SkillEffect();
+
+  static readonly MOD_METAL_MINER = new SkillEffect();
+  static readonly MOD_CRYSTAL_MINER = new SkillEffect();
+  static readonly MOD_ENERGY = new SkillEffect();
+  static readonly MOD_ALLOY = new SkillEffect();
+  static readonly MOD_CPU = new SkillEffect();
+  static readonly MOD_WORKER = new SkillEffect();
+  static readonly MOD_SEARCH = new SkillEffect();
+  static readonly MOD_WARRIOR = new SkillEffect();
   //#endregion
   //#region Search
   static readonly SEARCH_MULTI = new SkillEffect();
@@ -45,7 +54,6 @@ export class AllSkillEffects {
   static readonly COMPUTING_MULTI = new SkillEffect();
   static readonly SHIPYARD_MULTI = new SkillEffect();
   static readonly RESEARCH_MULTI = new SkillEffect();
-
   //#endregion
 
   static initialize(prestige = false) {
@@ -79,6 +87,15 @@ export class AllSkillEffects {
       AllSkillEffects.PLUS_WORKER,
       AllSkillEffects.PLUS_SEARCH
     ];
+    const mods = [
+      AllSkillEffects.MOD_METAL_MINER,
+      AllSkillEffects.MOD_CRYSTAL_MINER,
+      AllSkillEffects.MOD_ENERGY,
+      AllSkillEffects.MOD_CPU,
+      AllSkillEffects.MOD_ALLOY,
+      AllSkillEffects.MOD_WORKER,
+      AllSkillEffects.MOD_SEARCH
+    ];
     AllSkillEffects.DRONE_MULTI.getDescription = (num = 1) => {
       return (
         "Drones yield and consume\n" +
@@ -111,6 +128,17 @@ export class AllSkillEffects {
       workers[i].productionMultiplier.multiplicativeBonus.push(
         new Bonus(AllSkillEffects.DRONE_MULTI, 1.5)
       );
+
+      mods[i].getDescription = (num = 1) => {
+        return (
+          "+ " +
+          MainService.formatPipe.transform(10 * num) +
+          " " +
+          workers[i].name +
+          " mods"
+        );
+      };
+      workers[i].modPrestige = mods[i];
     }
     tier1.forEach(e => {
       e.afterBuy = () => {
@@ -119,6 +147,7 @@ export class AllSkillEffects {
         );
       };
     });
+
     //#endregion
     //#region PLUS_WARRIOR
     AllSkillEffects.PLUS_WARRIOR.shape = "ship";
@@ -322,7 +351,14 @@ export class AllSkillEffects {
       AllSkillEffects.MODULE_LEVEL,
       AllSkillEffects.DOUBLE_BATTLE_GAIN,
       AllSkillEffects.DOUBLE_MISSILE,
-      AllSkillEffects.DRONE_MULTI
+      AllSkillEffects.DRONE_MULTI,
+      AllSkillEffects.MOD_METAL_MINER,
+      AllSkillEffects.MOD_CRYSTAL_MINER,
+      AllSkillEffects.MOD_ENERGY,
+      AllSkillEffects.MOD_CPU,
+      AllSkillEffects.MOD_ALLOY,
+      AllSkillEffects.MOD_WORKER,
+      AllSkillEffects.MOD_SEARCH
     ];
     if (!prestige) {
       AllSkillEffects.effectList.forEach(e => {

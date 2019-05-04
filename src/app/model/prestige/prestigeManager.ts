@@ -63,7 +63,14 @@ export class PrestigeManager implements ISalvable {
       { from: 8, to: 35 },
       { from: 18, to: 40 },
       { from: 11, to: 41 },
-      { from: 12, to: 42 }
+      { from: 12, to: 42 },
+      { from: 24, to: 43 },
+      { from: 25, to: 44 },
+      { from: 26, to: 45 },
+      { from: 27, to: 46 },
+      { from: 29, to: 47 },
+      { from: 30, to: 48 },
+      { from: 32, to: 49 }
     ]);
 
     this.maxPrestigePoints = this.visSkills.length;
@@ -112,7 +119,15 @@ export class PrestigeManager implements ISalvable {
       new Skill(39, AllSkillEffects.DRONE_MULTI, true),
       new Skill(40, AllSkillEffects.DOUBLE_DARK_MATTER),
       new Skill(41, AllSkillEffects.DOUBLE_NAVAL_CAPACITY),
-      new Skill(42, AllSkillEffects.FACTORY_BONUS)
+      new Skill(42, AllSkillEffects.FACTORY_BONUS),
+
+      new Skill(43, AllSkillEffects.MOD_METAL_MINER),
+      new Skill(44, AllSkillEffects.MOD_CRYSTAL_MINER),
+      new Skill(45, AllSkillEffects.MOD_ALLOY),
+      new Skill(46, AllSkillEffects.MOD_ENERGY),
+      new Skill(47, AllSkillEffects.MOD_CPU),
+      new Skill(48, AllSkillEffects.MOD_WORKER),
+      new Skill(49, AllSkillEffects.MOD_SEARCH)
     ];
   }
   buySkill(skillId: number, fromSave = false): boolean {
