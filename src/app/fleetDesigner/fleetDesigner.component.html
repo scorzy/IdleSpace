@@ -36,18 +36,20 @@
     [routerLink]="'/fleet/design/' + ds.id"
     routerLinkActive="active"
     class="movable"
+    style="height:3rem;"
   >
-    <clr-icon [attr.shape]="ds.type.shape"></clr-icon>
+    <clr-icon [attr.shape]="ds.type.shape" class="shipIcon"></clr-icon>
     <span class="inlineFlex clr-row clr-justify-content-between">
-      <span class="resLeft">
+      <span class="clr-col-12">
         {{ ds.name }}
-      </span>
-      <span class="resRight">
-        <app-formatted-quantity [quantity]="ds.quantity" [integer]="true">
-        </app-formatted-quantity>
-        /
-        <app-formatted-quantity [quantity]="ds.wantQuantity" [integer]="true">
-        </app-formatted-quantity>
+
+        <span class="qtaSpan">
+          <app-formatted-quantity [quantity]="ds.quantity" [integer]="true">
+          </app-formatted-quantity>
+          /
+          <app-formatted-quantity [quantity]="ds.wantQuantity" [integer]="true">
+          </app-formatted-quantity>
+        </span>
       </span>
     </span>
   </a>

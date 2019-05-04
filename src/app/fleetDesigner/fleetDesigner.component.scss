@@ -1,10 +1,10 @@
-.resLeft {
-  width: 70%;
-  padding-left: 1rem;
-}
-.resRight {
-  width: 30%;
-}
+// .resLeft {
+//   width: 70%;
+//   padding-left: 1rem;
+// }
+// .resRight {
+//   width: 30%;
+// }
 .nav-link {
   height: 1.5rem;
   padding: 0 0.5rem 0 1rem;
@@ -17,4 +17,12 @@ clr-vertical-nav.cdk-drop-list-dragging a {
 .inlineFlex {
   display: inline-flex;
   width: 100%;
+}
+.qtaSpan {
+  margin-top: -1rem;
+  display: block;
+}
+.shipIcon {
+  margin-top: 0.5rem;
+  margin-right: 0.1rem;
 }
