@@ -1,6 +1,7 @@
 import { ISalvable } from "../base/ISalvable";
 import { ModData } from "./modData";
 import { IResource } from "../base/iResource";
+import { MainService } from "src/app/main.service";
 
 export class Mod implements ISalvable, IResource {
   quantity = new Decimal();
@@ -8,8 +9,9 @@ export class Mod implements ISalvable, IResource {
   name = "";
   description = "";
   resId = "";
-  max: number = Number.POSITIVE_INFINITY;
-  min: number = Number.NEGATIVE_INFINITY;
+  max = 1e300;
+  min = -1e300;
+  tooltip = "";
 
   constructor(public id: string) {
     const modData = ModData[id];
@@ -17,6 +19,7 @@ export class Mod implements ISalvable, IResource {
       this.name = modData.name;
       this.description = modData.description;
       this.getBonus = modData.getBonus;
+      this.tooltip = modData.tooltip;
       if ("min" in modData) this.min = modData.min;
       if ("max" in modData) this.max = modData.max;
     }
@@ -36,7 +39,7 @@ export class Mod implements ISalvable, IResource {
     return true;
   }
   getBonus(num: DecimalSource): string {
-    return new Decimal(num).toNumber() + "";
+    return MainService.formatPipe.transform(num);
   }
   getQuantity(): Decimal {
     return this.quantity;

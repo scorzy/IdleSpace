@@ -5,10 +5,13 @@ export const ModData = {
   f: {
     name: "Wasteful / Efficient",
     description: "Output production",
+    tooltip: "Increase or decrease yielded resources",
     getBonus: (num: DecimalSource) => {
       return (
         (new Decimal(num).gt(0) ? "+" : "") +
-        Decimal.multiply(MOD_EFFICIENCY, num).times(100) +
+        MainService.formatPipe.transform(
+          Decimal.multiply(MOD_EFFICIENCY, num).times(100)
+        ) +
         "%"
       );
     },
@@ -17,10 +20,13 @@ export const ModData = {
   p: {
     name: "Unproductive / Productive",
     description: "Production and Upkeep",
+    tooltip: "Increase or decrease yielded and consumed resources",
     getBonus: (num: DecimalSource) => {
       return (
         (new Decimal(num).gt(0) ? "+" : "") +
-        Decimal.multiply(MOD_PRODUCTION, num).times(100) +
+        MainService.formatPipe.transform(
+          Decimal.multiply(MOD_PRODUCTION, num).times(100)
+        ) +
         "%"
       );
     },
@@ -29,11 +35,14 @@ export const ModData = {
   e: {
     name: "Energy-intensive / Energy-saving",
     description: "Energy usage",
+    tooltip: "Increase or decrease energy usage",
     max: 10,
     getBonus: (num: DecimalSource) => {
       return (
         (new Decimal(num).lt(0) ? "+" : "") +
-        Decimal.multiply(MOD_ENERGY, num).times(100) +
+        MainService.formatPipe.transform(
+          Decimal.multiply(MOD_ENERGY, num).times(100)
+        ) +
         "%"
       );
     }
@@ -41,6 +50,8 @@ export const ModData = {
   s: {
     name: "Expensive / Economic",
     description: "Robot Price",
+    tooltip:
+      "Increase or decrease number or robots components needed to make a drone",
     max: 7,
     getBonus: (num: DecimalSource) => {
       return MainService.formatPipe.transform(
