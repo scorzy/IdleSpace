@@ -133,10 +133,13 @@ export class ShipDesign implements ISalvable, IBuyable {
     this.modules
       .filter(q => q.isValid())
       .forEach(w => {
-        const multiPrice = w.level / 10; // * Math.pow(MODULE_PRICE_INCREASE, w.level);
+        let multiPrice = w.level / 10; // * Math.pow(MODULE_PRICE_INCREASE, w.level);
         // const multiPrice = 1 + (w.level - 10) / 5;
         const bonus = w.level / 10;
         const sizeFactor = w.size + (w.size - 1) * SIZE_MULTI;
+        if (w.size > 4) {
+          multiPrice = multiPrice * 10 * Math.pow(1.2, w.size - 4);
+        }
         this.usedModulePoint += w.size;
 
         w.computedDamage = w.module.damage.times(bonus).times(sizeFactor);
@@ -163,9 +166,11 @@ export class ShipDesign implements ISalvable, IBuyable {
             .times(sizeFactor)
             .times(w.module.shieldPercent / 100)
         );
+
         this.price = this.price.plus(
           w.module.alloyPrice.times(w.size).times(multiPrice)
         );
+
         this.explosionChance += w.module.explosionChance * w.size;
       });
 
