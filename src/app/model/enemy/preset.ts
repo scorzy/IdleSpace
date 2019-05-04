@@ -3,6 +3,7 @@ import { Sizes } from "../fleet/module";
 
 export class Preset {
   static CORVETTE_PRESET: Preset;
+  static DefenseShield: Preset;
   static Presets: Preset[];
   static DefensePreset: Preset[];
 
@@ -489,6 +490,28 @@ export class Preset {
         ]
       }
     ];
+    Preset.DefenseShield = {
+      name: "Shield Bubble",
+      type: DefenseTypes[3],
+      modules: [
+        {
+          id: ["s"],
+          size: Sizes.ExtraLarge
+        },
+        {
+          id: ["s"],
+          size: Sizes.ExtraLarge
+        },
+        {
+          id: ["s"],
+          size: Sizes.ExtraLarge
+        },
+        {
+          id: ["a"],
+          size: Sizes.ExtraLarge
+        }
+      ]
+    };
   }
 }
 const RANDOM_WEAPON = ["l", "p", "d", "g"];

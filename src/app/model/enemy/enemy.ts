@@ -1,6 +1,6 @@
 import { Zone } from "./zone";
 import { ShipDesign } from "../fleet/shipDesign";
-import { MAX_NAVAL_CAPACITY } from "../fleet/fleetManager";
+import { MAX_NAVAL_CAPACITY, MAX_SHIP } from "../fleet/fleetManager";
 import { ShipTypes, DefenseTypes } from "../fleet/shipTypes";
 import { Preset } from "./preset";
 import sample from "lodash-es/sample";
@@ -15,6 +15,9 @@ import { shuffle } from "lodash-es";
 const DEFENSE_START_LEVEL = 7;
 const DEFENSE_END_LEVEL = 80;
 const DEFENSE_MAX_PERCENT = 1;
+const SHIELD_BUBBLE_START_LEVEL = 80;
+const SHIELD_BUBBLE_END_LEVEL = 1e3;
+const MAX_SHIELD_FILL = 0.5;
 
 export class Enemy {
   constructor() {
@@ -175,6 +178,31 @@ export class Enemy {
           });
           sd.reload(false);
         });
+    }
+    //#endregion
+    //#region Shield Bubble
+    if (enemy.level > SHIELD_BUBBLE_START_LEVEL) {
+      const shipCount = enemy.shipsDesign
+        .map(s => s.quantity)
+        .reduce((p, c) => p.plus(c), new Decimal(0));
+      if (shipCount.lt(MAX_SHIP * MAX_SHIELD_FILL)) {
+        const percentToFill =
+          (MAX_SHIELD_FILL * (level - SHIELD_BUBBLE_START_LEVEL)) /
+          (SHIELD_BUBBLE_END_LEVEL - DEFENSE_START_LEVEL);
+
+        if (percentToFill > 0) {
+          const bubbleToAdd =
+            (MAX_SHIP - shipCount.toNumber()) *
+            percentToFill *
+            random(0.7, 1.2, true);
+          const bubble = enemy.addFromPreset(Preset.DefenseShield);
+          bubble.quantity = new Decimal(bubbleToAdd);
+          bubble.modules.forEach(m => {
+            m.level = moduleLevel;
+          });
+          bubble.reload(false);
+        }
+      }
     }
     //#endregion
 
