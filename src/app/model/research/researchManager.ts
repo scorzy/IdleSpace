@@ -6,8 +6,8 @@ import { IResearchData } from "./iResearchData";
 import { EnemyManager } from "../enemy/enemyManager";
 import { SearchJob } from "../enemy/searchJob";
 import { ShipDesign } from "../fleet/shipDesign";
-import { CORVETTE_PRESET } from "../enemy/preset";
 import { Bonus } from "../bonus/bonus";
+import { Preset } from "../enemy/preset";
 
 export class ResearchManager {
   private static instance: ResearchManager;
@@ -72,7 +72,7 @@ export class ResearchManager {
           m.research.reloadNum();
           m.unlock();
         });
-      const corvetteDesign = ShipDesign.fromPreset(CORVETTE_PRESET);
+      const corvetteDesign = ShipDesign.fromPreset(Preset.CORVETTE_PRESET);
       corvetteDesign.id = "0";
       FleetManager.getInstance().ships.push(corvetteDesign);
 

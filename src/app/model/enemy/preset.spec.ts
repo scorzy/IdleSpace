@@ -1,5 +1,5 @@
-import { Presets } from "./preset";
 import { ShipDesign } from "../fleet/shipDesign";
+import { Preset } from "./preset";
 
 describe("Preset", () => {
   /**
@@ -8,7 +8,7 @@ describe("Preset", () => {
    */
   it("Presets should be valid", () => {
     for (let i = 0; i < 10; i++) {
-      Presets.forEach(pr => {
+      Preset.Presets.forEach(pr => {
         const shipDesign = ShipDesign.fromPreset(pr);
         shipDesign.modules.forEach(m => expect(m).toBeTruthy());
 

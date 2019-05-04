@@ -14,7 +14,7 @@ import { BonusStack } from "../bonus/bonusStack";
 import { IAlert } from "../base/IAlert";
 import { SkillEffect } from "../prestige/skillEffects";
 import { PLUS_ADD } from "../prestige/allSkillEffects";
-import { ModStack } from "../mod/modStack";
+import { ModStack, MOD_MORE } from "../mod/modStack";
 import { IResource } from "../base/iResource";
 import { Automator } from "../automators/automator";
 
@@ -157,6 +157,13 @@ export class Resource extends AbstractUnlockable
         ? this.workerPerMine.times(Decimal.pow(2, this.limitStorage.quantity))
         : this.limitStorage.quantity.plus(1).times(worker);
 
+      if (this.modStack && this.modStack.moreDrones) {
+        const modBonus = this.modStack.moreDrones.quantity
+          .times(MOD_MORE)
+          .plus(1);
+        console.log(modBonus.toNumber());
+        this.limit = this.limit.times(modBonus);
+      }
       this.limit = this.reloadCustomLimit(this.limit);
       this.limit = this.limit.floor();
       this.quantity = this.quantity.min(this.limit);
@@ -198,10 +205,10 @@ export class Resource extends AbstractUnlockable
   //#region Save and Load
   getSave(): any {
     const data = super.getSave();
-    if (!this.quantity.eq(0)) data.q = this.quantity;
     if (this.unlockedActions.length > 0) {
       data.a = this.unlockedActions.map(a => a.getSave());
     }
+    if (!this.quantity.eq(0)) data.q = this.quantity;
     if (this.operativity !== 100) data.o = this.operativity;
     if (this.modStack) data.m = this.modStack.getSave();
     return data;
@@ -217,7 +224,7 @@ export class Resource extends AbstractUnlockable
         }
       }
     }
-    if ("o" in data) this.operativity = data.o;
+    if ("o" in data) this.operativity = Math.min(data.o, 100);
     if ("m" in data) this.modStack.load(data.m);
 
     this.unlockedActions = this.actions.filter(a => a.unlocked);

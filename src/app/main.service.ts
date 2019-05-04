@@ -178,7 +178,7 @@ export class MainService {
   }
   load(data?: any): any {
     const save = localStorage.getItem("save");
-    console.log(save);
+    // console.log(save);
     if (save !== null) {
       this.zipWorker.postMessage(new CompressRequest(save, "", false, 2));
     } else {

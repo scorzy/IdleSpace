@@ -12,6 +12,7 @@ import { OptionsService } from "../options.service";
 import { AllSkillEffects } from "./prestige/allSkillEffects";
 import { AutomatorManager } from "./automators/automatorManager";
 import { ShipDesign } from "./fleet/shipDesign";
+import { Preset } from "./enemy/preset";
 
 export const ZERO_DECIMAL_IMMUTABLE = new Decimal(0);
 
@@ -35,6 +36,7 @@ export class Game {
 
   constructor() {
     Game.instance = this;
+    Preset.initPreset();
     this.init();
   }
   static getInstance(): Game {
@@ -245,10 +247,10 @@ export class Game {
   //#region Save and Load
   save(): any {
     const save: any = {};
-    save.r = this.resourceManager.getSave();
     save.e = this.researchManager.getSave();
     save.f = this.fleetManager.getSave();
     save.w = this.enemyManager.getSave();
+    save.r = this.resourceManager.getSave();
     save.s = this.shipyard.getSave();
     save.p = this.prestigeManager.getSave();
     save.d = this.darkMatterManager.getSave();

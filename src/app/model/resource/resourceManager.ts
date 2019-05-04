@@ -594,10 +594,6 @@ export class ResourceManager implements ISalvable {
       this.drone,
       this.missile
     ];
-    this.limited.forEach(rl => {
-      rl.isLimited = true;
-      rl.reloadLimit();
-    });
 
     this.allResources = [
       this.metal,
@@ -707,6 +703,10 @@ export class ResourceManager implements ISalvable {
       r.modStack.generateMods(r);
     });
     //#endregion
+    this.limited.forEach(rl => {
+      rl.isLimited = true;
+      rl.reloadLimit();
+    });
   }
   static getInstance() {
     return ResourceManager.instance;

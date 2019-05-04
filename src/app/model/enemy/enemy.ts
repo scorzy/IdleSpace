@@ -2,7 +2,7 @@ import { Zone } from "./zone";
 import { ShipDesign } from "../fleet/shipDesign";
 import { MAX_NAVAL_CAPACITY } from "../fleet/fleetManager";
 import { ShipTypes, DefenseTypes } from "../fleet/shipTypes";
-import { Presets, Preset, CORVETTE_PRESET, DefensePreset } from "./preset";
+import { Preset } from "./preset";
 import sample from "lodash-es/sample";
 import random from "lodash-es/random";
 import { Reward } from "./reward";
@@ -84,7 +84,7 @@ export class Enemy {
       const numShipToUse = random(2, ShipTypes.length - 1);
       while (shipToUse.length > numShipToUse) shipToUse.pop();
       shipToUse.forEach(shipType => {
-        let presets = Presets.filter(p => p.type === shipType);
+        let presets = Preset.Presets.filter(p => p.type === shipType);
         const pres = sample(presets);
         enemy.addFromPreset(pres);
         if (presets.length > 2 && Math.random() < 0.4) {
@@ -95,7 +95,7 @@ export class Enemy {
       });
     } else {
       navalCap = 20;
-      enemy.addFromPreset(CORVETTE_PRESET);
+      enemy.addFromPreset(Preset.CORVETTE_PRESET);
     }
     const totalWeight = enemy.shipsDesign
       .map(s => s.weight)
@@ -143,7 +143,7 @@ export class Enemy {
       // const numShipToUse = random(2, DefenseTypes.length - 1);
       // while (defenseToUse.length > numShipToUse) defenseToUse.pop();
       defenseToUse.forEach(shipType => {
-        let presets = DefensePreset.filter(p => p.type === shipType);
+        let presets = Preset.DefensePreset.filter(p => p.type === shipType);
         const pres = sample(presets);
         const def = enemy.addFromPreset(pres);
         def.name = def.name + " " + def.modules[0].module.name;

@@ -1,11 +1,16 @@
-import { MOD_EFFICIENCY, MOD_PRODUCTION, MOD_ENERGY } from "./modStack";
+import {
+  MOD_EFFICIENCY,
+  MOD_PRODUCTION,
+  MOD_ENERGY,
+  MOD_MORE
+} from "./modStack";
 import { MainService } from "src/app/main.service";
 
 export const ModData = {
   f: {
     name: "Wasteful / Efficient",
     description: "Output production",
-    tooltip: "Increase or decrease yielded resources",
+    tooltip: "Increase or decrease yielded resources; stack additive",
     getBonus: (num: DecimalSource) => {
       return (
         (new Decimal(num).gt(0) ? "+" : "") +
@@ -20,7 +25,8 @@ export const ModData = {
   p: {
     name: "Unproductive / Productive",
     description: "Production and Upkeep",
-    tooltip: "Increase or decrease yielded and consumed resources",
+    tooltip:
+      "Increase or decrease yielded and consumed resources; stack additive",
     getBonus: (num: DecimalSource) => {
       return (
         (new Decimal(num).gt(0) ? "+" : "") +
@@ -56,6 +62,21 @@ export const ModData = {
     getBonus: (num: DecimalSource) => {
       return MainService.formatPipe.transform(
         new Decimal(1).plus(new Decimal(num).times(-0.1))
+      );
+    }
+  },
+  m: {
+    name: "More Drones",
+    description: "More Drones",
+    tooltip: "Increase the number of drones you can have",
+    min: 0,
+    getBonus: (num: DecimalSource) => {
+      return (
+        "+" +
+        MainService.formatPipe.transform(
+          new Decimal(num).times(100).times(MOD_MORE)
+        ) +
+        "%"
       );
     }
   }

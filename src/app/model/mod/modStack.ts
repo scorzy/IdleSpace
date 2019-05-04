@@ -10,6 +10,7 @@ import { AllSkillEffects } from "../prestige/allSkillEffects";
 export const MOD_EFFICIENCY = 0.1;
 export const MOD_PRODUCTION = 0.2;
 export const MOD_ENERGY = -0.05;
+export const MOD_MORE = 1;
 
 export class ModStack implements ISalvable {
   mods: Mod[];
@@ -17,6 +18,7 @@ export class ModStack implements ISalvable {
   production: Mod;
   energyMod: Mod;
   priceMod: Mod;
+  moreDrones: Mod;
   resource: Resource;
   totalBonus = new BonusStack();
   maxPoints = new Decimal();
@@ -56,6 +58,9 @@ export class ModStack implements ISalvable {
         new Bonus(this.energyMod, MOD_ENERGY)
       );
     }
+    this.moreDrones = new Mod("m");
+    this.mods.push(this.moreDrones);
+
     this.mods.forEach(m => {
       m.resId = resource.id;
     });
@@ -82,6 +87,7 @@ export class ModStack implements ISalvable {
         m.quantity = new Decimal(m.quantity_ui);
       });
       this.setPrice();
+      this.resource.reloadLimit();
       this.loadUsedPoint();
     }
   }
