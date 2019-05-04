@@ -34,12 +34,22 @@
     <clr-alert-item>
       <span class="alert-text">
         Time warps don't affect battle and Automators
+        <br />
+        Available warp:
+        {{
+          ms.game.darkMatterManager.darkMatter.quantity.toNumber() * 1000
+            | endIn
+        }}
       </span></clr-alert-item
     >
   </clr-alert>
 
-  <app-action
-    *ngFor="let act of ms.game.darkMatterManager.actions; trackBy: getActId"
-    [action]="act"
-  ></app-action>
+  <div class="clr-row">
+    <div
+      class="clr-col-12 clr-col-md-6"
+      *ngFor="let act of ms.game.darkMatterManager.actions; trackBy: getActId"
+    >
+      <app-action [action]="act"></app-action>
+    </div>
+  </div>
 </div>

@@ -43,6 +43,24 @@ export class DarkMatterManager implements ISalvable {
       a.showNum = false;
       a.showTime = false;
     });
+
+    const periods: Array<[number, string, string]> = [
+      [3600 * 24, "Day", "wd"],
+      [3600 * 24 * 7, "Week", "ww"],
+      [3600 * 24 * 7 * 30, "Month", "wmo"],
+      [3600 * 24 * 365, "Year", "wy"]
+    ];
+    periods.forEach(period => {
+      const act = new Action(
+        period[2],
+        new MultiPrice([new Price(this.darkMatter, period[0], 1)])
+      );
+      act.name = period[1] + " Warp";
+      act.afterBuy = (number: Decimal) => {
+        this.game.update(number.times(period[0]).toNumber(), true);
+      };
+      this.actions.push(act);
+    });
   }
   reload() {
     this.actions.forEach(a => a.reload());
