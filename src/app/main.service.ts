@@ -484,11 +484,8 @@ export class MainService {
       );
       this.kongregate.stats.submit("MaxEnemy", this.game.enemyManager.maxLevel);
       this.kongregate.stats.submit(
-        "Max Dark Matters in days",
-        this.game.darkMatterManager.darkMatter.quantity
-          .div(3600 * 24)
-          .min(10e17)
-          .toNumber()
+        "Log10(Max Dark Matter)",
+        this.game.darkMatterManager.darkMatter.quantity.log10()
       );
     } catch (ex) {}
   }
