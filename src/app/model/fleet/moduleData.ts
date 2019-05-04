@@ -26,6 +26,19 @@ export const ModulesData: IModuleData[] = [
     shieldPercent: 30,
     armorPercent: 170,
     researchPrice: 2e3,
+    nextToUnlock: ["i"],
+    shape: "plasma"
+  },
+  {
+    id: "i",
+    name: "Disintegrator",
+    sizes: ALL_SIZES,
+    energyBalance: -2,
+    alloyPrice: 100,
+    damage: 10,
+    shieldPercent: 0,
+    armorPercent: 220,
+    researchPrice: 2e3,
     shape: "plasma"
   },
   {
@@ -49,6 +62,18 @@ export const ModulesData: IModuleData[] = [
     damage: 10,
     shieldPercent: 170,
     armorPercent: 30,
+    nextToUnlock: ["e"],
+    researchPrice: 2e3
+  },
+  {
+    id: "e",
+    name: "Rail gun",
+    sizes: ALL_SIZES,
+    energyBalance: -2,
+    alloyPrice: 100,
+    damage: 10,
+    shieldPercent: 220,
+    armorPercent: 0,
     researchPrice: 2e3
   },
   {

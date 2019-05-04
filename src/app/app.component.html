@@ -105,7 +105,12 @@
               ms.game.prestigeManager.prestigeToEarn > 0 &&
               !this.ms.game.prestigeManager.canAscend()
             "
-            >{{ ms.game.prestigeManager.prestigeToEarn }}
+          >
+            <app-formatted-quantity
+              [quantity]="ms.game.prestigeManager.prestigeToEarn"
+              [integer]="true"
+              [monospace]="false"
+            ></app-formatted-quantity>
           </span>
           <span
             class="badge badge-success"

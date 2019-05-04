@@ -20,13 +20,13 @@ export class ShipType {
     return new ShipType(
       "" + k,
       "Titan " + new RomanPipe().transform(i + 1),
-      new Decimal(10).times(Decimal.pow(2, k)),
-      new Decimal(BASE_ARMOR * 1.25 * k),
+      new Decimal(1e3).times(Decimal.pow(2, k)),
+      new Decimal(BASE_ARMOR * 1.5 * k * 10),
       10,
       k * 2,
       "rank4",
-      Math.floor(100 * Math.pow(1.5, k - 1)) / 100,
-      Math.floor(100 * Math.pow(1.5, k - 1)) / 100
+      Math.floor(100 * Math.pow(10, k - 1)) / 100,
+      Math.floor(100 * Math.pow(10, k - 1)) / 100
     );
   }
 }

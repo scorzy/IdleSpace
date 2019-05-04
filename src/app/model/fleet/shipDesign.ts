@@ -138,7 +138,7 @@ export class ShipDesign implements ISalvable, IBuyable {
         const bonus = w.level / 10;
         const sizeFactor = w.size + (w.size - 1) * SIZE_MULTI;
         if (w.size > 4) {
-          multiPrice = multiPrice * 10 * Math.pow(1.2, w.size - 4);
+          multiPrice = multiPrice * 1e3 * Math.pow(1.2, w.size - 4);
         }
         this.usedModulePoint += w.size;
 
@@ -154,18 +154,22 @@ export class ShipDesign implements ISalvable, IBuyable {
           w.module.shield.times(bonus).times(sizeFactor)
         );
 
-        this.armorDamage = this.armorDamage.plus(
-          w.module.damage
-            .times(bonus)
-            .times(sizeFactor)
-            .times(w.module.armorPercent / 100)
-        );
-        this.shieldDamage = this.shieldDamage.plus(
-          w.module.damage
-            .times(bonus)
-            .times(sizeFactor)
-            .times(w.module.shieldPercent / 100)
-        );
+        if (w.module.armorPercent > 0) {
+          this.armorDamage = this.armorDamage.plus(
+            w.module.damage
+              .times(bonus)
+              .times(sizeFactor)
+              .times(w.module.armorPercent / 100)
+          );
+        }
+        if (w.module.shieldPercent > 0) {
+          this.shieldDamage = this.shieldDamage.plus(
+            w.module.damage
+              .times(bonus)
+              .times(sizeFactor)
+              .times(w.module.shieldPercent / 100)
+          );
+        }
 
         this.price = this.price.plus(
           w.module.alloyPrice.times(w.size).times(multiPrice)
