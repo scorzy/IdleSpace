@@ -78,7 +78,14 @@ export class Game {
       new Bonus(this.researchManager.missile, 0.2)
     );
 
-    if (!prestige) this.automatorManager.generateAutomators();
+    if (prestige) {
+      const save = this.automatorManager.getSave();
+      this.automatorManager.generateAutomators();
+      this.automatorManager.load(save);
+    } else {
+      this.automatorManager.generateAutomators();
+    }
+
     this.automatorManager.assignToResource();
     this.userSearchLevel = 1;
   }
@@ -224,7 +231,10 @@ export class Game {
     }
     this.resourceManager.limitedResources.forEach(r => r.reloadLimit());
     this.prestigeManager.reloadPrestigeToEarn();
+    this.automatorManager.setAutomatorLevel();
+    this.automatorManager.resetTimers();
     AllSkillEffects.initialize(true);
+    this.automatorManager.assignToResource();
     this.resourceManager.allResources.forEach(r => {
       r.unlockedAutomators = r.automators.filter(a => a.isUnlocked());
       r.unlockedAutomators2 = r.automators2.filter(a => a.isUnlocked());
@@ -232,7 +242,7 @@ export class Game {
     this.resourceManager.tierGroups.forEach(h => {
       h.unlockedAutomators = h.automators.filter(g => g.isUnlocked());
     });
-    this.automatorManager.setAutomatorLevel();
+
     this.automatorManager.resetTimers();
   }
   ascend() {
