@@ -2,14 +2,19 @@
   <clr-icon *ngIf="action.shape" [attr.shape]="action.shape"></clr-icon>
   {{ action.name }}
   <app-cant-buy-signposts [action]="action"></app-cant-buy-signposts>
-  <span *ngIf="action.showNum"
-    >(
-    <app-formatted-quantity
-      [quantity]="quantity"
-      [integer]="true"
-      [monospace]="false"
-    ></app-formatted-quantity>
-    )</span
-  >
+  <a role="tooltip" aria-haspopup="true" class="tooltip tooltip-md">
+    <span *ngIf="action.showNum"
+      >(
+      <app-formatted-quantity
+        [quantity]="quantity"
+        [integer]="true"
+        [monospace]="false"
+      ></app-formatted-quantity>
+      )</span
+    >
+    <span class="tooltip-content"
+      >Manual buy, this is the number that increase the prices.</span
+    >
+  </a>
 </h6>
 <!-- *ngIf="action.showTime && !action.canBuy" -->

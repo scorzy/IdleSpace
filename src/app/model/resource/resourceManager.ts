@@ -550,6 +550,7 @@ export class ResourceManager implements ISalvable {
       this.energy.reloadLimit();
     };
     buyExpansion.name = "Batteries";
+    buyExpansion.description = "Batteries allow you to store more energy.";
     this.energy.actions.push(buyExpansion);
     this.energy.limitStorage = buyExpansion;
     this.energy.exponentialStorage = true;

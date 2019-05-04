@@ -3,10 +3,10 @@
   [action]="action"
   [quantity]="action.quantity"
 ></app-action-header>
-<div class="p" *ngIf="action?.description">
+<!-- <div class="p" *ngIf="action?.description">
   <span *ngIf="action.description !== ''">
     {{ action.description }}
     <br />
   </span>
-</div>
+</div> -->
 <app-buttons *ngIf="action" [action]="action"></app-buttons>

@@ -26,7 +26,6 @@ describe("EnemyViewComponent", () => {
     fixture = TestBed.createComponent(EnemyViewComponent);
     component = fixture.componentInstance;
     component.ms.start();
-    const pre = new Preset();
     component.enemy = Enemy.generate(new SearchJob());
     fixture.detectChanges();
   });
