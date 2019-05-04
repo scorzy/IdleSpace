@@ -9,7 +9,10 @@ import {
 import { MainService } from "src/app/main.service";
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 import { SearchJob } from "src/app/model/enemy/searchJob";
-import { MAX_ENEMY_LIST_SIZE } from "src/app/model/enemy/enemyManager";
+import {
+  MAX_ENEMY_LIST_SIZE,
+  EnemyManager
+} from "src/app/model/enemy/enemyManager";
 import { Subscription } from "rxjs";
 import { AllSkillEffects } from "src/app/model/prestige/allSkillEffects";
 import { preventScroll } from "src/app/app.component";
@@ -32,6 +35,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
   hab = false;
   automatorTab = false;
   deleteAllModal = false;
+  EnemyManager = EnemyManager;
 
   private subscriptions: Subscription[] = [];
 

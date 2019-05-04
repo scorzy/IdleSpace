@@ -186,6 +186,16 @@
               Sort Desc
             </button>
           </div>
+
+          <clr-toggle-wrapper>
+            <input
+              type="checkbox"
+              clrToggle
+              [(ngModel)]="EnemyManager.NewOnTop"
+              name="newTop"
+            />
+            <label>New on top</label>
+          </clr-toggle-wrapper>
         </div>
 
         <div

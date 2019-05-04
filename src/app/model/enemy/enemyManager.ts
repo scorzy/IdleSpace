@@ -43,6 +43,7 @@ const RANDOM_REWARDS = [
 ];
 export class EnemyManager implements ISalvable {
   private static instance: EnemyManager;
+  static NewOnTop = false;
 
   static romanPipe = new RomanPipe();
 
@@ -78,7 +79,8 @@ export class EnemyManager implements ISalvable {
     );
   }
   generate(searchJob: SearchJob) {
-    this.allEnemy.push(Enemy.generate(searchJob));
+    if (EnemyManager.NewOnTop) this.allEnemy.unshift(Enemy.generate(searchJob));
+    else this.allEnemy.push(Enemy.generate(searchJob));
   }
   attack(enemy: Enemy): boolean {
     if (this.currentEnemy) return false;
@@ -461,6 +463,7 @@ export class EnemyManager implements ISalvable {
       data.j = this.searchJobs.map(j => j.getSave());
     }
     if (this.autoNuke) data.n = this.autoNuke;
+    data.not = EnemyManager.NewOnTop;
     data.x = this.autoNext;
 
     return data;
@@ -499,6 +502,7 @@ export class EnemyManager implements ISalvable {
     }
     if ("n" in data) this.autoNuke = data.n;
     if ("x" in data) this.autoNext = data.x;
+    if ("not" in data) EnemyManager.NewOnTop = data.not;
     return true;
   }
   //#endregion
