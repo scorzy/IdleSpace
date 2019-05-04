@@ -8,7 +8,6 @@ import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { SizeNamePipe } from "src/app/size-name.pipe";
 import { defaultImport } from "src/app/app.component.spec";
 import { SearchJob } from "src/app/model/enemy/searchJob";
-import { Preset } from "src/app/model/enemy/preset";
 
 describe("EnemyViewComponent", () => {
   let component: EnemyViewComponent;

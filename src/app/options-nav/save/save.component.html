@@ -93,7 +93,7 @@
   </div>
 </div>
 
-<div class="toggle-switch">
+<div class="toggle-switch" *ngIf="ms.playFabLogged">
   <input type="checkbox" id="autoPlayFab" [(ngModel)]="os.playFabAutoSave" />
   <label for="autoPlayFab">AutoSave to PlayFab 20 min (in testing)</label>
 </div>

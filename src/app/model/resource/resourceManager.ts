@@ -500,6 +500,8 @@ export class ResourceManager implements ISalvable {
       this.drone.reloadLimit();
     };
     buyDrone.name = "Drone Depot";
+    buyDrone.description =
+      "Drone Depots allow you to store more robots components.";
     this.drone.exponentialStorage = true;
     this.drone.actions.push(buyDrone);
     this.drone.limitStorage = buyDrone;
