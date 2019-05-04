@@ -99,8 +99,8 @@ export class ModStack implements ISalvable {
   private getMax(): Decimal {
     return ResearchManager.getInstance()
       .modding.quantity.times(this.totalBonus.getTotalBonus())
-      .plus(AllSkillEffects.MODDING_PLUS.numOwned * 10)
-      .times(AllSkillEffects.DOUBLE_MODDING.numOwned * 2 + 1);
+      .plus(AllSkillEffects.MODDING_PLUS.numOwned * 5)
+      .times(AllSkillEffects.DOUBLE_MODDING.numOwned + 1);
   }
   setPrice() {
     this.resource.standardPrice = new Decimal(1).plus(
