@@ -57,6 +57,7 @@ export class MainService {
   webWorker = true;
   hotkeyEnabled = true;
   showDetails = true;
+  lastPlayFabSave = 0;
 
   constructor(
     public options: OptionsService,
@@ -366,6 +367,8 @@ export class MainService {
         requestData,
         this.saveToPlayFabCallback.bind(this)
       );
+      this.lastPlayFabSave = Date.now();
+      this.em.saveEmitter.emit("play fab");
     } catch (e) {
       console.log(e);
     }

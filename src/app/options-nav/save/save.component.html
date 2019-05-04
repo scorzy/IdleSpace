@@ -98,7 +98,13 @@
   <label for="autoPlayFab">AutoSave to PlayFab 20 min (in testing)</label>
 </div>
 
-<p>Last save: {{ ms.lastSave | date: "medium" }}</p>
+<p>
+  Last local save: {{ ms.lastSave | date: "medium" }}
+  <span *ngIf="ms.lastPlayFabSave > 0"
+    >Last PlayFab save:
+    {{ ms.lastPlayFabSave | date: "medium" }}
+  </span>
+</p>
 <h2>Export / Import Save</h2>
 <textarea name="raw" [(ngModel)]="exp" rows="3"></textarea>
 <div class="btn-group btn-primary">
