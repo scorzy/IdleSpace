@@ -17,6 +17,7 @@ const UP_INTERVAL = 200; // 5 fps
 const SAVE_INTERVAL_1 = 1 * 60 * 1000;
 const SAVE_INTERVAL_3 = 3 * 60 * 1000;
 const SAVE_INTERVAL_5 = 5 * 60 * 1000;
+const SAVE_INTERVAL_PLAYFAB = 20 * 60 * 1000;
 const NO_REINFORCE_INTERVAL = 60 * 1000;
 
 export function getUrl() {
@@ -113,6 +114,10 @@ export class MainService {
       }
     }, 5 * 1000);
 
+    setInterval(() => {
+      if (this.options.playFabAutoSave) this.save(true, true);
+    }, SAVE_INTERVAL_PLAYFAB);
+
     this.show = true;
 
     //  Kong Api
@@ -130,6 +135,7 @@ export class MainService {
           try {
             console.log("Kongregate build");
             this.sendKong();
+            this.playFabLogin();
           } catch (e) {
             console.log("Error: " + e.message);
           }
@@ -171,9 +177,13 @@ export class MainService {
     return data;
   }
   load(data?: any): any {
-    this.zipWorker.postMessage(
-      new CompressRequest(localStorage.getItem("save"), "", false, 2)
-    );
+    const save = localStorage.getItem("save");
+    console.log(save);
+    if (save !== null) {
+      this.zipWorker.postMessage(new CompressRequest(save, "", false, 2));
+    } else {
+      this.toastr.warning("", "Nothing to load");
+    }
   }
   load2(data: any): any {
     if (data && data.g) {
