@@ -6,6 +6,7 @@ import { defaultImport } from "../app.component.spec";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { MainService } from "../main.service";
 import { OptionsService } from "../options.service";
+import { EndInPipe } from "../end-in.pipe";
 
 describe("DarkMatterComponent", () => {
   let component: DarkMatterComponent;
@@ -13,7 +14,7 @@ describe("DarkMatterComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [DarkMatterComponent, FormatPipe],
+      declarations: [DarkMatterComponent, FormatPipe, EndInPipe],
       imports: defaultImport(),
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [MainService, OptionsService]
