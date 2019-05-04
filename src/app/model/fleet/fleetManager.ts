@@ -260,33 +260,30 @@ export class FleetManager implements ISalvable {
     const overNavalCap = ShipDesign.GetWantNavalCap(this.ships).gt(
       this.totalNavalCapacity
     );
-    if (this.autoReinforce && !this.fullStrength) {
-      if (!overNavalCap) {
-        this.make();
-      } else {
-        MainService.navalCapReinforceToast = true;
-      }
-    }
 
     const enemyManager = EnemyManager.getInstance();
     if (this.fightEnabled) {
-      let autoFightOk = this.fullStrength;
-      if (!this.fullStrength) {
+      let autoFightOk = this.fullStrength || !this.autoReinforce;
+
+      if (!this.fullStrength && this.autoReinforce) {
         const percent = isNaN(this.autoFightPer)
           ? 100
           : Math.max(Math.min(this.autoFightPer, 100), 0);
 
         const navalCapPercent = ShipDesign.GetTotalNavalCap(this.ships).div(
-          this.usedNavalCapacity
+          ShipDesign.GetWantNavalCap(this.ships)
         );
+
         // console.log(percent / 100 + "  " + navalCapPercent.toNumber());
         autoFightOk = Decimal.gte(navalCapPercent, percent / 100);
       }
 
+      // console.log("OK " + autoFightOk);
       if (
         !enemyManager.inBattle &&
         this.autoFight &&
-        (autoFightOk || !this.autoReinforce || overNavalCap)
+        !overNavalCap &&
+        autoFightOk
       ) {
         if (enemyManager.autoNuke) {
           enemyManager.nukeAction.reload();
@@ -304,6 +301,14 @@ export class FleetManager implements ISalvable {
       enemyManager.allEnemy.length > 0
     ) {
       enemyManager.attack(enemyManager.allEnemy[0]);
+    }
+
+    if (this.autoReinforce && !this.fullStrength) {
+      if (!overNavalCap) {
+        this.make();
+      } else {
+        MainService.navalCapReinforceToast = true;
+      }
     }
   }
   setFight() {
