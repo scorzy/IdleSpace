@@ -21,7 +21,9 @@ const sizeNames = [
   ["XL", "ExtraLarge"]
 ];
 export function getSizeName(size: Sizes, short = false): string {
-  return sizeNames[size - 1][short ? 0 : 1];
+  return size < 5
+    ? sizeNames[size - 1][short ? 0 : 1]
+    : (short ? "T " : "Titan ") + (size - 4);
 }
 export interface IModuleData {
   id: string;

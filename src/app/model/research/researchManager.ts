@@ -32,6 +32,7 @@ export class ResearchManager {
   cruiser: Research;
   battlecruiser: Research;
   battleship: Research;
+  titan: Research;
   //#endregion
   //#endregion
   researchPerSec = new Decimal(0);
@@ -56,6 +57,8 @@ export class ResearchManager {
     this.telescope = this.researches.find(r => r.id === "X1");
     this.energy = this.researches.find(r => r.id === "E");
     this.scavenger = this.researches.find(r => r.id === "SC");
+    this.titan = this.researches.find(r => r.id === "n");
+    this.titan.ratio = 1e3;
     this.missile = this.researches.find(r => r.id === "i");
     ResourceManager.getInstance().energyX1.productionMultiplier.additiveBonus.push(
       new Bonus(this.energy, 0.1)

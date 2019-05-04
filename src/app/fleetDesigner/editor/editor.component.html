@@ -117,16 +117,20 @@
                     [(ngModel)]="w.size"
                     (ngModelChange)="reload()"
                   >
-                    <option
-                      *ngFor="
-                        let si of (w.module.sizes
-                          | sizes: design.type.moduleCount);
-                        trackBy: getSizeId
-                      "
-                      [ngValue]="si"
-                      >{{ getSizeName(si) }}
-                      <!-- {{ si }} -->
-                    </option>
+                    <ng-container *ngIf="shipNum < 7; else titanModules">
+                      <option
+                        *ngFor="let si of w.module.sizes; trackBy: getSizeId"
+                        [ngValue]="si"
+                        >{{ getSizeName(si) }}
+                      </option>
+                    </ng-container>
+                    <ng-template #titanModules>
+                      <option
+                        *ngFor="let si of titanSizes; trackBy: getSizeId"
+                        [ngValue]="si"
+                        >{{ getSizeName(si) }}
+                      </option>
+                    </ng-template>
                   </select>
                 </div>
               </td>

@@ -198,6 +198,7 @@ export class ShipDesign implements ISalvable, IBuyable {
     data.i = this.id;
     if (!this.shipQuantity.eq(0)) data.q = this.shipQuantity;
     data.t = this.type.id;
+
     data.n = this.name;
     data.m = this.modules.filter(m => m.isValid()).map(m => m.getSave());
     if (this.quantity.gt(0)) data.q = this.quantity;
@@ -209,6 +210,11 @@ export class ShipDesign implements ISalvable, IBuyable {
     this.id = data.i;
     if ("q" in data) this.shipQuantity = Decimal.fromDecimal(data.q);
     this.type = ShipTypes.find(t => t.id === data.t);
+
+    if (this.type === null || this.type === undefined) {
+      const num = Number.parseInt(data.t, 10);
+      this.type = ShipType.GetTitan(num - 7);
+    }
     if (!this.type) this.type = DefenseTypes.find(t => t.id === data.t);
     this.name = data.n;
     if ("m" in data) {
