@@ -161,7 +161,7 @@ export class Resource extends AbstractUnlockable
         const modBonus = this.modStack.moreDrones.quantity
           .times(MOD_MORE)
           .plus(1);
-        console.log(modBonus.toNumber());
+        // console.log(modBonus.toNumber());
         this.limit = this.limit.times(modBonus);
       }
       this.limit = this.reloadCustomLimit(this.limit);

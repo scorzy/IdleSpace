@@ -115,6 +115,12 @@ export class Game {
         if (resEnded) {
           this.resourceManager.stopResource();
         }
+        //  Convert ShipyardProgress to actual progress
+        this.shipyard.addProgress(
+          this.resourceManager.shipyardProgress.quantity
+        );
+        this.resourceManager.shipyardProgress.quantity = new Decimal(0);
+        this.shipyard.reloadTimes();
       }
       if (n > 49) {
         console.log("This should not happening. Game loop is looping too much.");
@@ -132,11 +138,6 @@ export class Game {
         this.resourceManager.computing.quantity = new Decimal(0);
       }
       this.researchManager.reloadTimes();
-
-      //  Convert ShipyardProgress to actual progress
-      this.shipyard.addProgress(this.resourceManager.shipyardProgress.quantity);
-      this.resourceManager.shipyardProgress.quantity = new Decimal(0);
-      this.shipyard.reloadTimes();
 
       //  Convert SearchProgress to actual searching
       this.enemyManager.addProgress(
