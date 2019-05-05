@@ -17,6 +17,7 @@ export class SearchJob implements IJob {
   moreCrystal = false;
   moreHabitableSpace = false;
   moreHabitableSpace2 = false;
+  randomized = false;
   timeToComplete = Number.POSITIVE_INFINITY;
 
   level = 1;
@@ -37,6 +38,7 @@ export class SearchJob implements IJob {
     if ("mc" in data) job.moreCrystal = data.mc;
     if ("mh" in data) job.moreHabitableSpace = data.mh;
     if ("mh2" in data) job.moreHabitableSpace2 = data.mh2;
+    if ("ran" in data) job.randomized = data.ran;
 
     job.generateNameDescription();
     job.reload();
@@ -89,12 +91,15 @@ export class SearchJob implements IJob {
       case 3:
         this.name = "Search everything";
     }
+    if (this.randomized) this.name += " Randomized";
 
     this.description =
       "Level " + EnemyManager.romanPipe.transform(this.level) + " ";
-    if (this.moreMetal) this.description += "More Metal";
-    if (this.moreCrystal) this.description += "More Crystal";
-    if (this.moreHabitableSpace) this.description += "More Space";
+    if (this.moreMetal) this.description += "More Metal ";
+    if (this.moreCrystal) this.description += "More Crystal ";
+    if (this.moreHabitableSpace) this.description += "More Space ";
+    if (this.moreHabitableSpace2) this.description += "Even More Space ";
+    if (this.randomized) this.description += "Randomized ";
   }
 
   getName(): string {

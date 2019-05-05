@@ -134,6 +134,16 @@
                 ></clr-icon
               ></label>
             </div>
+            <div class="checkbox btn" *ngIf="rand">
+              <input
+                type="checkbox"
+                id="btn-rand"
+                [(ngModel)]="ms.game.enemyManager.randomized"
+              />
+              <label for="btn-rand">
+                <clr-icon shape="random"></clr-icon
+              ></label>
+            </div>
           </div>
 
           <clr-alert

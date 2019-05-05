@@ -59,6 +59,7 @@ export class EnemyManager implements ISalvable {
   moreCrystal = false;
   moreHabitable = false;
   moreHabitable2 = false;
+  randomized = false;
 
   nukeAction: NukeAction;
   missileDamageBonus = new BonusStack();
@@ -372,6 +373,7 @@ export class EnemyManager implements ISalvable {
       (this.moreMetal ? 1 : 0) +
       (this.moreCrystal ? 1 : 0) +
       (this.moreHabitable ? 1 : 0) +
+      (this.randomized ? 1 : 0) +
       (this.moreHabitable2 ? 1 : 0);
     return new Decimal(5e3).times(Decimal.pow(1.2, level - 1));
   }
@@ -385,6 +387,7 @@ export class EnemyManager implements ISalvable {
     searchJob.moreCrystal = this.moreCrystal;
     searchJob.moreHabitableSpace = this.moreHabitable;
     searchJob.moreHabitableSpace2 = this.moreHabitable2;
+    searchJob.randomized = this.randomized;
     searchJob.total = this.getRequiredSearch(level);
     searchJob.generateNameDescription();
     this.searchJobs.push(searchJob);

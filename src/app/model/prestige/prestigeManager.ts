@@ -71,7 +71,8 @@ export class PrestigeManager implements ISalvable {
       { from: 29, to: 47 },
       { from: 30, to: 48 },
       { from: 32, to: 49 },
-      { from: 17, to: 50 }
+      { from: 17, to: 50 },
+      { from: 14, to: 51 }
     ]);
 
     this.maxPrestigePoints = this.visSkills.length;
@@ -128,7 +129,8 @@ export class PrestigeManager implements ISalvable {
       new Skill(47, AllSkillEffects.MOD_CPU),
       new Skill(48, AllSkillEffects.MOD_WORKER),
       new Skill(49, AllSkillEffects.MOD_SEARCH),
-      new Skill(50, AllSkillEffects.SEARCH_HAB2)
+      new Skill(50, AllSkillEffects.SEARCH_HAB2),
+      new Skill(51, AllSkillEffects.SEARCH_RANDOM)
     ];
   }
   buySkill(skillId: number, fromSave = false): boolean {

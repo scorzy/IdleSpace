@@ -34,6 +34,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
   cry = false;
   hab = false;
   hab2 = false;
+  rand = false;
   automatorTab = false;
   deleteAllModal = false;
   EnemyManager = EnemyManager;
@@ -58,6 +59,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
     this.cry = AllSkillEffects.SEARCH_CRY.numOwned > 0;
     this.hab = AllSkillEffects.SEARCH_HAB.numOwned > 0;
     this.hab2 = AllSkillEffects.SEARCH_HAB2.numOwned > 0;
+    this.rand = AllSkillEffects.SEARCH_RANDOM.numOwned > 0;
 
     this.validate();
 

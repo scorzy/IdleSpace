@@ -21,9 +21,13 @@
     <clr-icon [attr.shape]="en.shape"></clr-icon>
 
     {{ en.name }}
-    <span class="badge badge-info" *ngIf="en.bonusCount > 0">{{
+    <!-- <span class="badge badge-info" *ngIf="en.bonusCount > 0">{{
       en.bonusCount
-    }}</span>
+    }}</span> -->
+
+    <span class="badge badge-info">{{ en.baseMining }}</span>
+    <span class="badge badge-success">{{ en.baseCrystal }}</span>
+    <span class="badge badge-warning">{{ en.baseHabitable }}</span>
 
     <span class="level">
       {{ en.level }}

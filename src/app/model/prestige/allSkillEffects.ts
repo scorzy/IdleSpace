@@ -48,6 +48,7 @@ export class AllSkillEffects {
   static readonly SEARCH_CRY = new SkillEffect();
   static readonly SEARCH_HAB = new SkillEffect();
   static readonly SEARCH_HAB2 = new SkillEffect();
+  static readonly SEARCH_RANDOM = new SkillEffect();
   //#endregion
   //#region Resource Gain Multi
   static readonly ENERGY_MULTI = new SkillEffect();
@@ -226,7 +227,9 @@ export class AllSkillEffects {
     };
     AllSkillEffects.DOUBLE_MODDING.getDescription = (num = 1) => {
       return (
-        "+ " + MainService.formatPipe.transform(10 * num) + "%\n Modding points"
+        "+ " +
+        MainService.formatPipe.transform(100 * num) +
+        "%\n Modding points"
       );
     };
     //#endregion
@@ -285,6 +288,18 @@ export class AllSkillEffects {
       );
     };
     AllSkillEffects.SEARCH_HAB2.name = "Prestige search habitable space 2";
+    resMan.searchX1.productionMultiplier.additiveBonus.push(
+      new Bonus(AllSkillEffects.SEARCH_HAB2, 0.5, true)
+    );
+
+    AllSkillEffects.SEARCH_RANDOM.getDescription = (num = 1) => {
+      return (
+        "+ " +
+        MainService.formatPipe.transform(50 * num) +
+        "% Searching\ncan search for randomized districts"
+      );
+    };
+    AllSkillEffects.SEARCH_RANDOM.name = "Prestige search random";
     resMan.searchX1.productionMultiplier.additiveBonus.push(
       new Bonus(AllSkillEffects.SEARCH_HAB2, 0.5, true)
     );
@@ -372,7 +387,8 @@ export class AllSkillEffects {
       AllSkillEffects.MOD_ALLOY,
       AllSkillEffects.MOD_WORKER,
       AllSkillEffects.MOD_SEARCH,
-      AllSkillEffects.SEARCH_HAB2
+      AllSkillEffects.SEARCH_HAB2,
+      AllSkillEffects.SEARCH_RANDOM
     ];
     if (!prestige) {
       AllSkillEffects.effectList.forEach(e => {

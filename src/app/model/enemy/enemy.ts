@@ -40,7 +40,12 @@ export class Enemy {
   moreCrystal = false;
   moreHabitableSpace = false;
   moreHabitableSpace2 = false;
+  randomized = true;
   bonusCount = 0;
+
+  baseMining = 2;
+  baseCrystal = 2;
+  baseHabitable = 3;
 
   static generate(searchJob: SearchJob): Enemy {
     const enemy = new Enemy();
@@ -49,6 +54,20 @@ export class Enemy {
     enemy.moreCrystal = searchJob.moreCrystal;
     enemy.moreHabitableSpace = searchJob.moreHabitableSpace;
     enemy.moreHabitableSpace2 = searchJob.moreHabitableSpace2;
+    enemy.randomized = searchJob.randomized;
+
+    if (enemy.randomized) {
+      enemy.baseMining = Math.min(random(0, 7), 7);
+      enemy.baseCrystal = Math.min(
+        random(0, 7 - enemy.baseMining),
+        7 - enemy.baseMining
+      );
+      enemy.baseHabitable = 7 - enemy.baseMining - enemy.baseCrystal;
+    }
+    if (enemy.moreMetal) enemy.baseMining++;
+    if (enemy.moreCrystal) enemy.baseCrystal++;
+    if (enemy.moreHabitableSpace) enemy.baseHabitable++;
+    if (enemy.moreHabitableSpace2) enemy.baseHabitable++;
 
     for (let n = 1; n < 4; n++) {
       if (Math.random() < enemy.level / (enemy.level + 100 * n)) {
@@ -222,6 +241,10 @@ export class Enemy {
     if ("mc" in data) enemy.moreCrystal = data.mc;
     if ("mh" in data) enemy.moreHabitableSpace = data.mh;
     if ("mh2" in data) enemy.moreHabitableSpace2 = data.mh2;
+    if ("rand" in data) enemy.randomized = data.rand;
+    if ("bm" in data) enemy.baseMining = data.bm;
+    if ("bc" in data) enemy.baseCrystal = data.bc;
+    if ("bh" in data) enemy.baseHabitable = data.bh;
 
     if ("s" in data) {
       for (const shipData of data.s) {
@@ -313,7 +336,7 @@ export class Enemy {
         otherZones = shuffle(otherZones);
 
         // Metal
-        const metalCount = 2 + (this.moreMetal ? 1 : 0);
+        const metalCount = this.baseMining;
         for (let j = 0; j < metalCount; j++) {
           const rand = otherZones.pop();
           rand.reward = Reward.MetalMine;
@@ -321,7 +344,7 @@ export class Enemy {
         }
 
         // Crystal
-        const crystalCount = 2 + (this.moreCrystal ? 1 : 0);
+        const crystalCount = this.baseCrystal;
         for (let j = 0; j < crystalCount; j++) {
           const rand = otherZones.pop();
           rand.reward = Reward.CrystalMine;
@@ -329,10 +352,7 @@ export class Enemy {
         }
 
         // Habitable Space
-        const spaceCount =
-          3 +
-          (this.moreHabitableSpace ? 1 : 0) +
-          (this.moreHabitableSpace2 ? 1 : 0);
+        const spaceCount = this.baseHabitable;
         for (let j = 0; j < spaceCount; j++) {
           if (otherZones.length > 0) {
             const rand = otherZones.pop();
@@ -366,6 +386,10 @@ export class Enemy {
     if (this.moreCrystal) data.mc = this.moreCrystal;
     if (this.moreHabitableSpace) data.mh = this.moreHabitableSpace;
     if (this.moreHabitableSpace2) data.mh2 = this.moreHabitableSpace2;
+    if (this.randomized) data.rand = this.randomized;
+    if (this.baseMining !== 2) data.bm = this.baseMining;
+    if (this.baseCrystal !== 2) data.bc = this.baseCrystal;
+    if (this.baseHabitable !== 2) data.bh = this.baseHabitable;
 
     return data;
   }
