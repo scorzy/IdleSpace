@@ -47,7 +47,7 @@ export class DarkMatterManager implements ISalvable {
     const periods: Array<[number, string, string]> = [
       [3600 * 24, "Day", "wd"],
       [3600 * 24 * 7, "Week", "ww"],
-      [3600 * 24 * 7 * 30, "Month", "wmo"],
+      [3600 * 24 * 30, "Month", "wmo"],
       [3600 * 24 * 365, "Year", "wy"]
     ];
     periods.forEach(period => {
