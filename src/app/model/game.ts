@@ -213,10 +213,10 @@ export class Game {
       this.prestigeManager.totalPrestige,
       this.enemyManager.maxLevel - 1
     );
-    this.prestigeManager.totalPrestige = Math.min(
-      this.prestigeManager.totalPrestige,
-      this.prestigeManager.maxPrestigePoints
-    );
+    // this.prestigeManager.totalPrestige = Math.min(
+    //   this.prestigeManager.totalPrestige,
+    //   this.prestigeManager.maxPrestigePoints
+    // );
 
     this.init(true);
     if (this.resetPrestige) {

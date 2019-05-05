@@ -72,7 +72,12 @@ export class PrestigeManager implements ISalvable {
       { from: 30, to: 48 },
       { from: 32, to: 49 },
       { from: 17, to: 50 },
-      { from: 14, to: 51 }
+      { from: 14, to: 51 },
+      { from: 33, to: 52 },
+      { from: 21, to: 53 },
+      { from: 14, to: 54 },
+      { from: 54, to: 55 },
+      { from: 55, to: 56 }
     ]);
 
     this.maxPrestigePoints = this.visSkills.length;
@@ -130,7 +135,12 @@ export class PrestigeManager implements ISalvable {
       new Skill(48, AllSkillEffects.MOD_WORKER),
       new Skill(49, AllSkillEffects.MOD_SEARCH),
       new Skill(50, AllSkillEffects.SEARCH_HAB2),
-      new Skill(51, AllSkillEffects.SEARCH_RANDOM)
+      new Skill(51, AllSkillEffects.SEARCH_RANDOM),
+      new Skill(52, AllSkillEffects.RESEARCH_MULTI),
+      new Skill(53, AllSkillEffects.COMPUTING_MULTI),
+      new Skill(54, AllSkillEffects.SEARCH_MULTI),
+      new Skill(55, AllSkillEffects.SEARCH_MULTI),
+      new Skill(56, AllSkillEffects.SEARCH_MULTI)
     ];
   }
   buySkill(skillId: number, fromSave = false): boolean {
@@ -145,7 +155,7 @@ export class PrestigeManager implements ISalvable {
     const effect = AllSkillEffects.effectList.find(
       eff => eff.id === skill.effectId
     );
-    const toAdd = Math.pow(2, this.ascension);
+    const toAdd = Math.max(2 * this.ascension, 1);
     effect.numOwned += toAdd;
     effect.afterBuy();
     this.unlockOther(skill);
