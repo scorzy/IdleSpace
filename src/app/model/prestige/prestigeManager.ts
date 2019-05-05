@@ -22,10 +22,7 @@ export class PrestigeManager implements ISalvable {
     this.visSkills = new DataSet(this.getDataset());
 
     this.visEdge = new DataSet([
-      { from: 1, to: 2 },
       { from: 2, to: 3 },
-      { from: 2, to: 4 },
-      { from: 1, to: 4 },
       { from: 4, to: 6 },
       { from: 3, to: 7 },
       { from: 6, to: 8 },
@@ -57,7 +54,7 @@ export class PrestigeManager implements ISalvable {
       { from: 39, to: 1 },
       { from: 39, to: 2 },
       { from: 39, to: 4 },
-      { from: 8, to: 36 },
+      { from: 35, to: 36 },
       { from: 11, to: 37 },
       { from: 37, to: 38 },
       { from: 8, to: 35 },
@@ -77,7 +74,11 @@ export class PrestigeManager implements ISalvable {
       { from: 21, to: 53 },
       { from: 14, to: 54 },
       { from: 54, to: 55 },
-      { from: 55, to: 56 }
+      { from: 55, to: 56 },
+      { from: 51, to: 57 },
+      { from: 36, to: 58 },
+      { from: 58, to: 59 },
+      { from: 56, to: 60 }
     ]);
 
     this.maxPrestigePoints = this.visSkills.length;
@@ -119,7 +120,7 @@ export class PrestigeManager implements ISalvable {
       new Skill(32, AllSkillEffects.PLUS_SEARCH),
       new Skill(33, AllSkillEffects.RESEARCH_MULTI),
       new Skill(34, AllSkillEffects.MODULE_LEVEL),
-      new Skill(35, AllSkillEffects.DOUBLE_BATTLE_GAIN, true),
+      new Skill(35, AllSkillEffects.DOUBLE_BATTLE_GAIN),
       new Skill(36, AllSkillEffects.DOUBLE_BATTLE_GAIN),
       new Skill(37, AllSkillEffects.DOUBLE_MISSILE),
       new Skill(38, AllSkillEffects.DOUBLE_MISSILE),
@@ -140,7 +141,11 @@ export class PrestigeManager implements ISalvable {
       new Skill(53, AllSkillEffects.COMPUTING_MULTI),
       new Skill(54, AllSkillEffects.SEARCH_MULTI),
       new Skill(55, AllSkillEffects.SEARCH_MULTI),
-      new Skill(56, AllSkillEffects.SEARCH_MULTI)
+      new Skill(56, AllSkillEffects.SEARCH_MULTI),
+      new Skill(57, AllSkillEffects.DOUBLE_DISTRICTS),
+      new Skill(58, AllSkillEffects.DOUBLE_DISTRICTS),
+      new Skill(59, AllSkillEffects.DOUBLE_DISTRICTS),
+      new Skill(60, AllSkillEffects.DOUBLE_DISTRICTS)
     ];
   }
   buySkill(skillId: number, fromSave = false): boolean {
@@ -234,6 +239,7 @@ export class PrestigeManager implements ISalvable {
   load(data: any): boolean {
     if ("t" in data) this.totalPrestige = data.t;
     if ("a" in data) this.ascension = data.a;
+    this.ascension = 2;
     if ("o" in data) {
       data.o.forEach(o => this.buySkill(o, true));
     }

@@ -49,6 +49,7 @@ export class AllSkillEffects {
   static readonly SEARCH_HAB = new SkillEffect();
   static readonly SEARCH_HAB2 = new SkillEffect();
   static readonly SEARCH_RANDOM = new SkillEffect();
+  static readonly DOUBLE_DISTRICTS = new SkillEffect();
   //#endregion
   //#region Resource Gain Multi
   static readonly ENERGY_MULTI = new SkillEffect();
@@ -303,6 +304,12 @@ export class AllSkillEffects {
     resMan.searchX1.productionMultiplier.additiveBonus.push(
       new Bonus(AllSkillEffects.SEARCH_HAB2, 0.5, true)
     );
+
+    AllSkillEffects.DOUBLE_DISTRICTS.getDescription = (num = 1) => {
+      return (
+        "+ " + MainService.formatPipe.transform(100 * num) + " districts gain"
+      );
+    };
     //#endregion
     //#region Gain Multi
     AllSkillEffects.ENERGY_MULTI.getDescription = (num = 1) => {
@@ -388,7 +395,8 @@ export class AllSkillEffects {
       AllSkillEffects.MOD_WORKER,
       AllSkillEffects.MOD_SEARCH,
       AllSkillEffects.SEARCH_HAB2,
-      AllSkillEffects.SEARCH_RANDOM
+      AllSkillEffects.SEARCH_RANDOM,
+      AllSkillEffects.DOUBLE_DISTRICTS
     ];
     if (!prestige) {
       AllSkillEffects.effectList.forEach(e => {

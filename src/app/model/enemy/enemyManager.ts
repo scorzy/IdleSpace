@@ -227,7 +227,9 @@ export class EnemyManager implements ISalvable {
       prestigeMulti = prestigeMulti.times(
         AllSkillEffects.DOUBLE_BATTLE_GAIN.numOwned * 2 + 1
       );
-      const gainDistrict = prestigeMulti.times(this.currentEnemy.level);
+      const gainDistrict = prestigeMulti
+        .times(this.currentEnemy.level)
+        .times(AllSkillEffects.DOUBLE_DISTRICTS.numOwned + 1);
       switch (reward) {
         case Reward.HabitableSpace:
           if (addSpace) {
