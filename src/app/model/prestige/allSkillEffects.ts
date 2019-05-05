@@ -47,6 +47,7 @@ export class AllSkillEffects {
   static readonly SEARCH_METAL = new SkillEffect();
   static readonly SEARCH_CRY = new SkillEffect();
   static readonly SEARCH_HAB = new SkillEffect();
+  static readonly SEARCH_HAB2 = new SkillEffect();
   //#endregion
   //#region Resource Gain Multi
   static readonly ENERGY_MULTI = new SkillEffect();
@@ -275,6 +276,18 @@ export class AllSkillEffects {
     resMan.searchX1.productionMultiplier.additiveBonus.push(
       new Bonus(AllSkillEffects.SEARCH_HAB, 0.5, true)
     );
+
+    AllSkillEffects.SEARCH_HAB2.getDescription = (num = 1) => {
+      return (
+        "+ " +
+        MainService.formatPipe.transform(50 * num) +
+        "% Searching\ncan search for even more habitable space"
+      );
+    };
+    AllSkillEffects.SEARCH_HAB2.name = "Prestige search habitable space 2";
+    resMan.searchX1.productionMultiplier.additiveBonus.push(
+      new Bonus(AllSkillEffects.SEARCH_HAB2, 0.5, true)
+    );
     //#endregion
     //#region Gain Multi
     AllSkillEffects.ENERGY_MULTI.getDescription = (num = 1) => {
@@ -358,7 +371,8 @@ export class AllSkillEffects {
       AllSkillEffects.MOD_CPU,
       AllSkillEffects.MOD_ALLOY,
       AllSkillEffects.MOD_WORKER,
-      AllSkillEffects.MOD_SEARCH
+      AllSkillEffects.MOD_SEARCH,
+      AllSkillEffects.SEARCH_HAB2
     ];
     if (!prestige) {
       AllSkillEffects.effectList.forEach(e => {

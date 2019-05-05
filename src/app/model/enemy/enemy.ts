@@ -39,6 +39,7 @@ export class Enemy {
   moreMetal = false;
   moreCrystal = false;
   moreHabitableSpace = false;
+  moreHabitableSpace2 = false;
   bonusCount = 0;
 
   static generate(searchJob: SearchJob): Enemy {
@@ -47,6 +48,7 @@ export class Enemy {
     enemy.moreMetal = searchJob.moreMetal;
     enemy.moreCrystal = searchJob.moreCrystal;
     enemy.moreHabitableSpace = searchJob.moreHabitableSpace;
+    enemy.moreHabitableSpace2 = searchJob.moreHabitableSpace2;
 
     for (let n = 1; n < 4; n++) {
       if (Math.random() < enemy.level / (enemy.level + 100 * n)) {
@@ -219,6 +221,7 @@ export class Enemy {
     if ("mm" in data) enemy.moreMetal = data.mm;
     if ("mc" in data) enemy.moreCrystal = data.mc;
     if ("mh" in data) enemy.moreHabitableSpace = data.mh;
+    if ("mh2" in data) enemy.moreHabitableSpace2 = data.mh2;
 
     if ("s" in data) {
       for (const shipData of data.s) {
@@ -251,7 +254,8 @@ export class Enemy {
     this.bonusCount =
       (this.moreMetal ? 1 : 0) +
       (this.moreCrystal ? 1 : 0) +
-      (this.moreHabitableSpace ? 1 : 0);
+      (this.moreHabitableSpace ? 1 : 0) +
+      (this.moreHabitableSpace2 ? 1 : 0);
   }
 
   setOrder() {
@@ -308,14 +312,6 @@ export class Enemy {
         for (let k = 0; k < 10; k++) otherZones.push(this.zones[i - k]);
         otherZones = shuffle(otherZones);
 
-        // Habitable Space
-        const spaceCount = 3 + (this.moreHabitableSpace ? 1 : 0);
-        for (let j = 0; j < spaceCount; j++) {
-          const rand = otherZones.pop();
-          rand.reward = Reward.HabitableSpace;
-          otherZones = otherZones.filter(z => !z.reward);
-        }
-
         // Metal
         const metalCount = 2 + (this.moreMetal ? 1 : 0);
         for (let j = 0; j < metalCount; j++) {
@@ -330,6 +326,19 @@ export class Enemy {
           const rand = otherZones.pop();
           rand.reward = Reward.CrystalMine;
           otherZones = otherZones.filter(z => !z.reward);
+        }
+
+        // Habitable Space
+        const spaceCount =
+          3 +
+          (this.moreHabitableSpace ? 1 : 0) +
+          (this.moreHabitableSpace2 ? 1 : 0);
+        for (let j = 0; j < spaceCount; j++) {
+          if (otherZones.length > 0) {
+            const rand = otherZones.pop();
+            rand.reward = Reward.HabitableSpace;
+            otherZones = otherZones.filter(z => !z.reward);
+          }
         }
       }
 
@@ -356,6 +365,7 @@ export class Enemy {
     if (this.moreMetal) data.mm = this.moreMetal;
     if (this.moreCrystal) data.mc = this.moreCrystal;
     if (this.moreHabitableSpace) data.mh = this.moreHabitableSpace;
+    if (this.moreHabitableSpace2) data.mh2 = this.moreHabitableSpace2;
 
     return data;
   }

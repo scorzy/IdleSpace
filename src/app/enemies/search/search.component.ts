@@ -33,9 +33,11 @@ export class SearchComponent implements OnInit, AfterViewInit {
   metal = false;
   cry = false;
   hab = false;
+  hab2 = false;
   automatorTab = false;
   deleteAllModal = false;
   EnemyManager = EnemyManager;
+  bonusCount = 0;
 
   private subscriptions: Subscription[] = [];
 
@@ -55,6 +57,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
     this.metal = AllSkillEffects.SEARCH_METAL.numOwned > 0;
     this.cry = AllSkillEffects.SEARCH_CRY.numOwned > 0;
     this.hab = AllSkillEffects.SEARCH_HAB.numOwned > 0;
+    this.hab2 = AllSkillEffects.SEARCH_HAB2.numOwned > 0;
 
     this.validate();
 
@@ -85,6 +88,11 @@ export class SearchComponent implements OnInit, AfterViewInit {
     this.limited =
       this.ms.game.enemyManager.getTotalEnemy() < MAX_ENEMY_LIST_SIZE;
     this.valid = this.isValid();
+    this.bonusCount =
+      (this.ms.game.enemyManager.moreMetal ? 1 : 0) +
+      (this.ms.game.enemyManager.moreCrystal ? 1 : 0) +
+      (this.ms.game.enemyManager.moreHabitable ? 1 : 0) +
+      (this.ms.game.enemyManager.moreHabitable2 ? 1 : 0);
   }
   isValid(): boolean {
     return (
