@@ -25,9 +25,15 @@
       en.bonusCount
     }}</span> -->
 
-    <span class="badge badge-info">{{ en.baseMining }}</span>
-    <span class="badge badge-success">{{ en.baseCrystal }}</span>
-    <span class="badge badge-warning">{{ en.baseHabitable }}</span>
+    <span *ngIf="en.baseMining > 0" class="badge badge-info">{{
+      en.baseMining
+    }}</span>
+    <span *ngIf="en.baseCrystal > 0" class="badge badge-success">{{
+      en.baseCrystal
+    }}</span>
+    <span *ngIf="en.baseHabitable > 0" class="badge badge-warning">{{
+      en.baseHabitable
+    }}</span>
 
     <span class="level">
       {{ en.level }}
