@@ -27,6 +27,7 @@ export class AllSkillEffects {
   static readonly MODULE_LEVEL = new SkillEffect();
   static readonly DOUBLE_BATTLE_GAIN = new SkillEffect();
   static readonly DOUBLE_MISSILE = new SkillEffect();
+  static readonly MULTI_FACTORY = new SkillEffect();
   //#endregion
   //#region Robot Modding
   static readonly FACTORY_BONUS = new SkillEffect();
@@ -207,6 +208,17 @@ export class AllSkillEffects {
       );
     };
     AllSkillEffects.DOUBLE_MISSILE.name = "Missile Prestige";
+    AllSkillEffects.MULTI_FACTORY.getDescription = (num = 1) => {
+      return (
+        "%Missile Factory yield and consume\n" +
+        MainService.formatPipe.transform(250 * num) +
+        "% more resource."
+      );
+    };
+    AllSkillEffects.DOUBLE_MISSILE.name = "Missile Factory Prestige";
+    resMan.missileX1.productionMultiplier.multiplicativeBonus.push(
+      new Bonus(AllSkillEffects.DOUBLE_MISSILE, 2.5)
+    );
     //#endregion
     //#region Robot Modding
     AllSkillEffects.FACTORY_BONUS.getDescription = (num = 1) => {
@@ -396,7 +408,8 @@ export class AllSkillEffects {
       AllSkillEffects.MOD_SEARCH,
       AllSkillEffects.SEARCH_HAB2,
       AllSkillEffects.SEARCH_RANDOM,
-      AllSkillEffects.DOUBLE_DISTRICTS
+      AllSkillEffects.DOUBLE_DISTRICTS,
+      AllSkillEffects.MULTI_FACTORY
     ];
     if (!prestige) {
       AllSkillEffects.effectList.forEach(e => {
