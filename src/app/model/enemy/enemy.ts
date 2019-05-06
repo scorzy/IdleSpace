@@ -88,16 +88,18 @@ export class Enemy {
     enemy.generateIcon();
     const moduleLevelMulti = sample([1, 1.05, 1.1]);
     const moduleLevel = Math.floor(
-      10 * Math.pow(1.1, level - 1) * moduleLevelMulti
+      10 * Math.pow(1.08, level - 1) * moduleLevelMulti
     );
     let navalCap = Math.ceil(
       (MAX_NAVAL_CAPACITY * level) /
-        (level + 500) /
+        (level + 400) /
         (1 + (moduleLevelMulti - 1) * 0.9)
     );
-
+    if (level < 20) {
+      navalCap = navalCap * 0.8;
+    }
     const maxShipTye = Math.floor(
-      Math.min(Math.max(Math.log(level) / Math.log(1.8), 1), ShipTypes.length)
+      Math.min(Math.max(Math.log(level) / Math.log(2), 1), ShipTypes.length)
     );
 
     //#region Ships
@@ -127,7 +129,7 @@ export class Enemy {
     enemy.shipsDesign.forEach(sd => {
       const numOfShips = Math.max(
         Math.floor(
-          (navalCap * sd.weight) / totalWeight / sd.type.enemyNavalCapacity
+          (navalCap * sd.weight) / totalWeight / sd.type.navalCapacity
         ),
         1
       );
