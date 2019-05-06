@@ -84,7 +84,7 @@ export class Shipyard implements ISalvable {
       if (j.newDesign) {
         const num = j.design.quantity.plus(this.getTotalShips(j.design, index));
         j.total = j.newDesign.price
-          .minus(j.design.price.div(2))
+          .minus(j.design.price)
           .max(1)
           .times(num);
       }
