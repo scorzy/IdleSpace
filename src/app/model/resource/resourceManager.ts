@@ -17,6 +17,9 @@ import { Bonus } from "../bonus/bonus";
 
 const MINE_EXP = 1.5;
 const BUILDING_EXP = 2;
+const CIVILIAN_SHIPS_EXP = 1.1;
+const CIVILIAN_SHIPS_PRICE = 1e6;
+const CIVILIAN_SHIPS_NAVCAP = -1e3;
 
 export class ResourceManager implements ISalvable {
   private static instance: ResourceManager;
@@ -58,6 +61,12 @@ export class ResourceManager implements ISalvable {
   metalM: Resource;
   crystalM: Resource;
   energyM: Resource;
+
+  terraformer: Resource;
+  scienceShip: Resource;
+  solarSatellite: Resource;
+  beamSatellite: Resource;
+
   // #endregion
   //#region group
   materials: Resource[];
@@ -66,6 +75,7 @@ export class ResourceManager implements ISalvable {
   tier1: Resource[];
   tier2: Resource[];
   matNav: Resource[];
+  civilianShips: Resource[];
 
   limited: Resource[];
   //#endregion
@@ -115,6 +125,11 @@ export class ResourceManager implements ISalvable {
 
     this.missile = new Resource("i");
     this.missile.shape = "missile";
+
+    this.terraformer = new Resource("te");
+    this.scienceShip = new Resource("sc");
+    this.solarSatellite = new Resource("ss");
+    this.beamSatellite = new Resource("bs");
     //#endregion
     //#region Declarations
 
@@ -232,6 +247,7 @@ export class ResourceManager implements ISalvable {
       this.energyM,
       this.missileX1
     ];
+    this.civilianShips = [this.terraformer, this.scienceShip];
     //#endregion
     //#region Buy
     this.metalX1.generateBuyAction(
@@ -310,7 +326,31 @@ export class ResourceManager implements ISalvable {
     );
     this.energyX1.productionMultiplier.additiveBonus.push(
       new Bonus(this.energyM, 1, true)
-    );
+    )
+
+    //
+    //  Civilian Ships
+    //
+    ;[
+      this.terraformer,
+      this.scienceShip,
+      this.solarSatellite,
+      this.beamSatellite
+    ].forEach(s => {
+      s.generateBuyAction(
+        new MultiPrice([
+          new Price(this.alloy, CIVILIAN_SHIPS_PRICE, CIVILIAN_SHIPS_EXP)
+        ])
+      );
+      this.navalCap.addGenerator(s, CIVILIAN_SHIPS_NAVCAP);
+      s.getQuantity = () => {
+        return s.quantity.times(s.operativity / 100);
+      };
+    });
+
+    // this.scienceShip.getQuantity = () => {
+    //   return this.scienceShip.quantity.times(this.scienceShip.operativity / 100);
+    // };
 
     //#endregion
     //#region Mine
@@ -518,25 +558,6 @@ export class ResourceManager implements ISalvable {
 
     //#endregion
     //#region Storage
-    // ;[this.metal, this.crystal, this.alloy].forEach(m => {
-    //   m.isLimited = true;
-    //   const buyExpansion1 = new Action(
-    //     "L",
-    //     new MultiPrice([
-    //       new Price(m, 1800, 2),
-    //       new Price(this.habitableSpace, 1, MINE_EXP)
-    //     ])
-    //   );
-    //   buyExpansion1.afterBuy = () => {
-    //     m.reloadLimit();
-    //   };
-    //   buyExpansion1.name = m.name + " Storage";
-    //   m.actions.push(buyExpansion1);
-    //   m.limitStorage = buyExpansion1;
-    //   m.exponentialStorage = true;
-    //   m.alwaysActive = true;
-    //   m.workerPerMine = new Decimal(2000);
-    // });
 
     //  Energy
     this.energy.isLimited = true;
@@ -625,7 +646,9 @@ export class ResourceManager implements ISalvable {
       this.crystalM,
       this.energyM,
       this.missile,
-      this.missileX1
+      this.missileX1,
+      this.terraformer,
+      this.scienceShip
     ];
     this.allResources.forEach(r => r.generateRefundActions());
     this.matGroup = new ResourceGroup(
@@ -638,7 +661,8 @@ export class ResourceManager implements ISalvable {
       this.matGroup,
       new ResourceGroup("1", "Robots", "robot", this.tier1),
       new ResourceGroup("2", "Buildings", "building", this.tier2),
-      new ResourceGroup("4", "Districts", "world", this.districts)
+      new ResourceGroup("4", "Districts", "world", this.districts),
+      new ResourceGroup("5", "Civilian Ships", "world", this.civilianShips)
     ];
     this.tierGroups[0].action1Name = "Buy Storage";
     this.tierGroups[1].action1Name = "Buy Robots";
