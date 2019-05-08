@@ -15,6 +15,42 @@
         integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
         crossorigin="anonymous"></script>
 
+        <script>
+          preventScroll = function () {
+            setTimeout(function () {
+              $('.nav-content, .content-area, .app-header').on('DOMMouseScroll mousewheel', function (ev) {
+                body = $('body')[0]
+                var $this = $(this),
+                  scrollTop = this.scrollTop,
+                  scrollHeight = this.scrollHeight,
+                  height = $this.innerHeight(),
+                  delta = (ev.type == 'DOMMouseScroll' ?
+                    ev.originalEvent.detail * -40 :
+                    ev.originalEvent.wheelDelta),
+                  up = delta > 0;
+
+                var prevent = function () {
+                  ev.stopPropagation();
+                  ev.preventDefault();
+                  ev.returnValue = false;
+                  return false;
+                }
+
+                if (!up && -delta > scrollHeight - height - scrollTop) {
+                  // Scrolling down, but this will take us past the bottom.
+                  $this.scrollTop(scrollHeight);
+                  return prevent();
+                } else if (up && delta > scrollTop) {
+                  // Scrolling up, but this will take us past the top.
+                  $this.scrollTop(0);
+                  return prevent();
+                }
+              }
+              )
+            }
+              , 0)
+          };
+        </script>
 
     <style>
       body {
@@ -60,41 +96,6 @@
       gtag("config", "UA-108006360-3")
     </script>
 
-    <script>
-      preventScroll = function () {
-        setTimeout(function () {
-          $('.nav-content, .content-area, .app-header').on('DOMMouseScroll mousewheel', function (ev) {
-            body = $('body')[0]
-            var $this = $(this),
-              scrollTop = this.scrollTop,
-              scrollHeight = this.scrollHeight,
-              height = $this.innerHeight(),
-              delta = (ev.type == 'DOMMouseScroll' ?
-                ev.originalEvent.detail * -40 :
-                ev.originalEvent.wheelDelta),
-              up = delta > 0;
 
-            var prevent = function () {
-              ev.stopPropagation();
-              ev.preventDefault();
-              ev.returnValue = false;
-              return false;
-            }
-
-            if (!up && -delta > scrollHeight - height - scrollTop) {
-              // Scrolling down, but this will take us past the bottom.
-              $this.scrollTop(scrollHeight);
-              return prevent();
-            } else if (up && delta > scrollTop) {
-              // Scrolling up, but this will take us past the top.
-              $this.scrollTop(0);
-              return prevent();
-            }
-          }
-          )
-        }
-          , 0)
-      };
-    </script>
-  <script type="text/javascript" src="runtime.26209474bfa8dc87a77c.js"></script><script type="text/javascript" src="polyfills.b48463972f859ef8ea7f.js"></script><script type="text/javascript" src="scripts.ac38d7b6227d2a574740.js"></script><script type="text/javascript" src="main.2cf2d9af2b02f4e32415.js"></script></body>
+  <script type="text/javascript" src="runtime.26209474bfa8dc87a77c.js"></script><script type="text/javascript" src="polyfills.b48463972f859ef8ea7f.js"></script><script type="text/javascript" src="scripts.ac38d7b6227d2a574740.js"></script><script type="text/javascript" src="main.cc63a9d78f76401414b9.js"></script></body>
 </html>
