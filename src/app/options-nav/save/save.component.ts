@@ -53,4 +53,7 @@ export class SaveComponent implements OnInit, OnDestroy, AfterViewInit {
   changeAutoSave() {
     this.ms.startAutoSave();
   }
+  submit() {
+    this.ms.sendKong(true);
+  }
 }
