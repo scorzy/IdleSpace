@@ -17,7 +17,7 @@ import { ResourceQuantitySorter } from "src/app/model/utility/resourceQuantitySo
 import { LimitResourceSorter } from "src/app/model/utility/limitResourceSorter";
 import { ExpansionResourceSorter } from "src/app/model/utility/expansionResourceSorter";
 import { Action } from "src/app/model/actions/abstractAction";
-import { preventScroll } from "src/app/app.component";
+declare let preventScroll;
 
 @Component({
   selector: "app-resource-group",

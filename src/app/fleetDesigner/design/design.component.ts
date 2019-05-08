@@ -13,7 +13,7 @@ import { ShipDesign } from "src/app/model/fleet/shipDesign";
 import { ShipTypes, ShipType } from "src/app/model/fleet/shipTypes";
 import { ResearchManager } from "src/app/model/research/researchManager";
 import { MAX_DESIGN } from "src/app/model/fleet/fleetManager";
-import { preventScroll } from "src/app/app.component";
+declare let preventScroll;
 
 @Component({
   selector: "app-design",

@@ -7,7 +7,7 @@ import {
 } from "@angular/core";
 import { MainService } from "../main.service";
 import { Action } from "../model/actions/abstractAction";
-import { preventScroll } from "../app.component";
+declare let preventScroll;
 
 @Component({
   selector: "app-dark-matter",

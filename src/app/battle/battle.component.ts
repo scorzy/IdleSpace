@@ -9,7 +9,7 @@ import {
 } from "@angular/core";
 import { MainService } from "../main.service";
 import { Subscription } from "rxjs";
-import { preventScroll } from "../app.component";
+declare let preventScroll;
 
 @Component({
   selector: "app-battle",

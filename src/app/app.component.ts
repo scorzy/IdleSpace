@@ -6,7 +6,6 @@ import { Router } from "@angular/router";
 import { AutomatorManager } from "./model/automators/automatorManager";
 
 declare let ClarityIcons;
-export let preventScroll: any;
 
 @Component({
   selector: "app-root",

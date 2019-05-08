@@ -9,7 +9,7 @@ import { MainService } from "../main.service";
 import { Enemy } from "../model/enemy/enemy";
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 import { OptionsService } from "../options.service";
-import { preventScroll } from "../app.component";
+declare let preventScroll;
 @Component({
   selector: "app-enemies",
   templateUrl: "./enemies.component.html",

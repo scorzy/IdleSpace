@@ -13,7 +13,7 @@ import { Subscription } from "rxjs";
 import { MainService } from "../main.service";
 import { Action } from "../model/actions/abstractAction";
 import { IAlert } from "../model/base/IAlert";
-import { preventScroll } from "../app.component";
+declare let preventScroll;
 import { MISSILE_DAMAGE } from "../model/enemy/enemyManager";
 import { OptionsService } from "../options.service";
 import { RefundAction } from "../model/actions/refundAction";

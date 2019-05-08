@@ -15,7 +15,7 @@ import { Skill } from "../model/prestige/skill";
 import { AllSkillEffects } from "../model/prestige/allSkillEffects";
 import { Network } from "vis";
 import { SkillEffect } from "../model/prestige/skillEffects";
-import { preventScroll } from "../app.component";
+declare let preventScroll;
 
 @Component({
   selector: "app-prestige",

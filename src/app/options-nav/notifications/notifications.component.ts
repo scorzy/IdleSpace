@@ -5,7 +5,7 @@ import {
   AfterViewInit
 } from "@angular/core";
 import { OptionsService } from "src/app/options.service";
-import { preventScroll } from "src/app/app.component";
+declare let preventScroll;
 
 @Component({
   selector: "app-notifications",

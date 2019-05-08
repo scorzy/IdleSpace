@@ -13,7 +13,7 @@ import { MainService } from "src/app/main.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ShipDesign } from "src/app/model/fleet/shipDesign";
 import { Module } from "src/app/model/fleet/module";
-import { preventScroll } from "src/app/app.component";
+declare let preventScroll;
 import { moveItemInArray } from "@angular/cdk/drag-drop";
 
 @Component({

@@ -15,7 +15,7 @@ import {
 } from "src/app/model/enemy/enemyManager";
 import { Subscription } from "rxjs";
 import { AllSkillEffects } from "src/app/model/prestige/allSkillEffects";
-import { preventScroll } from "src/app/app.component";
+declare let preventScroll;
 @Component({
   selector: "app-search",
   templateUrl: "./search.component.html",

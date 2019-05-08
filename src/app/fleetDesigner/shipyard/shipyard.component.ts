@@ -11,7 +11,7 @@ import { MainService } from "src/app/main.service";
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 import { Job } from "src/app/model/shipyard/job";
 import { ShipDesign } from "src/app/model/fleet/shipDesign";
-import { preventScroll } from "src/app/app.component";
+declare let preventScroll;
 
 @Component({
   selector: "app-shipyard",
