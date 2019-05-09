@@ -60,6 +60,7 @@ export class AutomatorManager implements ISalvable {
     //   const autoStorage = new StorageAutomator(m);
     //   this.automatorGroups.push(autoStorage);
     // });
+    this.automatorGroups = [];
 
     const resMan = ResourceManager.getInstance();
 
