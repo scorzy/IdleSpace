@@ -241,7 +241,7 @@ export class AllSkillEffects {
     AllSkillEffects.DOUBLE_MODDING.getDescription = (num = 1) => {
       return (
         "+ " +
-        MainService.formatPipe.transform(100 * num) +
+        MainService.formatPipe.transform(150 * num) +
         "%\n Modding points"
       );
     };
