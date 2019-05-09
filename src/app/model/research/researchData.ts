@@ -172,10 +172,9 @@ export const ResearchData: IResearchData[] = [
   {
     id: "civ",
     name: "Civilian Ships",
-    shape: "flash",
+    shape: "satellite",
     price: 1e14,
-    description:
-      "unlock civilian ships that like the terraformer and the research ships",
-    resourceToUnlock: ["te", "sc"]
+    description: "Unlock civilian ships",
+    resourceToUnlock: ["te", "sc", "ss", "bs"]
   }
 ];

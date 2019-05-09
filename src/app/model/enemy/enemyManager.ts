@@ -31,6 +31,7 @@ const ROBOT_REWARD = 0.5;
 const SHIPYARD_REWARD = 200;
 export const MISSILE_DAMAGE = 2500;
 const SEARCH_REWARD = 300;
+export const TERRAFORMER_MULTI = 0.01;
 
 const RANDOM_REWARDS = [
   Reward.HabitableSpace,
@@ -78,6 +79,9 @@ export class EnemyManager implements ISalvable {
     this.nukeAction = new NukeAction();
     this.missileDamageBonus.multiplicativeBonus.push(
       new Bonus(AllSkillEffects.DOUBLE_MISSILE, 2.5)
+    );
+    this.missileDamageBonus.multiplicativeBonus.push(
+      new Bonus(ResourceManager.getInstance().beamSatellite, TERRAFORMER_MULTI)
     );
   }
   generate(searchJob: SearchJob) {
@@ -229,6 +233,9 @@ export class EnemyManager implements ISalvable {
       );
       const gainDistrict = prestigeMulti
         .times(this.currentEnemy.level)
+        .times(
+          new Decimal(1).plus(resMan.terraformer.getQuantity().times(0.05))
+        )
         .times(AllSkillEffects.DOUBLE_DISTRICTS.numOwned + 1);
       switch (reward) {
         case Reward.HabitableSpace:
