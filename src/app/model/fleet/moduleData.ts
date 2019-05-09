@@ -39,7 +39,7 @@ export const ModulesData: IModuleData[] = [
     shieldPercent: 0,
     armorPercent: 220,
     researchPrice: 2e3,
-    shape: "plasma"
+    shape: "disintegrator"
   },
   {
     id: "d",
@@ -74,7 +74,8 @@ export const ModulesData: IModuleData[] = [
     damage: 10,
     shieldPercent: 220,
     armorPercent: 0,
-    researchPrice: 2e3
+    researchPrice: 2e3,
+    shape: "railgun"
   },
   {
     id: "S",

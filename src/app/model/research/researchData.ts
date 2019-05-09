@@ -112,7 +112,7 @@ export const ResearchData: IResearchData[] = [
   {
     id: "n",
     name: "Titan",
-    shape: "flask",
+    shape: "titan",
     price: 1e20,
     description: "Unlock Titan",
     limit: 100
