@@ -9,7 +9,7 @@ import {
 import { MainService } from "src/app/main.service";
 import { Subscription } from "rxjs";
 import { OptionsService } from "src/app/options.service";
-import { preventScroll } from "src/app/app.component";
+declare let preventScroll;
 
 @Component({
   selector: "app-save",
@@ -52,5 +52,8 @@ export class SaveComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   changeAutoSave() {
     this.ms.startAutoSave();
+  }
+  submit() {
+    this.ms.sendKong(true);
   }
 }

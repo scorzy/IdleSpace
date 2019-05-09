@@ -15,7 +15,7 @@ import { MainService } from "src/app/main.service";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { DesignLine } from "src/app/model/fleet/designLine";
-import { preventScroll } from "src/app/app.component";
+declare let preventScroll;
 
 @Component({
   selector: "app-editor",

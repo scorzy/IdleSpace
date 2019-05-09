@@ -11,7 +11,7 @@ import { MainService } from "../main.service";
 import { ResourceGroup } from "../model/resource/resourceGroup";
 import { Subscription } from "rxjs";
 import { Resource } from "../model/resource/resource";
-import { preventScroll } from "../app.component";
+declare let preventScroll;
 
 @Component({
   selector: "app-home",
@@ -26,7 +26,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(public ms: MainService, private cd: ChangeDetectorRef) {}
   ngAfterViewInit(): void {
-    if (typeof preventScroll === typeof Function) preventScroll();
+    if (typeof preventScroll === typeof Function) {
+      preventScroll();
+    }
   }
   ngOnInit() {
     this.reload();

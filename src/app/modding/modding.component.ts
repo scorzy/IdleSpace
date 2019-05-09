@@ -10,7 +10,7 @@ import {
 import { Resource } from "../model/resource/resource";
 import { Mod } from "../model/mod/mod";
 import { MainService } from "../main.service";
-import { preventScroll } from "../app.component";
+declare let preventScroll;
 import { Subscription } from "rxjs";
 
 @Component({

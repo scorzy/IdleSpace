@@ -11,7 +11,7 @@ import { MainService } from "../main.service";
 import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
 import { ResourceGroup } from "../model/resource/resourceGroup";
-import { preventScroll } from "../app.component";
+declare let preventScroll;
 import { Automator } from "../model/automators/automator";
 
 @Component({

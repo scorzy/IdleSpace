@@ -24,6 +24,10 @@
     <clr-icon shape="uninstall"></clr-icon>
     Clear
   </button>
+  <button class="btn btn-success" (click)="submit()" *ngIf="ms.kongregate">
+    <clr-icon shape="sync"></clr-icon>
+    Submit Score
+  </button>
 </div>
 
 <div class="btn-group btn-primary" *ngIf="ms.kongregate">

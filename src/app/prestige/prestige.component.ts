@@ -15,7 +15,7 @@ import { Skill } from "../model/prestige/skill";
 import { AllSkillEffects } from "../model/prestige/allSkillEffects";
 import { Network } from "vis";
 import { SkillEffect } from "../model/prestige/skillEffects";
-import { preventScroll } from "../app.component";
+declare let preventScroll;
 
 @Component({
   selector: "app-prestige",
@@ -95,12 +95,20 @@ export class PrestigeComponent implements OnInit, OnChanges, AfterViewInit {
     this.canAscend = this.ms.game.prestigeManager.canAscend();
     this.prestigeModal = false;
     this.reloadList();
+
+    try {
+      this.ms.sendKong();
+    } catch (ex) {}
   }
   ascend() {
     this.ms.game.ascend();
     this.canAscend = this.ms.game.prestigeManager.canAscend();
     this.ascendModal = false;
     this.reloadList();
+
+    try {
+      this.ms.sendKong();
+    } catch (ex) {}
   }
 
   ngAfterViewInit() {

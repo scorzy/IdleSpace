@@ -13,6 +13,8 @@ import { preventScroll } from "../app.component";
 import { ResearchManager } from "../model/research/researchManager";
 import { AllSkillEffects } from "../model/prestige/allSkillEffects";
 
+declare let preventScroll;
+
 @Component({
   selector: "app-battle",
   templateUrl: "./battle.component.html",

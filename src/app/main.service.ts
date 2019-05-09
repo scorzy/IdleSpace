@@ -474,7 +474,7 @@ export class MainService {
   /**
    * Sends high score to kongregate
    */
-  sendKong() {
+  sendKong(notify = false) {
     if (!this.game || !this.kongregate) return false;
     try {
       this.kongregate.stats.submit(
@@ -490,7 +490,17 @@ export class MainService {
         "Log10(Max Dark Matter)",
         this.game.darkMatterManager.darkMatter.quantity.log10()
       );
-    } catch (ex) {}
+      if (notify) {
+        this.toastr.success("Score submitted", "Kongregate");
+      }
+    } catch (ex) {
+      if (notify) {
+        this.toastr.error(
+          "Score not submitted, an error occurred",
+          "Kongregate"
+        );
+      }
+    }
   }
 }
 

@@ -7,7 +7,7 @@ import {
 import { MainService } from "src/app/main.service";
 import { OptionsService } from "src/app/options.service";
 import { FormatPipe } from "src/app/format.pipe";
-import { preventScroll } from "src/app/app.component";
+declare let preventScroll;
 
 @Component({
   selector: "app-ui",

@@ -283,7 +283,7 @@ export class EnemyManager implements ISalvable {
               "+ " +
               MainService.formatPipe.transform(gainDistrict) +
               " " +
-              resMan.miningDistrict.name +
+              resMan.crystalDistrict.name +
               "<br/>";
           }
           gain = new Decimal(CRYSTAL_REWARD * this.currentEnemy.level).times(

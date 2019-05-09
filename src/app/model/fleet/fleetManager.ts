@@ -177,7 +177,7 @@ export class FleetManager implements ISalvable {
     const av = this.totalNavalCapacity
       .minus(this.totalWantedNavalCap)
       .toNumber();
-    this.totalShipWant = this.getTotalShip() + this.getWantShip();
+    this.totalShipWant = this.getWantShip(); // this.getTotalShip() +
     const availableQty = MAX_SHIP - this.totalShipWant;
 
     this.ships.forEach(s => {
@@ -199,7 +199,7 @@ export class FleetManager implements ISalvable {
     this.configurationValid = this.totalNavalCapacity.gte(
       this.totalWantedNavalCap
     );
-    const totalWantShip = this.getTotalShip() + this.getWantShip();
+    const totalWantShip = this.getWantShip(); // +this.getTotalShip();
 
     this.configurationValid =
       totalWantShip <= MAX_SHIP &&

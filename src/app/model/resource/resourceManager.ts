@@ -905,7 +905,7 @@ export class ResourceManager implements ISalvable {
   }
 
   /**
-   * Deploy drones to works
+   * Deploy robots to jobs
    * Based on priority
    */
   deployDrones() {
@@ -943,9 +943,8 @@ export class ResourceManager implements ISalvable {
     }
     //  If everything round to zero no robots are deployed
     //  I fix this by deploy on high priority job
-    n = 0;
-    while (toDeploy.gte(0) && n < jobs.length) {
-      const job = jobs[n];
+    if (toDeploy.gte(0) && jobs.length > 0) {
+      const job = jobs[0];
       const toAddMax = job.limit.minus(job.quantity).floor();
       const toAdd = toAddMax
         .div(job.standardPrice)
@@ -957,7 +956,6 @@ export class ResourceManager implements ISalvable {
         toDeploy = toDeploy.minus(price);
         this.drone.quantity = this.drone.quantity.minus(price);
       }
-      n++;
     }
     this.drone.reloadLimit();
   }

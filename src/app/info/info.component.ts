@@ -5,7 +5,7 @@ import {
   HostBinding,
   AfterViewInit
 } from "@angular/core";
-import { preventScroll } from "../app.component";
+declare let preventScroll;
 
 @Component({
   selector: "app-info",

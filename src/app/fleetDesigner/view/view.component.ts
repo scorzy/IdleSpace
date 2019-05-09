@@ -10,7 +10,7 @@ import {
 import { ShipDesign } from "src/app/model/fleet/shipDesign";
 import { Subscription } from "rxjs";
 import { MainService } from "src/app/main.service";
-import { preventScroll } from "src/app/app.component";
+declare let preventScroll;
 
 @Component({
   selector: "app-view",

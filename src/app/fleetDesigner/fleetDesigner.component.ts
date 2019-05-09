@@ -8,7 +8,7 @@ import {
 import { MainService } from "../main.service";
 import { ShipDesign } from "../model/fleet/shipDesign";
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
-import { preventScroll } from "../app.component";
+declare let preventScroll;
 
 @Component({
   selector: "app-fleet-designer",

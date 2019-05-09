@@ -15,7 +15,7 @@ import {
 } from "@angular/cdk/drag-drop";
 import { Research } from "../model/research/research";
 import { Subscription } from "rxjs";
-import { preventScroll } from "../app.component";
+declare let preventScroll;
 
 @Component({
   selector: "app-lab",
