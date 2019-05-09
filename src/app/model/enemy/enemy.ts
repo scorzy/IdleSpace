@@ -1,6 +1,6 @@
 import { Zone } from "./zone";
 import { ShipDesign } from "../fleet/shipDesign";
-import { MAX_NAVAL_CAPACITY } from "../fleet/fleetManager";
+import { MAX_NAVAL_CAPACITY, MAX_SHIP } from "../fleet/fleetManager";
 import { ShipTypes, DefenseTypes } from "../fleet/shipTypes";
 import { Preset } from "./preset";
 import sample from "lodash-es/sample";
@@ -15,6 +15,9 @@ import { shuffle } from "lodash-es";
 const DEFENSE_START_LEVEL = 7;
 const DEFENSE_END_LEVEL = 80;
 const DEFENSE_MAX_PERCENT = 1;
+const SHIELD_BUBBLE_START_LEVEL = 80;
+const SHIELD_BUBBLE_END_LEVEL = 1e3;
+const MAX_SHIELD_FILL = 0.5;
 
 export class Enemy {
   constructor() {
@@ -36,7 +39,13 @@ export class Enemy {
   moreMetal = false;
   moreCrystal = false;
   moreHabitableSpace = false;
+  moreHabitableSpace2 = false;
+  randomized = true;
   bonusCount = 0;
+
+  baseMining = 2;
+  baseCrystal = 2;
+  baseHabitable = 3;
 
   static generate(searchJob: SearchJob): Enemy {
     const enemy = new Enemy();
@@ -44,6 +53,21 @@ export class Enemy {
     enemy.moreMetal = searchJob.moreMetal;
     enemy.moreCrystal = searchJob.moreCrystal;
     enemy.moreHabitableSpace = searchJob.moreHabitableSpace;
+    enemy.moreHabitableSpace2 = searchJob.moreHabitableSpace2;
+    enemy.randomized = searchJob.randomized;
+
+    if (enemy.randomized) {
+      enemy.baseMining = Math.min(random(0, 7), 7);
+      enemy.baseCrystal = Math.min(
+        random(0, 7 - enemy.baseMining),
+        7 - enemy.baseMining
+      );
+      enemy.baseHabitable = 7 - enemy.baseMining - enemy.baseCrystal;
+    }
+    if (enemy.moreMetal) enemy.baseMining++;
+    if (enemy.moreCrystal) enemy.baseCrystal++;
+    if (enemy.moreHabitableSpace) enemy.baseHabitable++;
+    if (enemy.moreHabitableSpace2) enemy.baseHabitable++;
 
     for (let n = 1; n < 4; n++) {
       if (Math.random() < enemy.level / (enemy.level + 100 * n)) {
@@ -64,16 +88,18 @@ export class Enemy {
     enemy.generateIcon();
     const moduleLevelMulti = sample([1, 1.05, 1.1]);
     const moduleLevel = Math.floor(
-      10 * Math.pow(1.1, level - 1) * moduleLevelMulti
+      10 * Math.pow(1.08, level - 1) * moduleLevelMulti
     );
     let navalCap = Math.ceil(
       (MAX_NAVAL_CAPACITY * level) /
-        (level + 500) /
+        (level + 400) /
         (1 + (moduleLevelMulti - 1) * 0.9)
     );
-
+    if (level < 20) {
+      navalCap = navalCap * 0.8;
+    }
     const maxShipTye = Math.floor(
-      Math.min(Math.max(Math.log(level) / Math.log(1.8), 1), ShipTypes.length)
+      Math.min(Math.max(Math.log(level) / Math.log(2), 1), ShipTypes.length)
     );
 
     //#region Ships
@@ -103,7 +129,7 @@ export class Enemy {
     enemy.shipsDesign.forEach(sd => {
       const numOfShips = Math.max(
         Math.floor(
-          (navalCap * sd.weight) / totalWeight / sd.type.enemyNavalCapacity
+          (navalCap * sd.weight) / totalWeight / sd.type.navalCapacity
         ),
         1
       );
@@ -177,6 +203,31 @@ export class Enemy {
         });
     }
     //#endregion
+    //#region Shield Bubble
+    if (enemy.level > SHIELD_BUBBLE_START_LEVEL) {
+      const shipCount = enemy.shipsDesign
+        .map(s => s.quantity)
+        .reduce((p, c) => p.plus(c), new Decimal(0));
+      if (shipCount.lt(MAX_SHIP * MAX_SHIELD_FILL)) {
+        const percentToFill =
+          (MAX_SHIELD_FILL * (level - SHIELD_BUBBLE_START_LEVEL)) /
+          (SHIELD_BUBBLE_END_LEVEL - DEFENSE_START_LEVEL);
+
+        if (percentToFill > 0) {
+          const bubbleToAdd =
+            (MAX_SHIP - shipCount.toNumber()) *
+            percentToFill *
+            random(0.7, 1.2, true);
+          const bubble = enemy.addFromPreset(Preset.DefenseShield);
+          bubble.quantity = new Decimal(bubbleToAdd);
+          bubble.modules.forEach(m => {
+            m.level = moduleLevel;
+          });
+          bubble.reload(false);
+        }
+      }
+    }
+    //#endregion
 
     enemy.setOrder();
     enemy.reload();
@@ -191,6 +242,11 @@ export class Enemy {
     if ("mm" in data) enemy.moreMetal = data.mm;
     if ("mc" in data) enemy.moreCrystal = data.mc;
     if ("mh" in data) enemy.moreHabitableSpace = data.mh;
+    if ("mh2" in data) enemy.moreHabitableSpace2 = data.mh2;
+    if ("rand" in data) enemy.randomized = data.rand;
+    if ("bm" in data) enemy.baseMining = data.bm;
+    if ("bc" in data) enemy.baseCrystal = data.bc;
+    if ("bh" in data) enemy.baseHabitable = data.bh;
 
     if ("s" in data) {
       for (const shipData of data.s) {
@@ -223,7 +279,8 @@ export class Enemy {
     this.bonusCount =
       (this.moreMetal ? 1 : 0) +
       (this.moreCrystal ? 1 : 0) +
-      (this.moreHabitableSpace ? 1 : 0);
+      (this.moreHabitableSpace ? 1 : 0) +
+      (this.moreHabitableSpace2 ? 1 : 0);
   }
 
   setOrder() {
@@ -280,16 +337,8 @@ export class Enemy {
         for (let k = 0; k < 10; k++) otherZones.push(this.zones[i - k]);
         otherZones = shuffle(otherZones);
 
-        // Habitable Space
-        const spaceCount = 3 + (this.moreHabitableSpace ? 1 : 0);
-        for (let j = 0; j < spaceCount; j++) {
-          const rand = otherZones.pop();
-          rand.reward = Reward.HabitableSpace;
-          otherZones = otherZones.filter(z => !z.reward);
-        }
-
         // Metal
-        const metalCount = 2 + (this.moreMetal ? 1 : 0);
+        const metalCount = this.baseMining;
         for (let j = 0; j < metalCount; j++) {
           const rand = otherZones.pop();
           rand.reward = Reward.MetalMine;
@@ -297,11 +346,21 @@ export class Enemy {
         }
 
         // Crystal
-        const crystalCount = 2 + (this.moreCrystal ? 1 : 0);
+        const crystalCount = this.baseCrystal;
         for (let j = 0; j < crystalCount; j++) {
           const rand = otherZones.pop();
           rand.reward = Reward.CrystalMine;
           otherZones = otherZones.filter(z => !z.reward);
+        }
+
+        // Habitable Space
+        const spaceCount = this.baseHabitable;
+        for (let j = 0; j < spaceCount; j++) {
+          if (otherZones.length > 0) {
+            const rand = otherZones.pop();
+            rand.reward = Reward.HabitableSpace;
+            otherZones = otherZones.filter(z => !z.reward);
+          }
         }
       }
 
@@ -328,6 +387,11 @@ export class Enemy {
     if (this.moreMetal) data.mm = this.moreMetal;
     if (this.moreCrystal) data.mc = this.moreCrystal;
     if (this.moreHabitableSpace) data.mh = this.moreHabitableSpace;
+    if (this.moreHabitableSpace2) data.mh2 = this.moreHabitableSpace2;
+    if (this.randomized) data.rand = this.randomized;
+    if (this.baseMining !== 2) data.bm = this.baseMining;
+    if (this.baseCrystal !== 2) data.bc = this.baseCrystal;
+    if (this.baseHabitable !== 2) data.bh = this.baseHabitable;
 
     return data;
   }

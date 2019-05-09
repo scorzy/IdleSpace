@@ -21,7 +21,9 @@ const sizeNames = [
   ["XL", "ExtraLarge"]
 ];
 export function getSizeName(size: Sizes, short = false): string {
-  return sizeNames[size - 1][short ? 0 : 1];
+  return size < 5
+    ? sizeNames[size - 1][short ? 0 : 1]
+    : (short ? "T " : "Titan ") + (size - 4);
 }
 export interface IModuleData {
   id: string;
@@ -53,8 +55,8 @@ export class Module extends AbstractUnlockable {
     public alloyPrice: Decimal = new Decimal(0),
     public energyBalance: Decimal = new Decimal(0),
     public damage: Decimal = new Decimal(0),
-    public armorPercent = 100,
-    public shieldPercent = 100,
+    public armorPercent = 0,
+    public shieldPercent = 0,
     public shield: Decimal = new Decimal(0),
     public armor: Decimal = new Decimal(0),
     public explosionChance = 0,

@@ -1,4 +1,5 @@
 import { BASE_ARMOR } from "./moduleData";
+import { RomanPipe } from "src/app/roman.pipe";
 
 export class ShipType {
   constructor(
@@ -13,6 +14,21 @@ export class ShipType {
     public enemyNavalCapacity: number = navalCapacity,
     public defense = false
   ) {}
+
+  static GetTitan(i = 0): ShipType {
+    const k = i + 7;
+    return new ShipType(
+      "" + k,
+      "Titan " + new RomanPipe().transform(i + 1),
+      new Decimal(10).times(Decimal.pow(2, k)),
+      new Decimal(BASE_ARMOR * 1.25 * k),
+      10,
+      k * 2,
+      "rank4",
+      Math.floor(100 * 1e3 * Math.pow(1.5, k - 1)) / 100,
+      Math.floor(100 * 1e3 * Math.pow(1.5, k - 1)) / 100
+    );
+  }
 }
 export const ShipTypes = [
   new ShipType(

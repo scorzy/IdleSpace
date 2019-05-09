@@ -73,6 +73,15 @@ export const descriptions = {
     eM: [
       "Electrical grid",
       "Increase production of Technicians by 100%, stack additive."
-    ]
+    ],
+
+    //  Civilian Ships
+    te: [
+      "Terraformer",
+      "Terraforming ships allow you to gain more habitable space from each battle."
+    ],
+    sc: ["Scientific Ship", "Scientific ships allow you to gain more science."],
+    ss: ["Solar Satellite", "Solar satellites increase your energy."],
+    bs: ["Beam Satellite", "Beam Satellites increases your nuking power."]
   }
 };

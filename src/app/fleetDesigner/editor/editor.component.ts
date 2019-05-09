@@ -32,6 +32,8 @@ export class EditorComponent
   changed = false;
   canUpgrade = false;
   private subscriptions: Subscription[] = [];
+  titanSizes = [];
+  shipNum = 1;
 
   constructor(
     public ms: MainService,
@@ -50,6 +52,12 @@ export class EditorComponent
   ngOnInit() {
     this.ms.game.fleetManager.isUsed = true;
     this.ms.hotkeyEnabled = false;
+    this.shipNum = Number.parseInt(this.design.type.id, 10);
+    if (this.shipNum > 6) {
+      for (let i = Math.max(this.shipNum - 12, 1); i < this.shipNum - 1; i++) {
+        this.titanSizes.push(i);
+      }
+    }
     if (this.design.modules.length === 0) {
       this.edit();
     }

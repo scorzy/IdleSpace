@@ -9,6 +9,10 @@ import {
 } from "@angular/core";
 import { MainService } from "../main.service";
 import { Subscription } from "rxjs";
+import { preventScroll } from "../app.component";
+import { ResearchManager } from "../model/research/researchManager";
+import { AllSkillEffects } from "../model/prestige/allSkillEffects";
+
 declare let preventScroll;
 
 @Component({
@@ -24,18 +28,22 @@ export class BattleMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(public ms: MainService, private cd: ChangeDetectorRef) {}
   private subscriptions: Subscription[] = [];
 
+  totalDistrictGain = new Decimal(1);
+
   ngOnInit() {
     let n = 1;
     this.ms.game.fleetManager.ships.forEach(s => {
       s.order = n;
       n++;
     });
+    this.reloadDistrictStats();
 
     this.subscriptions.push(
       this.ms.em.battleEndEmitter.subscribe(() => {
         this.cd.markForCheck();
       }),
       this.ms.em.updateEmitter.subscribe(() => {
+        this.reloadDistrictStats();
         this.cd.markForCheck();
       })
     );
@@ -56,5 +64,16 @@ export class BattleMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   nuke(num: Decimal) {
     this.ms.game.enemyManager.nukeAction.buy(num);
     this.ms.em.battleEndEmitter.emit(55);
+  }
+  reloadDistrictStats() {
+    let prestigeMulti = new Decimal(1).plus(
+      this.ms.game.researchManager.scavenger.quantity.times(0.1)
+    );
+    prestigeMulti = prestigeMulti.times(
+      AllSkillEffects.DOUBLE_BATTLE_GAIN.numOwned * 2 + 1
+    );
+    this.totalDistrictGain = prestigeMulti
+      .times(this.ms.game.enemyManager.currentEnemy.level)
+      .times(AllSkillEffects.DOUBLE_DISTRICTS.numOwned + 1);
   }
 }

@@ -16,7 +16,7 @@ export class Skill {
 
   constructor(public id: number, effect: SkillEffect, public buyable = false) {
     if (!effect) effect = AllSkillEffects.PLUS_METAL_MINER;
-    this.label = effect.label;
+    this.label = id + " " + effect.label;
     this.effectId = effect.id;
     if (buyable) this.color = BUYABLE_COLOR;
     if (this.id in positions) {

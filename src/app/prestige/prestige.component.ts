@@ -132,16 +132,26 @@ export class PrestigeComponent implements OnInit, OnChanges, AfterViewInit {
             }
           },
           interaction: {
-            dragNodes: false,
+            dragNodes: true,
             hover: true,
             navigationButtons: true,
             keyboard: true
           },
+          // layout: {
+          //   hierarchical: {
+          //     direction: "UD",
+          //     sortMethod: "directed",
+          //     levelSeparation: 300,
+          //     nodeSpacing: 200,
+          //     treeSpacing: 1e4,
+          //     parentCentralization: true
+          //   }
+          // },
           physics: {
-            enabled: false,
+            enabled: true,
             barnesHut: {
-              gravitationalConstant: -3000,
-              avoidOverlap: 0.4
+              gravitationalConstant: -6000,
+              avoidOverlap: 0.5
             },
             minVelocity: 1
           }

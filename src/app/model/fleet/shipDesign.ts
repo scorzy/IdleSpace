@@ -133,10 +133,11 @@ export class ShipDesign implements ISalvable, IBuyable {
     this.modules
       .filter(q => q.isValid())
       .forEach(w => {
-        const multiPrice = w.level / 10; // * Math.pow(MODULE_PRICE_INCREASE, w.level);
+        const multiPrice = w.level / 10; // * Math.log(w.level * MODULE_PRICE_INCREASE);
         // const multiPrice = 1 + (w.level - 10) / 5;
         const bonus = w.level / 10;
         const sizeFactor = w.size + (w.size - 1) * SIZE_MULTI;
+
         this.usedModulePoint += w.size;
 
         w.computedDamage = w.module.damage.times(bonus).times(sizeFactor);
@@ -151,24 +152,30 @@ export class ShipDesign implements ISalvable, IBuyable {
           w.module.shield.times(bonus).times(sizeFactor)
         );
 
-        this.armorDamage = this.armorDamage.plus(
-          w.module.damage
-            .times(bonus)
-            .times(sizeFactor)
-            .times(w.module.armorPercent / 100)
-        );
-        this.shieldDamage = this.shieldDamage.plus(
-          w.module.damage
-            .times(bonus)
-            .times(sizeFactor)
-            .times(w.module.shieldPercent / 100)
-        );
+        if (w.module.armorPercent > 0) {
+          this.armorDamage = this.armorDamage.plus(
+            w.module.damage
+              .times(bonus)
+              .times(sizeFactor)
+              .times(w.module.armorPercent / 100)
+          );
+        }
+        if (w.module.shieldPercent > 0) {
+          this.shieldDamage = this.shieldDamage.plus(
+            w.module.damage
+              .times(bonus)
+              .times(sizeFactor)
+              .times(w.module.shieldPercent / 100)
+          );
+        }
+
         this.price = this.price.plus(
-          w.module.alloyPrice.times(w.size).times(multiPrice)
+          w.module.alloyPrice.times(1 + (w.size - 1) * 2).times(multiPrice)
         );
+
         this.explosionChance += w.module.explosionChance * w.size;
       });
-
+    this.price = this.price.times(this.type.id);
     this.totalFleetPower = this.totalDamage
       .plus(this.totalShield)
       .plus(this.totalArmor);
@@ -198,6 +205,7 @@ export class ShipDesign implements ISalvable, IBuyable {
     data.i = this.id;
     if (!this.shipQuantity.eq(0)) data.q = this.shipQuantity;
     data.t = this.type.id;
+
     data.n = this.name;
     data.m = this.modules.filter(m => m.isValid()).map(m => m.getSave());
     if (this.quantity.gt(0)) data.q = this.quantity;
@@ -209,6 +217,11 @@ export class ShipDesign implements ISalvable, IBuyable {
     this.id = data.i;
     if ("q" in data) this.shipQuantity = Decimal.fromDecimal(data.q);
     this.type = ShipTypes.find(t => t.id === data.t);
+
+    if (this.type === null || this.type === undefined) {
+      const num = Number.parseInt(data.t, 10);
+      this.type = ShipType.GetTitan(num - 7);
+    }
     if (!this.type) this.type = DefenseTypes.find(t => t.id === data.t);
     this.name = data.n;
     if ("m" in data) {

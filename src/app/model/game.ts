@@ -69,6 +69,9 @@ export class Game {
     this.researchBonus.multiplicativeBonus.push(
       new Bonus(this.researchManager.betterResearch, new Decimal(0.2))
     );
+    this.researchBonus.multiplicativeBonus.push(
+      new Bonus(this.resourceManager.scienceShip, new Decimal(0.05))
+    );
 
     this.resourceManager.allResources.forEach(
       r => (r.unlockedActions = r.actions.filter(a => a.unlocked))
@@ -223,10 +226,10 @@ export class Game {
       this.prestigeManager.totalPrestige,
       this.enemyManager.maxLevel - 1
     );
-    this.prestigeManager.totalPrestige = Math.min(
-      this.prestigeManager.totalPrestige,
-      this.prestigeManager.maxPrestigePoints
-    );
+    // this.prestigeManager.totalPrestige = Math.min(
+    //   this.prestigeManager.totalPrestige,
+    //   this.prestigeManager.maxPrestigePoints
+    // );
 
     this.init(true);
     if (this.resetPrestige) {

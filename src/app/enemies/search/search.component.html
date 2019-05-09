@@ -13,6 +13,10 @@
         >
           <p>
             Here you can search for new worlds.
+            <span>
+              Max level:
+              {{ ms.game.enemyManager.maxLevel }}
+            </span>
           </p>
 
           <clr-alert
@@ -43,10 +47,7 @@
 
           <form clrForm>
             <clr-input-container>
-              <label
-                >Level
-                <span> (max:{{ ms.game.enemyManager.maxLevel }}) </span>
-              </label>
+              <label>Level </label>
               <input
                 clrInput
                 type="number"
@@ -78,6 +79,9 @@
                 type="checkbox"
                 id="btn-mmd"
                 [(ngModel)]="ms.game.enemyManager.moreMetal"
+                [disabled]="
+                  !ms.game.enemyManager.moreMetal && this.bonusCount >= 3
+                "
               />
               <label for="btn-mmd">
                 <clr-icon
@@ -90,6 +94,9 @@
                 type="checkbox"
                 id="btn-mcd"
                 [(ngModel)]="ms.game.enemyManager.moreCrystal"
+                [disabled]="
+                  !ms.game.enemyManager.moreCrystal && this.bonusCount >= 3
+                "
               />
               <label for="btn-mcd">
                 <clr-icon
@@ -102,11 +109,39 @@
                 type="checkbox"
                 id="btn-mhs"
                 [(ngModel)]="ms.game.enemyManager.moreHabitable"
+                [disabled]="
+                  !ms.game.enemyManager.moreHabitable && this.bonusCount >= 3
+                "
               />
               <label for="btn-mhs">
                 <clr-icon
                   [attr.shape]="ms.game.resourceManager.habitableSpace.shape"
                 ></clr-icon
+              ></label>
+            </div>
+            <div class="checkbox btn" *ngIf="hab2">
+              <input
+                type="checkbox"
+                id="btn-mhs2"
+                [(ngModel)]="ms.game.enemyManager.moreHabitable2"
+                [disabled]="
+                  !ms.game.enemyManager.moreHabitable2 && this.bonusCount >= 3
+                "
+              />
+              <label for="btn-mhs2">
+                <clr-icon
+                  [attr.shape]="ms.game.resourceManager.habitableSpace.shape"
+                ></clr-icon
+              ></label>
+            </div>
+            <div class="checkbox btn" *ngIf="rand">
+              <input
+                type="checkbox"
+                id="btn-rand"
+                [(ngModel)]="ms.game.enemyManager.randomized"
+              />
+              <label for="btn-rand">
+                <clr-icon shape="random"></clr-icon
               ></label>
             </div>
           </div>

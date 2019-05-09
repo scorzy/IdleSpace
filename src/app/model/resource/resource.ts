@@ -70,6 +70,7 @@ export class Resource extends AbstractUnlockable
   unlockedAutomators2 = new Array<Automator>();
   automation1Name = "Drone Automation";
   automation2Name = "Expansion Automation";
+  modPrestige: SkillEffect;
 
   addGenerator(generator: Resource, ratio: DecimalSource = 1): void {
     const prod = new Production(generator, this, ratio);

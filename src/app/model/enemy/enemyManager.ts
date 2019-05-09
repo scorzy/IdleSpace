@@ -58,6 +58,8 @@ export class EnemyManager implements ISalvable {
   moreMetal = false;
   moreCrystal = false;
   moreHabitable = false;
+  moreHabitable2 = false;
+  randomized = false;
 
   nukeAction: NukeAction;
   missileDamageBonus = new BonusStack();
@@ -225,7 +227,9 @@ export class EnemyManager implements ISalvable {
       prestigeMulti = prestigeMulti.times(
         AllSkillEffects.DOUBLE_BATTLE_GAIN.numOwned * 2 + 1
       );
-      const gainDistrict = prestigeMulti.times(this.currentEnemy.level);
+      const gainDistrict = prestigeMulti
+        .times(this.currentEnemy.level)
+        .times(AllSkillEffects.DOUBLE_DISTRICTS.numOwned + 1);
       switch (reward) {
         case Reward.HabitableSpace:
           if (addSpace) {
@@ -370,7 +374,9 @@ export class EnemyManager implements ISalvable {
       level +
       (this.moreMetal ? 1 : 0) +
       (this.moreCrystal ? 1 : 0) +
-      (this.moreHabitable ? 1 : 0);
+      (this.moreHabitable ? 1 : 0) +
+      (this.randomized ? 1 : 0) +
+      (this.moreHabitable2 ? 1 : 0);
     return new Decimal(5e3).times(Decimal.pow(1.2, level - 1));
   }
   /**
@@ -382,6 +388,8 @@ export class EnemyManager implements ISalvable {
     searchJob.moreMetal = this.moreMetal;
     searchJob.moreCrystal = this.moreCrystal;
     searchJob.moreHabitableSpace = this.moreHabitable;
+    searchJob.moreHabitableSpace2 = this.moreHabitable2;
+    searchJob.randomized = this.randomized;
     searchJob.total = this.getRequiredSearch(level);
     searchJob.generateNameDescription();
     this.searchJobs.push(searchJob);

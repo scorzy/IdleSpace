@@ -62,6 +62,10 @@ export class DesignComponent implements OnInit, OnDestroy, AfterViewInit {
     if (ResearchManager.getInstance().battleship.firstDone) {
       this.unlockedShips.push(ShipTypes[5]);
     }
+    const maxTitan = ResearchManager.getInstance().titan.quantity.toNumber();
+    for (let i = 0; i < maxTitan; i++) {
+      this.unlockedShips.push(ShipType.GetTitan(i));
+    }
 
     this.type = "1";
     this.subscriptions.push(
@@ -76,7 +80,7 @@ export class DesignComponent implements OnInit, OnDestroy, AfterViewInit {
   generate() {
     if (this.isDisabled()) return false;
 
-    const shipType = ShipTypes.find(t => t.id === this.type);
+    const shipType = this.unlockedShips.find(t => t.id === this.type);
     const design = this.ms.game.fleetManager.addDesign(this.name, shipType);
 
     this.router.navigate(["/fleet/design/" + design.id]);

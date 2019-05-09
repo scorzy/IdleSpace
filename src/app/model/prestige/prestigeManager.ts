@@ -22,10 +22,7 @@ export class PrestigeManager implements ISalvable {
     this.visSkills = new DataSet(this.getDataset());
 
     this.visEdge = new DataSet([
-      { from: 1, to: 2 },
       { from: 2, to: 3 },
-      { from: 2, to: 4 },
-      { from: 1, to: 4 },
       { from: 4, to: 6 },
       { from: 3, to: 7 },
       { from: 6, to: 8 },
@@ -57,13 +54,35 @@ export class PrestigeManager implements ISalvable {
       { from: 39, to: 1 },
       { from: 39, to: 2 },
       { from: 39, to: 4 },
-      { from: 8, to: 36 },
+      { from: 35, to: 36 },
       { from: 11, to: 37 },
       { from: 37, to: 38 },
       { from: 8, to: 35 },
       { from: 18, to: 40 },
       { from: 11, to: 41 },
-      { from: 12, to: 42 }
+      { from: 12, to: 42 },
+      { from: 24, to: 43 },
+      { from: 25, to: 44 },
+      { from: 26, to: 45 },
+      { from: 27, to: 46 },
+      { from: 29, to: 47 },
+      { from: 30, to: 48 },
+      { from: 32, to: 49 },
+      { from: 17, to: 50 },
+      { from: 14, to: 51 },
+      { from: 33, to: 52 },
+      { from: 21, to: 53 },
+      { from: 14, to: 54 },
+      { from: 54, to: 55 },
+      { from: 55, to: 56 },
+      { from: 51, to: 57 },
+      { from: 36, to: 58 },
+      { from: 58, to: 59 },
+      { from: 11, to: 60 },
+      { from: 60, to: 61 },
+      { from: 61, to: 62 },
+      { from: 62, to: 63 },
+      { from: 63, to: 64 }
     ]);
 
     this.maxPrestigePoints = this.visSkills.length;
@@ -105,14 +124,36 @@ export class PrestigeManager implements ISalvable {
       new Skill(32, AllSkillEffects.PLUS_SEARCH),
       new Skill(33, AllSkillEffects.RESEARCH_MULTI),
       new Skill(34, AllSkillEffects.MODULE_LEVEL),
-      new Skill(35, AllSkillEffects.DOUBLE_BATTLE_GAIN, true),
+      new Skill(35, AllSkillEffects.DOUBLE_BATTLE_GAIN),
       new Skill(36, AllSkillEffects.DOUBLE_BATTLE_GAIN),
       new Skill(37, AllSkillEffects.DOUBLE_MISSILE),
       new Skill(38, AllSkillEffects.DOUBLE_MISSILE),
       new Skill(39, AllSkillEffects.DRONE_MULTI, true),
       new Skill(40, AllSkillEffects.DOUBLE_DARK_MATTER),
       new Skill(41, AllSkillEffects.DOUBLE_NAVAL_CAPACITY),
-      new Skill(42, AllSkillEffects.FACTORY_BONUS)
+      new Skill(42, AllSkillEffects.FACTORY_BONUS),
+      new Skill(43, AllSkillEffects.MOD_METAL_MINER),
+      new Skill(44, AllSkillEffects.MOD_CRYSTAL_MINER),
+      new Skill(45, AllSkillEffects.MOD_ALLOY),
+      new Skill(46, AllSkillEffects.MOD_ENERGY),
+      new Skill(47, AllSkillEffects.MOD_CPU),
+      new Skill(48, AllSkillEffects.MOD_WORKER),
+      new Skill(49, AllSkillEffects.MOD_SEARCH),
+      new Skill(50, AllSkillEffects.SEARCH_HAB2),
+      new Skill(51, AllSkillEffects.SEARCH_RANDOM),
+      new Skill(52, AllSkillEffects.RESEARCH_MULTI),
+      new Skill(53, AllSkillEffects.COMPUTING_MULTI),
+      new Skill(54, AllSkillEffects.PLUS_SEARCH),
+      new Skill(55, AllSkillEffects.PLUS_SEARCH),
+      new Skill(56, AllSkillEffects.PLUS_SEARCH),
+      new Skill(57, AllSkillEffects.DOUBLE_DISTRICTS),
+      new Skill(58, AllSkillEffects.DOUBLE_DISTRICTS),
+      new Skill(59, AllSkillEffects.DOUBLE_DISTRICTS),
+      new Skill(60, AllSkillEffects.MULTI_FACTORY),
+      new Skill(61, AllSkillEffects.MULTI_FACTORY),
+      new Skill(62, AllSkillEffects.MULTI_FACTORY),
+      new Skill(63, AllSkillEffects.MULTI_FACTORY),
+      new Skill(64, AllSkillEffects.MULTI_FACTORY)
     ];
   }
   buySkill(skillId: number, fromSave = false): boolean {
@@ -127,7 +168,7 @@ export class PrestigeManager implements ISalvable {
     const effect = AllSkillEffects.effectList.find(
       eff => eff.id === skill.effectId
     );
-    const toAdd = Math.pow(2, this.ascension);
+    const toAdd = Math.max(2 * this.ascension, 1);
     effect.numOwned += toAdd;
     effect.afterBuy();
     this.unlockOther(skill);
@@ -171,10 +212,7 @@ export class PrestigeManager implements ISalvable {
     );
   }
   canAscend(): boolean {
-    return (
-      this.prestigeToEarn + this.totalPrestige >= 20 * (1 + this.ascension) &&
-      this.ascension < 2
-    );
+    return this.prestigeToEarn + this.totalPrestige >= 20 * (1 + this.ascension);
   }
   ascend() {
     this.ascension++;
@@ -206,6 +244,7 @@ export class PrestigeManager implements ISalvable {
   load(data: any): boolean {
     if ("t" in data) this.totalPrestige = data.t;
     if ("a" in data) this.ascension = data.a;
+    this.ascension = 2;
     if ("o" in data) {
       data.o.forEach(o => this.buySkill(o, true));
     }
