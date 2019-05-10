@@ -39,7 +39,7 @@
     </clr-alert>
 
     <!-- Operativity -->
-    <div *ngIf="res?.products.length > 0">
+    <div *ngIf="res?.products.length > 0 && res.id !== 'e1'">
       <h6>
         Operativity:
         <span class="monospace"> {{ res.operativity }}</span> %

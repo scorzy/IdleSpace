@@ -281,7 +281,6 @@ export class PrestigeManager implements ISalvable {
   load(data: any): boolean {
     if ("t" in data) this.totalPrestige = data.t;
     if ("a" in data) this.ascension = data.a;
-    this.ascension = 2;
     if ("o" in data) {
       data.o.forEach(o => this.buySkill(o, true));
     }

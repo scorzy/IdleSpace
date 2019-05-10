@@ -133,7 +133,7 @@ export class ShipDesign implements ISalvable, IBuyable {
     this.modules
       .filter(q => q.isValid())
       .forEach(w => {
-        const multiPrice = w.level / 10; // * Math.log(w.level * MODULE_PRICE_INCREASE);
+        const multiPrice = w.level / 8; // * Math.log(w.level * MODULE_PRICE_INCREASE);
         // const multiPrice = 1 + (w.level - 10) / 5;
         const bonus = w.level / 10;
         const sizeFactor = w.size + (w.size - 1) * SIZE_MULTI;

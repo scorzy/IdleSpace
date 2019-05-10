@@ -68,6 +68,7 @@ export class ResourceGroupComponent
       this.operativity =
         this.resourceGroup.selected.length > 0
           ? this.resourceGroup.selected
+              .filter(r => r.id !== "e1")
               .map(u => u.operativity)
               .reduce((p, c) => p + c, 0) / this.resourceGroup.selected.length
           : 0;
@@ -77,9 +78,11 @@ export class ResourceGroupComponent
     this.getGroup();
   }
   changeOperativity(event: any) {
-    this.resourceGroup.selected.forEach(u => {
-      u.operativity = this.operativity;
-    });
+    this.resourceGroup.selected
+      .filter(r => r.id !== "e1")
+      .forEach(u => {
+        u.operativity = this.operativity;
+      });
   }
   getGroup() {
     // this.unitsSpan = this.resourceGroup.unlockedResources

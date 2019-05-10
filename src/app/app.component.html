@@ -132,7 +132,7 @@
           <a clrDropdownItem (click)="all100()">All 100%</a>
           <a clrDropdownItem (click)="skip(1)">Warp 1 minute</a>
 
-          <clr-dropdown *ngIf="ms.game.enemyManager.maxLevel > 1">
+          <clr-dropdown *ngIf="ms.game.darkMatterManager.darkMatter.unlocked">
             <button type="button" clrDropdownTrigger>Time Warps</button>
             <clr-dropdown-menu clrPosition="left-top" *clrIfOpen>
               <a
@@ -171,6 +171,30 @@
                 (click)="skip(60)"
                 >Warp 1 hour</a
               >
+              <a
+                clrDropdownItem
+                [ngClass]="{ disabled: !warpAv(60 * 24) }"
+                (click)="skip(60 * 24)"
+                >Warp 1 day</a
+              >
+              <a
+                clrDropdownItem
+                [ngClass]="{ disabled: !warpAv(60 * 24 * 7) }"
+                (click)="skip(60 * 24 * 7)"
+                >Warp 1 week</a
+              >
+              <a
+                clrDropdownItem
+                [ngClass]="{ disabled: !warpAv(60 * 24 * 30) }"
+                (click)="skip(60 * 24 * 30)"
+                >Warp 1 month</a
+              >
+              <a
+                clrDropdownItem
+                [ngClass]="{ disabled: !warpAv(60 * 24 * 365) }"
+                (click)="skip(60 * 24 * 365)"
+                >Warp 1 year</a
+              >
             </clr-dropdown-menu>
           </clr-dropdown>
 
@@ -186,7 +210,7 @@
               <a clrDropdownItem (click)="all(40)">All 40%</a>
               <a clrDropdownItem (click)="all(30)">All 30%</a>
               <a clrDropdownItem (click)="all(20)">All 20%</a>
-              <a clrDropdownItem (click)="all(10)">All 100%</a>
+              <a clrDropdownItem (click)="all(10)">All 10%</a>
             </clr-dropdown-menu>
           </clr-dropdown>
         </clr-dropdown-menu>
