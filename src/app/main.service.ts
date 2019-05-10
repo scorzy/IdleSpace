@@ -281,7 +281,7 @@ export class MainService {
         this.load2(result.obj);
       } else {
         console.log("Error");
-        this.toastr.error("Game not Saved");
+        this.toastr.error("Game not Loaded");
       }
     }
     this.em.saveEmitter.emit("s");

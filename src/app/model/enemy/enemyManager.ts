@@ -125,6 +125,7 @@ export class EnemyManager implements ISalvable {
       this.inBattle = false;
       return false;
     }
+    this.inBattle = false;
 
     // console.log("On Battle End");
     result.enemyLost.forEach(e => {

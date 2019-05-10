@@ -65,21 +65,26 @@ export class BattleMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     this.ms.em.battleEndEmitter.emit(55);
   }
   reloadDistrictStats() {
-    let prestigeMulti = new Decimal(1).plus(
-      this.ms.game.researchManager.scavenger.quantity.times(0.1)
-    );
-    prestigeMulti = prestigeMulti.times(
-      AllSkillEffects.DOUBLE_BATTLE_GAIN.numOwned * 2 + 1
-    );
-    this.totalDistrictGain = prestigeMulti
-      .times(this.ms.game.enemyManager.currentEnemy.level)
-      .times(
+
+    if (this.ms.game.enemyManager.currentEnemy) {
+      let prestigeMulti = new Decimal(1).plus(
+        this.ms.game.researchManager.scavenger.quantity.times(0.1)
+      );
+      prestigeMulti = prestigeMulti.times(
+        AllSkillEffects.DOUBLE_BATTLE_GAIN.numOwned * 2 + 1
+      );
+      this.totalDistrictGain = prestigeMulti
+        .times(this.ms.game.enemyManager.currentEnemy.level)
+            .times(
         new Decimal(1).plus(
           this.ms.game.resourceManager.terraformer
             .getQuantity()
             .times(TERRAFORMER_MULTI)
         )
-      )
-      .times(AllSkillEffects.DOUBLE_DISTRICTS.numOwned + 1);
+        .times(AllSkillEffects.DOUBLE_DISTRICTS.numOwned + 1);
+    } else {
+      this.totalDistrictGain = new Decimal(0);
+    }
+
   }
 }
