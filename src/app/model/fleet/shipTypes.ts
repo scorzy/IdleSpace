@@ -25,8 +25,8 @@ export class ShipType {
       10,
       k * 2,
       "rank4",
-      Math.floor(100 * 1e3 * Math.pow(1.5, k - 1)) / 100,
-      Math.floor(100 * 1e3 * Math.pow(1.5, k - 1)) / 100
+      Math.floor(10 * Math.pow(1.5, k - 1)) / 10,
+      Math.floor(10 * Math.pow(1.5, k - 1)) / 10
     );
   }
 }

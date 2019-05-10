@@ -10,6 +10,7 @@ import {
 import { MainService } from "../main.service";
 import { Subscription } from "rxjs";
 import { AllSkillEffects } from "../model/prestige/allSkillEffects";
+import { TERRAFORMER_MULTI } from "../model/enemy/enemyManager";
 
 declare let preventScroll;
 
@@ -73,6 +74,13 @@ export class BattleMenuComponent implements OnInit, OnDestroy, AfterViewInit {
       );
       this.totalDistrictGain = prestigeMulti
         .times(this.ms.game.enemyManager.currentEnemy.level)
+        .times(
+          new Decimal(1).plus(
+            this.ms.game.resourceManager.terraformer
+              .getQuantity()
+              .times(TERRAFORMER_MULTI)
+          )
+        )
         .times(AllSkillEffects.DOUBLE_DISTRICTS.numOwned + 1);
     } else {
       this.totalDistrictGain = new Decimal(0);

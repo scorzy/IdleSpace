@@ -247,7 +247,12 @@ export class ResourceManager implements ISalvable {
       this.energyM,
       this.missileX1
     ];
-    this.civilianShips = [this.terraformer, this.scienceShip];
+    this.civilianShips = [
+      this.terraformer,
+      this.scienceShip,
+      this.solarSatellite,
+      this.beamSatellite
+    ];
     //#endregion
     //#region Buy
     this.metalX1.generateBuyAction(
@@ -347,10 +352,9 @@ export class ResourceManager implements ISalvable {
         return s.quantity.times(s.operativity / 100);
       };
     });
-
-    // this.scienceShip.getQuantity = () => {
-    //   return this.scienceShip.quantity.times(this.scienceShip.operativity / 100);
-    // };
+    this.energyX1.productionMultiplier.multiplicativeBonus.push(
+      new Bonus(this.solarSatellite, 0.05)
+    );
 
     //#endregion
     //#region Mine
@@ -648,7 +652,9 @@ export class ResourceManager implements ISalvable {
       this.missile,
       this.missileX1,
       this.terraformer,
-      this.scienceShip
+      this.scienceShip,
+      this.solarSatellite,
+      this.beamSatellite
     ];
     this.allResources.forEach(r => r.generateRefundActions());
     this.matGroup = new ResourceGroup(
@@ -661,8 +667,8 @@ export class ResourceManager implements ISalvable {
       this.matGroup,
       new ResourceGroup("1", "Robots", "robot", this.tier1),
       new ResourceGroup("2", "Buildings", "building", this.tier2),
-      new ResourceGroup("4", "Districts", "world", this.districts),
-      new ResourceGroup("5", "Civilian Ships", "world", this.civilianShips)
+      new ResourceGroup("5", "Civilian Ships", "world", this.civilianShips),
+      new ResourceGroup("4", "Districts", "world", this.districts)
     ];
     this.tierGroups[0].action1Name = "Buy Storage";
     this.tierGroups[1].action1Name = "Buy Robots";

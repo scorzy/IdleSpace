@@ -103,7 +103,7 @@ export class ModStack implements ISalvable {
         this.resource.modPrestige ? this.resource.modPrestige.numOwned * 10 : 0
       )
       .plus(AllSkillEffects.MODDING_PLUS.numOwned * 5)
-      .times(AllSkillEffects.DOUBLE_MODDING.numOwned + 1);
+      .times(AllSkillEffects.DOUBLE_MODDING.numOwned + 1.5);
   }
   setPrice() {
     this.resource.standardPrice = new Decimal(1).plus(

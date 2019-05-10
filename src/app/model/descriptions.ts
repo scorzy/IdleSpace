@@ -78,10 +78,19 @@ export const descriptions = {
     //  Civilian Ships
     te: [
       "Terraformer",
-      "Terraforming ships allow you to gain more habitable space from each battle."
+      "Terraforming ships allow you to gain more habitable space from each battle. +1% districts gain."
     ],
-    sc: ["Scientific Ship", "Scientific ships allow you to gain more science."],
-    ss: ["Solar Satellite", "Solar satellites increase your energy."],
-    bs: ["Beam Satellite", "Beam Satellites increases your nuking power."]
+    sc: [
+      "Scientific Ship",
+      "Scientific ships allow you to gain more science. +%5 science gain."
+    ],
+    ss: [
+      "Solar Satellite",
+      "Solar satellites increase your energy.  +%5 energy gain."
+    ],
+    bs: [
+      "Beam Satellite",
+      "Beam Satellites increases your nuking power.  +%5 nuking power."
+    ]
   }
 };
