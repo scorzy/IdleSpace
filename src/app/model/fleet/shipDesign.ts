@@ -175,7 +175,7 @@ export class ShipDesign implements ISalvable, IBuyable {
 
         this.explosionChance += w.module.explosionChance * w.size;
       });
-    this.price = this.price.times(this.type.id);
+    // this.price = this.price.times(this.type.id);
     this.totalFleetPower = this.totalDamage
       .plus(this.totalShield)
       .plus(this.totalArmor);

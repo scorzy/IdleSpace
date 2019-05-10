@@ -9,8 +9,6 @@ import {
 } from "@angular/core";
 import { MainService } from "../main.service";
 import { Subscription } from "rxjs";
-import { preventScroll } from "../app.component";
-import { ResearchManager } from "../model/research/researchManager";
 import { AllSkillEffects } from "../model/prestige/allSkillEffects";
 
 declare let preventScroll;
@@ -66,14 +64,18 @@ export class BattleMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     this.ms.em.battleEndEmitter.emit(55);
   }
   reloadDistrictStats() {
-    let prestigeMulti = new Decimal(1).plus(
-      this.ms.game.researchManager.scavenger.quantity.times(0.1)
-    );
-    prestigeMulti = prestigeMulti.times(
-      AllSkillEffects.DOUBLE_BATTLE_GAIN.numOwned * 2 + 1
-    );
-    this.totalDistrictGain = prestigeMulti
-      .times(this.ms.game.enemyManager.currentEnemy.level)
-      .times(AllSkillEffects.DOUBLE_DISTRICTS.numOwned + 1);
+    if (this.ms.game.enemyManager.currentEnemy) {
+      let prestigeMulti = new Decimal(1).plus(
+        this.ms.game.researchManager.scavenger.quantity.times(0.1)
+      );
+      prestigeMulti = prestigeMulti.times(
+        AllSkillEffects.DOUBLE_BATTLE_GAIN.numOwned * 2 + 1
+      );
+      this.totalDistrictGain = prestigeMulti
+        .times(this.ms.game.enemyManager.currentEnemy.level)
+        .times(AllSkillEffects.DOUBLE_DISTRICTS.numOwned + 1);
+    } else {
+      this.totalDistrictGain = new Decimal(0);
+    }
   }
 }
