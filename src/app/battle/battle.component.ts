@@ -65,7 +65,6 @@ export class BattleMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     this.ms.em.battleEndEmitter.emit(55);
   }
   reloadDistrictStats() {
-
     if (this.ms.game.enemyManager.currentEnemy) {
       let prestigeMulti = new Decimal(1).plus(
         this.ms.game.researchManager.scavenger.quantity.times(0.1)
@@ -75,16 +74,16 @@ export class BattleMenuComponent implements OnInit, OnDestroy, AfterViewInit {
       );
       this.totalDistrictGain = prestigeMulti
         .times(this.ms.game.enemyManager.currentEnemy.level)
-            .times(
-        new Decimal(1).plus(
-          this.ms.game.resourceManager.terraformer
-            .getQuantity()
-            .times(TERRAFORMER_MULTI)
+        .times(
+          new Decimal(1).plus(
+            this.ms.game.resourceManager.terraformer
+              .getQuantity()
+              .times(TERRAFORMER_MULTI)
+          )
         )
         .times(AllSkillEffects.DOUBLE_DISTRICTS.numOwned + 1);
     } else {
       this.totalDistrictGain = new Decimal(0);
     }
-
   }
 }
