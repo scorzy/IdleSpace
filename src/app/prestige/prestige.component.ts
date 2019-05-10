@@ -132,7 +132,7 @@ export class PrestigeComponent implements OnInit, OnChanges, AfterViewInit {
             }
           },
           interaction: {
-            dragNodes: true,
+            dragNodes: false,
             hover: true,
             navigationButtons: true,
             keyboard: true
@@ -148,7 +148,7 @@ export class PrestigeComponent implements OnInit, OnChanges, AfterViewInit {
           //   }
           // },
           physics: {
-            enabled: true,
+            enabled: false,
             barnesHut: {
               gravitationalConstant: -6000,
               avoidOverlap: 0.5

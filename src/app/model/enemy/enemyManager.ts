@@ -482,6 +482,12 @@ export class EnemyManager implements ISalvable {
     data.not = EnemyManager.NewOnTop;
     data.x = this.autoNext;
 
+    if (this.moreMetal) data.mm = this.moreMetal;
+    if (this.moreCrystal) data.mc = this.moreCrystal;
+    if (this.moreHabitable) data.mh = this.moreHabitable;
+    if (this.moreHabitable2) data.mh2 = this.moreHabitable2;
+    if (this.randomized) data.ra = this.randomized;
+
     return data;
   }
   load(data: any): boolean {
@@ -519,6 +525,13 @@ export class EnemyManager implements ISalvable {
     if ("n" in data) this.autoNuke = data.n;
     if ("x" in data) this.autoNext = data.x;
     if ("not" in data) EnemyManager.NewOnTop = data.not;
+
+    if ("mm" in data) this.moreMetal = data.mm;
+    if ("mc" in data) this.moreCrystal = data.mc;
+    if ("mh" in data) this.moreHabitable = data.mh;
+    if ("mh2" in data) this.moreHabitable2 = data.mh2;
+    if ("ra" in data) this.randomized = data.ra;
+
     return true;
   }
   //#endregion

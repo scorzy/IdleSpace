@@ -77,12 +77,31 @@ export class PrestigeManager implements ISalvable {
       { from: 55, to: 56 },
       { from: 51, to: 57 },
       { from: 36, to: 58 },
-      { from: 58, to: 59 },
       { from: 11, to: 60 },
       { from: 60, to: 61 },
       { from: 61, to: 62 },
       { from: 62, to: 63 },
-      { from: 63, to: 64 }
+      { from: 63, to: 64 },
+      { from: 24, to: 65 },
+      { from: 65, to: 71 },
+      { from: 25, to: 66 },
+      { from: 66, to: 72 },
+      { from: 26, to: 67 },
+      { from: 67, to: 73 },
+      { from: 27, to: 68 },
+      { from: 68, to: 74 },
+      { from: 29, to: 69 },
+      { from: 69, to: 75 },
+      { from: 30, to: 70 },
+      { from: 70, to: 76 },
+
+      { from: 71, to: 77 },
+      { from: 72, to: 78 },
+      { from: 73, to: 79 },
+      { from: 74, to: 80 },
+      { from: 75, to: 81 },
+      { from: 76, to: 82 },
+      { from: 55, to: 83 }
     ]);
 
     this.maxPrestigePoints = this.visSkills.length;
@@ -148,12 +167,30 @@ export class PrestigeManager implements ISalvable {
       new Skill(56, AllSkillEffects.PLUS_SEARCH),
       new Skill(57, AllSkillEffects.DOUBLE_DISTRICTS),
       new Skill(58, AllSkillEffects.DOUBLE_DISTRICTS),
-      new Skill(59, AllSkillEffects.DOUBLE_DISTRICTS),
       new Skill(60, AllSkillEffects.MULTI_FACTORY),
       new Skill(61, AllSkillEffects.MULTI_FACTORY),
       new Skill(62, AllSkillEffects.MULTI_FACTORY),
       new Skill(63, AllSkillEffects.MULTI_FACTORY),
-      new Skill(64, AllSkillEffects.MULTI_FACTORY)
+      new Skill(64, AllSkillEffects.MULTI_FACTORY),
+      new Skill(65, AllSkillEffects.PLUS_METAL_MINER),
+      new Skill(66, AllSkillEffects.PLUS_CRYSTAL_MINER),
+      new Skill(67, AllSkillEffects.PLUS_ALLOY),
+      new Skill(68, AllSkillEffects.PLUS_ENERGY),
+      new Skill(69, AllSkillEffects.PLUS_CPU),
+      new Skill(70, AllSkillEffects.PLUS_WORKER),
+      new Skill(71, AllSkillEffects.PLUS_METAL_MINER),
+      new Skill(72, AllSkillEffects.PLUS_CRYSTAL_MINER),
+      new Skill(73, AllSkillEffects.PLUS_ALLOY),
+      new Skill(74, AllSkillEffects.PLUS_ENERGY),
+      new Skill(75, AllSkillEffects.PLUS_CPU),
+      new Skill(76, AllSkillEffects.PLUS_WORKER),
+      new Skill(77, AllSkillEffects.MOD_METAL_MINER),
+      new Skill(78, AllSkillEffects.MOD_CRYSTAL_MINER),
+      new Skill(79, AllSkillEffects.MOD_ALLOY),
+      new Skill(80, AllSkillEffects.MOD_ENERGY),
+      new Skill(81, AllSkillEffects.MOD_CPU),
+      new Skill(82, AllSkillEffects.MOD_WORKER),
+      new Skill(83, AllSkillEffects.MOD_SEARCH)
     ];
   }
   buySkill(skillId: number, fromSave = false): boolean {
