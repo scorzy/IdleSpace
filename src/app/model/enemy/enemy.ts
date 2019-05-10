@@ -96,7 +96,7 @@ export class Enemy {
         (1 + (moduleLevelMulti - 1) * 0.9)
     );
     if (level < 20) {
-      navalCap = navalCap * 0.8;
+      navalCap = navalCap * (0.8 + level * 0.01);
     }
     const maxShipTye = Math.floor(
       Math.min(Math.max(Math.log(level) / Math.log(2), 1), ShipTypes.length)
