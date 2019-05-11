@@ -176,7 +176,7 @@ export class AllSkillEffects {
     AllSkillEffects.FAST_COMBAT.getDescription = (num = 1) => {
       return (
         "- " +
-        MainService.formatPipe.transform(0.3 * num, true) +
+        MainService.formatPipe.transform(Math.min(0.3 * num, 1)) +
         "s fight time"
       );
     };
@@ -385,13 +385,13 @@ export class AllSkillEffects {
     AllSkillEffects.RESEARCH_MULTI.getDescription = (num = 1) => {
       return (
         "+ " +
-        MainService.formatPipe.transform(400 * num, true) +
+        MainService.formatPipe.transform(300 * num, true) +
         "%\n Research"
       );
     };
     AllSkillEffects.RESEARCH_MULTI.name = "Prestige Research multi";
     Game.getInstance().researchBonus.multiplicativeBonus.push(
-      new Bonus(AllSkillEffects.RESEARCH_MULTI, 4, true)
+      new Bonus(AllSkillEffects.RESEARCH_MULTI, 3, true)
     );
     //#endregion
 

@@ -240,7 +240,7 @@ export class Game {
     this.automatorManager.setAutomatorLevel();
     this.automatorManager.resetTimers();
     AllSkillEffects.initialize(true);
-    this.automatorManager.assignToResource();
+    // this.automatorManager.assignToResource();
     this.resourceManager.allResources.forEach(r => {
       r.unlockedAutomators = r.automators.filter(a => a.isUnlocked());
       r.unlockedAutomators2 = r.automators2.filter(a => a.isUnlocked());
