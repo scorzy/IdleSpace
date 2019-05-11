@@ -26,6 +26,7 @@
             "assets": [
               "src/favicon.ico",
               "src/about.html",
+              "src/iframeTest.html",
               "src/assets",
               {
                 "glob": "break_infinity.min.js",
