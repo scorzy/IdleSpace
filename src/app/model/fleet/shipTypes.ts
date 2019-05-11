@@ -23,7 +23,7 @@ export class ShipType {
       new Decimal(10).times(Decimal.pow(2, k)),
       new Decimal(BASE_ARMOR * 1.25 * k),
       10,
-      k * 2,
+      (1 + k) * 2,
       "rank4",
       Math.floor(10 * Math.pow(1.5, k - 1)) / 10,
       Math.floor(10 * Math.pow(1.5, k - 1)) / 10
