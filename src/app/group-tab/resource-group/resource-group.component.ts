@@ -70,7 +70,8 @@ export class ResourceGroupComponent
           ? this.resourceGroup.selected
               .filter(r => r.id !== "e1")
               .map(u => u.operativity)
-              .reduce((p, c) => p + c, 0) / this.resourceGroup.selected.length
+              .reduce((p, c) => p + c, 0) /
+            this.resourceGroup.selected.filter(r => r.id !== "e1").length
           : 0;
     }
   }

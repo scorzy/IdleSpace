@@ -5,7 +5,7 @@
   >
     <h5>Aggregate group for {{ resourceGroup.name }}</h5>
 
-    <div *ngIf="buyAction">
+    <div *ngIf="buyAction && resourceGroup.id !== '0'">
       <span>Operativity (average): </span>
 
       <input
