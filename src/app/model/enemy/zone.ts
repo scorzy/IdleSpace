@@ -76,7 +76,7 @@ export class Zone implements ISalvable {
     if ("ship" in data) {
       for (const shipData of data.s) {
         const ship = new ShipDesign();
-        ship.load(shipData);
+        ship.load(shipData, false);
         this.ships.push(ship);
       }
     }

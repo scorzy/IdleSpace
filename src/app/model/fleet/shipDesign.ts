@@ -220,9 +220,22 @@ export class ShipDesign implements ISalvable, IBuyable {
     this.type = ShipTypes.find(t => t.id === data.t);
 
     if (this.type === null || this.type === undefined) {
-      const num = Number.parseInt(data.t, 10);
-      this.type = ShipType.GetTitan(num - 7);
+      this.type = DefenseTypes.find(t => t.id === data.t);
     }
+
+    if (this.type === null || this.type === undefined) {
+      if (isPlayer) {
+        const num = Number.parseInt(data.t, 10);
+        this.type = ShipType.GetTitan(num - 7);
+      } else {
+        this.type = DefenseTypes.find(t => t.name === data.n);
+        if (this.type === null || this.type === undefined) {
+          this.type = DefenseTypes[0];
+        }
+        this.type.defense = true;
+      }
+    }
+
     if (!this.type) this.type = DefenseTypes.find(t => t.id === data.t);
     this.name = data.n;
     if ("m" in data) {

@@ -251,7 +251,7 @@ export class Enemy {
     if ("s" in data) {
       for (const shipData of data.s) {
         const ship = new ShipDesign();
-        ship.load(shipData);
+        ship.load(shipData, false);
         enemy.shipsDesign.push(ship);
       }
     }
