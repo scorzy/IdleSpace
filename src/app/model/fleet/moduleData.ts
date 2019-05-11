@@ -37,7 +37,7 @@ export const ModulesData: IModuleData[] = [
     alloyPrice: 20,
     damage: 10,
     shieldPercent: 0,
-    armorPercent: 205,
+    armorPercent: 210,
     researchPrice: 2e3,
     shape: "disintegrator"
   },
@@ -72,7 +72,7 @@ export const ModulesData: IModuleData[] = [
     energyBalance: -1,
     alloyPrice: 20,
     damage: 10,
-    shieldPercent: 205,
+    shieldPercent: 210,
     armorPercent: 0,
     researchPrice: 2e3,
     shape: "railgun"
