@@ -2,9 +2,9 @@ import { SkillEffect } from "./skillEffects";
 import { AllSkillEffects } from "./allSkillEffects";
 import { positions } from "./positions";
 
-export const BUYABLE_COLOR = "#008000ee";
-export const OWNED_COLOR = "#ff0000ee";
-export const NOT_AVAILABLE_COLOR = "#4286f4ee";
+export const BUYABLE_COLOR = "#FFB38Fee";
+export const OWNED_COLOR = "#0094D3ee";
+export const NOT_AVAILABLE_COLOR = "#A6D8E7aa";
 
 export class Skill {
   effectId: string;
