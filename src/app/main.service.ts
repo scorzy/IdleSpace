@@ -95,7 +95,11 @@ export class MainService {
     MainService.endInPipe = new EndInPipe(this.options);
   }
   start() {
-    const savedData = localStorage.getItem("save");
+    let savedData = localStorage.getItem("saveIS");
+    if (!savedData || savedData === null) {
+      savedData = localStorage.getItem("save");
+    }
+
     if (savedData) {
       this.load(savedData);
       this.setTheme();
@@ -178,7 +182,10 @@ export class MainService {
     return data;
   }
   load(data?: any): any {
-    const save = localStorage.getItem("save");
+    let save = localStorage.getItem("saveIS");
+    if (!save || save === null) {
+      save = localStorage.getItem("save");
+    }
     // console.log(save);
     if (save !== null) {
       this.zipWorker.postMessage(new CompressRequest(save, "", false, 2));
@@ -232,7 +239,8 @@ export class MainService {
     );
   }
   clear() {
-    localStorage.removeItem("save");
+    localStorage.removeItem("saveIS");
+    localStorage.removeItem("saveDate");
     window.location.reload();
   }
 
@@ -260,7 +268,7 @@ export class MainService {
     if (result.compress) {
       if (result.zipped !== "") {
         if (result.requestId === 0 || result.requestId === 10) {
-          localStorage.setItem("save", result.zipped);
+          localStorage.setItem("saveIS", result.zipped);
           localStorage.setItem("saveDate", Date());
           this.lastSave = Date();
           if (result.requestId === 0 || this.options.autosaveNotification) {
