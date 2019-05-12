@@ -14,7 +14,6 @@ import { ModStack } from "../mod/modStack";
 import { ResearchManager } from "../research/researchManager";
 import { OptionsService } from "src/app/options.service";
 import { Bonus } from "../bonus/bonus";
-import { lookup } from "dns";
 
 const MINE_EXP = 1.5;
 const BUILDING_EXP = 2;

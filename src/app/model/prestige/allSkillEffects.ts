@@ -218,9 +218,9 @@ export class AllSkillEffects {
     AllSkillEffects.DOUBLE_MISSILE.name = "Missile Prestige";
     AllSkillEffects.MULTI_FACTORY.getDescription = (num = 1) => {
       return (
-        "%Missile Factory yield and consume\n" +
+        "Missile Factory yield and consume\n" +
         MainService.formatPipe.transform(250 * num, true) +
-        "% more resource."
+        "% more resource"
       );
     };
     AllSkillEffects.DOUBLE_MISSILE.name = "Missile Factory Prestige";
