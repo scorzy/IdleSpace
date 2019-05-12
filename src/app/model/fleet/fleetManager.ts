@@ -15,7 +15,7 @@ import { MainService } from "src/app/main.service";
 
 export const MAX_NAVAL_CAPACITY = 1e4;
 export const MAX_DESIGN = 20;
-const DISBAND_INTERVAL = 60 * 1000 * 5; //  5 minutes
+const DISBAND_INTERVAL = 60 * 1000 * 2; //  5 minutes
 const DISBAND_PERCENT = 0.3;
 export const MAX_SHIP = 1e4;
 
