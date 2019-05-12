@@ -2,7 +2,10 @@ export const enemyNames = [
   "Trimps",
   "Paperclips",
   "Space", // Company
+  "Shark", // Game
   "Printer",
+  "Ant",
+
   "Earth",
   "Mars",
   "Moon",

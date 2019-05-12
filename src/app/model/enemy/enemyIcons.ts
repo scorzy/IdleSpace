@@ -24,5 +24,11 @@ export const enemyIcons = [
   "skull",
   "griffin",
   "air",
-  "double"
+  "double",
+  "euro",
+  "banner",
+  "ribbon",
+  "biohazard",
+  "laurel",
+  "horus"
 ];

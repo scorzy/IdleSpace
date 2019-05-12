@@ -318,6 +318,14 @@ export class Enemy {
       this.shape = "printer";
       return true;
     }
+    if (this.name.includes("Shark")) {
+      this.shape = "shark";
+      return true;
+    }
+    if (this.name.includes("Ant")) {
+      this.shape = "ant";
+      return true;
+    }
     this.shape = sample(enemyIcons);
   }
   generateZones(empty = false) {
