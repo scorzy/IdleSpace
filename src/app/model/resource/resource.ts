@@ -55,7 +55,7 @@ export class Resource extends AbstractUnlockable
   prestigeLimitIncrease: number;
 
   productionMultiplier = new BonusStack();
-  priority = 100;
+  priority = 50;
   realPriority = new Decimal();
   showPriority = false;
 
@@ -212,6 +212,7 @@ export class Resource extends AbstractUnlockable
     if (!this.quantity.eq(0)) data.q = this.quantity;
     if (this.operativity !== 100) data.o = this.operativity;
     if (this.modStack) data.m = this.modStack.getSave();
+    data.rp = this.priority;
     return data;
   }
   load(data: any): boolean {
@@ -227,6 +228,7 @@ export class Resource extends AbstractUnlockable
     }
     if ("o" in data) this.operativity = Math.min(data.o, 100);
     if ("m" in data) this.modStack.load(data.m);
+    if ("rp" in data) this.priority = data.rp;
 
     this.unlockedActions = this.actions.filter(a => a.unlocked);
     return true;

@@ -14,6 +14,7 @@ import { ModStack } from "../mod/modStack";
 import { ResearchManager } from "../research/researchManager";
 import { OptionsService } from "src/app/options.service";
 import { Bonus } from "../bonus/bonus";
+import { lookup } from "dns";
 
 const MINE_EXP = 1.5;
 const BUILDING_EXP = 2;
@@ -554,7 +555,7 @@ export class ResourceManager implements ISalvable {
         !this.tierGroups
           ? new Decimal(0)
           : this.tierGroups[1].unlockedResources
-              .filter(r => !r.isCapped && r !== this.drone)
+              .filter(r => !r.isCapped && r !== this.drone && r.priority > 0)
               .map(r => r.limit.minus(r.quantity).times(r.standardPrice))
               .reduce((c, p) => c.plus(p), new Decimal(0))
       );
@@ -932,24 +933,26 @@ export class ResourceManager implements ISalvable {
     let n = 0;
     while (toDeploy.gte(0) && n < jobs.length) {
       const job = jobs[n];
-      const toAddMax = job.limit.minus(job.quantity).floor();
-      const toAddPrior = toDeploy
-        .times(job.realPriority)
-        .div(job.standardPrice)
-        .div(totalPriority)
-        .floor();
-      const toAdd = Decimal.min(toAddMax, toAddPrior).floor();
-      if (toAdd.gte(1)) {
-        job.quantity = job.quantity.plus(toAdd);
-        const price = toAdd.times(job.standardPrice);
-        toDeploy = toDeploy.minus(price);
-        this.drone.quantity = this.drone.quantity.minus(price);
+      if (job.priority > 0) {
+        const toAddMax = job.limit.minus(job.quantity).floor();
+        const toAddPrior = toDeploy
+          .times(job.realPriority)
+          .div(job.standardPrice)
+          .div(totalPriority)
+          .floor();
+        const toAdd = Decimal.min(toAddMax, toAddPrior).floor();
+        if (toAdd.gte(1)) {
+          job.quantity = job.quantity.plus(toAdd);
+          const price = toAdd.times(job.standardPrice);
+          toDeploy = toDeploy.minus(price);
+          this.drone.quantity = this.drone.quantity.minus(price);
+        }
       }
       n++;
     }
     //  If everything round to zero no robots are deployed
     //  I fix this by deploy on high priority job
-    if (toDeploy.gte(0) && jobs.length > 0) {
+    if (toDeploy.gte(0) && jobs.length > 0 && jobs[0].priority > 0) {
       const job = jobs[0];
       const toAddMax = job.limit.minus(job.quantity).floor();
       const toAdd = toAddMax
