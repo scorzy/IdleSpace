@@ -51,7 +51,8 @@ export const ModulesData: IModuleData[] = [
     shieldPercent: 125,
     armorPercent: 75,
     nextToUnlock: ["g"],
-    researchPrice: 2e3
+    researchPrice: 2e3,
+    shape: "mass"
   },
   {
     id: "g",
@@ -63,7 +64,8 @@ export const ModulesData: IModuleData[] = [
     shieldPercent: 170,
     armorPercent: 30,
     nextToUnlock: ["e"],
-    researchPrice: 2e3
+    researchPrice: 2e3,
+    shape: "gauss"
   },
   {
     id: "e",
