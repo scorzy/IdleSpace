@@ -85,9 +85,12 @@ export class Game {
       const save = this.automatorManager.getSave();
       this.automatorManager.generateAutomators();
       this.automatorManager.load(save);
-      this.automatorManager.automatorGroups.forEach(a => {
-        a.on = false;
-      });
+      if (!OptionsService.noAutomatorOff) {
+        this.automatorManager.automatorGroups.forEach(a => {
+          a.on = false;
+        });
+      }
+      this.automatorManager.resetTimers();
     } else {
       this.automatorManager.generateAutomators();
     }

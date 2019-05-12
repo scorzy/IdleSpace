@@ -11,6 +11,7 @@ export class OptionsService {
   static researchModal = true;
   static battleWinNotification = true;
   static navalCapNotification = true;
+  static noAutomatorOff = false;
 
   usaFormat = true;
   numFormat = "scientific";
@@ -78,7 +79,8 @@ export class OptionsService {
       k: this.hotKeyAlert,
       c: OptionsService.navalCapNotification,
       v: this.hideRefund,
-      f: this.playFabAutoSave
+      f: this.playFabAutoSave,
+      e: OptionsService.noAutomatorOff
     };
   }
   restore(data: any) {
@@ -101,6 +103,7 @@ export class OptionsService {
     if ("c" in data) OptionsService.navalCapNotification = data.c;
     if ("v" in data) this.hideRefund = data.v;
     if ("f" in data) this.playFabAutoSave = data.f;
+    if ("e" in data) OptionsService.noAutomatorOff = data.e;
     this.generateFormatter();
     this.reloadHeader();
   }

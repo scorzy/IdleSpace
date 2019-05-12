@@ -148,4 +148,17 @@
       <label for="hideRef"></label>
     </div>
   </div>
+
+  <div class="form-group">
+    <label for="hideRef">Don't disable automators on prestige</label>
+    <div class="toggle-switch">
+      <input
+        name="noAuto"
+        type="checkbox"
+        id="noAuto"
+        [(ngModel)]="OptionsService.noAutomatorOff"
+      />
+      <label for="noAuto"></label>
+    </div>
+  </div>
 </form>
