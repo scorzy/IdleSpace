@@ -1,12 +1,10 @@
 <h1>Automators</h1>
 <p>
-  Automators are unlocked by automator level
-  <a [routerLink]="'/autoTable'">Automators</a>
-  "Automator Level" is prestige level * (1 + 0.3 * ascension level) and never
-  decrease.
+  Automators are unlocked based upon your Automator Level, which you can see in the Automators tab: 
+  <a [routerLink]="'/autoTable'">Automators</a><br />
+  "Automator Level" is calculated by Prestige*(1+(0.3*Ascension_Level))
   <br />
-  Automators can automate some aspect of the game, for example auto search for
-  new enemy.
+  Automators can automate some aspects of the game, such as searching for enemies.
 </p>
 <h6>Automators Stats</h6>
 <ul class="list">
@@ -16,13 +14,13 @@
     you have at least one Robot Factory
   </li>
   <li>
-    <strong>Interval</strong>Minimum interval, unlock lower interval with
-    prestige level. You should put higher interval on low priority automators to
-    avoid Priority inversion
+    <strong>Interval</strong> Minimum interval, Lower intervals are unlocked by
+    raising your Automator Level. You should put higher interval on low priority 
+    automators to avoid Priority inversion
   </li>
-  <li><strong>Priority</strong>Higher number equal higher priority</li>
+  <li><strong>Priority</strong> Higher number equal higher priority</li>
   <li>
-    <strong>Res %</strong>Percent of resource to use. With 100% automators will
-    use 100% of available resource
+    <strong>Res %</strong> Percent of resources to use. With 100% automators will
+    activate as soon as you have 100% of the resources it requires.
   </li>
 </ul>
