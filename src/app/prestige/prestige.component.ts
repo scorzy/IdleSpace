@@ -15,6 +15,7 @@ import { Skill } from "../model/prestige/skill";
 import { AllSkillEffects } from "../model/prestige/allSkillEffects";
 import { Network } from "vis";
 import { SkillEffect } from "../model/prestige/skillEffects";
+import { OptionsService } from "../options.service";
 declare let preventScroll;
 
 @Component({
@@ -41,7 +42,11 @@ export class PrestigeComponent implements OnInit, OnChanges, AfterViewInit {
   exp = "";
   canAscend = false;
 
-  constructor(public ms: MainService, private cd: ChangeDetectorRef) {}
+  constructor(
+    public ms: MainService,
+    public os: OptionsService,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     this.reloadList();
@@ -165,7 +170,14 @@ export class PrestigeComponent implements OnInit, OnChanges, AfterViewInit {
             ? this.ms.game.prestigeManager.visSkills.get(masteryBuy)
             : null;
 
-        this.openBuyModal(this.node);
+        if (!this.node) return false;
+
+        if (this.os.noPrestigeModal) {
+          this.selectedSkill = this.node;
+          this.buy();
+        } else {
+          this.openBuyModal(this.node);
+        }
 
         this.cd.markForCheck();
       });

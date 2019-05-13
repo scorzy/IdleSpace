@@ -27,6 +27,7 @@ export class OptionsService {
   hotKeyAlert = false;
   hideRefund = false;
   playFabAutoSave = false;
+  noPrestigeModal = false;
 
   formatter: any;
   formatEmitter: EventEmitter<number> = new EventEmitter<number>();
@@ -80,7 +81,8 @@ export class OptionsService {
       c: OptionsService.navalCapNotification,
       v: this.hideRefund,
       f: this.playFabAutoSave,
-      e: OptionsService.noAutomatorOff
+      e: OptionsService.noAutomatorOff,
+      l: this.noPrestigeModal
     };
   }
   restore(data: any) {
@@ -104,6 +106,7 @@ export class OptionsService {
     if ("v" in data) this.hideRefund = data.v;
     if ("f" in data) this.playFabAutoSave = data.f;
     if ("e" in data) OptionsService.noAutomatorOff = data.e;
+    if ("l" in data) this.noPrestigeModal = data.l;
     this.generateFormatter();
     this.reloadHeader();
   }
