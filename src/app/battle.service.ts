@@ -98,9 +98,10 @@ export class BattleService {
               //  Skip if damage <0.1% shield
               if (maxShieldDamage.gte(target.shield.div(1000))) {
                 target.shield = target.shield.minus(maxShieldDamage);
+                // tslint:disable-next-line:prefer-conditional-expression
                 if (target.shield.lt(0)) {
-                  const toDo = damageToDo.plus(target.shield);
-                  damageToDo = toDo.div(shieldPercent);
+                  damageToDo = Decimal.abs(target.shield).div(shieldPercent);
+                  // console.log(damageToDo.toNumber());
                 } else {
                   damageToDo = new Decimal(0);
                 }
