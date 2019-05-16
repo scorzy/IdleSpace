@@ -1,16 +1,19 @@
 <h1>Options</h1>
-<form clrForm class="clr-form clr-form-compact">
+<form clrForm class="clr-form">
   <div class="form-group">
-    <label for="t1">Dark Theme</label>
-    <div class="toggle-switch">
-      <input
-        name="dark"
-        type="checkbox"
-        id="dark"
-        [(ngModel)]="ms.options.dark"
-        (change)="ms.setTheme()"
-      />
-      <label for="dark"></label>
+    <label for="numFormat">Number format</label>
+    <div class="select">
+      <select
+        id="numFormat"
+        name="numFormat"
+        [(ngModel)]="ms.options.numFormat"
+        (change)="onFormatChange()"
+      >
+        <option value="standard">Standard</option>
+        <option value="scientific">Scientific</option>
+        <option value="engineering">Engineering</option>
+        <option value="longScale">Long Scale</option>
+      </select>
     </div>
   </div>
 
@@ -34,144 +37,114 @@
     </div>
   </div>
 
-  <div class="form-group">
-    <label for="t1">Alternative number format</label>
-    <div class="toggle-switch">
-      <input
-        type="checkbox"
-        id="format"
-        name="format"
-        [(ngModel)]="ms.options.usaFormat"
-        (change)="onFormatChange()"
-      />
-      <label for="format"></label>
-    </div>
-  </div>
+  <clr-toggle-wrapper>
+    <input
+      type="checkbox"
+      clrToggle
+      id="dark"
+      name="dark"
+      [(ngModel)]="ms.options.dark"
+      (change)="ms.setTheme()"
+    />
+    <label>Dark Theme</label>
+  </clr-toggle-wrapper>
+  <br />
 
-  <div class="form-group">
-    <label for="numFormat">Number format</label>
-    <div class="select">
-      <select
-        id="numFormat"
-        name="numFormat"
-        [(ngModel)]="ms.options.numFormat"
-        (change)="onFormatChange()"
-      >
-        <option value="standard">Standard</option>
-        <option value="scientific">Scientific</option>
-        <option value="engineering">Engineering</option>
-        <option value="longScale">Long Scale</option>
-      </select>
-    </div>
-  </div>
+  <clr-toggle-wrapper>
+    <input
+      type="checkbox"
+      clrToggle
+      name="format"
+      id="format"
+      [(ngModel)]="ms.options.usaFormat"
+      (change)="onFormatChange()"
+    />
+    <label>Alternative number format</label>
+  </clr-toggle-wrapper>
+  <br />
 
-  <!-- <div class="form-group">
-    <label for="matPos">Materials position:</label>
-    <div class="select">
-      <select
-        id="matPos"
-        name="matPos"
-        [(ngModel)]="os.materialPosition"
-        (change)="onChangeMaterialPos()"
-      >
-        <option value="1">Both</option>
-        <option value="2">Top</option>
-        <option value="3">Side</option>
-      </select>
-    </div>
-  </div> -->
+  <clr-toggle-wrapper>
+    <input
+      type="checkbox"
+      clrToggle
+      name="si"
+      id="si"
+      id="si"
+      [(ngModel)]="ms.options.showI"
+    />
+    <label>Show I on new units</label>
+  </clr-toggle-wrapper>
+  <br />
 
-  <div class="form-group">
-    <label for="si">Show I on new units</label>
-    <div class="toggle-switch">
-      <input name="si" type="checkbox" id="si" [(ngModel)]="ms.options.showI" />
-      <label for="si"></label>
-    </div>
-  </div>
+  <clr-toggle-wrapper>
+    <input
+      type="checkbox"
+      clrToggle
+      name="time"
+      id="time"
+      [(ngModel)]="os.timeFormatDetail"
+    />
+    <label>Time in strict units</label>
+  </clr-toggle-wrapper>
+  <br />
 
-  <!-- <div class="form-group">
-    <label for="nr">Disable notification for unit ending:</label>
-    <div class="toggle-switch">
-      <input
-        name="nr"
-        type="checkbox"
-        id="nr"
-        [(ngModel)]="os.noResourceEndPopUp"
-      />
-      <label for="nr"></label>
-    </div>
-  </div> -->
+  <clr-toggle-wrapper>
+    <input
+      type="checkbox"
+      clrToggle
+      name="hot"
+      id="hot"
+      [(ngModel)]="os.hotKeyAlert"
+    />
+    <label>HotKey disabled info closed</label>
+  </clr-toggle-wrapper>
+  <br />
 
-  <div class="form-group">
-    <label for="wn">Time in strict units</label>
-    <div class="toggle-switch">
-      <input
-        name="time"
-        type="checkbox"
-        id="time"
-        [(ngModel)]="os.timeFormatDetail"
-      />
-      <label for="time"></label>
-    </div>
-  </div>
+  <clr-toggle-wrapper>
+    <input
+      type="checkbox"
+      clrToggle
+      name="navCap"
+      id="navCap"
+      [(ngModel)]="OptionsService.navalCapNotification"
+    />
+    <label>Max Naval cap message on warrior page</label>
+  </clr-toggle-wrapper>
+  <br />
 
-  <div class="form-group">
-    <label for="hot">HotKey disabled info closed</label>
-    <div class="toggle-switch">
-      <input name="hot" type="checkbox" id="hot" [(ngModel)]="os.hotKeyAlert" />
-      <label for="hot"></label>
-    </div>
-  </div>
+  <clr-toggle-wrapper>
+    <input
+      type="checkbox"
+      clrToggle
+      name="hideRef"
+      id="hideRef"
+      [(ngModel)]="os.hideRefund"
+    />
+    <label>Hide refund</label>
+  </clr-toggle-wrapper>
+  <br />
 
-  <div class="form-group">
-    <label for="navCap">Max Naval cap message on warrior page</label>
-    <div class="toggle-switch">
-      <input
-        name="navCap"
-        type="checkbox"
-        id="navCap"
-        [(ngModel)]="OptionsService.navalCapNotification"
-      />
-      <label for="navCap"></label>
-    </div>
-  </div>
+  <clr-toggle-wrapper>
+    <input
+      type="checkbox"
+      clrToggle
+      name="noAuto"
+      id="noAuto"
+      [(ngModel)]="OptionsService.noAutomatorOff"
+    />
+    <label>Don't disable automators on prestige</label>
+  </clr-toggle-wrapper>
+  <br />
 
-  <div class="form-group">
-    <label for="hideRef">Hide refund</label>
-    <div class="toggle-switch">
-      <input
-        name="hideRef"
-        type="checkbox"
-        id="hideRef"
-        [(ngModel)]="os.hideRefund"
-      />
-      <label for="hideRef"></label>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label for="hideRef">Don't disable automators on prestige</label>
-    <div class="toggle-switch">
-      <input
-        name="noAuto"
-        type="checkbox"
-        id="noAuto"
-        [(ngModel)]="OptionsService.noAutomatorOff"
-      />
-      <label for="noAuto"></label>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label for="noPresModal">No prestige modal</label>
-    <div class="toggle-switch">
-      <input
-        name="noPresModal"
-        type="checkbox"
-        id="noPresModal"
-        [(ngModel)]="os.noPrestigeModal"
-      />
-      <label for="noPresModal"></label>
-    </div>
-  </div>
+  <clr-toggle-wrapper>
+    <input
+      type="checkbox"
+      clrToggle
+      name="noPresModal"
+      id="noPresModal"
+      [(ngModel)]="os.noPrestigeModal"
+    />
+    <label>No prestige modal</label>
+  </clr-toggle-wrapper>
+  <br />
 </form>
