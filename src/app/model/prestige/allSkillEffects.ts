@@ -223,9 +223,9 @@ export class AllSkillEffects {
         "% more resource"
       );
     };
-    AllSkillEffects.DOUBLE_MISSILE.name = "Missile Factory Prestige";
+    AllSkillEffects.MULTI_FACTORY.name = "Missile Factory Prestige";
     resMan.missileX1.productionMultiplier.multiplicativeBonus.push(
-      new Bonus(AllSkillEffects.DOUBLE_MISSILE, 2.5)
+      new Bonus(AllSkillEffects.MULTI_FACTORY, 2.5)
     );
     //#endregion
     //#region Robot Modding
