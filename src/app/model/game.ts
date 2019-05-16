@@ -107,6 +107,9 @@ export class Game {
     this.requiredWarp = ZERO_DECIMAL_IMMUTABLE;
 
     if (!this.isPaused || warp) {
+      //  Deploy Drones
+      this.resourceManager.deployDrones();
+
       if (warp && OptionsService.warpNotification) {
         MainService.toastr.show(
           MainService.endInPipe.transform(diff * 1000),
@@ -161,9 +164,6 @@ export class Game {
       );
       this.resourceManager.searchProgress.quantity = ZERO_DECIMAL_IMMUTABLE;
       this.enemyManager.reloadTimes();
-
-      //  Deploy Drones
-      this.resourceManager.deployDrones();
 
       //  Reload End times
       this.resourceManager.loadPolynomial();
