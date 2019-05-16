@@ -1,69 +1,56 @@
 <h1>Notifications</h1>
+<br />
 
-<form clrForm class="clr-form clr-form-compact">
-  <div class="form-group">
-    <label for="t1">Research Notification</label>
-    <div class="toggle-switch">
-      <input
-        name="res_noti"
-        type="checkbox"
-        id="res_noti"
-        [(ngModel)]="OptionsService.researchNotification"
-      />
-      <label for="res_noti"></label>
-    </div>
-  </div>
+<clr-toggle-wrapper>
+  <input
+    type="checkbox"
+    clrToggle
+    name="options"
+    [(ngModel)]="OptionsService.researchNotification"
+  />
+  <label>Research Notification</label>
+</clr-toggle-wrapper>
+<br />
 
-  <div class="form-group">
-    <label for="t1">Warp Notification</label>
-    <div class="toggle-switch">
-      <input
-        name="warp_noti"
-        type="checkbox"
-        id="warp_noti"
-        [(ngModel)]="OptionsService.warpNotification"
-      />
-      <label for="warp_noti"></label>
-    </div>
-  </div>
+<clr-toggle-wrapper>
+  <input
+    type="checkbox"
+    clrToggle
+    name="options2"
+    [(ngModel)]="OptionsService.warpNotification"
+  />
+  <label>Warp Notification</label>
+</clr-toggle-wrapper>
+<br />
 
-  <div class="form-group">
-    <label for="enemy">Enemy Defeated</label>
-    <div class="toggle-switch">
-      <input
-        name="enemy"
-        type="checkbox"
-        id="enemy"
-        [(ngModel)]="OptionsService.enemyDefeatedNotification"
-      />
-      <label for="enemy"></label>
-    </div>
-  </div>
+<clr-toggle-wrapper>
+  <input
+    type="checkbox"
+    clrToggle
+    name="options3"
+    [(ngModel)]="OptionsService.enemyDefeatedNotification"
+  />
+  <label>Enemy Defeated</label>
+</clr-toggle-wrapper>
+<br />
 
-  <div class="form-group">
-    <label for="research">Open Modal when unlocking Laboratory</label>
-    <div class="toggle-switch">
-      <input
-        name="research"
-        type="checkbox"
-        id="research"
-        [(ngModel)]="OptionsService.researchModal"
-      />
-      <label for="research"></label>
-    </div>
-  </div>
-  <br />
+<clr-toggle-wrapper>
+  <input
+    type="checkbox"
+    clrToggle
+    name="options4"
+    [(ngModel)]="OptionsService.researchModal"
+  />
+  <label>Open Modal when unlocking Laboratory</label>
+</clr-toggle-wrapper>
+<br />
 
-  <div class="form-group">
-    <label for="battleWin">Battle win notification</label>
-    <div class="toggle-switch">
-      <input
-        name="battleWin"
-        type="checkbox"
-        id="battleWin"
-        [(ngModel)]="OptionsService.battleWinNotification"
-      />
-      <label for="battleWin"></label>
-    </div>
-  </div>
-</form>
+<clr-toggle-wrapper>
+  <input
+    type="checkbox"
+    clrToggle
+    name="options5"
+    [(ngModel)]="OptionsService.battleWinNotification"
+  />
+  <label>Battle win notification</label>
+</clr-toggle-wrapper>
