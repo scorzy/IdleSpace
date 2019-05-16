@@ -108,6 +108,9 @@ export class AllSkillEffects {
       );
     };
     AllSkillEffects.DRONE_MULTI.name = "Drone Prestige";
+    resMan.warriorX1.productionMultiplier.multiplicativeBonus.push(
+      new Bonus(AllSkillEffects.DRONE_MULTI, 1.5)
+    );
     for (let i = 0; i < 7; i++) {
       tier1[i].shape = resources[i].shape;
       tier1[i].getDescription = (num = 1) => {
