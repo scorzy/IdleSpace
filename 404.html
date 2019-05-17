@@ -18,7 +18,7 @@
         <script>
           preventScroll = function () {
             setTimeout(function () {
-              $('.nav-content, .content-area, .app-header').on('DOMMouseScroll mousewheel', function (ev) {
+              $('.drag-list, .nav-content, .content-area, .app-header').on('DOMMouseScroll mousewheel', function (ev) {
                 body = $('body')[0]
                 var $this = $(this),
                   scrollTop = this.scrollTop,
@@ -36,6 +36,11 @@
                   return false;
                 }
 
+                if($this.hasClass("drag-list")){
+                  console.log(delta)
+                  $this.scrollTop(scrollTop -delta );
+                  return false;
+                }else{
                 if (!up && -delta > scrollHeight - height - scrollTop) {
                   // Scrolling down, but this will take us past the bottom.
                   $this.scrollTop(scrollHeight);
@@ -45,6 +50,7 @@
                   $this.scrollTop(0);
                   return prevent();
                 }
+              }
               }
               )
             }
