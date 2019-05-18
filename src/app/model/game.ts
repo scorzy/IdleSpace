@@ -13,6 +13,7 @@ import { AllSkillEffects } from "./prestige/allSkillEffects";
 import { AutomatorManager } from "./automators/automatorManager";
 import { ShipDesign } from "./fleet/shipDesign";
 import { Preset } from "./enemy/preset";
+import { SkillEffect } from "./prestige/skillEffects";
 
 export const ZERO_DECIMAL_IMMUTABLE = new Decimal(0);
 
@@ -252,13 +253,16 @@ export class Game {
       h.unlockedAutomators = h.automators.filter(g => g.isUnlocked());
     });
 
+    SkillEffect.availableSkill.quantity = new Decimal(
+      this.prestigeManager.totalPrestige
+    );
     this.automatorManager.resetTimers();
   }
   ascend() {
     if (!this.prestigeManager.canAscend()) return false;
-    const oldPrstige = this.prestigeManager.totalPrestige;
+    const oldPrestige = this.prestigeManager.totalPrestige;
     this.prestigeManager.ascend();
-    this.automatorManager.setAutomatorLevel(oldPrstige);
+    this.automatorManager.setAutomatorLevel(oldPrestige);
     this.prestige();
     this.prestigeManager.totalPrestige = 1;
     this.reload();

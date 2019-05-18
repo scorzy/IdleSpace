@@ -29,7 +29,10 @@ export class SkillGroupComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscriptions.push(
-      this.route.params.subscribe(this.getGroup.bind(this))
+      this.route.params.subscribe(this.getGroup.bind(this)),
+      this.ms.em.prestigeEmitter.subscribe(() => {
+        this.cd.markForCheck();
+      })
     );
   }
   ngOnDestroy() {
@@ -43,6 +46,10 @@ export class SkillGroupComponent implements OnInit, OnDestroy {
       return false;
     }
     this.skillGroup = SkillGroups.find(g => g.id === id);
+    this.skillGroup.skills.map(s => s.buyAction).forEach(a => a.reload());
     this.cd.markForCheck();
+  }
+  getSkillId(index: number, skill: SkillGroup) {
+    return skill.id;
   }
 }

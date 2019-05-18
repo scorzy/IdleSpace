@@ -2,4 +2,14 @@
   <h1>
     {{ skillGroup.name }}
   </h1>
+
+  <div class="clr-row">
+    <div
+      class="clr-col-12 clr-col-md-6 clr-col-xl-4"
+      *ngFor="let skill of skillGroup.skills; trackBy: getSkillId"
+    >
+      <app-action [action]="skill.buyAction"> </app-action>
+      <br />
+    </div>
+  </div>
 </ng-container>

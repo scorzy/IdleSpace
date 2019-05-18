@@ -4,7 +4,7 @@
 <clr-vertical-nav>
   <a clrVerticalNavLink routerLink="./pre" routerLinkActive="active">Skills</a>
   <a
-    *ngFor="let group of SkillGroups"
+    *ngFor="let group of SkillGroups; trackBy: getGroupId"
     clrVerticalNavLink
     [routerLink]="'./grp/' + group.id"
     routerLinkActive="active"

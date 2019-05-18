@@ -10,22 +10,26 @@ export const SkillGroups: SkillGroup[] = [
   {
     id: "1",
     name: "Tier 1",
-    maxPercent: 1
+    maxPercent: 1,
+    skills: []
   },
   {
     id: "2",
     name: "Tier 2",
-    maxPercent: 2 / 3
+    maxPercent: 2 / 3,
+    skills: []
   },
   {
     id: "3",
     name: "Tier 3",
-    maxPercent: 1 / 3
+    maxPercent: 1 / 3,
+    skills: []
   },
   {
     id: "S",
     name: "Special",
-    maxPercent: 1 / 10
+    maxPercent: 1 / 10,
+    skills: []
   }
 ];
 
@@ -199,7 +203,8 @@ export class AllSkillEffects {
     };
     //#endregion
     //#region Combat
-    AllSkillEffects.FAST_COMBAT.shape = "clock";
+    AllSkillEffects.FAST_COMBAT.limit = new Decimal(1);
+    AllSkillEffects.FAST_COMBAT.isLimited = true;
     AllSkillEffects.FAST_COMBAT.getDescription = (num = 1) => {
       return (
         "- " +
@@ -221,6 +226,8 @@ export class AllSkillEffects {
         "%\nDark Matter"
       );
     };
+    AllSkillEffects.MODULE_LEVEL.limit = new Decimal(1);
+    AllSkillEffects.MODULE_LEVEL.isLimited = true;
     AllSkillEffects.MODULE_LEVEL.getDescription = (num = 1) => {
       return (
         "+ " +
@@ -235,6 +242,8 @@ export class AllSkillEffects {
         "%\nResource gain from battle"
       );
     };
+    AllSkillEffects.DOUBLE_MISSILE.limit = new Decimal(3);
+    AllSkillEffects.DOUBLE_MISSILE.isLimited = true;
     AllSkillEffects.DOUBLE_MISSILE.getDescription = (num = 1) => {
       return (
         "+ " +
@@ -256,6 +265,8 @@ export class AllSkillEffects {
     );
     //#endregion
     //#region Robot Modding
+    AllSkillEffects.FACTORY_BONUS.limit = new Decimal(3);
+    AllSkillEffects.FACTORY_BONUS.isLimited = true;
     AllSkillEffects.FACTORY_BONUS.getDescription = (num = 1) => {
       return (
         "+ " +
@@ -268,6 +279,7 @@ export class AllSkillEffects {
     ResourceManager.getInstance().droneFactory.productionMultiplier.multiplicativeBonus.push(
       new Bonus(AllSkillEffects.FACTORY_BONUS, 5, true)
     );
+
     AllSkillEffects.MODDING_PLUS.getDescription = (num = 1) => {
       return (
         "+ " +
@@ -275,6 +287,9 @@ export class AllSkillEffects {
         "\n Modding points"
       );
     };
+
+    AllSkillEffects.DOUBLE_MODDING.limit = new Decimal(1);
+    AllSkillEffects.DOUBLE_MODDING.isLimited = true;
     AllSkillEffects.DOUBLE_MODDING.getDescription = (num = 1) => {
       return (
         "+ " +
@@ -296,6 +311,8 @@ export class AllSkillEffects {
       new Bonus(AllSkillEffects.SEARCH_MULTI, 3, true)
     );
 
+    AllSkillEffects.SEARCH_METAL.limit = new Decimal(1);
+    AllSkillEffects.SEARCH_METAL.isLimited = true;
     AllSkillEffects.SEARCH_METAL.getDescription = (num = 1) => {
       return (
         "+ " +
@@ -308,6 +325,8 @@ export class AllSkillEffects {
       new Bonus(AllSkillEffects.SEARCH_METAL, 0.5, true)
     );
 
+    AllSkillEffects.SEARCH_CRY.limit = new Decimal(1);
+    AllSkillEffects.SEARCH_CRY.isLimited = true;
     AllSkillEffects.SEARCH_CRY.getDescription = (num = 1) => {
       return (
         "+ " +
@@ -320,6 +339,8 @@ export class AllSkillEffects {
       new Bonus(AllSkillEffects.SEARCH_CRY, 0.5, true)
     );
 
+    AllSkillEffects.SEARCH_HAB.limit = new Decimal(1);
+    AllSkillEffects.SEARCH_HAB.isLimited = true;
     AllSkillEffects.SEARCH_HAB.getDescription = (num = 1) => {
       return (
         "+ " +
@@ -332,6 +353,8 @@ export class AllSkillEffects {
       new Bonus(AllSkillEffects.SEARCH_HAB, 0.5, true)
     );
 
+    AllSkillEffects.SEARCH_HAB2.limit = new Decimal(1);
+    AllSkillEffects.SEARCH_HAB2.isLimited = true;
     AllSkillEffects.SEARCH_HAB2.getDescription = (num = 1) => {
       return (
         "+ " +
@@ -344,6 +367,8 @@ export class AllSkillEffects {
       new Bonus(AllSkillEffects.SEARCH_HAB2, 0.5, true)
     );
 
+    AllSkillEffects.SEARCH_RANDOM.limit = new Decimal(1);
+    AllSkillEffects.SEARCH_RANDOM.isLimited = true;
     AllSkillEffects.SEARCH_RANDOM.getDescription = (num = 1) => {
       return (
         "+ " +
@@ -469,5 +494,9 @@ export class AllSkillEffects {
         e.label = e.getDescription(1);
       });
     }
+
+    AllSkillEffects.effectList.forEach(s => {
+      s.buyAction.name = s.getDescription(1);
+    });
   }
 }

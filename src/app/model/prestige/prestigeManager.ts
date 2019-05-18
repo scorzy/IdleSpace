@@ -1,6 +1,7 @@
 import { ISalvable } from "../base/ISalvable";
 import { AllSkillEffects } from "./allSkillEffects";
 import { EnemyManager } from "../enemy/enemyManager";
+import { ISpendable } from "../base/ISpendable";
 import { SkillEffect } from "./skillEffects";
 
 export class PrestigeManager implements ISalvable {
@@ -19,14 +20,6 @@ export class PrestigeManager implements ISalvable {
   }
   static getInstance(): PrestigeManager {
     return PrestigeManager.instance;
-  }
-  buySkill(effect: SkillEffect): boolean {
-    const multi = Math.max(2 * this.ascension, 1);
-    effect.numBuy++;
-    effect.numOwned = multi * effect.numBuy;
-    effect.afterBuy();
-
-    return true;
   }
   reloadPrestigeToEarn() {
     this.prestigeToEarn = Math.max(
@@ -76,6 +69,8 @@ export class PrestigeManager implements ISalvable {
       .forEach(e => {
         e.numOwned = e.numBuy * multi;
       });
+
+    SkillEffect.availableSkill.quantity = new Decimal(this.totalPrestige);
 
     return true;
   }
