@@ -31,6 +31,8 @@ import { AscendInfoComponent } from "./info/ascend-info/ascend-info.component";
 import { CreditsComponent } from "./options-nav/credits/credits.component";
 import { ChangelogComponent } from "./info/changelog/changelog.component";
 import { AutomatorsComponent } from "./automator-group/automators/automators.component";
+import { SkillNavComponent } from "./prestige/skill-nav/skill-nav.component";
+import { SkillGroupComponent } from "./prestige/skill-group/skill-group.component";
 
 const routes: Routes = [
   {
@@ -101,7 +103,16 @@ const routes: Routes = [
   },
   {
     path: "prestige",
-    component: PrestigeComponent
+    redirectTo: "prestige/pre",
+    pathMatch: "full"
+  },
+  {
+    path: "prestige",
+    component: SkillNavComponent,
+    children: [
+      { path: "pre", component: PrestigeComponent },
+      { path: "grp/:id", component: SkillGroupComponent }
+    ]
   },
   {
     path: "autoTable",

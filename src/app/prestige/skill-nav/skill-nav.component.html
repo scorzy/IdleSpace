@@ -1,0 +1,13 @@
+<div class="content-area">
+  <router-outlet></router-outlet>
+</div>
+<clr-vertical-nav>
+  <a clrVerticalNavLink routerLink="./pre" routerLinkActive="active">Skills</a>
+  <a
+    *ngFor="let group of SkillGroups"
+    clrVerticalNavLink
+    [routerLink]="'./grp/' + group.id"
+    routerLinkActive="active"
+    >{{ group.name }}</a
+  >
+</clr-vertical-nav>

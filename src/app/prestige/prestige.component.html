@@ -1,108 +1,76 @@
-<div id="network" #network></div>
-
-<div class="content-area">
-  <h1>
-    Prestige
-    <app-formatted-quantity
-      [quantity]="ms.game.prestigeManager.totalPrestige"
-      [integer]="true"
-    ></app-formatted-quantity>
-    /
-    <app-formatted-quantity
-      [quantity]="ms.game.prestigeManager.maxPrestigePoints"
-      [integer]="true"
-    ></app-formatted-quantity>
-  </h1>
-  <h1>
-    Ascension
-    <app-formatted-quantity
-      [quantity]="ms.game.prestigeManager.ascension"
-      [integer]="true"
-    ></app-formatted-quantity>
-    <!-- /
+<h1>
+  Prestige
+  <app-formatted-quantity
+    [quantity]="ms.game.prestigeManager.totalPrestige"
+    [integer]="true"
+  ></app-formatted-quantity>
+  &nbsp;&nbsp;&nbsp; Ascension
+  <app-formatted-quantity
+    [quantity]="ms.game.prestigeManager.ascension"
+    [integer]="true"
+  ></app-formatted-quantity>
+  <!-- /
     <span class="monospace">2</span> -->
-  </h1>
+</h1>
 
-  <div class="clr-row full-height">
-    <div class="clr-col">
-      <h4>
-        Available Points
-        <a role="tooltip" aria-haspopup="true" class="tooltip tooltip-sm">
-          <clr-icon shape="info-circle" size="24"></clr-icon>
-          <span class="tooltip-content"
-            >Get more by defeating MAX LEVEL enemies</span
-          >
-        </a>
-        :
-        {{
-          ms.game.prestigeManager.totalPrestige -
-            ms.game.prestigeManager.usedPrestige
-        }}
-      </h4>
+<div class="clr-row full-height">
+  <div class="clr-col">
+    <h4>
+      Available Points
+      <a
+        role="tooltip"
+        aria-haspopup="true"
+        class="tooltip tooltip-md tooltip-bottom-right"
+      >
+        <clr-icon shape="info-circle" size="24"></clr-icon>
+        <span class="tooltip-content"
+          >Get more by defeating MAX LEVEL enemies</span
+        >
+      </a>
+      :
+      {{
+        ms.game.prestigeManager.totalPrestige -
+          ms.game.prestigeManager.usedPrestige
+      }}
+    </h4>
 
-      <!-- [disabled]="
+    <!-- [disabled]="
           ms.game.enemyManager.maxLevel <= ms.game.prestigeManager.totalPrestige
         " -->
-      <div class="btn-group btn-primary">
-        <button class="btn btn-primary" (click)="prestigeModal = true">
-          Prestige
-          <span *ngIf="ms.game.prestigeManager.prestigeToEarn > 0"
-            >+
-            {{ ms.game.prestigeManager.prestigeToEarn }}
-          </span>
-        </button>
-        <button
-          *ngIf="canAscend"
-          class="btn btn-success"
-          (click)="ascendModal = true"
-        >
-          Ascend
-        </button>
-      </div>
-      <a [routerLink]="'/autoTable'">Automators</a>
-      <clr-checkbox-container>
-        <clr-checkbox-wrapper>
-          <input
-            type="checkbox"
-            clrCheckbox
-            value="resetPr"
-            name="resetPr"
-            [(ngModel)]="ms.game.resetPrestige"
-          />
-          <label>Reset Prestige</label>
-        </clr-checkbox-wrapper>
-      </clr-checkbox-container>
-      <ul class="list" *ngFor="let desc of skillsList; trackBy: descID">
-        <li>{{ desc }}</li>
-      </ul>
-
-      <!-- Debug Stuff -->
-      <!-- <button class="btn" (click)="export()">
-        Export positions
+    <div class="btn-group btn-primary">
+      <button class="btn btn-primary" (click)="prestigeModal = true">
+        Prestige
+        <span *ngIf="ms.game.prestigeManager.prestigeToEarn > 0"
+          >+
+          {{ ms.game.prestigeManager.prestigeToEarn }}
+        </span>
       </button>
-      <textarea name="raw" [(ngModel)]="exp" rows="1"></textarea> -->
-      <!-- Debug Stuff -->
+      <button
+        *ngIf="canAscend"
+        class="btn btn-success"
+        (click)="ascendModal = true"
+      >
+        Ascend
+      </button>
     </div>
+    <a [routerLink]="'/autoTable'">Automators</a>
+    <clr-checkbox-container>
+      <clr-checkbox-wrapper>
+        <input
+          type="checkbox"
+          clrCheckbox
+          value="resetPr"
+          name="resetPr"
+          [(ngModel)]="ms.game.resetPrestige"
+        />
+        <label>Reset Prestige</label>
+      </clr-checkbox-wrapper>
+    </clr-checkbox-container>
+    <ul class="list" *ngFor="let desc of skillsList; trackBy: descID">
+      <li>{{ desc }}</li>
+    </ul>
   </div>
 </div>
-
-<!-- Buy Modal -->
-<clr-modal [(clrModalOpen)]="buyModal">
-  <h3 class="modal-title">
-    Skill
-  </h3>
-  <div class="modal-body" *ngIf="selectedSkill">
-    <p>Buy {{ effect.getDescription(1) }}?</p>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline" (click)="close()">
-      Cancel
-    </button>
-    <button type="button" class="btn btn-primary" (click)="buy()">
-      Ok
-    </button>
-  </div>
-</clr-modal>
 
 <!-- Prestige Modal -->
 <clr-modal [(clrModalOpen)]="prestigeModal">
