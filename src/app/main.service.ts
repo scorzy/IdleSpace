@@ -135,12 +135,12 @@ export class MainService {
       kongregateAPI.loadAPI(() => {
         this.kongregate = kongregateAPI.getAPI();
         console.log("KongregateAPI Loaded");
+        this.playFabLogin();
 
         setTimeout(() => {
           try {
             console.log("Kongregate build");
             this.sendKong();
-            this.playFabLogin();
           } catch (e) {
             console.log("Error: " + e.message);
           }
