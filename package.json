@@ -4,8 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "npm run make-themes && npm run compileCompResult && ng serve --open",
-    "start:prod": "npm run compileCompResult && ng serve --open --prod",
-    "build": "npm run compileCompResult && ng build --prod --aot --build-optimizer --base-href ./",
+    "start:prod": "npm run make-themes && npm run compileCompResult && ng serve --open --prod",
+    "build": "npm run make-themes && npm run compileCompResult && ng build --prod --aot --build-optimizer --base-href ./",
     "test": "npm run compileCompResult && ng test",
     "test:watch": "ng test --watch",
     "test:coverage": "ng test --code-coverage",
