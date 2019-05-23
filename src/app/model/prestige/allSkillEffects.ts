@@ -46,46 +46,46 @@ export class AllSkillEffects {
   static readonly PLUS_SEARCH = new SkillEffect(6, "1");
   static readonly PLUS_WARRIOR = new SkillEffect(7, "1");
   static readonly PLUS_BATTERY = new SkillEffect(8, "1");
-  static readonly DRONE_MULTI = new SkillEffect(9, "1");
+  static readonly DRONE_MULTI = new SkillEffect(9, "1", 1);
   //#endregion
   //#region Combat
-  static readonly FAST_COMBAT = new SkillEffect(10, "S");
-  static readonly DOUBLE_NAVAL_CAPACITY = new SkillEffect(11, "1");
-  static readonly DOUBLE_DARK_MATTER = new SkillEffect(12, "1");
-  static readonly MODULE_LEVEL = new SkillEffect(13, "1");
-  static readonly DOUBLE_BATTLE_GAIN = new SkillEffect(14, "1");
-  static readonly DOUBLE_MISSILE = new SkillEffect(15, "1");
-  static readonly MULTI_FACTORY = new SkillEffect(16, "1");
+  static readonly FAST_COMBAT = new SkillEffect(10, "S", 1);
+  static readonly DOUBLE_NAVAL_CAPACITY = new SkillEffect(11, "S", 1);
+  static readonly DOUBLE_DARK_MATTER = new SkillEffect(12, "S", 2);
+  static readonly MODULE_LEVEL = new SkillEffect(13, "S", 1);
+  static readonly DOUBLE_BATTLE_GAIN = new SkillEffect(14, "S", 3);
+  static readonly DOUBLE_MISSILE = new SkillEffect(15, "S", 3);
+  static readonly MULTI_FACTORY = new SkillEffect(16, "2");
   //#endregion
   //#region Robot Modding
-  static readonly FACTORY_BONUS = new SkillEffect(17, "1");
-  static readonly MODDING_PLUS = new SkillEffect(18, "1");
-  static readonly DOUBLE_MODDING = new SkillEffect(19, "1");
+  static readonly FACTORY_BONUS = new SkillEffect(17, "1", 3);
+  static readonly MODDING_PLUS = new SkillEffect(18, "3");
+  static readonly DOUBLE_MODDING = new SkillEffect(19, "S", 1);
 
-  static readonly MOD_METAL_MINER = new SkillEffect(20, "1");
-  static readonly MOD_CRYSTAL_MINER = new SkillEffect(21, "1");
-  static readonly MOD_ENERGY = new SkillEffect(22, "1");
-  static readonly MOD_ALLOY = new SkillEffect(23, "1");
-  static readonly MOD_CPU = new SkillEffect(24, "1");
-  static readonly MOD_WORKER = new SkillEffect(25, "1");
-  static readonly MOD_SEARCH = new SkillEffect(26, "1");
-  static readonly MOD_WARRIOR = new SkillEffect(27, "1");
+  static readonly MOD_METAL_MINER = new SkillEffect(20, "3");
+  static readonly MOD_CRYSTAL_MINER = new SkillEffect(21, "3");
+  static readonly MOD_ENERGY = new SkillEffect(22, "3");
+  static readonly MOD_ALLOY = new SkillEffect(23, "3");
+  static readonly MOD_CPU = new SkillEffect(24, "3");
+  static readonly MOD_WORKER = new SkillEffect(25, "3");
+  static readonly MOD_SEARCH = new SkillEffect(26, "3");
+  // static readonly MOD_WARRIOR = new SkillEffect(27, "3");
   //#endregion
   //#region Search
-  static readonly SEARCH_MULTI = new SkillEffect(28, "1");
-  static readonly SEARCH_METAL = new SkillEffect(29, "1");
-  static readonly SEARCH_CRY = new SkillEffect(30, "1");
-  static readonly SEARCH_HAB = new SkillEffect(31, "1");
-  static readonly SEARCH_HAB2 = new SkillEffect(32, "1");
-  static readonly SEARCH_RANDOM = new SkillEffect(33, "1");
-  static readonly DOUBLE_DISTRICTS = new SkillEffect(34, "1");
+  static readonly SEARCH_MULTI = new SkillEffect(28, "2");
+  static readonly SEARCH_METAL = new SkillEffect(29, "S", 1);
+  static readonly SEARCH_CRY = new SkillEffect(30, "S", 1);
+  static readonly SEARCH_HAB = new SkillEffect(31, "S", 1);
+  static readonly SEARCH_HAB2 = new SkillEffect(32, "S", 1);
+  static readonly SEARCH_RANDOM = new SkillEffect(33, "S", 1);
+  static readonly DOUBLE_DISTRICTS = new SkillEffect(34, "S", 3);
   //#endregion
   //#region Resource Gain Multi
-  static readonly ENERGY_MULTI = new SkillEffect(35, "1");
-  static readonly ALLOY_MULTI = new SkillEffect(36, "1");
-  static readonly COMPUTING_MULTI = new SkillEffect(37, "1");
-  static readonly SHIPYARD_MULTI = new SkillEffect(38, "1");
-  static readonly RESEARCH_MULTI = new SkillEffect(39, "1");
+  static readonly ENERGY_MULTI = new SkillEffect(35, "2");
+  static readonly ALLOY_MULTI = new SkillEffect(36, "2");
+  static readonly COMPUTING_MULTI = new SkillEffect(37, "2");
+  static readonly SHIPYARD_MULTI = new SkillEffect(38, "2");
+  static readonly RESEARCH_MULTI = new SkillEffect(39, "2");
   //#endregion
 
   static initialize(prestige = false) {
@@ -265,8 +265,6 @@ export class AllSkillEffects {
     );
     //#endregion
     //#region Robot Modding
-    AllSkillEffects.FACTORY_BONUS.limit = new Decimal(3);
-    AllSkillEffects.FACTORY_BONUS.isLimited = true;
     AllSkillEffects.FACTORY_BONUS.getDescription = (num = 1) => {
       return (
         "+ " +
@@ -489,7 +487,7 @@ export class AllSkillEffects {
     ];
     if (!prestige) {
       AllSkillEffects.effectList.forEach(e => {
-        e.numBuy = 0;
+        e.quantity = new Decimal(0);
         e.numOwned = 0;
         e.label = e.getDescription(1);
       });

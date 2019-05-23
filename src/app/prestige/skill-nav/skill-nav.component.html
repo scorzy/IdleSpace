@@ -1,7 +1,11 @@
 <div class="content-area">
   <router-outlet></router-outlet>
 </div>
-<clr-vertical-nav>
+<clr-vertical-nav
+  [clrVerticalNavCollapsible]="true"
+  [clr-nav-level]="2"
+  class="nav-trigger--bottom"
+>
   <a clrVerticalNavLink routerLink="./pre" routerLinkActive="active">Skills</a>
   <a
     *ngFor="let group of SkillGroups; trackBy: getGroupId"

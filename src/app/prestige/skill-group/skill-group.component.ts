@@ -29,10 +29,7 @@ export class SkillGroupComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscriptions.push(
-      this.route.params.subscribe(this.getGroup.bind(this)),
-      this.ms.em.prestigeEmitter.subscribe(() => {
-        this.cd.markForCheck();
-      })
+      this.route.params.subscribe(this.getGroup.bind(this))
     );
   }
   ngOnDestroy() {

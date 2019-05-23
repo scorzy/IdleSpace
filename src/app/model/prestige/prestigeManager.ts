@@ -38,7 +38,7 @@ export class PrestigeManager implements ISalvable {
   reset() {
     this.usedPrestige = 0;
     AllSkillEffects.effectList.forEach(e => {
-      e.numBuy = 0;
+      e.quantity = new Decimal(0);
       e.numOwned = 0;
     });
   }
@@ -49,7 +49,7 @@ export class PrestigeManager implements ISalvable {
     if (this.ascension > 0) save.a = this.ascension;
     save.t = this.totalPrestige;
     save.s = AllSkillEffects.effectList
-      .filter(e => e.numBuy > 0)
+      .filter(e => e.quantity.gt(0))
       .map(e => e.getSave());
     return save;
   }
@@ -65,9 +65,9 @@ export class PrestigeManager implements ISalvable {
     }
     const multi = Math.max(2 * this.ascension, 1);
     AllSkillEffects.effectList
-      .filter(e => e.numBuy > 0)
+      .filter(e => e.quantity.gt(0))
       .forEach(e => {
-        e.numOwned = e.numBuy * multi;
+        e.numOwned = e.quantity.toNumber() * multi;
       });
 
     SkillEffect.availableSkill.quantity = new Decimal(this.totalPrestige);
