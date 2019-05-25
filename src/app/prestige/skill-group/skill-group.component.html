@@ -2,6 +2,10 @@
   <h1>
     {{ skillGroup.name }}
   </h1>
+  <span>
+    Max {{ skillGroup.maxPercent * 100 }}% of total points:
+    {{ ms.game.prestigeManager.totalPrestige * skillGroup.maxPercent }}
+  </span>
 
   <div class="clr-row">
     <div
@@ -10,7 +14,16 @@
     >
       <div class="card">
         <div class="card-block">
-          <app-action [action]="skill.buyAction"> </app-action>
+          <div class="card-title">
+            {{ skill.buyAction.name }}
+            (
+            <app-formatted-quantity
+              [quantity]="skill.buyAction.quantity"
+              [integer]="true"
+            ></app-formatted-quantity>
+            )
+          </div>
+          <app-buttons [action]="skill.buyAction"> </app-buttons>
         </div>
       </div>
     </div>

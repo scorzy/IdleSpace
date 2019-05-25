@@ -9,26 +9,26 @@ export const PLUS_ADD = 10;
 export const SkillGroups: SkillGroup[] = [
   {
     id: "1",
-    name: "Tier 1",
+    name: "1- Basic Production",
     maxPercent: 1,
     skills: []
   },
   {
     id: "2",
-    name: "Tier 2",
-    maxPercent: 2 / 3,
+    name: "2- Advanced Production",
+    maxPercent: 0.3,
     skills: []
   },
   {
     id: "3",
-    name: "Tier 3",
-    maxPercent: 1 / 3,
+    name: "3- Modding",
+    maxPercent: 0.2,
     skills: []
   },
   {
     id: "S",
-    name: "Special",
-    maxPercent: 1 / 10,
+    name: "4- Special",
+    maxPercent: 0.1,
     skills: []
   }
 ];
@@ -45,7 +45,7 @@ export class AllSkillEffects {
   static readonly PLUS_WORKER = new SkillEffect(5, "1");
   static readonly PLUS_SEARCH = new SkillEffect(6, "1");
   static readonly PLUS_WARRIOR = new SkillEffect(7, "1");
-  static readonly PLUS_BATTERY = new SkillEffect(8, "1");
+  // static readonly PLUS_BATTERY = new SkillEffect(8, "1");
   static readonly DRONE_MULTI = new SkillEffect(9, "1", 1);
   //#endregion
   //#region Combat
@@ -58,8 +58,8 @@ export class AllSkillEffects {
   static readonly MULTI_FACTORY = new SkillEffect(16, "2");
   //#endregion
   //#region Robot Modding
-  static readonly FACTORY_BONUS = new SkillEffect(17, "1", 3);
-  static readonly MODDING_PLUS = new SkillEffect(18, "3");
+  static readonly FACTORY_BONUS = new SkillEffect(17, "2", 3);
+  static readonly MODDING_PLUS = new SkillEffect(18, "S");
   static readonly DOUBLE_MODDING = new SkillEffect(19, "S", 1);
 
   static readonly MOD_METAL_MINER = new SkillEffect(20, "3");
@@ -130,7 +130,7 @@ export class AllSkillEffects {
     ];
     AllSkillEffects.DRONE_MULTI.getDescription = (num = 1) => {
       return (
-        "Drones yield and consume\n" +
+        "Drones yield and consume, " +
         MainService.formatPipe.transform(150 * num, true) +
         "% more resource"
       );
@@ -147,9 +147,9 @@ export class AllSkillEffects {
           MainService.formatPipe.transform(PLUS_ADD * num, true) +
           " " +
           workers[i].name +
-          "\n / " +
+          ",  / " +
           workers[i].actions[1].name +
-          "\n " +
+          ",  " +
           MainService.formatPipe.transform(50 * num, true) +
           "% " +
           workers[i].name +
@@ -192,7 +192,7 @@ export class AllSkillEffects {
         MainService.formatPipe.transform(PLUS_ADD * num, true) +
         " " +
         resMan.warriorX1.name +
-        "\n / " +
+        ",  / " +
         resMan.warriorX1.actions[1].name
       );
     };
@@ -216,14 +216,14 @@ export class AllSkillEffects {
       return (
         "+ " +
         MainService.formatPipe.transform(50 * num, true) +
-        "%\nnaval capacity"
+        "%, naval capacity"
       );
     };
     AllSkillEffects.DOUBLE_DARK_MATTER.getDescription = (num = 1) => {
       return (
         "+ " +
         MainService.formatPipe.transform(200 * num, true) +
-        "%\nDark Matter"
+        "%, Dark Matter"
       );
     };
     AllSkillEffects.MODULE_LEVEL.limit = new Decimal(1);
@@ -232,14 +232,14 @@ export class AllSkillEffects {
       return (
         "+ " +
         MainService.formatPipe.transform(200 * num, true) +
-        "%\nShip Module Level"
+        "%, Ship Module Level"
       );
     };
     AllSkillEffects.DOUBLE_BATTLE_GAIN.getDescription = (num = 1) => {
       return (
         "+ " +
         MainService.formatPipe.transform(200 * num, true) +
-        "%\nResource gain from battle"
+        "%, Resource gain from battle"
       );
     };
     AllSkillEffects.DOUBLE_MISSILE.limit = new Decimal(3);
@@ -248,13 +248,13 @@ export class AllSkillEffects {
       return (
         "+ " +
         MainService.formatPipe.transform(250 * num, true) +
-        "%\nDamage from missiles"
+        "%, Damage from missiles"
       );
     };
     AllSkillEffects.DOUBLE_MISSILE.name = "Missile Prestige";
     AllSkillEffects.MULTI_FACTORY.getDescription = (num = 1) => {
       return (
-        "Missile Factory yield and consume\n" +
+        "Missile Factory yield and consume, " +
         MainService.formatPipe.transform(250 * num, true) +
         "% more resource"
       );
@@ -269,7 +269,7 @@ export class AllSkillEffects {
       return (
         "+ " +
         MainService.formatPipe.transform(500 * num, true) +
-        "%\n" +
+        "%, " +
         resMan.droneFactory.name +
         " output"
       );
@@ -282,7 +282,7 @@ export class AllSkillEffects {
       return (
         "+ " +
         MainService.formatPipe.transform(5 * num, true) +
-        "\n Modding points"
+        ",  Modding points"
       );
     };
 
@@ -292,7 +292,7 @@ export class AllSkillEffects {
       return (
         "+ " +
         MainService.formatPipe.transform(150 * num, true) +
-        "%\n Modding points"
+        "%,  Modding points"
       );
     };
     //#endregion
@@ -301,7 +301,7 @@ export class AllSkillEffects {
       return (
         "+ " +
         MainService.formatPipe.transform(300 * num, true) +
-        "%\n Searching"
+        "%,  Searching"
       );
     };
     AllSkillEffects.SEARCH_MULTI.name = "Prestige search multi";
@@ -315,7 +315,7 @@ export class AllSkillEffects {
       return (
         "+ " +
         MainService.formatPipe.transform(50 * num, true) +
-        "% Searching\ncan search for metal district"
+        "% Searching, can search for metal district"
       );
     };
     AllSkillEffects.SEARCH_METAL.name = "Prestige search metal";
@@ -329,7 +329,7 @@ export class AllSkillEffects {
       return (
         "+ " +
         MainService.formatPipe.transform(50 * num, true) +
-        "% Searching\ncan search for crystal district"
+        "% Searching, can search for crystal district"
       );
     };
     AllSkillEffects.SEARCH_CRY.name = "Prestige search crystal";
@@ -343,7 +343,7 @@ export class AllSkillEffects {
       return (
         "+ " +
         MainService.formatPipe.transform(50 * num, true) +
-        "% Searching\ncan search for habitable space"
+        "% Searching, can search for habitable space"
       );
     };
     AllSkillEffects.SEARCH_HAB.name = "Prestige search habitable space";
@@ -357,7 +357,7 @@ export class AllSkillEffects {
       return (
         "+ " +
         MainService.formatPipe.transform(50 * num, true) +
-        "% Searching\ncan search for even more habitable space"
+        "% Searching, can search for even more habitable space"
       );
     };
     AllSkillEffects.SEARCH_HAB2.name = "Prestige search habitable space 2";
@@ -371,7 +371,7 @@ export class AllSkillEffects {
       return (
         "+ " +
         MainService.formatPipe.transform(50 * num, true) +
-        "% Searching\ncan search for randomized districts"
+        "% Searching, can search for randomized districts"
       );
     };
     AllSkillEffects.SEARCH_RANDOM.name = "Prestige search random";
@@ -390,7 +390,7 @@ export class AllSkillEffects {
     //#region Gain Multi
     AllSkillEffects.ENERGY_MULTI.getDescription = (num = 1) => {
       return (
-        "+ " + MainService.formatPipe.transform(200 * num, true) + "%\n Energy"
+        "+ " + MainService.formatPipe.transform(200 * num, true) + "%,  Energy"
       );
     };
     AllSkillEffects.ENERGY_MULTI.name = "Prestige energy multi";
@@ -400,7 +400,7 @@ export class AllSkillEffects {
 
     AllSkillEffects.ALLOY_MULTI.getDescription = (num = 1) => {
       return (
-        "+ " + MainService.formatPipe.transform(200 * num, true) + "%\n Alloy"
+        "+ " + MainService.formatPipe.transform(200 * num, true) + "%,  Alloy"
       );
     };
     AllSkillEffects.ALLOY_MULTI.name = "Prestige alloy multi";
@@ -412,7 +412,7 @@ export class AllSkillEffects {
       return (
         "+ " +
         MainService.formatPipe.transform(200 * num, true) +
-        "%\n Computing"
+        "%,  Computing"
       );
     };
     AllSkillEffects.COMPUTING_MULTI.name = "Prestige computing multi";
@@ -424,7 +424,7 @@ export class AllSkillEffects {
       return (
         "+ " +
         MainService.formatPipe.transform(200 * num, true) +
-        "%\n Shipyard Progress"
+        "%,  Shipyard Progress"
       );
     };
     AllSkillEffects.SHIPYARD_MULTI.name = "Prestige Shipyard Progress multi";
@@ -436,7 +436,7 @@ export class AllSkillEffects {
       return (
         "+ " +
         MainService.formatPipe.transform(300 * num, true) +
-        "%\n Research"
+        "%,  Research"
       );
     };
     AllSkillEffects.RESEARCH_MULTI.name = "Prestige Research multi";
