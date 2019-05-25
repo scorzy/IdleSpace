@@ -20,6 +20,7 @@ import { SkillGroup } from "src/app/model/prestige/skillGroup";
 export class SkillGroupComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
   skillGroup: SkillGroup;
+  max = "";
 
   constructor(
     public ms: MainService,
@@ -44,6 +45,9 @@ export class SkillGroupComponent implements OnInit, OnDestroy {
     }
     this.skillGroup = SkillGroups.find(g => g.id === id);
     this.skillGroup.skills.map(s => s.buyAction).forEach(a => a.reload());
+    this.max = Math.floor(
+      this.ms.game.prestigeManager.totalPrestige * this.skillGroup.maxPercent
+    ).toString();
     this.cd.markForCheck();
   }
   getSkillId(index: number, skill: SkillGroup) {
