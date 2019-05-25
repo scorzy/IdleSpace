@@ -6,6 +6,7 @@ import {
 } from "@angular/core";
 import { SkillGroup } from "src/app/model/prestige/skillGroup";
 import { SkillGroups } from "src/app/model/prestige/allSkillEffects";
+import { MainService } from "src/app/main.service";
 
 @Component({
   selector: "app-skill-nav",
@@ -19,7 +20,7 @@ export class SkillNavComponent implements OnInit {
 
   SkillGroups = SkillGroups;
 
-  constructor() {}
+  constructor(public ms: MainService) {}
 
   ngOnInit() {}
 
