@@ -1,7 +1,7 @@
 <div *ngIf="!action.complete">
+  <!--  id="userNum" -->
   <input
     *ngIf="!action.onlyOne; else one"
-    id="userNum"
     [(ngModel)]="action.numWantedUi"
     (change)="onNumChange()"
     type="number"

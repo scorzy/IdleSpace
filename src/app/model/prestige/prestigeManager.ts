@@ -40,6 +40,13 @@ export class PrestigeManager implements ISalvable {
     AllSkillEffects.effectList.forEach(e => {
       e.quantity = new Decimal(0);
       e.numOwned = 0;
+      e.buyAction.buyable.isCapped = false;
+      e.buyAction.quantity = new Decimal(0);
+    });
+    AllSkillEffects.effectList.forEach(e => {
+      e.buyAction.numWantedUi = 1;
+      e.buyAction.numWanted = new Decimal(1);
+      e.buyAction.reload();
     });
   }
 
@@ -63,15 +70,23 @@ export class PrestigeManager implements ISalvable {
         effect.load(effData);
       }
     }
+    SkillEffect.availableSkill.quantity = new Decimal(this.totalPrestige);
     const multi = Math.max(2 * this.ascension, 1);
     AllSkillEffects.effectList
       .filter(e => e.quantity.gt(0))
       .forEach(e => {
         e.numOwned = e.quantity.toNumber() * multi;
+        e.buyAction.quantity = e.quantity;
+        SkillEffect.availableSkill.quantity = SkillEffect.availableSkill.quantity.minus(
+          e.quantity
+        );
       });
 
-    SkillEffect.availableSkill.quantity = new Decimal(this.totalPrestige);
-
+    AllSkillEffects.effectList.forEach(e => {
+      e.buyAction.numWantedUi = 1;
+      e.buyAction.numWanted = new Decimal(1);
+      e.buyAction.reload();
+    });
     return true;
   }
   //#endregion

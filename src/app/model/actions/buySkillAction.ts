@@ -30,7 +30,6 @@ export class BuySkillAction extends BuyAction {
     const groupNum = this.skillEffect.skillGroup.skills
       .map(s => s.quantity.toNumber())
       .reduce((p, c) => p + c, 0);
-    console.log(groupNum);
 
     this.skillEffect.limit = Decimal.min(
       this.skillEffect.maxLimit,
