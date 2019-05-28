@@ -62,7 +62,7 @@ export class AllSkillEffects {
   //#endregion
   //#region Robot Modding
   static readonly FACTORY_BONUS = new SkillEffect(17, "2", 3);
-  static readonly MODDING_PLUS = new SkillEffect(18, "S");
+  static readonly MODDING_PLUS = new SkillEffect(18, "S", 5);
   static readonly DOUBLE_MODDING = new SkillEffect(19, "S", 1);
 
   static readonly MOD_METAL_MINER = new SkillEffect(20, "3");
@@ -302,9 +302,7 @@ export class AllSkillEffects {
     //#region Search
     AllSkillEffects.SEARCH_MULTI.getDescription = (num = 1) => {
       return (
-        "+ " +
-        MainService.formatPipe.transform(300 * num, true) +
-        "%,  Searching"
+        "+ " + MainService.formatPipe.transform(300 * num, true) + "% Searching"
       );
     };
     AllSkillEffects.SEARCH_MULTI.name = "Prestige search multi";
