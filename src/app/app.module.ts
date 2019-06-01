@@ -74,6 +74,8 @@ import { CreditsComponent } from "./options-nav/credits/credits.component";
 import { SearchAutomatorComponent } from "./automator-group/search-automator/search-automator.component";
 import { ChangelogComponent } from "./info/changelog/changelog.component";
 import { AutomatorsComponent } from "./automator-group/automators/automators.component";
+import { SkillNavComponent } from './prestige/skill-nav/skill-nav.component';
+import { SkillGroupComponent } from './prestige/skill-group/skill-group.component';
 
 @NgModule({
   declarations: [
@@ -141,7 +143,9 @@ import { AutomatorsComponent } from "./automator-group/automators/automators.com
     CreditsComponent,
     SearchAutomatorComponent,
     ChangelogComponent,
-    AutomatorsComponent
+    AutomatorsComponent,
+    SkillNavComponent,
+    SkillGroupComponent
   ],
   imports: [
     BrowserAnimationsModule,

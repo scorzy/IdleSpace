@@ -1,0 +1,30 @@
+<div class="content-area">
+  <router-outlet></router-outlet>
+</div>
+<clr-vertical-nav
+  [clrVerticalNavCollapsible]="true"
+  [clr-nav-level]="2"
+  class="nav-trigger--bottom"
+>
+  <a clrVerticalNavLink routerLink="./pre" routerLinkActive="active"
+    >Prestige &nbsp;&nbsp;P
+    <app-formatted-quantity
+      [quantity]="ms.game.prestigeManager.totalPrestige"
+      [integer]="true"
+      [monospace]="false"
+    ></app-formatted-quantity>
+    &nbsp;&nbsp;A
+    <app-formatted-quantity
+      [quantity]="ms.game.prestigeManager.ascension"
+      [integer]="true"
+      [monospace]="false"
+    ></app-formatted-quantity>
+  </a>
+  <a
+    *ngFor="let group of SkillGroups; trackBy: getGroupId"
+    clrVerticalNavLink
+    [routerLink]="'./grp/' + group.id"
+    routerLinkActive="active"
+    >{{ group.name }}</a
+  >
+</clr-vertical-nav>

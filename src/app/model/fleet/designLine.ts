@@ -44,7 +44,7 @@ export class DesignLine {
         (this.module && this.module.research
           ? this.module.research.quantity.toNumber()
           : 1)) *
-        (1 + AllSkillEffects.MODULE_LEVEL.numOwned * 2)
+        (1 + AllSkillEffects.MODULE_LEVEL.numOwned)
     );
   }
 

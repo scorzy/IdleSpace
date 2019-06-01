@@ -2,20 +2,15 @@ import {
   Component,
   OnInit,
   ChangeDetectionStrategy,
-  HostBinding,
   OnChanges,
   ViewChild,
   ElementRef,
-  AfterViewInit,
-  ChangeDetectorRef,
-  SimpleChanges
+  SimpleChanges,
+  AfterViewInit
 } from "@angular/core";
 import { MainService } from "../main.service";
-import { Skill } from "../model/prestige/skill";
 import { AllSkillEffects } from "../model/prestige/allSkillEffects";
-import { Network } from "vis";
 import { SkillEffect } from "../model/prestige/skillEffects";
-import { OptionsService } from "../options.service";
 declare let preventScroll;
 
 @Component({
@@ -25,15 +20,11 @@ declare let preventScroll;
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PrestigeComponent implements OnInit, OnChanges, AfterViewInit {
-  @HostBinding("class")
-  contentContainer = "content-container";
-
   @ViewChild("network")
   networkDiv: ElementRef;
   networkVis: any; // Network;
 
   buyModal = false;
-  selectedSkill: Skill;
   effect: SkillEffect;
   skillsList: string[];
   prestigeModal = false;
@@ -41,12 +32,9 @@ export class PrestigeComponent implements OnInit, OnChanges, AfterViewInit {
   node: any;
   exp = "";
   canAscend = false;
+  availableSkill = SkillEffect.availableSkill;
 
-  constructor(
-    public ms: MainService,
-    public os: OptionsService,
-    private cd: ChangeDetectorRef
-  ) {}
+  constructor(public ms: MainService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     this.reloadList();
@@ -55,38 +43,10 @@ export class PrestigeComponent implements OnInit, OnChanges, AfterViewInit {
     this.canAscend = this.ms.game.prestigeManager.canAscend();
     this.reloadList();
   }
-  getClass(skill: Skill): string {
-    return "";
+  ngAfterViewInit(): void {
+    if (typeof preventScroll === typeof Function) preventScroll();
   }
-  trackByRow(index: number, row: Skill[]) {
-    return index;
-  }
-  trackByCell(index: number, skill: Skill) {
-    return skill.id;
-  }
-  openBuyModal(skill: Skill) {
-    if (
-      skill.owned ||
-      !skill.buyable ||
-      this.ms.game.prestigeManager.totalPrestige <=
-        this.ms.game.prestigeManager.usedPrestige
-    ) {
-      return false;
-    }
-    this.buyModal = true;
-    this.selectedSkill = skill;
-    this.effect = AllSkillEffects.effectList.find(e => e.id === skill.effectId);
-  }
-  buy() {
-    this.ms.game.prestigeManager.buySkill(this.selectedSkill.id);
-    this.buyModal = false;
-    this.selectedSkill = null;
-    this.reloadList();
-  }
-  close() {
-    this.selectedSkill = null;
-    this.buyModal = false;
-  }
+
   descID(index: number, desc: string) {
     return desc;
   }
@@ -114,78 +74,5 @@ export class PrestigeComponent implements OnInit, OnChanges, AfterViewInit {
     try {
       this.ms.sendKong();
     } catch (ex) {}
-  }
-
-  ngAfterViewInit() {
-    if (typeof preventScroll === typeof Function) preventScroll();
-    setTimeout(() => {
-      const myNodes: any = this.ms.game.prestigeManager.visSkills;
-      const myEedges: any = this.ms.game.prestigeManager.visEdge;
-      this.networkVis = new Network(
-        this.networkDiv.nativeElement,
-        {
-          nodes: myNodes,
-          edges: myEedges
-        },
-        {
-          nodes: { borderWidth: 2 },
-          edges: {
-            smooth: {
-              enabled: true,
-              type: "dynamic",
-              roundness: 0.5
-            }
-          },
-          interaction: {
-            dragNodes: false,
-            hover: true,
-            navigationButtons: true,
-            keyboard: true
-          },
-          // layout: {
-          //   hierarchical: {
-          //     direction: "UD",
-          //     sortMethod: "directed",
-          //     levelSeparation: 300,
-          //     nodeSpacing: 200,
-          //     treeSpacing: 1e4,
-          //     parentCentralization: true
-          //   }
-          // },
-          physics: {
-            enabled: false,
-            barnesHut: {
-              gravitationalConstant: -6000,
-              avoidOverlap: 0.5
-            },
-            minVelocity: 1
-          }
-        }
-      );
-      this.networkVis.on("click", params => {
-        const masteryBuy = params.nodes[0];
-
-        this.node =
-          masteryBuy || masteryBuy === 0
-            ? this.ms.game.prestigeManager.visSkills.get(masteryBuy)
-            : null;
-
-        if (!this.node) return false;
-
-        if (this.os.noPrestigeModal) {
-          this.selectedSkill = this.node;
-          this.buy();
-        } else {
-          this.openBuyModal(this.node);
-        }
-
-        this.cd.markForCheck();
-      });
-    }, 0);
-  }
-
-  export() {
-    this.networkVis.storePositions();
-    this.exp = JSON.stringify(this.networkVis.getPositions());
   }
 }

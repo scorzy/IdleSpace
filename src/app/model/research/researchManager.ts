@@ -8,6 +8,7 @@ import { SearchJob } from "../enemy/searchJob";
 import { ShipDesign } from "../fleet/shipDesign";
 import { Bonus } from "../bonus/bonus";
 import { Preset } from "../enemy/preset";
+import { ShipTypes } from "../fleet/shipTypes";
 
 export class ResearchManager {
   private static instance: ResearchManager;
@@ -63,6 +64,20 @@ export class ResearchManager {
     ResourceManager.getInstance().energyX1.productionMultiplier.additiveBonus.push(
       new Bonus(this.energy, 0.1)
     );
+
+    this.corvette.ship = ShipTypes[0];
+    this.frigate.ship = ShipTypes[1];
+    this.destroyer.ship = ShipTypes[2];
+    this.cruiser.ship = ShipTypes[3];
+    this.battlecruiser.ship = ShipTypes[4];
+    this.battleship.ship = ShipTypes[5];
+
+    this.corvette.navalCapacity = ShipTypes[0].navalCapacity * 5;
+    this.frigate.navalCapacity = ShipTypes[1].navalCapacity * 5;
+    this.destroyer.navalCapacity = ShipTypes[2].navalCapacity * 5;
+    this.cruiser.navalCapacity = ShipTypes[3].navalCapacity * 5;
+    this.battlecruiser.navalCapacity = ShipTypes[4].navalCapacity * 5;
+    this.battleship.navalCapacity = ShipTypes[5].navalCapacity * 5;
 
     this.corvette.onBuy = () => {
       EnemyManager.getInstance().generate(new SearchJob());

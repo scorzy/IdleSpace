@@ -13,6 +13,7 @@ import { AllSkillEffects } from "./prestige/allSkillEffects";
 import { AutomatorManager } from "./automators/automatorManager";
 import { ShipDesign } from "./fleet/shipDesign";
 import { Preset } from "./enemy/preset";
+import { SkillEffect } from "./prestige/skillEffects";
 
 export const ZERO_DECIMAL_IMMUTABLE = new Decimal(0);
 
@@ -227,7 +228,7 @@ export class Game {
 
     this.prestigeManager.totalPrestige = Math.max(
       this.prestigeManager.totalPrestige,
-      this.enemyManager.maxLevel - 1
+      this.prestigeManager.ascension + this.enemyManager.maxLevel - 1
     );
     // this.prestigeManager.totalPrestige = Math.min(
     //   this.prestigeManager.totalPrestige,
@@ -252,15 +253,18 @@ export class Game {
       h.unlockedAutomators = h.automators.filter(g => g.isUnlocked());
     });
 
+    SkillEffect.availableSkill.quantity = new Decimal(
+      this.prestigeManager.totalPrestige
+    );
     this.automatorManager.resetTimers();
   }
   ascend() {
     if (!this.prestigeManager.canAscend()) return false;
-    const oldPrstige = this.prestigeManager.totalPrestige;
+    const oldPrestige = this.prestigeManager.totalPrestige;
     this.prestigeManager.ascend();
-    this.automatorManager.setAutomatorLevel(oldPrstige);
+    this.automatorManager.setAutomatorLevel(oldPrestige);
     this.prestige();
-    this.prestigeManager.totalPrestige = 1;
+    this.prestigeManager.totalPrestige = this.prestigeManager.ascension;
     this.reload();
   }
 
@@ -301,7 +305,6 @@ export class Game {
     // this.resourceManager.materials.forEach(m => {
     //   m.quantity = new Decimal(1e20);
     // });
-    // this.enemyManager.maxLevel = 20;
     // this.prestigeManager.totalPrestige = 10;
     // this.prestigeManager.ascension = 1;
 

@@ -1,0 +1,32 @@
+<ng-container *ngIf="skillGroup">
+  <h1>
+    {{ skillGroup.name }}
+  </h1>
+  <span>
+    Max {{ skillGroup.maxPercent * 100 }}% of total points:
+    {{ max }}
+    &nbsp;&nbsp;&nbsp; Used: {{ getNum() }}
+  </span>
+
+  <div class="clr-row">
+    <div
+      class="clr-col-12 clr-col-md-6 clr-col-xl-4"
+      *ngFor="let skill of skillGroup.skills; trackBy: getSkillId"
+    >
+      <div class="card">
+        <div class="card-block">
+          <div class="card-title">
+            {{ skill.buyAction.name }}
+            (
+            <app-formatted-quantity
+              [quantity]="skill.buyAction.quantity"
+              [integer]="true"
+            ></app-formatted-quantity>
+            )
+          </div>
+          <app-buttons [action]="skill.buyAction"> </app-buttons>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

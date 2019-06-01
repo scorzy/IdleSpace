@@ -52,7 +52,6 @@
     "@clr/icons": "^1.1.3",
     "@clr/ui": "^1.1.3",
     "@types/lodash-es": "^4.17.3",
-    "@types/vis": "^4.21.12",
     "@webcomponents/custom-elements": "^1.2.4",
     "angular-cli-ghpages": "^0.5.3",
     "ant-utils": "^1.2.0",
