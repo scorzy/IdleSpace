@@ -60,6 +60,7 @@ export class Automator implements ISalvable {
     if (this.minInterval !== 1) data.m = this.minInterval;
     if (this.on) data.o = this.on;
     if (this.resourcePercentToUse !== 100) data.r = this.resourcePercentToUse;
+    if (this.stopWhenFactory) data.swf = this.stopWhenFactory;
     return data;
   }
   load(data: any): boolean {
@@ -68,6 +69,7 @@ export class Automator implements ISalvable {
     if ("m" in data) this.minInterval = data.m;
     if ("o" in data) this.on = data.o;
     if ("r" in data) this.resourcePercentToUse = data.r;
+    if ("swf" in data) this.stopWhenFactory = data.swf;
     return true;
   }
 }
