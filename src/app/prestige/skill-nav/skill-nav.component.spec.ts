@@ -24,6 +24,7 @@ describe("SkillNavComponent", () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SkillNavComponent);
     component = fixture.componentInstance;
+    component.ms.start();
     fixture.detectChanges();
   });
 

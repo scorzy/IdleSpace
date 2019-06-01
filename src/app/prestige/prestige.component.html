@@ -28,10 +28,10 @@
         >
       </a>
       :
-      {{
-        ms.game.prestigeManager.totalPrestige -
-          ms.game.prestigeManager.usedPrestige
-      }}
+      <app-formatted-quantity
+        [quantity]="availableSkill.quantity"
+        [integer]="true"
+      ></app-formatted-quantity>
     </h4>
 
     <!-- [disabled]="

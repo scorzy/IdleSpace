@@ -1,7 +1,6 @@
 import { ISalvable } from "../base/ISalvable";
 import { AllSkillEffects } from "./allSkillEffects";
 import { EnemyManager } from "../enemy/enemyManager";
-import { ISpendable } from "../base/ISpendable";
 import { SkillEffect } from "./skillEffects";
 
 export class PrestigeManager implements ISalvable {
@@ -23,7 +22,10 @@ export class PrestigeManager implements ISalvable {
   }
   reloadPrestigeToEarn() {
     this.prestigeToEarn = Math.max(
-      EnemyManager.getInstance().maxLevel - this.totalPrestige - 1,
+      this.ascension +
+        EnemyManager.getInstance().maxLevel -
+        this.totalPrestige -
+        1,
       0
     );
   }
@@ -32,7 +34,6 @@ export class PrestigeManager implements ISalvable {
   }
   ascend() {
     this.ascension++;
-    this.totalPrestige = this.ascension;
     this.reset();
   }
   reset() {

@@ -5,13 +5,12 @@ import {
   OnChanges,
   ViewChild,
   ElementRef,
-  ChangeDetectorRef,
-  SimpleChanges
+  SimpleChanges,
+  AfterViewInit
 } from "@angular/core";
 import { MainService } from "../main.service";
 import { AllSkillEffects } from "../model/prestige/allSkillEffects";
 import { SkillEffect } from "../model/prestige/skillEffects";
-import { OptionsService } from "../options.service";
 declare let preventScroll;
 
 @Component({
@@ -20,7 +19,7 @@ declare let preventScroll;
   styleUrls: ["./prestige.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PrestigeComponent implements OnInit, OnChanges {
+export class PrestigeComponent implements OnInit, OnChanges, AfterViewInit {
   @ViewChild("network")
   networkDiv: ElementRef;
   networkVis: any; // Network;
@@ -33,12 +32,9 @@ export class PrestigeComponent implements OnInit, OnChanges {
   node: any;
   exp = "";
   canAscend = false;
+  availableSkill = SkillEffect.availableSkill;
 
-  constructor(
-    public ms: MainService,
-    public os: OptionsService,
-    private cd: ChangeDetectorRef
-  ) {}
+  constructor(public ms: MainService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     this.reloadList();
@@ -46,6 +42,9 @@ export class PrestigeComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.canAscend = this.ms.game.prestigeManager.canAscend();
     this.reloadList();
+  }
+  ngAfterViewInit(): void {
+    if (typeof preventScroll === typeof Function) preventScroll();
   }
 
   descID(index: number, desc: string) {

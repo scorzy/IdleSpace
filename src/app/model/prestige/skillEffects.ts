@@ -8,7 +8,7 @@ import { ISpendable } from "../base/ISpendable";
 import { BuySkillAction } from "../actions/buySkillAction";
 
 export class SkillEffect implements IResource, ISalvable, IBuyable {
-  static availableSkill: ISpendable = {
+  public static availableSkill: ISpendable = {
     id: "avSk",
     quantity: new Decimal(0),
     name: "Prestige point",

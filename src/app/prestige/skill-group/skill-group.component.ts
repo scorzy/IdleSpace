@@ -53,4 +53,9 @@ export class SkillGroupComponent implements OnInit, OnDestroy {
   getSkillId(index: number, skill: SkillGroup) {
     return skill.id;
   }
+  getNum(): number {
+    return this.skillGroup.skills
+      .map(s => s.quantity.toNumber())
+      .reduce((p, c) => p + c, 0);
+  }
 }

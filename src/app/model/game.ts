@@ -228,7 +228,7 @@ export class Game {
 
     this.prestigeManager.totalPrestige = Math.max(
       this.prestigeManager.totalPrestige,
-      this.enemyManager.maxLevel - 1
+      this.prestigeManager.ascension + this.enemyManager.maxLevel - 1
     );
     // this.prestigeManager.totalPrestige = Math.min(
     //   this.prestigeManager.totalPrestige,
@@ -264,7 +264,7 @@ export class Game {
     this.prestigeManager.ascend();
     this.automatorManager.setAutomatorLevel(oldPrestige);
     this.prestige();
-    this.prestigeManager.totalPrestige = 1;
+    this.prestigeManager.totalPrestige = this.prestigeManager.ascension;
     this.reload();
   }
 
@@ -305,7 +305,6 @@ export class Game {
     // this.resourceManager.materials.forEach(m => {
     //   m.quantity = new Decimal(1e20);
     // });
-    // this.enemyManager.maxLevel = 20;
     // this.prestigeManager.totalPrestige = 10;
     // this.prestigeManager.ascension = 1;
 

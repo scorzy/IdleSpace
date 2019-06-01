@@ -38,7 +38,10 @@ export class BuySkillAction extends BuyAction {
         groupNum +
         this.quantity.toNumber()
     ).floor();
-
-    super.reload();
+    if (this.skillEffect.limit.gt(0)) super.reload();
+    else {
+      this.canBuy = false;
+    }
+    if (this.maxBuy.lt(1)) this.canBuy = false;
   }
 }
