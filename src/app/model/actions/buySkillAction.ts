@@ -43,5 +43,6 @@ export class BuySkillAction extends BuyAction {
       this.canBuy = false;
     }
     if (this.maxBuy.lt(1)) this.canBuy = false;
+    if (!this.canBuy) this.maxBuy = new Decimal(0);
   }
 }

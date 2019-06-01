@@ -56,14 +56,14 @@ export class AllSkillEffects {
   //#region Combat
   static readonly DOUBLE_NAVAL_CAPACITY = new SkillEffect(11, "S", 1);
   static readonly DOUBLE_DARK_MATTER = new SkillEffect(12, "S", 2);
-  static readonly MODULE_LEVEL = new SkillEffect(13, "S", 1);
+  static readonly MODULE_LEVEL = new SkillEffect(13, "S", 2);
   static readonly DOUBLE_MISSILE = new SkillEffect(15, "S", 3);
   static readonly MULTI_FACTORY = new SkillEffect(16, "2");
   //#endregion
   //#region Robot Modding
   static readonly FACTORY_BONUS = new SkillEffect(17, "2", 3);
   static readonly MODDING_PLUS = new SkillEffect(18, "S", 5);
-  static readonly DOUBLE_MODDING = new SkillEffect(19, "S", 1);
+  static readonly DOUBLE_MODDING = new SkillEffect(19, "S", 2);
 
   static readonly MOD_METAL_MINER = new SkillEffect(20, "3");
   static readonly MOD_CRYSTAL_MINER = new SkillEffect(21, "3");
@@ -229,8 +229,6 @@ export class AllSkillEffects {
         "% Dark Matter"
       );
     };
-    AllSkillEffects.MODULE_LEVEL.limit = new Decimal(1);
-    AllSkillEffects.MODULE_LEVEL.isLimited = true;
     AllSkillEffects.MODULE_LEVEL.getDescription = (num = 1) => {
       return (
         "+ " +
@@ -245,8 +243,6 @@ export class AllSkillEffects {
         "% Resource gain from battle"
       );
     };
-    AllSkillEffects.DOUBLE_MISSILE.limit = new Decimal(3);
-    AllSkillEffects.DOUBLE_MISSILE.isLimited = true;
     AllSkillEffects.DOUBLE_MISSILE.getDescription = (num = 1) => {
       return (
         "+ " +
@@ -289,8 +285,6 @@ export class AllSkillEffects {
       );
     };
 
-    AllSkillEffects.DOUBLE_MODDING.limit = new Decimal(1);
-    AllSkillEffects.DOUBLE_MODDING.isLimited = true;
     AllSkillEffects.DOUBLE_MODDING.getDescription = (num = 1) => {
       return (
         "+ " +
