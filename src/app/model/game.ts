@@ -265,6 +265,7 @@ export class Game {
     this.automatorManager.setAutomatorLevel(oldPrestige);
     this.prestige();
     this.prestigeManager.totalPrestige = this.prestigeManager.ascension;
+    SkillEffect.availableSkill.quantity = new Decimal(this.prestigeManager.totalPrestige);
     this.reload();
   }
 
