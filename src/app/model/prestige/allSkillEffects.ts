@@ -276,6 +276,7 @@ export class AllSkillEffects {
     ResourceManager.getInstance().droneFactory.productionMultiplier.multiplicativeBonus.push(
       new Bonus(AllSkillEffects.FACTORY_BONUS, 5, true)
     );
+    AllSkillEffects.FACTORY_BONUS.name = "Robot Factory Prestige";
 
     AllSkillEffects.MODDING_PLUS.getDescription = (num = 1) => {
       return (
