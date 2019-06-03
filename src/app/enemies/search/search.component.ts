@@ -4,7 +4,8 @@ import {
   ChangeDetectionStrategy,
   HostBinding,
   ChangeDetectorRef,
-  AfterViewInit
+  AfterViewInit,
+  OnDestroy
 } from "@angular/core";
 import { MainService } from "src/app/main.service";
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
@@ -22,7 +23,7 @@ declare let preventScroll;
   styleUrls: ["./search.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SearchComponent implements OnInit, AfterViewInit {
+export class SearchComponent implements OnInit, AfterViewInit, OnDestroy {
   @HostBinding("class")
   contentArea = "content-area";
   searchValid = true;
@@ -69,6 +70,9 @@ export class SearchComponent implements OnInit, AfterViewInit {
         this.cd.markForCheck();
       })
     );
+  }
+  ngOnDestroy() {
+    this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
   ngAfterViewInit(): void {
     if (typeof preventScroll === typeof Function) preventScroll();
