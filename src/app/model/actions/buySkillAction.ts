@@ -15,8 +15,7 @@ export class BuySkillAction extends BuyAction {
   }
   afterBuy(number: Decimal) {
     const multi = Math.max(2 * PrestigeManager.getInstance().ascension, 1);
-    this.skillEffect.numOwned =
-      number.toNumber() * multi * this.quantity.toNumber();
+    this.skillEffect.numOwned = multi * this.quantity.toNumber();
     this.skillEffect.afterBuy();
 
     AllSkillEffects.effectList
