@@ -19,6 +19,8 @@ import { NukeAction } from "../actions/nukeAction";
 import { BonusStack } from "../bonus/bonusStack";
 import { ZERO_DECIMAL_IMMUTABLE } from "../game";
 import { Bonus } from "../bonus/bonus";
+import { Automator } from "../automators/automator";
+import { AutomatorManager } from "../automators/automatorManager";
 
 export const MAX_ENEMY_LIST_SIZE = 10;
 const DARK_MATTER_START_LEVEL = 2;
@@ -184,6 +186,8 @@ export class EnemyManager implements ISalvable {
           this.attack(this.allEnemy[0]);
         }
         PrestigeManager.getInstance().reloadPrestigeToEarn();
+        const am = AutomatorManager.getInstance();
+        if (am) am.searchAutomator.enemyDefeated = true;
 
         try {
           if (OptionsService.enemyDefeatedNotification) {

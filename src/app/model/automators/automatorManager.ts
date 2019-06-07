@@ -40,6 +40,7 @@ export const TIME_LEVELS = [
 
 export class AutomatorManager implements ISalvable {
   static automatorLevel = 0;
+  private static instance: AutomatorManager;
 
   automatorGroups = new Array<Automator>();
   times = new Array<number>();
@@ -52,6 +53,10 @@ export class AutomatorManager implements ISalvable {
 
   constructor() {
     AutomatorManager.automatorLevel = 0;
+    AutomatorManager.instance = this;
+  }
+  static getInstance(): AutomatorManager {
+    return AutomatorManager.instance;
   }
   generateAutomators() {
     //  Resource Storage

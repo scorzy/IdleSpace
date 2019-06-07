@@ -5,6 +5,9 @@ import { ResourceManager } from "../resource/resourceManager";
 export class SearchAutomator extends Automator {
   maxLevel = true;
   userLevel = 1;
+  afterEnemyDefeat = false;
+  enemyDefeated = false;
+
   constructor() {
     super("EAM");
     this.name = "Auto Enemy Search";
@@ -17,7 +20,9 @@ export class SearchAutomator extends Automator {
 
     const em = EnemyManager.getInstance();
     return (
-      em.searchJobs.length === 0 && em.allEnemy.length < MAX_ENEMY_LIST_SIZE
+      (this.enemyDefeated || !this.afterEnemyDefeat) &&
+      em.searchJobs.length === 0 &&
+      em.allEnemy.length < MAX_ENEMY_LIST_SIZE
     );
   }
   doAction(): boolean {
@@ -25,18 +30,21 @@ export class SearchAutomator extends Automator {
     em.startSearching(
       this.maxLevel ? em.maxLevel : Math.min(em.maxLevel, this.userLevel)
     );
+    this.enemyDefeated = false;
     return true;
   }
   getSave(): any {
     const data = super.getSave();
     data.ml = this.maxLevel;
     data.ul = this.userLevel;
+    data.af = this.afterEnemyDefeat;
     return data;
   }
   load(data: any) {
     if (!super.load(data)) return false;
     if ("ml" in data) this.maxLevel = data.ml;
     if ("ul" in data) this.userLevel = data.ul;
+    if ("af" in data) this.afterEnemyDefeat = data.af;
     return true;
   }
 }

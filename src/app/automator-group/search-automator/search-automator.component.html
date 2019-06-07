@@ -27,3 +27,16 @@
     >Must be a number (1 - {{ ms.game.enemyManager.maxLevel }})
   </clr-control-error></clr-input-container
 >
+
+<clr-checkbox-container>
+  <label>Enemy defeated</label>
+  <clr-checkbox-wrapper>
+    <label>On</label>
+    <input
+      clrCheckbox
+      type="checkbox"
+      [(ngModel)]="auto.afterEnemyDefeat"
+      name="aed"
+    />
+  </clr-checkbox-wrapper>
+</clr-checkbox-container>
