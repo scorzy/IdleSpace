@@ -19,7 +19,6 @@ import { NukeAction } from "../actions/nukeAction";
 import { BonusStack } from "../bonus/bonusStack";
 import { ZERO_DECIMAL_IMMUTABLE } from "../game";
 import { Bonus } from "../bonus/bonus";
-import { Automator } from "../automators/automator";
 import { AutomatorManager } from "../automators/automatorManager";
 
 export const MAX_ENEMY_LIST_SIZE = 10;
