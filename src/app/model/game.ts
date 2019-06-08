@@ -226,14 +226,12 @@ export class Game {
       this.resourceManager.inactiveDarkMatter.quantity
     );
 
+    const toAdd = new Decimal(this.prestigeManager.prestigeToEarn);
+
     this.prestigeManager.totalPrestige = Math.max(
       this.prestigeManager.totalPrestige,
       this.prestigeManager.ascension + this.enemyManager.maxLevel - 1
     );
-    // this.prestigeManager.totalPrestige = Math.min(
-    //   this.prestigeManager.totalPrestige,
-    //   this.prestigeManager.maxPrestigePoints
-    // );
 
     this.init(true);
     if (this.resetPrestige) {
@@ -253,9 +251,10 @@ export class Game {
       h.unlockedAutomators = h.automators.filter(g => g.isUnlocked());
     });
 
-    SkillEffect.availableSkill.quantity = new Decimal(
-      this.prestigeManager.totalPrestige
+    SkillEffect.availableSkill.quantity = SkillEffect.availableSkill.quantity.plus(
+      toAdd
     );
+
     this.automatorManager.resetTimers();
   }
   ascend() {
@@ -265,7 +264,9 @@ export class Game {
     this.automatorManager.setAutomatorLevel(oldPrestige);
     this.prestige();
     this.prestigeManager.totalPrestige = this.prestigeManager.ascension;
-    SkillEffect.availableSkill.quantity = new Decimal(this.prestigeManager.totalPrestige);
+    SkillEffect.availableSkill.quantity = new Decimal(
+      this.prestigeManager.totalPrestige
+    );
     this.reload();
   }
 
