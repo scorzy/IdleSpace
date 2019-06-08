@@ -251,7 +251,8 @@ export class Game {
       h.unlockedAutomators = h.automators.filter(g => g.isUnlocked());
     });
 
-    SkillEffect.availableSkill.quantity = SkillEffect.availableSkill.quantity.plus(
+    SkillEffect.availableSkill.quantity = this.resetPrestige ? new Decimal(this.prestigeManager.totalPrestige) :
+    SkillEffect.availableSkill.quantity.plus(
       toAdd
     );
 
