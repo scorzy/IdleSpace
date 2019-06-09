@@ -54,7 +54,9 @@ export class SearchComponent implements OnInit, AfterViewInit, OnDestroy {
     this.moreSearch =
       AllSkillEffects.SEARCH_CRY.numOwned > 0 ||
       AllSkillEffects.SEARCH_METAL.numOwned > 0 ||
-      AllSkillEffects.SEARCH_HAB.numOwned > 0;
+      AllSkillEffects.SEARCH_HAB.numOwned > 0 ||
+      AllSkillEffects.SEARCH_HAB2.numOwned > 0 ||
+      AllSkillEffects.SEARCH_RANDOM.numOwned > 0;
 
     this.metal = AllSkillEffects.SEARCH_METAL.numOwned > 0;
     this.cry = AllSkillEffects.SEARCH_CRY.numOwned > 0;
