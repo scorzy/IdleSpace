@@ -372,7 +372,7 @@ export class AllSkillEffects {
     };
     AllSkillEffects.SEARCH_RANDOM.name = "Prestige search random";
     resMan.searchX1.productionMultiplier.additiveBonus.push(
-      new Bonus(AllSkillEffects.SEARCH_HAB2, 0.5, true)
+      new Bonus(AllSkillEffects.SEARCH_RANDOM, 0.5, true)
     );
 
     AllSkillEffects.DOUBLE_DISTRICTS.getDescription = (num = 1) => {
