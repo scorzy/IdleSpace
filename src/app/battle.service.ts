@@ -49,9 +49,9 @@ export class BattleService {
       design.forEach(ds => {
         const ship = new Ship();
         ship.id = ds.id;
-        ship.armor = Decimal.fromDecimal(ds.totalArmor);
+        ship.armor.fromDecimal(ds.totalArmor);
         ship.originalArmor = new Decimal(ship.armor);
-        ship.shield = Decimal.fromDecimal(ds.totalShield);
+        ship.shield.fromDecimal(ds.totalShield);
         ship.originalShield = new Decimal(ship.shield);
         ship.explosionLevel = ds.explosionLevel / 100;
         ds.modules.forEach(dl => {
@@ -156,8 +156,19 @@ export class BattleService {
         }
       }
       //  Remove death ships
-      playerShips = playerShips.filter(s => s.armor.gt(0));
-      enemyShip = enemyShip.filter(s => s.armor.gt(0));
+      for (let num = 0; num < 2; num++) {
+        const ships = battleFleets[num];
+        let aliveShips = new Array<Ship>();
+        for (const ship of ships){
+          if (ship.armor.gt(0)){
+            aliveShips.push(ship);
+          } else {
+            ship.free();
+          }
+        }
+        battleFleets[num] = aliveShips;
+      }
+      [playerShips, enemyShip] = battleFleets; // Update ships variable to new array
 
       //  Regenerate shields
       // playerShips
@@ -167,7 +178,6 @@ export class BattleService {
       //     s.shield = new Decimal(s.originalShield);
       //   });
 
-      battleFleets = [playerShips, enemyShip]; //  just to be sure
       if (playerShips.length === 0 || enemyShip.length === 0) break;
     }
     //#endregion
@@ -178,9 +188,18 @@ export class BattleService {
       [input.playerFleet, playerShips, ret.playerLost],
       [input.enemyFleet, enemyShip, ret.enemyLost]
     ];
+
     retArr.forEach(arr => {
+      const fleetCount = {};
+
+      // Count and free the ships object
+      for (const ship of arr[1]){
+        fleetCount[ship.id] = fleetCount[ship.id] ? fleetCount[ship.id] + 1 : 1;
+        ship.free();
+      }
+
       arr[0].forEach(fl => {
-        const alive = arr[1].filter(s => s.id === fl.id).length;
+        const alive = fleetCount[fl.id];
         if (Decimal.fromDecimal(fl.quantity).gt(alive)) {
           arr[2].push([fl.id, Decimal.fromDecimal(fl.quantity).minus(alive)]);
         }

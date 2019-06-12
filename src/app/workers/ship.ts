@@ -1,9 +1,10 @@
 class Ship {
+  private static Ships = new Array<Ship>();
   id: string;
-  armor: Decimal;
+  armor: Decimal = new Decimal();
   originalArmor: Decimal;
   explosionLevel: number;
-  shield: Decimal;
+  shield: Decimal = new Decimal();
   originalShield: Decimal;
   modules = new Array<{
     damage: Decimal
@@ -12,15 +13,21 @@ class Ship {
   }>();
 
   getCopy(): Ship {
-    const ret = new Ship();
+    const ret = Ship.Ships.pop() || new Ship();
     ret.id = this.id;
-    ret.armor = new Decimal(this.armor);
-    ret.originalArmor = new Decimal(this.armor);
-    ret.shield = new Decimal(this.shield);
-    ret.originalShield = new Decimal(this.shield);
+    ret.armor.fromDecimal(this.armor);
+    ret.shield.fromDecimal(this.shield);
+    // Original value shouldn't get modified, reuse original object instead of creating 10000+ new ones for max ships.
+    ret.originalArmor = this.originalArmor;
+    ret.originalShield = this.originalShield;
     ret.modules = this.modules;
     ret.explosionLevel = this.explosionLevel;
 
     return ret;
+  }
+
+  free(): void {
+    // Reuse object to prevent gc
+    Ship.Ships.push(this);
   }
 }
