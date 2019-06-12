@@ -49,9 +49,9 @@ export class BattleService {
       design.forEach(ds => {
         const ship = new Ship();
         ship.id = ds.id;
-        ship.armor = Decimal.fromDecimal(ds.totalArmor);
+        ship.armor.fromDecimal(ds.totalArmor);
         ship.originalArmor = new Decimal(ship.armor);
-        ship.shield = Decimal.fromDecimal(ds.totalShield);
+        ship.shield.fromDecimal(ds.totalShield);
         ship.originalShield = new Decimal(ship.shield);
         ship.explosionLevel = ds.explosionLevel / 100;
         ds.modules.forEach(dl => {
