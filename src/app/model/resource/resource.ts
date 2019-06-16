@@ -199,6 +199,7 @@ export class Resource extends AbstractUnlockable
     this.modStack.save();
     this.quantity = new Decimal(1);
     if (this.buyAction) this.buyAction.quantity = new Decimal(0);
+    this.isCapped = this.isLimited && this.quantity.gte(this.limit.floor());
   }
   getQuantity(): Decimal {
     return this.quantity;
