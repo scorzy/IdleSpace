@@ -1,15 +1,16 @@
 # IdleSpace
+
 [![Build Status](https://travis-ci.org/scorzy/IdleSpace.svg?branch=master)](https://travis-ci.org/scorzy/IdleSpace)
 
 This is an idle game about space combat. I made it to try web workers and some Angular Matrial CDK, that's why there are drag and drop and per battle is handled per ship.
 
-Links: 
-- Game: https://github.com/scorzy/IdleSpace
+Links:
+
+- GitHub: https://github.com/scorzy/IdleSpace
+- Game: https://scorzy.github.io/IdleSpace
 - Kongregate: https://www.kongregate.com/games/scorzy88/idle-space
 - Discord: https://discord.gg/CGEfHGe
 - Battle code: https://github.com/scorzy/IdleSpace/blob/master/src/app/battle.service.ts
-
-
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.2.
 
