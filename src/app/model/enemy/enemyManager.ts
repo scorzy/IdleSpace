@@ -20,6 +20,7 @@ import { BonusStack } from "../bonus/bonusStack";
 import { ZERO_DECIMAL_IMMUTABLE } from "../game";
 import { Bonus } from "../bonus/bonus";
 import { AutomatorManager } from "../automators/automatorManager";
+import { ShipDesign } from "../fleet/shipDesign";
 
 export const MAX_ENEMY_LIST_SIZE = 10;
 const DARK_MATTER_START_LEVEL = 2;
@@ -71,6 +72,8 @@ export class EnemyManager implements ISalvable {
   prestigeModal = false;
   ascendModal = false;
   totalTime = 0;
+  mergeLevel = 0;
+  currentMerge = 0;
 
   static getInstance(): EnemyManager {
     return EnemyManager.instance;
@@ -99,6 +102,33 @@ export class EnemyManager implements ISalvable {
   startBattle() {
     if (this.inBattle || !this.currentEnemy) return false;
     this.fightEnemy = this.currentEnemy;
+
+    //  Merge tiles
+    while (
+      this.currentMerge < this.mergeLevel &&
+      this.currentMerge + this.currentEnemy.currentZone.number < 99
+    ) {
+      this.currentMerge++;
+      const zoneToMerge = this.currentEnemy.zones[
+        this.currentEnemy.currentZone.number + this.currentMerge
+      ];
+      zoneToMerge.generateShips(this.currentEnemy.shipsDesign);
+      zoneToMerge.ships.forEach(ship => {
+        zoneToMerge.mergedOrigin = this.currentEnemy.currentZone;
+        const originalShip = this.currentEnemy.currentZone.ships.find(
+          s => s.name === ship.name
+        );
+        if (originalShip) {
+          originalShip.quantity = originalShip.quantity.plus(ship.quantity);
+        } else {
+          this.currentEnemy.currentZone.ships.push(ship);
+        }
+      });
+      this.currentEnemy.currentZone.originalNavCap = ShipDesign.GetTotalNavalCap(
+        this.currentEnemy.currentZone.ships
+      );
+      zoneToMerge.ships = [];
+    }
 
     Emitters.getInstance().battleEndEmitter.emit(1);
     this.inBattle = true;
@@ -146,14 +176,24 @@ export class EnemyManager implements ISalvable {
       ship.quantity = ship.quantity.max(0);
     });
     this.currentEnemy.currentZone.reload();
+    for (let n = 0; n <= this.currentMerge; n++) {
+      const mergedZone = this.currentEnemy.zones[
+        this.currentEnemy.currentZone.number + n
+      ];
+      mergedZone.reload();
+    }
 
     //#region Win
     if (result.result === "1") {
       this.currentEnemy.currentZone.ships = null;
       this.currentEnemy.currentZone.originalNavCap = null;
       //#region Reward
-      const currentZone = this.currentEnemy.currentZone;
-      this.rewardPlayer(currentZone.reward);
+      for (let n = 0; n <= this.currentMerge; n++) {
+        const mergedZone = this.currentEnemy.zones[
+          this.currentEnemy.currentZone.number + n
+        ];
+        this.rewardPlayer(mergedZone.reward);
+      }
       //#endregion
       //#region Dark Matter
       if (this.currentEnemy.level >= DARK_MATTER_START_LEVEL) {
@@ -167,7 +207,7 @@ export class EnemyManager implements ISalvable {
         );
       }
       //#endregion
-      if (this.currentEnemy.currentZone.number >= 99) {
+      if (this.currentEnemy.currentZone.number + this.currentMerge >= 99) {
         if (this.currentEnemy.level === 1 && this.maxLevel === 1) {
           this.prestigeModal = true;
         }
@@ -194,16 +234,24 @@ export class EnemyManager implements ISalvable {
           }
         } catch (ex) {}
       } else {
+        for (let n = 0; n <= this.currentMerge; n++) {
+          const mergedZone = this.currentEnemy.zones[
+            this.currentEnemy.currentZone.number + n
+          ];
+          mergedZone.completed = true;
+          mergedZone.reload();
+        }
         this.currentEnemy.currentZone.completed = true;
         this.currentEnemy.currentZone.reload();
         this.currentEnemy.currentZone = this.currentEnemy.zones[
-          this.currentEnemy.currentZone.number + 1
+          this.currentEnemy.currentZone.number + 1 + this.currentMerge
         ];
         this.currentEnemy.currentZone.generateShips(
           this.currentEnemy.shipsDesign
         );
         this.currentEnemy.currentZone.reload();
       }
+      this.currentMerge = 0;
     }
     //#endregion
 
@@ -490,6 +538,18 @@ export class EnemyManager implements ISalvable {
     if (this.moreHabitable) data.mh = this.moreHabitable;
     if (this.moreHabitable2) data.mh2 = this.moreHabitable2;
     if (this.randomized) data.ra = this.randomized;
+    if (this.mergeLevel !== 0) data.mer = this.mergeLevel;
+    if (this.currentMerge !== 0) data.cumer = this.currentMerge;
+
+    for (let n = 0; n <= this.currentMerge; n++) {
+      const mergedZone = this.currentEnemy.zones[
+        this.currentEnemy.currentZone.number + n
+      ];
+      if (mergedZone) {
+        mergedZone.mergedOrigin = this.currentEnemy.currentZone;
+        mergedZone.reload();
+      }
+    }
 
     return data;
   }
@@ -534,6 +594,8 @@ export class EnemyManager implements ISalvable {
     if ("mh" in data) this.moreHabitable = data.mh;
     if ("mh2" in data) this.moreHabitable2 = data.mh2;
     if ("ra" in data) this.randomized = data.ra;
+    if ("mer" in data) this.mergeLevel = data.mer;
+    if ("cumer" in data) this.currentMerge = data.cumer;
 
     return true;
   }

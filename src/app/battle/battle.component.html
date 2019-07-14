@@ -125,6 +125,20 @@
             [(ngModel)]="ms.game.fleetManager.autoFightPer"
           />
         </clr-input-container>
+
+        <clr-input-container class="clr-form-control clr-row-6">
+          <label>Merge </label>
+
+          <input
+            clrInput
+            placeholder="100"
+            name="autoPerc"
+            type="number"
+            min="0"
+            max="100"
+            [(ngModel)]="ms.game.enemyManager.mergeLevel"
+          />
+        </clr-input-container>
       </form>
 
       <!-- <br /><br /> -->
