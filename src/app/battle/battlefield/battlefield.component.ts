@@ -24,7 +24,7 @@ export class BattlefieldComponent implements OnInit {
 
   getColor(zone: Zone) {
     return zone.number <=
-      this.enemy.currentZone.number + this.ms.game.enemyManager.mergeLevel
+      this.enemy.currentZone.number + this.ms.game.enemyManager.currentMerge
       ? zone.color
       : "";
   }

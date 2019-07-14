@@ -100,46 +100,44 @@
         </div>
       </div>
 
-      <form clrForm clrLayout="compact">
-        <clr-input-container>
-          <label
-            >Auto Fight min %
-            <!-- <clr-signpost>
-              <clr-signpost-content *clrIfOpen>
-                <h3>Auto Fight %</h3>
-                <p>
-                  Minimum percentage of actual fleet capacity needed to auto
-                  fight. 100 equals to fight only at full fleet.
-                </p>
-              </clr-signpost-content>
-            </clr-signpost> -->
-          </label>
+      <div class="clr-row">
+        <div class="clr-col-6 clr-col-xl-5">
+          <form clrForm clrLayout="compact">
+            <clr-input-container>
+              <label class="clr-col-12 clr-col-md-8">Auto Fight min % </label>
 
-          <input
-            clrInput
-            placeholder="100"
-            name="autoPerc"
-            type="number"
-            min="0"
-            max="100"
-            [(ngModel)]="ms.game.fleetManager.autoFightPer"
-          />
-        </clr-input-container>
+              <input
+                class="clr-col-12 clr-col-md-4"
+                clrInput
+                placeholder="100"
+                name="autoPerc"
+                type="number"
+                min="0"
+                max="100"
+                [(ngModel)]="ms.game.fleetManager.autoFightPer"
+              />
+            </clr-input-container>
+          </form>
+        </div>
+        <div class="clr-col-6 clr-col-xl-5">
+          <form clrForm clrLayout="compact">
+            <clr-input-container>
+              <label class="clr-col-12 clr-col-md-8">Tile per fight </label>
 
-        <clr-input-container class="clr-form-control clr-row-6">
-          <label>Merge </label>
-
-          <input
-            clrInput
-            placeholder="100"
-            name="autoPerc"
-            type="number"
-            min="0"
-            max="100"
-            [(ngModel)]="ms.game.enemyManager.mergeLevel"
-          />
-        </clr-input-container>
-      </form>
+              <input
+                class="clr-col-12 clr-col-md-4"
+                clrInput
+                placeholder="100"
+                name="autoPerc"
+                type="number"
+                min="0"
+                max="100"
+                [(ngModel)]="ms.game.enemyManager.mergeLevel"
+              />
+            </clr-input-container>
+          </form>
+        </div>
+      </div>
 
       <!-- <br /><br /> -->
       <app-battlefield
