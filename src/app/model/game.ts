@@ -269,6 +269,9 @@ export class Game {
     );
     this.reload();
   }
+  getMaxExtraTile(): number {
+    return Math.min(Math.floor(AllSkillEffects.TILE_MERGE.numOwned), 99);
+  }
 
   //#region Save and Load
   save(): any {
@@ -322,6 +325,10 @@ export class Game {
       h.unlockedAutomators = h.automators.filter(g => g.isUnlocked());
     });
     this.automatorManager.resetTimers();
+    this.enemyManager.mergeLevel = Math.min(
+      enemyManager.mergeLevel,
+      this.getMaxExtraTile()
+    );
   }
   //#endregion
 }

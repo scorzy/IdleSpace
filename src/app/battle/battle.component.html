@@ -3,7 +3,7 @@
   *ngIf="ms.game.enemyManager.currentEnemy; else noEnemy"
 >
   <div class="clr-row" *ngIf="ms.game.enemyManager.currentEnemy">
-    <div class="clr-col-12 clr-col-md-7">
+    <div class="clr-col-12 clr-col-sm-12 clr-col-lg-7">
       <h1>
         <clr-icon
           [attr.shape]="ms.game.enemyManager.currentEnemy?.shape"
@@ -68,7 +68,7 @@
             id="btn-demo-check-1"
             [(ngModel)]="ms.game.fleetManager.autoFight"
           />
-          <label for="btn-demo-check-1">Auto Fight</label>
+          <label for="btn-demo-check-1">A. Fight</label>
         </div>
         <div class="checkbox btn">
           <input
@@ -76,7 +76,7 @@
             id="btn-demo-check-2"
             [(ngModel)]="ms.game.fleetManager.autoReinforce"
           />
-          <label for="btn-demo-check-2">Auto Reinforce</label>
+          <label for="btn-demo-check-2">A. Reinforce</label>
         </div>
         <div
           class="checkbox btn"
@@ -87,7 +87,7 @@
             id="check-3"
             [(ngModel)]="ms.game.enemyManager.autoNuke"
           />
-          <label for="check-3">Auto Nuke</label>
+          <label for="check-3">A. Nuke</label>
         </div>
         <div class="checkbox btn">
           <input
@@ -96,15 +96,17 @@
             title="Auto proceed to next enemy."
             [(ngModel)]="ms.game.enemyManager.autoNext"
           />
-          <label for="check-next">Auto Next</label>
+          <label for="check-next">A. Next</label>
         </div>
       </div>
 
       <div class="clr-row">
-        <div class="clr-col-6 clr-col-xl-5">
+        <div class="clr-col-6 clr-col-xl-4">
           <form clrForm clrLayout="compact">
             <clr-input-container>
-              <label class="clr-col-12 clr-col-md-8">Auto Fight min % </label>
+              <label class="clr-col-12 clr-col-md-8 clr-col-xl-6"
+                >Auto Fight min %
+              </label>
 
               <input
                 class="clr-col-12 clr-col-md-4"
@@ -119,10 +121,12 @@
             </clr-input-container>
           </form>
         </div>
-        <div class="clr-col-6 clr-col-xl-5">
+        <div class="clr-col-6 clr-col-xl-4" *ngIf="maxExtraTile >= 1">
           <form clrForm clrLayout="compact">
             <clr-input-container>
-              <label class="clr-col-12 clr-col-md-8">Tile per fight </label>
+              <label class="clr-col-12 clr-col-md-8 clr-col-xl-6"
+                >Extra tile per fight
+              </label>
 
               <input
                 class="clr-col-12 clr-col-md-4"
@@ -131,7 +135,7 @@
                 name="autoPerc"
                 type="number"
                 min="0"
-                max="100"
+                [attr.max]="maxExtraTile"
                 [(ngModel)]="ms.game.enemyManager.mergeLevel"
               />
             </clr-input-container>
@@ -144,7 +148,7 @@
         [enemy]="ms.game.enemyManager.currentEnemy"
       ></app-battlefield>
     </div>
-    <div class="clr-col-12 clr-col-md-5">
+    <div class="clr-col-12 clr-col-sm-12 clr-col-lg-5">
       <h4>You</h4>
       <app-fleet-table [fleet]="ms.game.fleetManager.ships"></app-fleet-table>
       <h4>Enemy</h4>

@@ -59,6 +59,7 @@ export class AllSkillEffects {
   static readonly MODULE_LEVEL = new SkillEffect(13, "S", 2);
   static readonly DOUBLE_MISSILE = new SkillEffect(15, "S", 3);
   static readonly MULTI_FACTORY = new SkillEffect(16, "2");
+  static readonly TILE_MERGE = new SkillEffect(40, "S", 2);
   //#endregion
   //#region Robot Modding
   static readonly FACTORY_BONUS = new SkillEffect(17, "2", 3);
@@ -262,6 +263,16 @@ export class AllSkillEffects {
     resMan.missileX1.productionMultiplier.multiplicativeBonus.push(
       new Bonus(AllSkillEffects.MULTI_FACTORY, 2.5)
     );
+
+    AllSkillEffects.TILE_MERGE.limit = new Decimal(2);
+    AllSkillEffects.TILE_MERGE.isLimited = true;
+    AllSkillEffects.TILE_MERGE.getDescription = (num = 1) => {
+      return (
+        "+ " +
+        MainService.formatPipe.transform(num, true) +
+        " extra tile per fight"
+      );
+    };
     //#endregion
     //#region Robot Modding
     AllSkillEffects.FACTORY_BONUS.getDescription = (num = 1) => {
@@ -475,7 +486,8 @@ export class AllSkillEffects {
       AllSkillEffects.SEARCH_HAB2,
       AllSkillEffects.SEARCH_RANDOM,
       AllSkillEffects.DOUBLE_DISTRICTS,
-      AllSkillEffects.MULTI_FACTORY
+      AllSkillEffects.MULTI_FACTORY,
+      AllSkillEffects.TILE_MERGE
     ];
     if (!prestige) {
       AllSkillEffects.effectList.forEach(e => {
