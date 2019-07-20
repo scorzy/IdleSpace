@@ -74,6 +74,7 @@ export class EnemyManager implements ISalvable {
   totalTime = 0;
   mergeLevel = 0;
   currentMerge = 0;
+  rewardMessage = "";
 
   static getInstance(): EnemyManager {
     return EnemyManager.instance;
@@ -188,12 +189,20 @@ export class EnemyManager implements ISalvable {
       this.currentEnemy.currentZone.ships = null;
       this.currentEnemy.currentZone.originalNavCap = null;
       //#region Reward
+      this.rewardMessage = "";
       for (let n = 0; n <= this.currentMerge; n++) {
         const mergedZone = this.currentEnemy.zones[
           this.currentEnemy.currentZone.number + n
         ];
         this.rewardPlayer(mergedZone.reward);
       }
+      try {
+        if (OptionsService.battleWinNotification) {
+          MainService.toastr.success(this.rewardMessage, "Battle Win", {
+            enableHtml: true
+          });
+        }
+      } catch (ex) {}
       //#endregion
       //#region Dark Matter
       if (this.currentEnemy.level >= DARK_MATTER_START_LEVEL) {
@@ -306,7 +315,7 @@ export class EnemyManager implements ISalvable {
             prestigeMulti
           );
           ResearchManager.getInstance().update(gain);
-          message += "+ " + MainService.formatPipe.transform(gain) + " research";
+          message += "+ " + MainService.formatPipe.transform(gain) + " Research";
           break;
 
         case Reward.MetalMine:
@@ -413,13 +422,7 @@ export class EnemyManager implements ISalvable {
           break;
       }
     }
-    try {
-      if (OptionsService.battleWinNotification) {
-        MainService.toastr.success(message, "Battle Win", {
-          enableHtml: true
-        });
-      }
-    } catch (ex) {}
+    this.rewardMessage += message + "<br/>";
   }
 
   delete(enemy: Enemy) {

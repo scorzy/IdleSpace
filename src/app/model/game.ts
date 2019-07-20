@@ -326,7 +326,7 @@ export class Game {
     });
     this.automatorManager.resetTimers();
     this.enemyManager.mergeLevel = Math.min(
-      enemyManager.mergeLevel,
+      this.enemyManager.mergeLevel,
       this.getMaxExtraTile()
     );
   }
