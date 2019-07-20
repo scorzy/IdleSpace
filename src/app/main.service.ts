@@ -202,10 +202,12 @@ export class MainService {
       this.game = new Game();
       this.game.load(data.g);
       this.show = true;
-      this.toastr.info(
+      this.toastr.show(
         "You were offline for " +
           MainService.endInPipe.transform(Date.now() - this.last),
-        "Game Loaded"
+        "Game Loaded",
+        {},
+        "toast-load"
       );
       this.startAutoSave();
     } else {
@@ -272,7 +274,7 @@ export class MainService {
           localStorage.setItem("saveDate", Date());
           this.lastSave = Date();
           if (result.requestId === 0 || this.options.autosaveNotification) {
-            this.toastr.success("Game Saved");
+            this.toastr.show("", "Game Saved", {}, "toast-save");
           }
         } else if (result.requestId === 1) {
           this.em.zipEmitter.emit(result.zipped);
