@@ -21,6 +21,7 @@ export class ResearchManager {
   isNewModal = false;
   //#region Researches
   betterResearch: Research;
+  computing: Research;
   energy: Research;
   modding: Research;
   telescope: Research;
@@ -48,6 +49,7 @@ export class ResearchManager {
       this.researches.push(Research.fromData(resData));
     }
     this.betterResearch = this.researches.find(r => r.id === "r");
+    this.computing = this.researches.find(r => r.id === "CO");
     this.corvette = this.researches.find(r => r.id === "c");
     this.frigate = this.researches.find(r => r.id === "f");
     this.destroyer = this.researches.find(r => r.id === "d");
@@ -61,8 +63,13 @@ export class ResearchManager {
     this.titan = this.researches.find(r => r.id === "n");
     this.titan.ratio = 1e3;
     this.missile = this.researches.find(r => r.id === "i");
-    ResourceManager.getInstance().energyX1.productionMultiplier.additiveBonus.push(
+
+    const resMan = ResourceManager.getInstance();
+    resMan.energyX1.productionMultiplier.additiveBonus.push(
       new Bonus(this.energy, 0.1)
+    );
+    resMan.computingX1.productionMultiplier.additiveBonus.push(
+      new Bonus(this.computing, 0.1, true)
     );
 
     this.corvette.ship = ShipTypes[0];

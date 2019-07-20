@@ -20,7 +20,17 @@ export const ResearchData: IResearchData[] = [
     price: 5e3,
     description: "+10% energy",
     limit: Number.POSITIVE_INFINITY,
+    researchToUnlock: ["CO"],
     bonus: [["Energy Gain", "+10%"]]
+  },
+  {
+    id: "CO",
+    name: "Computing",
+    shape: "cpu",
+    price: 5e4,
+    description: "+10% computing",
+    limit: Number.POSITIVE_INFINITY,
+    bonus: [["Computing Gain", "+10%"]]
   },
   {
     id: "c",
