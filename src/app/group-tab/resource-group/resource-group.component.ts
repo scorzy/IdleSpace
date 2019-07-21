@@ -55,8 +55,8 @@ export class ResourceGroupComponent
     this.subscriptions.push(
       this.ms.em.updateEmitter.subscribe(() => {
         this.getOperativity();
-        this.getGroup();
-        // this.actions.forEach(a => a.reload());
+        // this.getGroup();
+        this.actions.forEach(a => a.reload());
         this.cd.markForCheck();
       })
     );
