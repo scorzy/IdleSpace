@@ -172,11 +172,13 @@ export class Enemy {
         let presets = Preset.DefensePreset.filter(p => p.type === shipType);
         const pres = sample(presets);
         const def = enemy.addFromPreset(pres);
+        def.isDefense = true;
         def.name = def.name + " " + def.modules[0].module.name;
         if (presets.length > 2 && Math.random() < 0.4) {
           presets = presets.filter(p => p !== pres);
           const pres2 = sample(presets);
           const def2 = enemy.addFromPreset(pres2);
+          def2.isDefense = true;
           def2.name = def2.name + " " + def2.modules[0].module.name;
         }
       });
@@ -219,6 +221,7 @@ export class Enemy {
             percentToFill *
             random(0.7, 1.2, true);
           const bubble = enemy.addFromPreset(Preset.DefenseShield);
+          bubble.isDefense = true;
           bubble.quantity = new Decimal(bubbleToAdd);
           bubble.modules.forEach(m => {
             m.level = moduleLevel;

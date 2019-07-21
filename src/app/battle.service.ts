@@ -49,11 +49,15 @@ export class BattleService {
       design.forEach(ds => {
         const ship = new Ship();
         ship.id = ds.id;
+        ship.class = ds.class;
+        ship.isDefense = ds.isDefense;
         ship.armor.fromDecimal(ds.totalArmor);
         ship.originalArmor = new Decimal(ship.armor);
         ship.shield.fromDecimal(ds.totalShield);
         ship.originalShield = new Decimal(ship.shield);
         ship.explosionLevel = ds.explosionLevel / 100;
+        ship.armorReduction = new Decimal(ds.armorReduction);
+        ship.shieldReduction = new Decimal(ds.shieldReduction);
         ds.modules.forEach(dl => {
           if (Decimal.fromDecimal(dl.computedDamage).gt(0)) {
             ship.modules.push({
@@ -75,7 +79,7 @@ export class BattleService {
     //#endregion
     //#region Battle
     //  Up to 5 rounds
-    let battleFleets = [playerShips, enemyShip];
+    const battleFleets = [playerShips, enemyShip];
     //  for each round
     for (let round = 0; round < 5; round++) {
       //  for both player and enemy fleets
@@ -83,24 +87,54 @@ export class BattleService {
         const ships = battleFleets[num];
         const targets = battleFleets[(num + 1) % 2];
         if (targets.length < 1 || ships.length < 1) break;
+        let defenders = targets.filter(s => s.class === "2");
 
         let n = 0;
         for (const ship of ships) {
           n++;
 
+          let availableTargets = targets;
+
+          //  80% chance of hitting a defender
+          if (
+            ship.class !== "3" &&
+            defenders.length > 0 &&
+            Math.random() > 0.8
+          ) {
+            availableTargets = defenders;
+          }
+
+          switch (ship.class) {
+            case "1": // Fighter
+              availableTargets = availableTargets.filter(t => t.armor.gt(0));
+              if (availableTargets.length === 0) availableTargets = targets;
+              break;
+            case "3": // Bomber
+              availableTargets = targets.filter(
+                t => t.isDefense && t.armor.gt(0)
+              );
+              break;
+          }
+
           ship.modules.forEach(weapon => {
-            const target = targets[Math.floor(Math.random() * targets.length)];
+            const target =
+              availableTargets[Math.floor(Math.random() * targets.length)];
             let damageToDo = weapon.damage;
             //  Damage to shield
             if (target.shield.gt(0)) {
               const shieldPercent = weapon.shieldPercent / 100;
-              const maxShieldDamage = damageToDo.times(shieldPercent);
+              let maxShieldDamage = damageToDo.times(shieldPercent);
+              maxShieldDamage = maxShieldDamage
+                .minus(target.shieldReduction)
+                .max(0);
               //  Skip if damage <0.1% shield
               if (maxShieldDamage.gte(target.shield.div(1000))) {
                 target.shield = target.shield.minus(maxShieldDamage);
                 // tslint:disable-next-line:prefer-conditional-expression
                 if (target.shield.lt(0)) {
-                  damageToDo = Decimal.abs(target.shield).div(shieldPercent);
+                  damageToDo = Decimal.abs(
+                    target.shield.minus(target.shieldReduction)
+                  ).div(shieldPercent);
                   // console.log(damageToDo.toNumber());
                 } else {
                   damageToDo = new Decimal(0);
@@ -111,7 +145,10 @@ export class BattleService {
             }
             //  Damage to Armor
             if (damageToDo.gt(0)) {
-              const maxArmorDamage = damageToDo.times(weapon.armorPercent / 100);
+              let maxArmorDamage = damageToDo.times(weapon.armorPercent / 100);
+              maxArmorDamage = maxArmorDamage
+                .minus(target.armorReduction)
+                .max(0);
               //  Skip if damage < 0.1% armor
               if (maxArmorDamage.gte(target.armor.div(1000))) {
                 target.armor = target.armor.minus(maxArmorDamage);
@@ -148,7 +185,12 @@ export class BattleService {
                 }
               }
             }
+            //  Remove defenders
+            if (target.armor.lt(0)) {
+              defenders = defenders.filter(d => d.armor.gt(0));
+            }
           });
+
           if (n % 10 === 0 && targets.findIndex(t => t.armor.gt(0)) < 0) {
             // console.log("break");
             break;
@@ -158,9 +200,9 @@ export class BattleService {
       //  Remove death ships
       for (let num = 0; num < 2; num++) {
         const ships = battleFleets[num];
-        let aliveShips = new Array<Ship>();
-        for (const ship of ships){
-          if (ship.armor.gt(0)){
+        const aliveShips = new Array<Ship>();
+        for (const ship of ships) {
+          if (ship.armor.gt(0)) {
             aliveShips.push(ship);
           } else {
             ship.free();
@@ -193,7 +235,7 @@ export class BattleService {
       const fleetCount = {};
 
       // Count and free the ships object
-      for (const ship of arr[1]){
+      for (const ship of arr[1]) {
         fleetCount[ship.id] = fleetCount[ship.id] ? fleetCount[ship.id] + 1 : 1;
         ship.free();
       }

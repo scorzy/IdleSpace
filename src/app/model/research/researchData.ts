@@ -97,7 +97,7 @@ export const ResearchData: IResearchData[] = [
     shape: "flask",
     price: 1e14,
     description: "Unlock battlecruiser",
-    researchToUnlock: ["civ", "s"]
+    researchToUnlock: ["civ", "s", "cl1"]
   },
   {
     id: "s",
@@ -174,5 +174,46 @@ export const ResearchData: IResearchData[] = [
     price: 1e14,
     description: "Unlock civilian ships",
     resourceToUnlock: ["te", "sc", "ss", "bs"]
+  },
+  {
+    id: "cl1",
+    name: "Ships Classes",
+    shape: "satellite",
+    price: 1e15,
+    description: "Unlock ships classes and fighter",
+    researchToUnlock: ["cl2", "cl3", "cl4", "cl5"],
+    classesToUnlock: ["1"]
+  },
+  {
+    id: "cl2",
+    name: "Bomber",
+    shape: "satellite",
+    price: 1e16,
+    description: "Unlock Bomber",
+    classesToUnlock: ["2"]
+  },
+  {
+    id: "cl3",
+    name: "Defender",
+    shape: "satellite",
+    price: 1e16,
+    description: "Unlock Defender",
+    classesToUnlock: ["3"]
+  },
+  {
+    id: "cl4",
+    name: "Technician",
+    shape: "satellite",
+    price: 1e16,
+    description: "Unlock Technician",
+    classesToUnlock: ["4"]
+  },
+  {
+    id: "cl5",
+    name: "Supply",
+    shape: "satellite",
+    price: 1e16,
+    description: "Unlock Supply",
+    classesToUnlock: ["5"]
   }
 ];

@@ -7,6 +7,7 @@ import {
 import { Research } from "src/app/model/research/research";
 import { IUnlockable } from "src/app/model/base/IUnlockable";
 import { Resource } from "src/app/model/resource/resource";
+import { ShipClass } from "src/app/model/fleet/class";
 
 @Component({
   selector: "app-research-unlocks",
@@ -35,5 +36,8 @@ export class ResearchUnlocksComponent implements OnInit {
   }
   getBonId(index: number, bonus: [string, string]) {
     return index + bonus[0] + bonus[1];
+  }
+  getClaId(index: number, cla: ShipClass) {
+    return cla.id;
   }
 }

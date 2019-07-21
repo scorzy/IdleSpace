@@ -5,6 +5,9 @@
       </clr-icon>
       {{ design.name }} -
       {{ design.type.name }}
+      <span *ngIf="design.class">
+        {{ design.class.name }}
+      </span>
     </h1>
     <div *ngIf="design.editable">
       <clr-alert

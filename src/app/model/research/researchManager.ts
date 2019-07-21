@@ -27,6 +27,7 @@ export class ResearchManager {
   telescope: Research;
   scavenger: Research;
   missile: Research;
+  classes: Research;
   //#region Ship Types
   corvette: Research;
   frigate: Research;
@@ -63,6 +64,7 @@ export class ResearchManager {
     this.titan = this.researches.find(r => r.id === "n");
     this.titan.ratio = 1e3;
     this.missile = this.researches.find(r => r.id === "i");
+    this.classes = this.researches.find(r => r.id === "cla");
 
     const resMan = ResourceManager.getInstance();
     resMan.energyX1.productionMultiplier.additiveBonus.push(

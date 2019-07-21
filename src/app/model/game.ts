@@ -14,6 +14,7 @@ import { AutomatorManager } from "./automators/automatorManager";
 import { ShipDesign } from "./fleet/shipDesign";
 import { Preset } from "./enemy/preset";
 import { SkillEffect } from "./prestige/skillEffects";
+import { Classes } from "./fleet/class";
 
 export const ZERO_DECIMAL_IMMUTABLE = new Decimal(0);
 
@@ -256,6 +257,9 @@ export class Game {
       : SkillEffect.availableSkill.quantity.plus(toAdd);
 
     this.automatorManager.resetTimers();
+    Classes.forEach(c => {
+      c.unlocked = false;
+    });
   }
   ascend() {
     if (!this.prestigeManager.canAscend()) return false;

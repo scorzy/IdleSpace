@@ -41,6 +41,8 @@ export interface IModuleData {
   shape?: string;
   explosionChance?: number;
   start?: boolean;
+  armorReduction?: DecimalSource;
+  shieldReduction?: DecimalSource;
 }
 export class Module extends AbstractUnlockable {
   research: Research;
@@ -59,6 +61,8 @@ export class Module extends AbstractUnlockable {
     public shieldPercent = 0,
     public shield: Decimal = new Decimal(0),
     public armor: Decimal = new Decimal(0),
+    public shieldReduction: Decimal = new Decimal(0),
+    public armorReduction: Decimal = new Decimal(0),
     public explosionChance = 0,
     public start = false
   ) {
@@ -75,6 +79,12 @@ export class Module extends AbstractUnlockable {
     if (data.damage) ret.damage = new Decimal(data.damage);
     if (data.shield) ret.shield = new Decimal(data.shield);
     if (data.armor) ret.armor = new Decimal(data.armor);
+    if (data.shieldReduction) {
+      ret.shieldReduction = new Decimal(data.shieldReduction);
+    }
+    if (data.armorReduction) {
+      ret.armorReduction = new Decimal(data.armorReduction);
+    }
     if (data.armorPercent) ret.armorPercent = data.armorPercent;
     if (data.shieldPercent) ret.shieldPercent = data.shieldPercent;
     if (data.nextToUnlock) ret.nextToUnlock = data.nextToUnlock;

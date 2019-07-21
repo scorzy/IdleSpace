@@ -10,6 +10,7 @@ import { OptionsService } from "src/app/options.service";
 import { IResource } from "../base/iResource";
 import { Module } from "../fleet/module";
 import { ShipType } from "../fleet/shipTypes";
+import { Classes, ShipClass } from "../fleet/class";
 
 export class Research extends AbstractUnlockable
   implements IHasQuantity, IResource, IJob {
@@ -34,6 +35,7 @@ export class Research extends AbstractUnlockable
   module: Module;
   ship: ShipType;
   bonus: Array<[string, string]>;
+  classes: ShipClass[];
 
   progressPercent = 0;
   done = false;
@@ -52,6 +54,14 @@ export class Research extends AbstractUnlockable
     if (data.limit) ret.limit = new Decimal(data.limit);
     if (data.ship) ret.ship = data.ship;
     if (data.bonus) ret.bonus = data.bonus;
+    if (data.classesToUnlock) {
+      ret.classes = data.classesToUnlock.map(c =>
+        Classes.find(cl => cl.id === c)
+      );
+      ret.classes.forEach(cla => {
+        ret.toUnlock.push(cla);
+      });
+    }
     return ret;
   }
 
@@ -157,6 +167,13 @@ export class Research extends AbstractUnlockable
 
     this.firstDone = this.quantity.gte(1);
     this.reloadNum();
+
+    if (this.unlocked && this.classes) {
+      this.classes.forEach(c => {
+        c.unlocked = true;
+      });
+    }
+
     return true;
   }
   //#endregion

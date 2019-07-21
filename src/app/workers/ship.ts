@@ -11,6 +11,10 @@ class Ship {
     shieldPercent: number
     armorPercent: number
   }>();
+  class = "";
+  isDefense = false;
+  armorReduction: Decimal = new Decimal();
+  shieldReduction: Decimal = new Decimal();
 
   getCopy(): Ship {
     const ret = Ship.Ships.pop() || new Ship();
@@ -22,6 +26,10 @@ class Ship {
     ret.originalShield = this.originalShield;
     ret.modules = this.modules;
     ret.explosionLevel = this.explosionLevel;
+    ret.armorReduction = this.armorReduction;
+    ret.shieldReduction = this.shieldReduction;
+
+    ret.class = this.class;
 
     return ret;
   }

@@ -57,8 +57,20 @@
               {{ tp.name }}
             </option>
           </select>
-          <!-- <clr-control-helper>Helper text</clr-control-helper> -->
           <clr-control-error>This field is required!</clr-control-error>
+        </clr-select-container>
+
+        <clr-select-container *ngIf="unlockedClasses.length > 0">
+          <label>Class</label>
+          <select clrSelect name="shipClass" [(ngModel)]="class">
+            <option ngValue="''"> </option>
+            <option
+              *ngFor="let tp of unlockedClasses; trackBy: typeId"
+              [ngValue]="tp.id"
+            >
+              {{ tp.name }}
+            </option>
+          </select>
         </clr-select-container>
       </form>
       <button

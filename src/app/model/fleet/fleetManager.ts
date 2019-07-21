@@ -12,6 +12,7 @@ import { ResearchManager } from "../research/researchManager";
 import { AllSkillEffects } from "../prestige/allSkillEffects";
 import sample from "lodash-es/sample";
 import { MainService } from "src/app/main.service";
+import { ShipClass } from "./class";
 
 export const MAX_NAVAL_CAPACITY = 1e4;
 export const MAX_DESIGN = 20;
@@ -100,8 +101,9 @@ export class FleetManager implements ISalvable {
     );
     this.reloadSliders();
   }
-  addDesign(name: string, type: ShipType): ShipDesign {
+  addDesign(name: string, type: ShipType, shipClass: ShipClass): ShipDesign {
     const design = new ShipDesign();
+    design.class = shipClass;
 
     design.id =
       "" +
