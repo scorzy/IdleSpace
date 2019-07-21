@@ -96,14 +96,27 @@
                     [(ngModel)]="w.moduleId"
                     (ngModelChange)="reload()"
                   >
-                    <option
-                      *ngFor="
-                        let wt of ms.game.fleetManager.unlockedModules;
-                        trackBy: getModuleId
-                      "
-                      [ngValue]="wt.id"
-                      >{{ wt.name }}</option
-                    >
+                    <optgroup label="Weapons" *ngIf="weapons.length > 0">
+                      <option
+                        *ngFor="let wt of weapons; trackBy: getModuleId"
+                        [ngValue]="wt.id"
+                        >{{ wt.name }}</option
+                      >
+                    </optgroup>
+                    <optgroup label="Defenses" *ngIf="defenses.length > 0">
+                      <option
+                        *ngFor="let wt of defenses; trackBy: getModuleId"
+                        [ngValue]="wt.id"
+                        >{{ wt.name }}</option
+                      >
+                    </optgroup>
+                    <optgroup label="Generators" *ngIf="generators.length > 0">
+                      <option
+                        *ngFor="let wt of generators; trackBy: getModuleId"
+                        [ngValue]="wt.id"
+                        >{{ wt.name }}</option
+                      >
+                    </optgroup>
                   </select>
                 </div>
               </td>

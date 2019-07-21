@@ -32,13 +32,14 @@
 ::-webkit-scrollbar-track:active {
   background: rgb(15, 23, 28);
 }
-select option {
-  background: #1b2a32 !important;
-  color: #e9ecef !important;
-}
 
 select {
   color: #e9ecef !important;
+  option,
+  optgroup {
+    background: #1b2a32 !important;
+    color: #e9ecef !important;
+  }
 }
 
 .ui-widget-content {

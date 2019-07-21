@@ -35,6 +35,10 @@ export class EditorComponent
   titanSizes = [];
   shipNum = 1;
 
+  weapons: Module[] = [];
+  defenses: Module[] = [];
+  generators: Module[] = [];
+
   constructor(
     public ms: MainService,
     private cd: ChangeDetectorRef,
@@ -61,6 +65,16 @@ export class EditorComponent
     if (this.design.modules.length === 0) {
       this.edit();
     }
+
+    this.weapons = this.ms.game.fleetManager.unlockedModules.filter(m =>
+      m.damage.gt(0)
+    );
+    this.defenses = this.ms.game.fleetManager.unlockedModules.filter(
+      m => m.armor.gt(0) || m.shield.gt(0)
+    );
+    this.generators = this.ms.game.fleetManager.unlockedModules.filter(m =>
+      m.energyBalance.gt(0)
+    );
 
     this.subscriptions.push(
       this.ms.em.updateEmitter.subscribe(() => {
