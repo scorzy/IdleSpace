@@ -38,6 +38,7 @@ export class EditorComponent
   weapons: Module[] = [];
   defenses: Module[] = [];
   generators: Module[] = [];
+  damageReduction: Module[] = [];
 
   constructor(
     public ms: MainService,
@@ -74,6 +75,9 @@ export class EditorComponent
     );
     this.generators = this.ms.game.fleetManager.unlockedModules.filter(m =>
       m.energyBalance.gt(0)
+    );
+    this.damageReduction = this.ms.game.fleetManager.unlockedModules.filter(
+      m => m.armorReduction.gt(0) || m.shieldReduction.gt(0)
     );
 
     this.subscriptions.push(

@@ -61,6 +61,54 @@
     </tr>
 
     <tr>
+      <td class="left">Armor Damage Reduction</td>
+      <td>
+        <app-formatted-quantity
+          [quantity]="design.totalArmorReduction"
+        ></app-formatted-quantity>
+      </td>
+      <td
+        *ngIf="showDifference"
+        [ngClass]="{
+          'text-success': design.editable.totalArmorReduction.gt(
+            design.totalArmorReduction
+          ),
+          'text-danger': design.editable.totalArmorReduction.lt(
+            design.totalArmorReduction
+          )
+        }"
+      >
+        <app-formatted-quantity
+          [quantity]="design.editable.totalArmorReduction"
+        ></app-formatted-quantity>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="left">Shield Damage Reduction</td>
+      <td>
+        <app-formatted-quantity
+          [quantity]="design.totalShieldReduction"
+        ></app-formatted-quantity>
+      </td>
+      <td
+        *ngIf="showDifference"
+        [ngClass]="{
+          'text-success': design.editable.totalShieldReduction.gt(
+            design.totalShieldReduction
+          ),
+          'text-danger': design.editable.totalShieldReduction.lt(
+            design.totalShieldReduction
+          )
+        }"
+      >
+        <app-formatted-quantity
+          [quantity]="design.editable.totalShieldReduction"
+        ></app-formatted-quantity>
+      </td>
+    </tr>
+
+    <tr>
       <td class="left">Total Energy</td>
       <td>
         <app-formatted-quantity

@@ -28,6 +28,9 @@ export class ResearchManager {
   scavenger: Research;
   missile: Research;
   classes: Research;
+  defender: Research;
+  deflector: Research;
+  jammer: Research;
   //#region Ship Types
   corvette: Research;
   frigate: Research;
@@ -65,6 +68,7 @@ export class ResearchManager {
     this.titan.ratio = 1e3;
     this.missile = this.researches.find(r => r.id === "i");
     this.classes = this.researches.find(r => r.id === "cla");
+    this.defender = this.researches.find(r => r.id === "cl3");
 
     const resMan = ResourceManager.getInstance();
     resMan.energyX1.productionMultiplier.additiveBonus.push(
@@ -144,6 +148,7 @@ export class ResearchManager {
    * Generate researches for ship modules
    */
   addOtherResearches() {
+    console.log("addOtherResearches");
     //  Create researches for modules
     let moduleResearches = new Array<Research>();
     FleetManager.getInstance().allModules.forEach(m => {
@@ -176,6 +181,14 @@ export class ResearchManager {
             );
           });
       });
+
+    //  Add damage reduction researches to defender class
+    this.deflector = this.researches.find(r => r.id === "f-R");
+    this.jammer = this.researches.find(r => r.id === "j-R");
+    this.defender.toUnlock.push(this.deflector, this.jammer);
+    moduleResearches = moduleResearches.filter(
+      r => r !== this.deflector && r !== this.jammer
+    );
 
     //  Add other modules to corvette research
     this.corvette.toUnlock = this.corvette.toUnlock.concat(moduleResearches);

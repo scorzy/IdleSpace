@@ -131,5 +131,25 @@ export const ModulesData: IModuleData[] = [
     shield: BASE_ARMOR,
     researchPrice: 2e3,
     shape: "shield"
+  },
+  {
+    id: "f",
+    name: "Deflector",
+    sizes: ALL_SIZES,
+    energyBalance: -1,
+    alloyPrice: 40,
+    armorReduction: BASE_ARMOR / 4,
+    researchPrice: 2e3,
+    shape: "shieldRed"
+  },
+  {
+    id: "j",
+    name: "Jammer",
+    sizes: ALL_SIZES,
+    energyBalance: -1,
+    alloyPrice: 40,
+    shieldReduction: BASE_ARMOR / 4,
+    researchPrice: 2e3,
+    shape: "armorRed"
   }
 ];

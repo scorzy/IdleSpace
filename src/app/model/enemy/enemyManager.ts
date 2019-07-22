@@ -544,16 +544,6 @@ export class EnemyManager implements ISalvable {
     if (this.mergeLevel !== 0) data.mer = this.mergeLevel;
     if (this.currentMerge !== 0) data.cumer = this.currentMerge;
 
-    for (let n = 0; n <= this.currentMerge; n++) {
-      const mergedZone = this.currentEnemy.zones[
-        this.currentEnemy.currentZone.number + n
-      ];
-      if (mergedZone) {
-        mergedZone.mergedOrigin = this.currentEnemy.currentZone;
-        mergedZone.reload();
-      }
-    }
-
     return data;
   }
   load(data: any): boolean {
@@ -599,6 +589,18 @@ export class EnemyManager implements ISalvable {
     if ("ra" in data) this.randomized = data.ra;
     if ("mer" in data) this.mergeLevel = data.mer;
     if ("cumer" in data) this.currentMerge = data.cumer;
+
+    if (this.currentEnemy) {
+      for (let n = 0; n <= this.currentMerge; n++) {
+        const mergedZone = this.currentEnemy.zones[
+          this.currentEnemy.currentZone.number + n
+        ];
+        if (mergedZone) {
+          mergedZone.mergedOrigin = this.currentEnemy.currentZone;
+          mergedZone.reload();
+        }
+      }
+    }
 
     return true;
   }
