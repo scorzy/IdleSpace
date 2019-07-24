@@ -11,6 +11,7 @@ export class ShipData {
   totalShield: Decimal;
   armorReduction: Decimal;
   shieldReduction: Decimal;
+  shieldCharger: Decimal;
   modules: IWeapon[];
   explosionLevel = 30;
   isDefense = false;

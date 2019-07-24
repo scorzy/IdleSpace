@@ -15,6 +15,7 @@ class Ship {
   isDefense = false;
   armorReduction: Decimal = new Decimal();
   shieldReduction: Decimal = new Decimal();
+  shieldCharger: Decimal = new Decimal();
 
   getCopy(): Ship {
     const ret = Ship.Ships.pop() || new Ship();
@@ -28,6 +29,7 @@ class Ship {
     ret.explosionLevel = this.explosionLevel;
     ret.armorReduction = this.armorReduction;
     ret.shieldReduction = this.shieldReduction;
+    ret.shieldCharger = this.shieldCharger;
 
     ret.class = this.class;
 

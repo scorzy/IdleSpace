@@ -151,5 +151,15 @@ export const ModulesData: IModuleData[] = [
     shieldReduction: BASE_ARMOR / 4,
     researchPrice: 2e3,
     shape: "armorRed"
+  },
+  {
+    id: "c",
+    name: "Shield charger",
+    sizes: ALL_SIZES,
+    energyBalance: -1,
+    alloyPrice: 40,
+    shieldCharge: BASE_ARMOR * 1.5,
+    researchPrice: 2e3,
+    shape: "armorRed"
   }
 ];

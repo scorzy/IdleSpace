@@ -56,8 +56,9 @@ export class BattleService {
         ship.shield.fromDecimal(ds.totalShield);
         ship.originalShield = new Decimal(ship.shield);
         ship.explosionLevel = ds.explosionLevel / 100;
-        ship.armorReduction = new Decimal(ds.armorReduction);
-        ship.shieldReduction = new Decimal(ds.shieldReduction);
+        ship.armorReduction.fromDecimal(ds.armorReduction);
+        ship.shieldReduction.fromDecimal(ds.shieldReduction);
+        ship.shieldCharger.fromDecimal(ds.shieldCharger);
         ds.modules.forEach(dl => {
           if (Decimal.fromDecimal(dl.computedDamage).gt(0)) {
             ship.modules.push({
@@ -210,6 +211,31 @@ export class BattleService {
         }
         battleFleets[num] = aliveShips;
       }
+
+      //  Recharge shields
+      for (let num = 0; num < 2; num++) {
+        const ships = battleFleets[num];
+        let totalCharge = ships
+          .map(s => s.shieldCharger)
+          .reduce((p, c) => p.plus(c), new Decimal(0));
+        const sorted = ships
+          .filter(s => s.shield.gt(0))
+          .sort((a, b) =>
+            a.shield.div(a.originalShield).cmp(b.shield.div(b.originalShield))
+          );
+        // console.log("total charge: " + totalCharge.toNumber());
+        if (totalCharge.gt(0)) {
+          sorted.forEach(ship => {
+            const missing = ship.originalShield
+              .minus(ship.shield)
+              .min(totalCharge);
+            ship.shield = ship.shield.plus(missing);
+            totalCharge = totalCharge.minus(missing);
+            // console.log("charged: " + missing.toNumber());
+          });
+        }
+      }
+
       [playerShips, enemyShip] = battleFleets; // Update ships variable to new array
 
       //  Regenerate shields

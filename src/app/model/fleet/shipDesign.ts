@@ -36,6 +36,7 @@ export class ShipDesign implements ISalvable, IBuyable {
   price = new Decimal();
   totalFleetPower = new Decimal();
   explosionChance = 30;
+  totalShieldCharger = new Decimal();
 
   editable: ShipDesign;
   original: ShipDesign;
@@ -130,6 +131,7 @@ export class ShipDesign implements ISalvable, IBuyable {
     this.armorDamage = new Decimal(0);
     this.shieldDamage = new Decimal(0);
     this.totalFleetPower = new Decimal(0);
+    this.totalShieldCharger = new Decimal(0);
     this.totalArmor = new Decimal(this.type ? this.type.health : 0);
     this.totalArmorReduction = new Decimal(0);
     this.totalShieldReduction = new Decimal(0);
@@ -172,6 +174,9 @@ export class ShipDesign implements ISalvable, IBuyable {
         );
         this.totalShieldReduction = this.totalShieldReduction.plus(
           w.module.shieldReduction.times(bonus).times(sizeFactor)
+        );
+        this.totalShieldCharger = this.totalShieldCharger.plus(
+          w.module.shieldCharge.times(bonus).times(sizeFactor)
         );
 
         if (w.module.armorPercent > 0) {
@@ -387,6 +392,7 @@ export class ShipDesign implements ISalvable, IBuyable {
     shipData.explosionLevel = this.explosionChance;
     shipData.armorReduction = this.totalArmorReduction;
     shipData.shieldReduction = this.totalShieldReduction;
+    shipData.shieldCharger = this.totalShieldCharger;
     shipData.modules = new Array<{
       computedDamage: Decimal
       shieldPercent: number

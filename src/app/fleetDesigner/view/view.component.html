@@ -147,6 +147,30 @@
     </tr>
 
     <tr>
+      <td class="left">Shield Charger</td>
+      <td>
+        <app-formatted-quantity
+          [quantity]="design.totalShieldCharger"
+        ></app-formatted-quantity>
+      </td>
+      <td
+        *ngIf="showDifference"
+        [ngClass]="{
+          'text-success': design.editable.totalShieldCharger.gt(
+            design.totalShieldCharger
+          ),
+          'text-danger': design.editable.totalShieldCharger.lt(
+            design.totalShieldCharger
+          )
+        }"
+      >
+        <app-formatted-quantity
+          [quantity]="design.editable.totalShieldCharger"
+        ></app-formatted-quantity>
+      </td>
+    </tr>
+
+    <tr>
       <td class="left">Armor Damage</td>
       <td>
         <app-formatted-quantity

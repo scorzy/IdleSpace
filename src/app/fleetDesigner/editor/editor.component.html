@@ -135,6 +135,13 @@
                         >{{ wt.name }}</option
                       >
                     </optgroup>
+                    <optgroup label=" - Others - " *ngIf="other.length > 0">
+                      <option
+                        *ngFor="let wt of other; trackBy: getModuleId"
+                        [ngValue]="wt.id"
+                        >{{ wt.name }}</option
+                      >
+                    </optgroup>
                   </select>
                 </div>
               </td>
