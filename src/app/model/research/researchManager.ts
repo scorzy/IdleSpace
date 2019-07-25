@@ -249,6 +249,7 @@ export class ResearchManager {
         const research = this.researches.find(u => u.id === res.i);
         if (research) {
           research.load(res);
+          research.unlocked = true;
           this.toDo.push(research);
         }
       }
@@ -259,6 +260,7 @@ export class ResearchManager {
         const research = this.researches.find(u => u.id === res.i);
         if (research) {
           research.load(res);
+          research.unlocked = true;
           this.backLog.push(research);
         }
       }
@@ -269,6 +271,7 @@ export class ResearchManager {
         const research = this.researches.find(u => u.id === res.i);
         if (research) {
           research.load(res);
+          research.unlocked = true;
           if (research.quantity.gte(research.limit)) {
             research.done = true;
             this.completed.push(research);

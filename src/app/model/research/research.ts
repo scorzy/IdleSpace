@@ -156,6 +156,7 @@ export class Research extends AbstractUnlockable
   //#region Save and Load
   getSave(): any {
     const save = super.getSave();
+    delete save.u;
     if (this.progress.gt(0)) save.p = this.progress;
     if (this.quantity.gt(0)) save.q = this.quantity;
     return save;
@@ -168,7 +169,7 @@ export class Research extends AbstractUnlockable
     this.firstDone = this.quantity.gte(1);
     this.reloadNum();
 
-    if (this.unlocked && this.classes) {
+    if (this.firstDone && this.classes) {
       this.classes.forEach(c => {
         c.unlocked = true;
       });
