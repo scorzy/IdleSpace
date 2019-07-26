@@ -14,6 +14,7 @@ import { Job } from "../shipyard/job";
 import { Shipyard } from "../shipyard/shipyard";
 import { SliderOptions } from "../utility/sliderOptions";
 import { ShipClass, Classes } from "./class";
+import { MyFromDecimal } from "../utility/myUtility";
 
 export const SIZE_MULTI = 0.25;
 
@@ -258,7 +259,7 @@ export class ShipDesign implements ISalvable, IBuyable {
   }
   load(data: any, isPlayer = true): boolean {
     this.id = data.i;
-    if ("q" in data) this.shipQuantity = Decimal.fromDecimal(data.q);
+    if ("q" in data) this.shipQuantity = MyFromDecimal(data.q);
     this.type = ShipTypes.find(t => t.id === data.t);
 
     if (this.type === null || this.type === undefined) {
@@ -286,10 +287,10 @@ export class ShipDesign implements ISalvable, IBuyable {
       }
     }
     if ("q" in data) {
-      this.quantity = Decimal.fromDecimal(data.q);
+      this.quantity = MyFromDecimal(data.q);
     }
     if ("w" in data) {
-      this.wantQuantity = Decimal.fromDecimal(data.w);
+      this.wantQuantity = MyFromDecimal(data.w);
     }
     if ("cl" in data) this.class = Classes.find(c => c.id === data.cl);
     if ("def" in data) this.isDefense = data.def;

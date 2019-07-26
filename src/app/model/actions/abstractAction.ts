@@ -3,6 +3,7 @@ import { AbstractUnlockable } from "../base/AbstractUnlockable";
 import { Research } from "../research/research";
 import { IHasQuantity } from "../base/IHasQuantity";
 import { ISpendable } from "../base/ISpendable";
+import { MyFromDecimal } from "../utility/myUtility";
 
 export class Action extends AbstractUnlockable
   implements IHasQuantity, ISpendable {
@@ -63,7 +64,7 @@ export class Action extends AbstractUnlockable
   }
   load(data: any): boolean {
     if (super.load(data)) {
-      if ("q" in data) this.quantity = Decimal.fromDecimal(data.q);
+      if ("q" in data) this.quantity = MyFromDecimal(data.q);
       return true;
     }
     return false;

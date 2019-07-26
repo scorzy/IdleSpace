@@ -11,6 +11,7 @@ import { IResource } from "../base/iResource";
 import { Module } from "../fleet/module";
 import { ShipType } from "../fleet/shipTypes";
 import { Classes, ShipClass } from "../fleet/class";
+import { MyFromDecimal } from "../utility/myUtility";
 
 export class Research extends AbstractUnlockable
   implements IHasQuantity, IResource, IJob {
@@ -163,8 +164,8 @@ export class Research extends AbstractUnlockable
   }
   load(data: any): boolean {
     if (!super.load(data)) return false;
-    if ("p" in data) this.progress = Decimal.fromDecimal(data.p);
-    if ("q" in data) this.quantity = Decimal.fromDecimal(data.q);
+    if ("p" in data) this.progress = MyFromDecimal(data.p);
+    if ("q" in data) this.quantity = MyFromDecimal(data.q);
 
     this.firstDone = this.quantity.gte(1);
     this.reloadNum();

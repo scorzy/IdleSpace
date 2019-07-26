@@ -4,6 +4,7 @@ import { IJob } from "../base/IJob";
 import { Shipyard } from "./shipyard";
 import { MainService } from "src/app/main.service";
 import { ResourceManager } from "../resource/resourceManager";
+import { MyFromDecimal } from "../utility/myUtility";
 
 export class Job implements IJob {
   private static lastId = 1;
@@ -30,13 +31,13 @@ export class Job implements IJob {
   }
   static FromData(data: any): Job {
     const job = new Job();
-    if ("p" in data) job.progress = Decimal.fromDecimal(data.p);
-    if ("t" in data) job.total = Decimal.fromDecimal(data.t);
+    if ("p" in data) job.progress = MyFromDecimal(data.p);
+    if ("t" in data) job.total = MyFromDecimal(data.t);
     if ("d" in data) {
       const design = FleetManager.getInstance().ships.find(s => s.id === data.d);
       if (design) job.design = design;
     }
-    if ("q" in data) job.quantity = Decimal.fromDecimal(data.q);
+    if ("q" in data) job.quantity = MyFromDecimal(data.q);
     if ("n" in data) {
       const design = FleetManager.getInstance().ships.find(s => s.id === data.n);
       if (design) job.newDesign = design;

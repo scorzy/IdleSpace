@@ -21,6 +21,7 @@ import { ZERO_DECIMAL_IMMUTABLE } from "../game";
 import { Bonus } from "../bonus/bonus";
 import { AutomatorManager } from "../automators/automatorManager";
 import { ShipDesign } from "../fleet/shipDesign";
+import { MyFromDecimal } from "../utility/myUtility";
 
 export const MAX_ENEMY_LIST_SIZE = 10;
 const DARK_MATTER_START_LEVEL = 2;
@@ -163,7 +164,7 @@ export class EnemyManager implements ISalvable {
     result.enemyLost.forEach(e => {
       const ship = this.currentEnemy.currentZone.ships.find(s => s.id === e[0]);
       if (ship) {
-        ship.quantity = ship.quantity.minus(Decimal.fromDecimal(e[1]));
+        ship.quantity = ship.quantity.minus(MyFromDecimal(e[1]));
         if (ship.quantity.lt(1)) {
           this.currentEnemy.currentZone.ships = this.currentEnemy.currentZone.ships.filter(
             s => s !== ship
@@ -173,7 +174,7 @@ export class EnemyManager implements ISalvable {
     });
     result.playerLost.forEach(e => {
       const ship = FleetManager.getInstance().ships.find(s => s.id === e[0]);
-      ship.quantity = ship.quantity.minus(Decimal.fromDecimal(e[1]));
+      ship.quantity = ship.quantity.minus(MyFromDecimal(e[1]));
       ship.quantity = ship.quantity.max(0);
     });
     this.currentEnemy.currentZone.reload();

@@ -1,6 +1,7 @@
 import { IJob } from "../base/IJob";
 import { EnemyManager } from "./enemyManager";
 import { ResourceManager } from "../resource/resourceManager";
+import { MyFromDecimal } from "../utility/myUtility";
 
 export class SearchJob implements IJob {
   private static lastId = 0;
@@ -30,8 +31,8 @@ export class SearchJob implements IJob {
 
   static FromData(data: any): SearchJob {
     const job = new SearchJob();
-    if ("p" in data) job.progress = Decimal.fromDecimal(data.p);
-    if ("t" in data) job.total = Decimal.fromDecimal(data.t);
+    if ("p" in data) job.progress = MyFromDecimal(data.p);
+    if ("t" in data) job.total = MyFromDecimal(data.t);
     if ("l" in data) job.level = data.l;
 
     if ("mm" in data) job.moreMetal = data.mm;

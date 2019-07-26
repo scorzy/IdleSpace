@@ -3,6 +3,7 @@ import { ISalvable } from "../base/ISalvable";
 import { Enemy } from "./enemy";
 import { Reward } from "./reward";
 import { ResourceManager } from "../resource/resourceManager";
+import { MyFromDecimal } from "../utility/myUtility";
 
 const TO_DO_COLOR = [245, 79, 71];
 const DONE_COLOR = [96, 181, 21];
@@ -86,7 +87,7 @@ export class Zone implements ISalvable {
         this.ships.push(ship);
       }
     }
-    if ("n" in data) this.originalNavCap = Decimal.fromDecimal(data.n);
+    if ("n" in data) this.originalNavCap = MyFromDecimal(data.n);
     if ("w" in data) this.reward = data.w;
     this.reload();
     return true;

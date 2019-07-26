@@ -55,7 +55,7 @@
     "@webcomponents/custom-elements": "^1.2.4",
     "angular-cli-ghpages": "^0.5.3",
     "ant-utils": "^1.2.0",
-    "break_infinity.js": "^1.0.5",
+    "break_infinity.js": "^1.0.8",
     "classlist.js": "^1.1.20150312",
     "core-js": "^2.6.5",
     "date-fns": "^1.30.1",

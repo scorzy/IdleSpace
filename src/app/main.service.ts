@@ -224,7 +224,9 @@ export class MainService {
   }
 
   export() {
-    this.zipWorker.postMessage(new CompressRequest(this.getSave(), "", true, 1));
+    this.zipWorker.postMessage(
+      new CompressRequest(JSON.stringify(this.getSave()), "", true, 1)
+    );
   }
   save(auto = false, playfab = false) {
     if (!this.game) return false;
@@ -237,7 +239,7 @@ export class MainService {
     }
 
     this.zipWorker.postMessage(
-      new CompressRequest(this.getSave(), "", true, num)
+      new CompressRequest(JSON.stringify(this.getSave()), "", true, num)
     );
   }
   clear() {
@@ -250,7 +252,7 @@ export class MainService {
     if (input.compress) {
       let save = "";
       try {
-        save = LZString.compressToBase64(JSON.stringify(input.obj));
+        save = LZString.compressToBase64(input.obj);
       } catch (ex) {
         save = "";
       }
