@@ -7,5 +7,5 @@ export function MyFromDecimal(obj: any = {}): Decimal {
   ) {
     return Decimal.fromMantissaExponent(obj.mantissa, obj.exponent);
   }
-  return Decimal.fromDecimal(obj);
+  return new  Decimal(obj);
 }
