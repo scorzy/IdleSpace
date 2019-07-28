@@ -69,7 +69,7 @@ export const ModulesData: IModuleData[] = [
   },
   {
     id: "e",
-    name: "Rail gun",
+    name: "Emp impulse",
     sizes: ALL_SIZES,
     energyBalance: -1,
     alloyPrice: 20,
@@ -77,7 +77,7 @@ export const ModulesData: IModuleData[] = [
     shieldPercent: 210,
     armorPercent: 0,
     researchPrice: 2e3,
-    shape: "railgun"
+    shape: "emp"
   },
   {
     id: "S",

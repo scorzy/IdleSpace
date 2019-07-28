@@ -178,7 +178,7 @@ export const ResearchData: IResearchData[] = [
   {
     id: "cl1",
     name: "Ships Classes",
-    shape: "satellite",
+    shape: "class",
     price: 1e15,
     description: "Unlock ships classes and fighter",
     researchToUnlock: ["cl2", "cl3", "cl4", "cl5"],
@@ -187,7 +187,7 @@ export const ResearchData: IResearchData[] = [
   {
     id: "cl2",
     name: "Bomber",
-    shape: "satellite",
+    shape: "bomber",
     price: 1e16,
     description: "Unlock Bomber",
     classesToUnlock: ["2"]
@@ -195,7 +195,7 @@ export const ResearchData: IResearchData[] = [
   {
     id: "cl3",
     name: "Defender",
-    shape: "satellite",
+    shape: "defender",
     price: 1e16,
     description: "Unlock Defender",
     classesToUnlock: ["3"]
@@ -203,7 +203,7 @@ export const ResearchData: IResearchData[] = [
   {
     id: "cl4",
     name: "Technician",
-    shape: "satellite",
+    shape: "scout",
     price: 1e16,
     description: "Unlock Technician",
     classesToUnlock: ["4"]
@@ -211,7 +211,7 @@ export const ResearchData: IResearchData[] = [
   {
     id: "cl5",
     name: "Supply",
-    shape: "satellite",
+    shape: "ufo",
     price: 1e16,
     description: "Unlock Supply",
     classesToUnlock: ["5"]
