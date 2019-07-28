@@ -273,8 +273,9 @@ export class BattleService {
 
       arr[0].forEach(fl => {
         const alive = fleetCount[fl.id];
-        if (MyFromDecimal(fl.quantity).gt(alive)) {
-          arr[2].push([fl.id, MyFromDecimal(fl.quantity).minus(alive)]);
+        const qta = MyFromDecimal(fl.quantity);
+        if (qta.gt(alive)) {
+          arr[2].push([fl.id, qta.minus(alive)]);
         }
       });
     });
