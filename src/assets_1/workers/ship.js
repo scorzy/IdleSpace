@@ -1,24 +1,16 @@
-class Ship {
-  private static Ships = new Array<Ship>();
-  id: string;
-  armor: Decimal = new Decimal();
-  originalArmor: Decimal;
-  explosionLevel: number;
-  shield: Decimal = new Decimal();
-  originalShield: Decimal;
-  modules = new Array<{
-    damage: Decimal
-    shieldPercent: number
-    armorPercent: number
-  }>();
-  class = "";
-  isDefense = false;
-  armorReduction: Decimal = new Decimal();
-  shieldReduction: Decimal = new Decimal();
-  shieldCharger: Decimal = new Decimal();
-
-  getCopy(): Ship {
-    const ret = Ship.Ships.pop() || new Ship();
+var Ship = /** @class */ (function() {
+  function Ship() {
+    this.armor = new Decimal();
+    this.shield = new Decimal();
+    this.modules = new Array();
+    this.class = "";
+    this.isDefense = false;
+    this.armorReduction = new Decimal();
+    this.shieldReduction = new Decimal();
+    this.shieldCharger = new Decimal();
+  }
+  Ship.prototype.getCopy = function() {
+    var ret = Ship.Ships.pop() || new Ship();
     ret.id = this.id;
     ret.armor = MyFromDecimal(this.armor);
     ret.shield = MyFromDecimal(this.shield);
@@ -30,19 +22,20 @@ class Ship {
     ret.armorReduction = this.armorReduction;
     ret.shieldReduction = this.shieldReduction;
     ret.shieldCharger = this.shieldCharger;
-
     ret.class = this.class;
-
     return ret;
-  }
-
-  free(): void {
+  };
+  Ship.prototype.free = function() {
     // Reuse object to prevent gc
     Ship.Ships.push(this);
+  };
+  Ship.Ships = new Array();
+  return Ship;
+})();
+function MyFromDecimal(obj) {
+  if (obj === void 0) {
+    obj = {};
   }
-}
-
-function MyFromDecimal(obj: any = {}): Decimal {
   if (
     typeof obj === "object" &&
     obj !== null &&

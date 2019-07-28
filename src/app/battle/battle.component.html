@@ -32,8 +32,9 @@
         <button
           class="btn btn-success"
           (click)="startBattle()"
-          [disabled]="ms.game.enemyManager.inBattle"
-          [disabled]="!ms.game.fleetManager.fightEnabled"
+          [disabled]="
+            ms.game.enemyManager.inBattle || !ms.game.fleetManager.fightEnabled
+          "
         >
           <clr-icon shape="ship"></clr-icon>
           Fight

@@ -266,6 +266,7 @@ export class EnemyManager implements ISalvable {
     //#endregion
 
     this.inBattle = false;
+    FleetManager.getInstance().setFight();
   }
   /**
    * Reward player for winning a battle

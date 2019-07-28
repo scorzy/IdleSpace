@@ -5,6 +5,7 @@ import { EnemyManager } from "./model/enemy/enemyManager";
 import { BattleRequest, ShipData } from "./workers/battleRequest";
 import { Emitters } from "./emitters";
 import { Enemy } from "./model/enemy/enemy";
+declare let MyFromDecimal: (arg: any) => Decimal;
 
 @Injectable({
   providedIn: "root"
@@ -24,8 +25,10 @@ export class BattleService {
       onError: error => {},
       importScripts: [
         url + "break_infinity.min.js",
-        url + "assets/ship.js",
-        url + "assets/battleResult.js"
+        url + "assets/is.js"
+        // url + "assets/ship.js",
+        // url + "assets/battleResult.js",
+        // url + "assets/myUtility.js"
       ]
     });
   }
@@ -33,7 +36,7 @@ export class BattleService {
     return BattleService.instance;
   }
   doBattle(input: BattleRequest, cb: (_: BattleResult) => void): void {
-    // console.log(input);
+    console.log(input);
     const initial = Date.now();
     let playerShips = new Array<Ship>();
     let enemyShip = new Array<Ship>();
@@ -51,24 +54,24 @@ export class BattleService {
         ship.id = ds.id;
         ship.class = ds.class;
         ship.isDefense = ds.isDefense;
-        ship.armor.fromDecimal(ds.totalArmor);
-        ship.originalArmor = new Decimal(ship.armor);
-        ship.shield.fromDecimal(ds.totalShield);
-        ship.originalShield = new Decimal(ship.shield);
+        ship.armor = MyFromDecimal(ds.totalArmor);
+        ship.originalArmor = MyFromDecimal(ship.armor);
+        ship.shield = MyFromDecimal(ds.totalShield);
+        ship.originalShield = MyFromDecimal(ship.shield);
         ship.explosionLevel = ds.explosionLevel / 100;
-        ship.armorReduction.fromDecimal(ds.armorReduction);
-        ship.shieldReduction.fromDecimal(ds.shieldReduction);
-        ship.shieldCharger.fromDecimal(ds.shieldCharger);
+        ship.armorReduction = MyFromDecimal(ds.armorReduction);
+        ship.shieldReduction = MyFromDecimal(ds.shieldReduction);
+        ship.shieldCharger = MyFromDecimal(ds.shieldCharger);
         ds.modules.forEach(dl => {
-          if (Decimal.fromDecimal(dl.computedDamage).gt(0)) {
+          if (MyFromDecimal(dl.computedDamage).gt(0)) {
             ship.modules.push({
-              damage: Decimal.fromDecimal(dl.computedDamage),
+              damage: MyFromDecimal(dl.computedDamage),
               shieldPercent: dl.shieldPercent,
               armorPercent: dl.armorPercent
             });
           }
         });
-        const qta = Decimal.fromDecimal(ds.quantity).toNumber();
+        const qta = MyFromDecimal(ds.quantity).toNumber();
         for (let num = 0; num < qta; num++) {
           ships.push(ship.getCopy());
         }
@@ -225,14 +228,16 @@ export class BattleService {
           );
         // console.log("total charge: " + totalCharge.toNumber());
         if (totalCharge.gt(0)) {
-          sorted.forEach(ship => {
+          for (const ship of sorted) {
             const missing = ship.originalShield
               .minus(ship.shield)
               .min(totalCharge);
             ship.shield = ship.shield.plus(missing);
             totalCharge = totalCharge.minus(missing);
+            // console.log(totalCharge.toNumber());
+            if (totalCharge.lte(0)) break;
             // console.log("charged: " + missing.toNumber());
-          });
+          }
         }
       }
 
@@ -268,8 +273,8 @@ export class BattleService {
 
       arr[0].forEach(fl => {
         const alive = fleetCount[fl.id];
-        if (Decimal.fromDecimal(fl.quantity).gt(alive)) {
-          arr[2].push([fl.id, Decimal.fromDecimal(fl.quantity).minus(alive)]);
+        if (MyFromDecimal(fl.quantity).gt(alive)) {
+          arr[2].push([fl.id, MyFromDecimal(fl.quantity).minus(alive)]);
         }
       });
     });
