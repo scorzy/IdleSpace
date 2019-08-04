@@ -38,6 +38,7 @@ export class ShipDesign implements ISalvable, IBuyable {
   totalFleetPower = new Decimal();
   explosionChance = 30;
   totalShieldCharger = new Decimal();
+  totalTilePerSec = 1;
 
   editable: ShipDesign;
   original: ShipDesign;
@@ -139,6 +140,7 @@ export class ShipDesign implements ISalvable, IBuyable {
     this.usedModulePoint = 0;
     this.price = new Decimal(this.type.baseCost);
     this.explosionChance = 30;
+    this.totalTilePerSec = 1;
 
     this.modules
       .filter(q => q.isValid())
@@ -190,6 +192,9 @@ export class ShipDesign implements ISalvable, IBuyable {
             w.computedDamage.times(w.module.shieldPercent / 100)
           );
         }
+
+        this.totalTilePerSec =
+          this.totalTilePerSec + w.module.tilePerSec * bonus * sizeFactor;
 
         this.price = this.price.plus(
           w.module.alloyPrice.times(1 + (w.size - 1) * 2).times(multiPrice)

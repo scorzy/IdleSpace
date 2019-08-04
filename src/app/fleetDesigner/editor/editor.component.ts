@@ -40,6 +40,7 @@ export class EditorComponent
   generators: Module[] = [];
   damageReduction: Module[] = [];
   other: Module[] = [];
+  drives: Module[] = [];
 
   constructor(
     public ms: MainService,
@@ -79,6 +80,9 @@ export class EditorComponent
     );
     this.damageReduction = this.ms.game.fleetManager.unlockedModules.filter(
       m => m.armorReduction.gt(0) || m.shieldReduction.gt(0)
+    );
+    this.drives = this.ms.game.fleetManager.unlockedModules.filter(
+      m => m.tilePerSec > 0
     );
 
     if (this.design.class && this.design.class.id === "4") {

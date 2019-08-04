@@ -151,7 +151,7 @@ export class ResearchManager {
    * Generate researches for ship modules
    */
   addOtherResearches() {
-    console.log("addOtherResearches");
+    // console.log("addOtherResearches");
     //  Create researches for modules
     let moduleResearches = new Array<Research>();
     FleetManager.getInstance().allModules.forEach(m => {
@@ -159,11 +159,11 @@ export class ResearchManager {
         id: m.id + "-R",
         name: m.name,
         shape: m.shape,
-        price: 1e4,
+        price: m.researchPrice,
         description: "Unlock " + m.name
       };
       const research = Research.fromData(resData);
-      research.limit = new Decimal(1e4);
+      research.limit = new Decimal(1e6);
       research.toUnlock.push(m);
       m.research = research;
       research.module = m;

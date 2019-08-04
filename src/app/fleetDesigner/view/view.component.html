@@ -209,6 +209,26 @@
     </tr>
 
     <tr>
+      <td class="left">Tile /s</td>
+      <td>
+        <app-formatted-quantity
+          [quantity]="design.totalTilePerSec"
+        ></app-formatted-quantity>
+      </td>
+      <td *ngIf="showDifference">
+        <app-formatted-quantity
+          [quantity]="design.editable.totalTilePerSec"
+          [ngClass]="{
+            'text-success':
+              design.editable.totalTilePerSec > design.totalTilePerSec,
+            'text-danger':
+              design.editable.totalTilePerSec < design.totalTilePerSec
+          }"
+        ></app-formatted-quantity>
+      </td>
+    </tr>
+
+    <tr>
       <td class="left">Price</td>
       <td>
         <app-formatted-quantity

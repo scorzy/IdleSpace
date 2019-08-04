@@ -135,6 +135,13 @@
                         >{{ wt.name }}</option
                       >
                     </optgroup>
+                    <optgroup label=" - Thrusters - " *ngIf="drives.length > 0">
+                      <option
+                        *ngFor="let wt of drives; trackBy: getModuleId"
+                        [ngValue]="wt.id"
+                        >{{ wt.name }}</option
+                      >
+                    </optgroup>
                     <optgroup label=" - Others - " *ngIf="other.length > 0">
                       <option
                         *ngFor="let wt of other; trackBy: getModuleId"
