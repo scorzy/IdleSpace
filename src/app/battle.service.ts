@@ -36,7 +36,7 @@ export class BattleService {
     return BattleService.instance;
   }
   doBattle(input: BattleRequest, cb: (_: BattleResult) => void): void {
-    console.log(input);
+    // console.log(input);
     const initial = Date.now();
     let playerShips = new Array<Ship>();
     let enemyShip = new Array<Ship>();
