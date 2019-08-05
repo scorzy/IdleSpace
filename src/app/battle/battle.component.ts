@@ -32,7 +32,7 @@ export class BattleMenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     let n = 1;
-    this.maxExtraTile = this.ms.game.getMaxExtraTile();
+    this.maxExtraTile = this.ms.game.fleetManager.maxTilePerFight;
     this.ms.game.fleetManager.ships.forEach(s => {
       s.order = n;
       n++;

@@ -46,3 +46,8 @@ Thumbs.db
 ""
 
 src/assets/*
+
+src/assets_1/workers/battleResult.js
+src/assets_1/workers/compressRequest2.js
+src/assets_1/workers/ship.js
+src/assets_1/model/utility/myUtility.js

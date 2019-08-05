@@ -45,6 +45,8 @@ export class FleetManager implements ISalvable {
   autoFightPer = 100;
   isUsed = false;
   totalShipWant = 0;
+  timePerFight = 1;
+  maxTilePerFight = 0;
 
   constructor() {
     FleetManager.instance = this;
@@ -347,6 +349,28 @@ export class FleetManager implements ISalvable {
         );
         this.reloadNavalCapacity();
       }
+    }
+  }
+  /**
+   * Reload max tile /s
+   */
+  reloadFightTime() {
+    this.timePerFight = 1;
+    this.maxTilePerFight = 0;
+    let tilePerSec = this.ships
+      .filter(s => s.quantity.gt(0))
+      .map(s => s.totalTilePerSec)
+      .reduce((p, n) => Math.min(p, n), Number.POSITIVE_INFINITY);
+
+    if (tilePerSec === Number.POSITIVE_INFINITY) return false;
+
+    tilePerSec += AllSkillEffects.FAST_COMBAT.numOwned * 0.15;
+    tilePerSec = tilePerSec * (AllSkillEffects.TILE_MERGE.numOwned * 0.2 + 1);
+    this.timePerFight = Math.floor(Math.max(1 / tilePerSec, 0.2) * 100) / 100;
+    this.maxTilePerFight = Math.floor(tilePerSec / 5);
+    const em = EnemyManager.getInstance();
+    if (em) {
+      em.mergeLevel = Math.min(em.mergeLevel, this.maxTilePerFight);
     }
   }
 }

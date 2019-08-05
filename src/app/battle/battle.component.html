@@ -23,6 +23,12 @@
           [quantity]="totalDistrictGain"
           [integer]="true"
         ></app-formatted-quantity>
+        &nbsp;&nbsp;&nbsp; Fight time:
+        <app-formatted-quantity
+          [quantity]="ms.game.fleetManager.timePerFight"
+          [integer]="false"
+        ></app-formatted-quantity>
+        s
       </span>
 
       <br />
@@ -122,15 +128,24 @@
             </clr-input-container>
           </form>
         </div>
+
         <div class="clr-col-6 clr-col-xl-4" *ngIf="maxExtraTile >= 1">
           <form clrForm clrLayout="compact">
             <clr-input-container>
-              <label class="clr-col-12 clr-col-md-8 clr-col-xl-6"
-                >Extra tile per fight
+              <label class="clr-col-12 clr-col-md-10"
+                >Extra tile / fight
+                <small
+                  >(max:
+                  <app-formatted-quantity
+                    [quantity]="maxExtraTile"
+                    [integer]="true"
+                  ></app-formatted-quantity
+                  >)</small
+                >
               </label>
 
               <input
-                class="clr-col-12 clr-col-md-4"
+                class="clr-col-12 clr-col-md-2"
                 clrInput
                 placeholder="100"
                 name="autoPerc"

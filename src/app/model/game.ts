@@ -197,6 +197,7 @@ export class Game {
     this.resourceManager.loadPolynomial();
     if (this.isPaused) this.resourceManager.loadEndTime();
 
+    this.fleetManager.reloadFightTime();
     this.resourceManager.reloadActions();
     this.resourceManager.unlockedResources.forEach(r => r.setABC());
     this.fleetManager.reloadActions();
@@ -273,9 +274,6 @@ export class Game {
     );
     this.reload();
   }
-  getMaxExtraTile(): number {
-    return Math.min(Math.floor(AllSkillEffects.TILE_MERGE.numOwned), 99);
-  }
 
   //#region Save and Load
   save(): any {
@@ -315,7 +313,7 @@ export class Game {
     //   m.quantity = new Decimal(1e20);
     // });
     // this.prestigeManager.totalPrestige = 10;
-    // this.prestigeManager.ascension = 1;
+    // this.prestigeManager.ascension = 2;
 
     this.fleetManager.upgradingCheck();
     this.resourceManager.limitedResources.forEach(r => r.reloadLimit());
@@ -329,9 +327,10 @@ export class Game {
       h.unlockedAutomators = h.automators.filter(g => g.isUnlocked());
     });
     this.automatorManager.resetTimers();
+    this.fleetManager.reloadFightTime();
     this.enemyManager.mergeLevel = Math.min(
       this.enemyManager.mergeLevel,
-      this.getMaxExtraTile()
+      this.fleetManager.maxTilePerFight
     );
   }
   //#endregion

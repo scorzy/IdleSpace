@@ -211,9 +211,9 @@ export class AllSkillEffects {
     AllSkillEffects.FAST_COMBAT.isLimited = true;
     AllSkillEffects.FAST_COMBAT.getDescription = (num = 1) => {
       return (
-        "- " +
-        MainService.formatPipe.transform(Math.min(0.3 * num, 1)) +
-        "s fight time"
+        "+ " +
+        MainService.formatPipe.transform(Math.min(0.15 * num, 1)) +
+        " tile /s"
       );
     };
     AllSkillEffects.DOUBLE_NAVAL_CAPACITY.getDescription = (num = 1) => {
@@ -268,9 +268,7 @@ export class AllSkillEffects {
     AllSkillEffects.TILE_MERGE.isLimited = true;
     AllSkillEffects.TILE_MERGE.getDescription = (num = 1) => {
       return (
-        "+ " +
-        MainService.formatPipe.transform(num, true) +
-        " extra tile per fight"
+        "+ " + MainService.formatPipe.transform(20 * num, true) + "% tile /s"
       );
     };
     //#endregion

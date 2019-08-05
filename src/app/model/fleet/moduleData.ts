@@ -166,32 +166,32 @@ export const ModulesData: IModuleData[] = [
     id: "W",
     name: "Solar Wing",
     sizes: ALL_SIZES,
-    alloyPrice: 10,
+    alloyPrice: 20,
     nextToUnlock: ["T"],
     researchPrice: 1e4,
     tilePerSec: 0.1,
-    shape: "laser"
+    shape: "sail"
   },
   {
     id: "T",
     name: "Ion thruster",
     sizes: ALL_SIZES,
-    alloyPrice: 25,
+    alloyPrice: 40,
     energyBalance: -1,
     nextToUnlock: ["P"],
     researchPrice: 1e4,
-    tilePerSec: 0.2,
-    shape: "laser"
+    tilePerSec: 0.15,
+    shape: "ion"
   },
   {
     id: "P",
     name: "Warp drive",
     sizes: ALL_SIZES,
-    alloyPrice: 50,
+    alloyPrice: 80,
     energyBalance: -2,
     explosionChance: 10,
     researchPrice: 1e4,
-    tilePerSec: 0.3,
-    shape: "laser"
+    tilePerSec: 0.2,
+    shape: "warp"
   }
 ];
