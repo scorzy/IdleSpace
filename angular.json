@@ -112,7 +112,7 @@
               "src/assets",
               {
                 "glob": "break_infinity.min.js",
-                "input": "./node_modules/dist/break_infinity.js/",
+                "input": "./node_modules/break_infinity.js/dist/",
                 "output": "./"
               },
               {
