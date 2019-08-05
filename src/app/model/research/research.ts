@@ -85,7 +85,7 @@ export class Research extends AbstractUnlockable
 
       //  Notification
       if (OptionsService.researchNotification) {
-        MainService.toastr.show("", name, {}, "toast-research");
+        MainService.researchesCompleted.push("" + name);
       }
     }
 

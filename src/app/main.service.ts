@@ -38,6 +38,7 @@ export class MainService {
   static endInPipe: EndInPipe;
   static toastr: ToastrService;
   static navalCapReinforceToast = false;
+  static researchesCompleted: string[];
 
   zipWorker: ITypedWorker<CompressRequest, CompressRequest2>;
   game: Game;
@@ -151,10 +152,11 @@ export class MainService {
 
   update() {
     if (!this.game) return false;
+    MainService.researchesCompleted = [];
 
     const now = Date.now();
-    let diff = (now - this.last) / 1000;
-    diff = diff * 10000000;
+    const diff = (now - this.last) / 1000;
+    // diff = diff * 10000000;
     this.game.update(diff);
     this.last = now;
     this.em.updateEmitter.emit(diff);
@@ -168,6 +170,21 @@ export class MainService {
         "Fleet not reinforced. Manual configuration needed!",
         "Exceeding naval capacity"
       );
+    }
+    if (MainService.researchesCompleted.length > 0) {
+      if (MainService.researchesCompleted.length > 4) {
+        MainService.toastr.show(
+          "",
+          Math.floor(MainService.researchesCompleted.length) +
+            " Researches completed",
+          {},
+          "toast-research"
+        );
+      } else {
+        MainService.researchesCompleted.forEach(r => {
+          MainService.toastr.show("", r, {}, "toast-research");
+        });
+      }
     }
   }
   reload() {
