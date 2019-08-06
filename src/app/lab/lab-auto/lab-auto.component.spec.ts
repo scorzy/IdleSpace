@@ -24,6 +24,7 @@ describe("LabAutoComponent", () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(LabAutoComponent);
     component = fixture.componentInstance;
+    component.ms.start();
     fixture.detectChanges();
   });
 

@@ -113,7 +113,8 @@ export class Research extends AbstractUnlockable
   onBuy() {}
   unlock(): boolean {
     if (super.unlock()) {
-      ResearchManager.getInstance().addAvailable(this);
+      if (this.maxLevel !== 0) ResearchManager.getInstance().addAvailable(this);
+      else ResearchManager.getInstance().backLog.push(this);
       return true;
     }
     return false;

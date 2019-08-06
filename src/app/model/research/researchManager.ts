@@ -211,7 +211,7 @@ export class ResearchManager {
         }
       } else if (progress.gt(0)) {
         this.toDo.shift();
-        if (res.maxLevel < 0 || Decimal.gt(res.maxLevel - 1, res.quantity)) {
+        if (res.maxLevel < 0 || Decimal.gte(res.maxLevel - 1, res.quantity)) {
           this.toDo.push(res);
         } else {
           this.backLog.push(res);
