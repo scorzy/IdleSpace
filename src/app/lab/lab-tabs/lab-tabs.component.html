@@ -1,0 +1,20 @@
+<div class="content-area">
+  <h1>
+    <clr-icon shape="lightbulb" size="48" class="resIcon"></clr-icon>Laboratory
+  </h1>
+
+  <clr-tabs>
+    <clr-tab>
+      <button clrTabLink>Laboratory</button>
+      <clr-tab-content *clrIfActive>
+        <app-lab></app-lab>
+      </clr-tab-content>
+    </clr-tab>
+    <clr-tab>
+      <button clrTabLink>Automation</button>
+      <clr-tab-content *clrIfActive>
+        <app-lab-auto></app-lab-auto>
+      </clr-tab-content>
+    </clr-tab>
+  </clr-tabs>
+</div>

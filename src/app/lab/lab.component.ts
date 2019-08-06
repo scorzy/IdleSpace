@@ -24,8 +24,6 @@ declare let preventScroll;
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LabComponent implements OnInit, OnDestroy, AfterViewInit {
-  @HostBinding("class")
-  contentContainer = "content-container";
   resMulti = new Decimal(1);
   resPerSec = new Decimal(1);
   infoModal = false;

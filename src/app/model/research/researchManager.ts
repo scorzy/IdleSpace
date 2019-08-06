@@ -211,7 +211,12 @@ export class ResearchManager {
         }
       } else if (progress.gt(0)) {
         this.toDo.shift();
-        this.toDo.push(res);
+        if (res.maxLevel < 0 || Decimal.gt(res.maxLevel - 1, res.quantity)) {
+          this.toDo.push(res);
+        } else {
+          this.backLog.push(res);
+        }
+
         if (this.autoSort) {
           this.sortPrice();
         }

@@ -43,6 +43,8 @@ export class Research extends AbstractUnlockable
   firstDone = false;
   number = "";
 
+  maxLevel = -1;
+
   static fromData(data: IResearchData): Research {
     const ret = new Research();
     ret.id = data.id;
@@ -160,12 +162,14 @@ export class Research extends AbstractUnlockable
     delete save.u;
     if (this.progress.gt(0)) save.p = this.progress;
     if (this.quantity.gt(0)) save.q = this.quantity;
+    if (this.maxLevel !== -1) save.M = this.maxLevel;
     return save;
   }
   load(data: any): boolean {
     if (!super.load(data)) return false;
     if ("p" in data) this.progress = MyFromDecimal(data.p);
     if ("q" in data) this.quantity = MyFromDecimal(data.q);
+    if ("M" in data) this.maxLevel = data.M;
 
     this.firstDone = this.quantity.gte(1);
     this.reloadNum();

@@ -1,0 +1,28 @@
+<clr-datagrid class="datagrid-compact">
+  <clr-dg-column [clrDgField]="'name'">
+    Name
+  </clr-dg-column>
+  <clr-dg-column [clrDgField]="'maxLevel'">Max Level</clr-dg-column>
+
+  <clr-dg-row *clrDgItems="let res of ms.game.researchManager.researches">
+    <clr-dg-cell>{{ res.name }}</clr-dg-cell>
+    <clr-dg-cell>
+      <input
+        clrInput
+        name="maxLevel"
+        [(ngModel)]="res.maxLevel"
+        type="number"
+      />
+    </clr-dg-cell>
+  </clr-dg-row>
+
+  <clr-dg-footer>
+    <clr-dg-pagination #pagination [clrDgPageSize]="10">
+      <clr-dg-page-size [clrPageSizeOptions]="[10, 15, 20, 50, 100]"
+        >Researches per page</clr-dg-page-size
+      >
+      {{ pagination.firstItem + 1 }} - {{ pagination.lastItem + 1 }} of
+      {{ pagination.totalItems }}
+    </clr-dg-pagination>
+  </clr-dg-footer>
+</clr-datagrid>
