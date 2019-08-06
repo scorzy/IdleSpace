@@ -76,6 +76,7 @@ export class EnemyManager implements ISalvable {
   mergeLevel = 0;
   currentMerge = 0;
   rewardMessage = "";
+  rewardMessages: Array<[string, Decimal]> = [];
 
   static getInstance(): EnemyManager {
     return EnemyManager.instance;
@@ -191,6 +192,8 @@ export class EnemyManager implements ISalvable {
       this.currentEnemy.currentZone.originalNavCap = null;
       //#region Reward
       this.rewardMessage = "";
+      this.rewardMessages = [];
+
       for (let n = 0; n <= this.currentMerge; n++) {
         const mergedZone = this.currentEnemy.zones[
           this.currentEnemy.currentZone.number + n
@@ -199,6 +202,15 @@ export class EnemyManager implements ISalvable {
       }
       try {
         if (OptionsService.battleWinNotification) {
+          this.rewardMessages.forEach(e => {
+            this.rewardMessage =
+              this.rewardMessage +
+              "+ " +
+              MainService.formatPipe.transform(e[1]) +
+              " " +
+              e[0] +
+              "<br/>";
+          });
           MainService.toastr.success(this.rewardMessage, "Battle Win", {
             enableHtml: true
           });
@@ -272,7 +284,7 @@ export class EnemyManager implements ISalvable {
    * Reward player for winning a battle
    * if reward is null give a random reward
    */
-  rewardPlayer(reward: Reward) {
+  private rewardPlayer(reward: Reward) {
     const resMan = ResourceManager.getInstance();
     let message = "";
     let gain = new Decimal();
@@ -306,12 +318,7 @@ export class EnemyManager implements ISalvable {
             resMan.habitableSpace.quantity = resMan.habitableSpace.quantity.plus(
               gainDistrict
             );
-            message =
-              "+ " +
-              MainService.formatPipe.transform(gainDistrict) +
-              " " +
-              resMan.habitableSpace.name +
-              "<br/>";
+            this.addOrUpdateMessages(resMan.habitableSpace.name, gainDistrict);
           }
           gain = new Decimal(RESEARCH_REWARD * this.currentEnemy.level).times(
             prestigeMulti
@@ -325,23 +332,14 @@ export class EnemyManager implements ISalvable {
             resMan.miningDistrict.quantity = resMan.miningDistrict.quantity.plus(
               gainDistrict
             );
-            message =
-              "+ " +
-              MainService.formatPipe.transform(gainDistrict) +
-              " " +
-              resMan.miningDistrict.name +
-              "<br/>";
+            this.addOrUpdateMessages(resMan.miningDistrict.name, gainDistrict);
           }
           gain = new Decimal(METAL_REWARD * this.currentEnemy.level).times(
             prestigeMulti
           );
           resMan.metal.quantity = resMan.metal.quantity.plus(gain);
           resMan.metal.quantity = resMan.metal.quantity.min(resMan.metal.limit);
-          message +=
-            "+ " +
-            MainService.formatPipe.transform(gain) +
-            " " +
-            resMan.metal.name;
+          this.addOrUpdateMessages(resMan.metal.name, gain);
           break;
 
         case Reward.CrystalMine:
@@ -349,12 +347,7 @@ export class EnemyManager implements ISalvable {
             resMan.crystalDistrict.quantity = resMan.crystalDistrict.quantity.plus(
               gainDistrict
             );
-            message +=
-              "+ " +
-              MainService.formatPipe.transform(gainDistrict) +
-              " " +
-              resMan.crystalDistrict.name +
-              "<br/>";
+            this.addOrUpdateMessages(resMan.crystalDistrict.name, gainDistrict);
           }
           gain = new Decimal(CRYSTAL_REWARD * this.currentEnemy.level).times(
             prestigeMulti
@@ -363,11 +356,7 @@ export class EnemyManager implements ISalvable {
           resMan.crystal.quantity = resMan.crystal.quantity.min(
             resMan.crystal.limit
           );
-          message +=
-            "+ " +
-            MainService.formatPipe.transform(gain) +
-            " " +
-            resMan.crystal.name;
+          this.addOrUpdateMessages(resMan.crystal.name, gain);
           break;
 
         case Reward.Robot:
@@ -377,11 +366,7 @@ export class EnemyManager implements ISalvable {
           resMan.drone.unlock();
           resMan.drone.quantity = resMan.drone.quantity.plus(gain);
           resMan.drone.quantity = resMan.drone.quantity.min(resMan.drone.limit);
-          message +=
-            "+ " +
-            MainService.formatPipe.transform(gain) +
-            " " +
-            resMan.drone.name;
+          this.addOrUpdateMessages(resMan.drone.name, gain);
           break;
 
         case Reward.Alloy:
@@ -390,11 +375,7 @@ export class EnemyManager implements ISalvable {
           );
           resMan.alloy.quantity = resMan.alloy.quantity.plus(gain);
           resMan.alloy.quantity = resMan.alloy.quantity.min(resMan.alloy.limit);
-          message +=
-            "+ " +
-            MainService.formatPipe.transform(gain) +
-            " " +
-            resMan.alloy.name;
+          this.addOrUpdateMessages(resMan.alloy.name, gain);
           break;
 
         case Reward.Enemy:
@@ -402,12 +383,7 @@ export class EnemyManager implements ISalvable {
             prestigeMulti
           );
           this.addProgress(gain);
-          message +=
-            "+ " +
-            MainService.formatPipe.transform(gain) +
-            " " +
-            resMan.searchProgress.name;
-
+          this.addOrUpdateMessages(resMan.searchProgress.name, gain);
           break;
         case Reward.Shipyard:
           gain = new Decimal(SHIPYARD_REWARD * this.currentEnemy.level).times(
@@ -416,15 +392,20 @@ export class EnemyManager implements ISalvable {
           resMan.shipyardProgress.quantity = resMan.shipyardProgress.quantity.plus(
             gain
           );
-          message +=
-            "+ " +
-            MainService.formatPipe.transform(gain) +
-            " " +
-            resMan.shipyardProgress.name;
+          this.addOrUpdateMessages(resMan.shipyardProgress.name, gain);
           break;
       }
     }
-    this.rewardMessage += message + "<br/>";
+  }
+
+  private addOrUpdateMessages(what: string, quantity: Decimal) {
+    let elem = this.rewardMessages.find(e => e[0] === what);
+    if (!elem) {
+      elem = [what, quantity];
+      this.rewardMessages.push(elem);
+    } else {
+      elem[1] = elem[1].plus(quantity);
+    }
   }
 
   delete(enemy: Enemy) {

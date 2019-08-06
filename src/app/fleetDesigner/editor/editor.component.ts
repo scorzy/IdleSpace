@@ -69,9 +69,14 @@ export class EditorComponent
       this.edit();
     }
 
-    this.weapons = this.ms.game.fleetManager.unlockedModules.filter(m =>
-      m.damage.gt(0)
-    );
+    if (
+      !this.design.class ||
+      (this.design.class.id !== "4" && this.design.class.id !== "5")
+    ) {
+      this.weapons = this.ms.game.fleetManager.unlockedModules.filter(m =>
+        m.damage.gt(0)
+      );
+    }
     this.defenses = this.ms.game.fleetManager.unlockedModules.filter(
       m => m.armor.gt(0) || m.shield.gt(0)
     );
