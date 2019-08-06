@@ -23,15 +23,7 @@ export const ResearchData: IResearchData[] = [
     researchToUnlock: ["CO"],
     bonus: [["Energy Gain", "+10%"]]
   },
-  {
-    id: "CO",
-    name: "Computing",
-    shape: "cpu",
-    price: 5e4,
-    description: "+10% computing",
-    limit: Number.POSITIVE_INFINITY,
-    bonus: [["Computing Gain", "+10%"]]
-  },
+
   {
     id: "c",
     name: "Corvette",
@@ -165,7 +157,8 @@ export const ResearchData: IResearchData[] = [
     shape: "energy",
     price: 5e4,
     description: "unlock Electrical grid",
-    resourceToUnlock: ["eM"]
+    resourceToUnlock: ["eM"],
+    researchToUnlock: ["xM"]
   },
   {
     id: "civ",
@@ -215,5 +208,31 @@ export const ResearchData: IResearchData[] = [
     price: 1e14,
     description: "Unlock Supply",
     classesToUnlock: ["5"]
+  },
+  {
+    id: "xM",
+    name: "Computing center",
+    shape: "cpu",
+    price: 1e5,
+    description: "unlock Computing center",
+    resourceToUnlock: ["xM"],
+    researchToUnlock: ["sM", "CO"]
+  },
+  {
+    id: "sM",
+    name: "Science complex",
+    shape: "flask",
+    price: 1e6,
+    description: "unlock Science complex",
+    resourceToUnlock: ["sM"]
+  },
+  {
+    id: "CO",
+    name: "Computing",
+    shape: "cpu",
+    price: 1e6,
+    description: "+10% computing",
+    limit: Number.POSITIVE_INFINITY,
+    bonus: [["Computing Gain", "+10%"]]
   }
 ];

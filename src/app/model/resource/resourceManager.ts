@@ -61,6 +61,8 @@ export class ResourceManager implements ISalvable {
   metalM: Resource;
   crystalM: Resource;
   energyM: Resource;
+  scienceM: Resource;
+  computingM: Resource;
 
   terraformer: Resource;
   scienceShip: Resource;
@@ -122,6 +124,8 @@ export class ResourceManager implements ISalvable {
     this.metalM = new Resource("mM");
     this.crystalM = new Resource("cM");
     this.energyM = new Resource("eM");
+    this.scienceM = new Resource("sM");
+    this.computingM = new Resource("xM");
 
     this.missile = new Resource("i");
     this.missile.shape = "missile";
@@ -245,6 +249,8 @@ export class ResourceManager implements ISalvable {
       this.metalM,
       this.crystalM,
       this.energyM,
+      this.computingM,
+      this.scienceM,
       this.missileX1
     ];
     this.civilianShips = [
@@ -331,6 +337,23 @@ export class ResourceManager implements ISalvable {
     );
     this.energyX1.productionMultiplier.additiveBonus.push(
       new Bonus(this.energyM, 1, true)
+    );
+    this.scienceM.generateBuyAction(
+      new MultiPrice([
+        new Price(this.alloy, 1e3, BUILDING_EXP),
+        new Price(this.crystal, 1e4, BUILDING_EXP),
+        new Price(this.habitableSpace, 10, BUILDING_EXP)
+      ])
+    );
+    this.computingM.generateBuyAction(
+      new MultiPrice([
+        new Price(this.alloy, 1e3, BUILDING_EXP),
+        new Price(this.crystal, 1e4, BUILDING_EXP),
+        new Price(this.habitableSpace, 10, BUILDING_EXP)
+      ])
+    );
+    this.computingM.productionMultiplier.additiveBonus.push(
+      new Bonus(this.computingX1, 1, true)
     )
 
     //
@@ -649,6 +672,8 @@ export class ResourceManager implements ISalvable {
       this.metalM,
       this.crystalM,
       this.energyM,
+      this.scienceM,
+      this.computingM,
       this.missile,
       this.missileX1,
       this.terraformer,
