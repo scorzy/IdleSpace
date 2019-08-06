@@ -57,6 +57,7 @@ export class MultiBuyAction extends Action {
       this.maxBuy = new Decimal(0);
       return;
     }
+    super.reload();
     this.actions
       .filter(a => a instanceof BuyAction && a.buyable.isLimited)
       .forEach(a => {
@@ -66,8 +67,6 @@ export class MultiBuyAction extends Action {
           this.maxBuy = this.maxBuy.min(max);
         }
       });
-
-    super.reload();
   }
   isCapped(): boolean {
     return (
