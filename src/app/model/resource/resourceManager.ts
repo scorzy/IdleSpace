@@ -352,8 +352,8 @@ export class ResourceManager implements ISalvable {
         new Price(this.habitableSpace, 10, BUILDING_EXP)
       ])
     );
-    this.computingM.productionMultiplier.additiveBonus.push(
-      new Bonus(this.computingX1, 1, true)
+    this.computingX1.productionMultiplier.additiveBonus.push(
+      new Bonus(this.computingM, 1, true)
     )
 
     //
