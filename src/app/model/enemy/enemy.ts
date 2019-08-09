@@ -41,11 +41,13 @@ export class Enemy {
   moreHabitableSpace = false;
   moreHabitableSpace2 = false;
   randomized = true;
+  moreRobot = false;
   bonusCount = 0;
 
   baseMining = 2;
   baseCrystal = 2;
   baseHabitable = 3;
+  baseRobot = 0;
 
   static generate(searchJob: SearchJob): Enemy {
     const enemy = new Enemy();
@@ -55,6 +57,7 @@ export class Enemy {
     enemy.moreHabitableSpace = searchJob.moreHabitableSpace;
     enemy.moreHabitableSpace2 = searchJob.moreHabitableSpace2;
     enemy.randomized = searchJob.randomized;
+    enemy.moreRobot = searchJob.moreRobot;
 
     if (enemy.randomized) {
       enemy.baseMining = Math.min(random(0, 7), 7);
@@ -62,12 +65,14 @@ export class Enemy {
         random(0, 7 - enemy.baseMining),
         7 - enemy.baseMining
       );
-      enemy.baseHabitable = 7 - enemy.baseMining - enemy.baseCrystal;
+      enemy.baseHabitable =
+        7 - enemy.baseMining - enemy.baseCrystal - enemy.baseRobot;
     }
     if (enemy.moreMetal) enemy.baseMining++;
     if (enemy.moreCrystal) enemy.baseCrystal++;
     if (enemy.moreHabitableSpace) enemy.baseHabitable++;
     if (enemy.moreHabitableSpace2) enemy.baseHabitable++;
+    if (enemy.moreRobot) enemy.baseRobot++;
 
     for (let n = 1; n < 4; n++) {
       if (Math.random() < enemy.level / (enemy.level + 100 * n)) {
@@ -246,6 +251,7 @@ export class Enemy {
     if ("mc" in data) enemy.moreCrystal = data.mc;
     if ("mh" in data) enemy.moreHabitableSpace = data.mh;
     if ("mh2" in data) enemy.moreHabitableSpace2 = data.mh2;
+    if ("mr" in data) enemy.moreRobot = data.mr;
     if ("rand" in data) enemy.randomized = data.rand;
     if ("bm" in data) enemy.baseMining = data.bm;
     if ("bc" in data) enemy.baseCrystal = data.bc;
@@ -283,7 +289,8 @@ export class Enemy {
       (this.moreMetal ? 1 : 0) +
       (this.moreCrystal ? 1 : 0) +
       (this.moreHabitableSpace ? 1 : 0) +
-      (this.moreHabitableSpace2 ? 1 : 0);
+      (this.moreHabitableSpace2 ? 1 : 0) +
+      (this.moreRobot ? 1 : 0);
   }
 
   setOrder() {
@@ -373,6 +380,16 @@ export class Enemy {
             otherZones = otherZones.filter(z => !z.reward);
           }
         }
+
+        // Robot c.
+        const robotCount = this.baseRobot;
+        for (let j = 0; j < robotCount; j++) {
+          if (otherZones.length > 0) {
+            const rand = otherZones.pop();
+            rand.reward = Reward.Robot;
+            otherZones = otherZones.filter(z => !z.reward);
+          }
+        }
       }
 
       this.zones.forEach(z => z.reload());
@@ -400,6 +417,7 @@ export class Enemy {
     if (this.moreHabitableSpace) data.mh = this.moreHabitableSpace;
     if (this.moreHabitableSpace2) data.mh2 = this.moreHabitableSpace2;
     if (this.randomized) data.rand = this.randomized;
+    if (this.moreRobot) data.mr = this.moreRobot;
     if (this.baseMining !== 2) data.bm = this.baseMining;
     if (this.baseCrystal !== 2) data.bc = this.baseCrystal;
     if (this.baseHabitable !== 2) data.bh = this.baseHabitable;

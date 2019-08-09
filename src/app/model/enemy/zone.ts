@@ -105,6 +105,9 @@ export class Zone implements ISalvable {
       case Reward.CrystalMine:
         this.shape = ResourceManager.getInstance().crystal.shape;
         break;
+      case Reward.Robot:
+        this.shape = ResourceManager.getInstance().drone.shape;
+        break;
     }
   }
 }

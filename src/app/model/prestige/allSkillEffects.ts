@@ -83,6 +83,7 @@ export class AllSkillEffects {
   static readonly SEARCH_HAB2 = new SkillEffect(32, "S", 1);
   static readonly SEARCH_RANDOM = new SkillEffect(33, "S", 1);
   static readonly DOUBLE_DISTRICTS = new SkillEffect(34, "S", 5);
+  static readonly SEARCH_ROBOT = new SkillEffect(41, "S", 1);
   //#endregion
   //#region Resource Gain Multi
   static readonly ENERGY_MULTI = new SkillEffect(35, "2");
@@ -391,6 +392,20 @@ export class AllSkillEffects {
         "% districts gain"
       );
     };
+
+    AllSkillEffects.SEARCH_ROBOT.limit = new Decimal(1);
+    AllSkillEffects.SEARCH_ROBOT.isLimited = true;
+    AllSkillEffects.SEARCH_ROBOT.getDescription = (num = 1) => {
+      return (
+        "+ " +
+        MainService.formatPipe.transform(50 * num, true) +
+        "% Searching, can search for robot c."
+      );
+    };
+    AllSkillEffects.SEARCH_ROBOT.name = "Prestige search robot c.";
+    resMan.searchX1.productionMultiplier.additiveBonus.push(
+      new Bonus(AllSkillEffects.SEARCH_ROBOT, 0.5, true)
+    );
     //#endregion
     //#region Gain Multi
     AllSkillEffects.ENERGY_MULTI.getDescription = (num = 1) => {
@@ -485,7 +500,8 @@ export class AllSkillEffects {
       AllSkillEffects.SEARCH_RANDOM,
       AllSkillEffects.DOUBLE_DISTRICTS,
       AllSkillEffects.MULTI_FACTORY,
-      AllSkillEffects.TILE_MERGE
+      AllSkillEffects.TILE_MERGE,
+      AllSkillEffects.SEARCH_ROBOT
     ];
     if (!prestige) {
       AllSkillEffects.effectList.forEach(e => {

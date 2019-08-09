@@ -64,6 +64,7 @@ export class EnemyManager implements ISalvable {
   moreHabitable = false;
   moreHabitable2 = false;
   randomized = false;
+  moreRobot = false;
 
   nukeAction: NukeAction;
   missileDamageBonus = new BonusStack();
@@ -286,7 +287,6 @@ export class EnemyManager implements ISalvable {
    */
   private rewardPlayer(reward: Reward) {
     const resMan = ResourceManager.getInstance();
-    let message = "";
     let gain = new Decimal();
 
     const addSpace = !!reward;
@@ -324,7 +324,6 @@ export class EnemyManager implements ISalvable {
             prestigeMulti
           );
           ResearchManager.getInstance().update(gain);
-          message += "+ " + MainService.formatPipe.transform(gain) + " Research";
           break;
 
         case Reward.MetalMine:
@@ -421,7 +420,8 @@ export class EnemyManager implements ISalvable {
       (this.moreCrystal ? 1 : 0) +
       (this.moreHabitable ? 1 : 0) +
       (this.randomized ? 1 : 0) +
-      (this.moreHabitable2 ? 1 : 0);
+      (this.moreHabitable2 ? 1 : 0) +
+      (this.moreRobot ? 1 : 0);
     return new Decimal(5e3).times(Decimal.pow(1.2, level - 1));
   }
   /**
@@ -435,6 +435,7 @@ export class EnemyManager implements ISalvable {
     searchJob.moreHabitableSpace = this.moreHabitable;
     searchJob.moreHabitableSpace2 = this.moreHabitable2;
     searchJob.randomized = this.randomized;
+    searchJob.moreRobot = this.moreRobot;
     searchJob.total = this.getRequiredSearch(level);
     searchJob.generateNameDescription();
     this.searchJobs.push(searchJob);
@@ -524,6 +525,7 @@ export class EnemyManager implements ISalvable {
     if (this.moreHabitable) data.mh = this.moreHabitable;
     if (this.moreHabitable2) data.mh2 = this.moreHabitable2;
     if (this.randomized) data.ra = this.randomized;
+    if (this.moreRobot) data.mr = this.moreRobot;
     if (this.mergeLevel !== 0) data.mer = this.mergeLevel;
     if (this.currentMerge !== 0) data.cumer = this.currentMerge;
 
@@ -570,6 +572,7 @@ export class EnemyManager implements ISalvable {
     if ("mh" in data) this.moreHabitable = data.mh;
     if ("mh2" in data) this.moreHabitable2 = data.mh2;
     if ("ra" in data) this.randomized = data.ra;
+    if ("mr" in data) this.moreRobot = data.mr;
     if ("mer" in data) this.mergeLevel = data.mer;
     if ("cumer" in data) this.currentMerge = data.cumer;
 
