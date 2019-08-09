@@ -33,6 +33,8 @@ export class ResearchManager {
   jammer: Research;
   shieldCharger: Research;
   technician: Research;
+  massProduction: Research;
+  mTheory: Research;
   //#region Ship Types
   corvette: Research;
   frigate: Research;
@@ -72,6 +74,8 @@ export class ResearchManager {
     this.classes = this.researches.find(r => r.id === "cla");
     this.defender = this.researches.find(r => r.id === "cl3");
     this.technician = this.researches.find(r => r.id === "cl4");
+    this.massProduction = this.researches.find(r => r.id === "D1");
+    this.mTheory = this.researches.find(r => r.id === "Mt");
 
     const resMan = ResourceManager.getInstance();
     resMan.energyX1.productionMultiplier.additiveBonus.push(
@@ -79,6 +83,9 @@ export class ResearchManager {
     );
     resMan.computingX1.productionMultiplier.additiveBonus.push(
       new Bonus(this.computing, 0.1, true)
+    );
+    resMan.droneFactory.productionMultiplier.additiveBonus.push(
+      new Bonus(this.massProduction, 0.2)
     );
 
     this.corvette.ship = ShipTypes[0];

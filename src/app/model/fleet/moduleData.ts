@@ -160,7 +160,7 @@ export const ModulesData: IModuleData[] = [
     alloyPrice: 40,
     shieldCharge: BASE_ARMOR * 0.8,
     researchPrice: 1e4,
-    shape: "armorRed"
+    shape: "armor-upgrades"
   },
   {
     id: "W",

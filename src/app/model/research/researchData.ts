@@ -105,21 +105,39 @@ export const ResearchData: IResearchData[] = [
     shape: "titan",
     price: 1e20,
     description: "Unlock Titan",
+    researchToUnlock: ["Mt"],
     limit: 100
+  },
+  {
+    id: "Mt",
+    name: "M-theory",
+    shape: "atom-core",
+    price: 1e24,
+    description: "Improve science",
+    bonus: [["Science gain", "+2000%"]]
   },
   {
     id: "D",
     name: "Robot Factory",
-    shape: "battery",
+    shape: "robot",
     price: 1e7,
     description: "Robot Factory",
     resourceToUnlock: ["D", "F"],
-    researchToUnlock: ["i"]
+    researchToUnlock: ["i", "D1"]
+  },
+  {
+    id: "D1",
+    name: "Mass Production",
+    shape: "robot",
+    price: 1e12,
+    limit: Number.POSITIVE_INFINITY,
+    description: "Improve Robot Factory",
+    bonus: [["Robot Factory input/output", "+20%"]]
   },
   {
     id: "M",
     name: "Drone Modding",
-    shape: "battery",
+    shape: "hand",
     price: 2e5,
     description: "+1 drone modding point",
     limit: Number.POSITIVE_INFINITY,

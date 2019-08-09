@@ -77,6 +77,9 @@ export class Game {
     this.researchBonus.multiplicativeBonus.push(
       new Bonus(this.resourceManager.scienceShip, new Decimal(0.05))
     );
+    this.researchBonus.multiplicativeBonus.push(
+      new Bonus(this.researchManager.mTheory, 20, true)
+    );
 
     this.resourceManager.allResources.forEach(
       r => (r.unlockedActions = r.actions.filter(a => a.unlocked))
