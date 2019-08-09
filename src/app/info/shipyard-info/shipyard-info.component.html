@@ -14,6 +14,15 @@
     <strong>Armor</strong>: Health, Run out of this and the ship is destroyed.
   </li>
   <li><strong>Shield</strong>: Takes damage before Armor.</li>
+
+  <li>
+    <strong>Armor Damage Reduction</strong>: Reduces incoming damages to armor.
+  </li>
+  <li>
+    <strong>Shield Damage Reduction</strong>: Reduces incoming damages to
+    shield.
+  </li>
+
   <li><strong>Energy</strong>: Must be positive, has no effect in battle.</li>
   <li><strong>Damage</strong>: Average damage, see modules for more info.</li>
   <li>
@@ -21,6 +30,14 @@
     explode (lower is better).
   </li>
   <li><strong>Price</strong>: Price of one ship in Alloy.</li>
+  <li>
+    <strong>Tile /s</strong>: Speed in tile per second. Total speed of fleets is
+    the lowest among your ships.
+  </li>
+  <li>
+    <strong>Shield Charger</strong>: Technicians only - Amount of shield
+    recharged to the most wounded ship with shield >0
+  </li>
 </ul>
 <p>
   Ships designs are a list of modules, bigger ships can have more modules.
@@ -45,8 +62,8 @@
     <strong>Gauss Rifle</strong>: Anti-Shield, 170% vs shield, 30% vs armor
   </li>
   <li>
-    <strong>Rail Gun</strong>: Anti-Shield, 10% damage bonus but doesn't damage
-    armor, 210% vs shield, 0% vs armor
+    <strong>Emp Impulse</strong>: Anti-Shield, 10% damage bonus but doesn't
+    damage armor, 210% vs shield, 0% vs armor
   </li>
 </ul>
 <h6>Energy</h6>
@@ -67,6 +84,30 @@
 <ul class="list">
   <li><strong>Armor</strong>: Basic defense, doesn't consume energy.</li>
   <li><strong>Shield</strong>: Takes damage before armor, consumes energy.</li>
+  <li>
+    <strong>Deflector</strong>: Reduce damage taken from armor, consume energy.
+  </li>
+  <li>
+    <strong>Jammer</strong>: Reduce damage taken from shield, consumes energy.
+  </li>
+</ul>
+<h6>Thruster</h6>
+<ul class="list">
+  <li>
+    <strong>Solar Wing</strong>: Small speed boost, doesn't consume energy.
+  </li>
+  <li><strong>Ion Thruster</strong>: Medium speed boost, consume energy.</li>
+  <li>
+    <strong>Warp Drive</strong>: Big speed boost, consume energy and increase
+    explosion chance.
+  </li>
+</ul>
+<h6>Special</h6>
+<ul class="list">
+  <li>
+    <strong>Shield charger</strong>: Technicians only - recharge the ship with
+    less shield
+  </li>
 </ul>
 <h3>Battle</h3>
 <p>
