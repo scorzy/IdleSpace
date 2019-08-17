@@ -21,7 +21,7 @@ export class RobotEndingAutomator extends Automator {
     return (
       !this.robot.isCapped &&
       this.material.isEnding &&
-      this.robot.operativity < 100
+      this.robot.operativity >= 100
     );
   }
   doAction(): boolean {
