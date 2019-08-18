@@ -8,7 +8,12 @@
         [routerLinkActive]="'active'"
         (click)="navigateLast()"
       >
-        <span class="nav-text"> <clr-icon shape="home"></clr-icon> </span>
+        <span class="nav-text">
+          <span class="small-title">
+            Home
+          </span>
+          <clr-icon shape="home"></clr-icon>
+        </span>
       </a>
 
       <a
@@ -18,6 +23,9 @@
         *ngIf="ms.game.resourceManager.computing.unlocked"
       >
         <span class="nav-text">
+          <span class="small-title">
+            Laboratory
+          </span>
           <clr-icon
             [ngClass]="{
               'is-warning': ms.game.researchManager.isNew,
@@ -35,6 +43,9 @@
         *ngIf="ms.game.researchManager.corvette.firstDone"
       >
         <span class="nav-text">
+          <span class="small-title">
+            Shipyard
+          </span>
           <clr-icon
             shape="cog"
             [ngClass]="{ 'has-alert': ms.game.overNavalCap }"
@@ -49,6 +60,9 @@
         *ngIf="ms.game.researchManager.corvette.firstDone"
       >
         <span class="nav-text">
+          <span class="small-title">
+            Battle
+          </span>
           <clr-icon shape="crosshairs"></clr-icon>
         </span>
       </a>
@@ -60,6 +74,9 @@
         *ngIf="ms.game.researchManager.telescope.firstDone"
       >
         <span class="nav-text">
+          <span class="small-title">
+            Worlds
+          </span>
           <clr-icon shape="world"></clr-icon>
         </span>
       </a>
@@ -71,6 +88,9 @@
         *ngIf="AutomatorManager.automatorLevel >= 3"
       >
         <span class="nav-text">
+          <span class="small-title">
+            Automators
+          </span>
           <clr-icon shape="applications"></clr-icon>
         </span>
       </a>
@@ -82,6 +102,9 @@
         *ngIf="ms.game.darkMatterManager.darkMatter.unlocked"
       >
         <span class="nav-text">
+          <span class="small-title">
+            Dark Matter
+          </span>
           <clr-icon shape="darkMatter"></clr-icon>
         </span>
       </a>

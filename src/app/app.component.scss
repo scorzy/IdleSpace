@@ -2,8 +2,20 @@ app-material-list {
   min-height: fit-content;
   overflow-y: auto;
 }
+.small-title {
+  display: none;
+}
 @media screen and (max-width: 768px) {
   app-material-list {
     display: none;
+  }
+
+  .nav-text {
+    clr-icon {
+      display: none;
+    }
+  }
+  .small-title {
+    display: inline;
   }
 }
