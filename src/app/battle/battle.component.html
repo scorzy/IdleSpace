@@ -165,9 +165,9 @@
       ></app-battlefield>
     </div>
     <div class="clr-col-12 clr-col-sm-12 clr-col-lg-5">
-      <h4>You</h4>
+      <h4>{{ ms.options.name }}</h4>
       <app-fleet-table [fleet]="ms.game.fleetManager.ships"></app-fleet-table>
-      <h4>Enemy</h4>
+      <h4>{{ ms.game.enemyManager.currentEnemy?.name }}</h4>
       <app-fleet-table
         [fleet]="ms.game.enemyManager.currentEnemy.currentZone.ships"
       ></app-fleet-table>
