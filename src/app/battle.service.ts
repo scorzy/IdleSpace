@@ -123,75 +123,77 @@ export class BattleService {
           ship.modules.forEach(weapon => {
             const target =
               availableTargets[Math.floor(Math.random() * targets.length)];
-            let damageToDo = weapon.damage;
-            //  Damage to shield
-            if (target.shield.gt(0)) {
-              const shieldPercent = weapon.shieldPercent / 100;
-              let maxShieldDamage = damageToDo.times(shieldPercent);
-              maxShieldDamage = maxShieldDamage
-                .minus(target.shieldReduction)
-                .max(0);
-              //  Skip if damage <0.1% shield
-              if (maxShieldDamage.gte(target.shield.div(1000))) {
-                target.shield = target.shield.minus(maxShieldDamage);
-                // tslint:disable-next-line:prefer-conditional-expression
-                if (target.shield.lt(0)) {
-                  damageToDo = Decimal.abs(
-                    target.shield.minus(target.shieldReduction)
-                  ).div(shieldPercent);
-                  // console.log(damageToDo.toNumber());
+            if (target) {
+              let damageToDo = weapon.damage;
+              //  Damage to shield
+              if (target.shield.gt(0)) {
+                const shieldPercent = weapon.shieldPercent / 100;
+                let maxShieldDamage = damageToDo.times(shieldPercent);
+                maxShieldDamage = maxShieldDamage
+                  .minus(target.shieldReduction)
+                  .max(0);
+                //  Skip if damage <0.1% shield
+                if (maxShieldDamage.gte(target.shield.div(1000))) {
+                  target.shield = target.shield.minus(maxShieldDamage);
+                  // tslint:disable-next-line:prefer-conditional-expression
+                  if (target.shield.lt(0)) {
+                    damageToDo = Decimal.abs(
+                      target.shield.minus(target.shieldReduction)
+                    ).div(shieldPercent);
+                    // console.log(damageToDo.toNumber());
+                  } else {
+                    damageToDo = new Decimal(0);
+                  }
                 } else {
                   damageToDo = new Decimal(0);
                 }
-              } else {
-                damageToDo = new Decimal(0);
               }
-            }
-            //  Damage to Armor
-            if (damageToDo.gt(0)) {
-              let maxArmorDamage = damageToDo.times(weapon.armorPercent / 100);
-              maxArmorDamage = maxArmorDamage
-                .minus(target.armorReduction)
-                .max(0);
-              //  Skip if damage < 0.1% armor
-              if (maxArmorDamage.gte(target.armor.div(1000))) {
-                target.armor = target.armor.minus(maxArmorDamage);
-                //  Check explosion
-                // console.log(
-                //   target.armor.div(target.originalArmor).toNumber() +
-                //     " - " +
-                //     target.explosionLevel
-                // );
-                if (
-                  target.armor.gt(0) &&
-                  target.armor.div(target.originalArmor).toNumber() <
-                    target.explosionLevel
-                ) {
-                  const prob =
-                    1 -
-                    target.armor
-                      .div(target.originalArmor.times(target.explosionLevel))
-                      .toNumber();
+              //  Damage to Armor
+              if (damageToDo.gt(0)) {
+                let maxArmorDamage = damageToDo.times(weapon.armorPercent / 100);
+                maxArmorDamage = maxArmorDamage
+                  .minus(target.armorReduction)
+                  .max(0);
+                //  Skip if damage < 0.1% armor
+                if (maxArmorDamage.gte(target.armor.div(1000))) {
+                  target.armor = target.armor.minus(maxArmorDamage);
+                  //  Check explosion
                   // console.log(
-                  //   "Expl:" +
-                  //     target.armor.toNumber() +
-                  //     " " +
-                  //     target.originalArmor.toNumber() +
-                  //     " " +
-                  //     target.explosionLevel +
-                  //     " " +
-                  //     prob
+                  //   target.armor.div(target.originalArmor).toNumber() +
+                  //     " - " +
+                  //     target.explosionLevel
                   // );
-                  if (Math.random() < prob) {
-                    //  Explode
-                    target.armor = new Decimal(-1);
+                  if (
+                    target.armor.gt(0) &&
+                    target.armor.div(target.originalArmor).toNumber() <
+                      target.explosionLevel
+                  ) {
+                    const prob =
+                      1 -
+                      target.armor
+                        .div(target.originalArmor.times(target.explosionLevel))
+                        .toNumber();
+                    // console.log(
+                    //   "Expl:" +
+                    //     target.armor.toNumber() +
+                    //     " " +
+                    //     target.originalArmor.toNumber() +
+                    //     " " +
+                    //     target.explosionLevel +
+                    //     " " +
+                    //     prob
+                    // );
+                    if (Math.random() < prob) {
+                      //  Explode
+                      target.armor = new Decimal(-1);
+                    }
                   }
                 }
               }
-            }
-            //  Remove defenders
-            if (target.armor.lt(0)) {
-              defenders = defenders.filter(d => d.armor.gt(0));
+              //  Remove defenders
+              if (target.armor.lt(0)) {
+                defenders = defenders.filter(d => d.armor.gt(0));
+              }
             }
           });
 
