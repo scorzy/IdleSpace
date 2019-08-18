@@ -148,7 +148,7 @@ export class AllSkillEffects {
       tier1[i].shape = resources[i].shape;
       tier1[i].getDescription = (num = 1) => {
         return (
-          "+" +
+          "+ " +
           MainService.formatPipe.transform(PLUS_ADD * num, true) +
           " " +
           workers[i].name +
@@ -211,11 +211,7 @@ export class AllSkillEffects {
     AllSkillEffects.FAST_COMBAT.limit = new Decimal(1);
     AllSkillEffects.FAST_COMBAT.isLimited = true;
     AllSkillEffects.FAST_COMBAT.getDescription = (num = 1) => {
-      return (
-        "+ " +
-        MainService.formatPipe.transform(Math.min(0.15 * num, 1)) +
-        " tile /s"
-      );
+      return "+ " + MainService.formatPipe.transform(0.15 * num) + " tile /s";
     };
     AllSkillEffects.DOUBLE_NAVAL_CAPACITY.getDescription = (num = 1) => {
       return (

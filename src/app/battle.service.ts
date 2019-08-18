@@ -91,8 +91,8 @@ export class BattleService {
         const ships = battleFleets[num];
         const targets = battleFleets[(num + 1) % 2];
         if (targets.length < 1 || ships.length < 1) break;
-        let defenders = targets.filter(s => s.class === "2");
-
+        let defenders = targets.filter(s => s.class === "3");
+        console.log(defenders.length);
         let n = 0;
         for (const ship of ships) {
           n++;
@@ -101,9 +101,9 @@ export class BattleService {
 
           //  80% chance of hitting a defender
           if (
-            ship.class !== "3" &&
+            ship.class !== "2" &&
             defenders.length > 0 &&
-            Math.random() > 0.8
+            Math.random() < 0.8
           ) {
             availableTargets = defenders;
           }
@@ -113,7 +113,7 @@ export class BattleService {
               availableTargets = availableTargets.filter(t => t.armor.gt(0));
               if (availableTargets.length === 0) availableTargets = targets;
               break;
-            case "3": // Bomber
+            case "2": // Bomber
               availableTargets = targets.filter(
                 t => t.isDefense && t.armor.gt(0)
               );
