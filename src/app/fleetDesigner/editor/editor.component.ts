@@ -51,6 +51,7 @@ export class EditorComponent
     if (typeof preventScroll === typeof Function) preventScroll();
   }
   ngOnChanges(changes: SimpleChanges) {
+    this.setClasses();
     if (this.design) this.design.copy();
     if (this.design.modules.length === 0) {
       this.edit();
@@ -69,14 +70,6 @@ export class EditorComponent
       this.edit();
     }
 
-    if (
-      !this.design.class ||
-      (this.design.class.id !== "4" && this.design.class.id !== "5")
-    ) {
-      this.weapons = this.ms.game.fleetManager.unlockedModules.filter(m =>
-        m.damage.gt(0)
-      );
-    }
     this.defenses = this.ms.game.fleetManager.unlockedModules.filter(
       m => m.armor.gt(0) || m.shield.gt(0)
     );
@@ -90,11 +83,7 @@ export class EditorComponent
       m => m.tilePerSec > 0
     );
 
-    if (this.design.class && this.design.class.id === "4") {
-      this.other = this.ms.game.fleetManager.allModules.filter(m =>
-        m.shieldCharge.gt(0)
-      );
-    }
+    this.setClasses();
 
     this.subscriptions.push(
       this.ms.em.updateEmitter.subscribe(() => {
@@ -108,6 +97,21 @@ export class EditorComponent
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
 
+  setClasses() {
+    if (
+      !this.design.class ||
+      (this.design.class.id !== "4" && this.design.class.id !== "5")
+    ) {
+      this.weapons = this.ms.game.fleetManager.unlockedModules.filter(m =>
+        m.damage.gt(0)
+      );
+    }
+    if (this.design.class && this.design.class.id === "4") {
+      this.other = this.ms.game.fleetManager.allModules.filter(m =>
+        m.shieldCharge.gt(0)
+      );
+    }
+  }
   addModule() {
     this.design.addModule();
     this.reload();
