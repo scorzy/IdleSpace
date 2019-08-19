@@ -364,7 +364,7 @@ export class FleetManager implements ISalvable {
 
     if (tilePerSec === Number.POSITIVE_INFINITY) return false;
 
-    tilePerSec += AllSkillEffects.FAST_COMBAT.numOwned * 0.15;
+    tilePerSec += AllSkillEffects.FAST_COMBAT.numOwned * 0.25;
     tilePerSec = tilePerSec * (AllSkillEffects.TILE_MERGE.numOwned * 0.2 + 1);
     this.timePerFight = Math.floor(Math.max(1 / tilePerSec, 0.2) * 100) / 100;
     this.maxTilePerFight = Math.floor(tilePerSec / 5);
