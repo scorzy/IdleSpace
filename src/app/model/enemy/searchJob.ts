@@ -88,11 +88,25 @@ export class SearchJob implements IJob {
           : "";
         break;
       case 2:
+      case 3:
         this.name = this.moreMetal ? "Metal & " : "";
         this.name += this.moreCrystal ? "Crystal " : "";
-        this.name += this.moreCrystal && this.moreHabitableSpace ? "& " : "";
-        this.name += this.moreHabitableSpace ? "Habitable Space " : "";
-        this.name += this.moreHabitableSpace && this.moreRobot ? "& " : "";
+        this.name +=
+          this.moreCrystal &&
+          (this.moreHabitableSpace ||
+            this.moreHabitableSpace2 ||
+            this.moreRobot)
+            ? "& "
+            : "";
+        this.name +=
+          this.moreHabitableSpace || this.moreHabitableSpace2
+            ? "Habitable Space "
+            : "";
+        this.name +=
+          (this.moreHabitableSpace || this.moreHabitableSpace2) &&
+          this.moreRobot
+            ? "& "
+            : "";
         this.name += this.moreRobot ? "Robot " : "";
         this.name += " search";
         break;
@@ -107,7 +121,7 @@ export class SearchJob implements IJob {
     if (this.moreCrystal) this.description += "More Crystals ";
     if (this.moreHabitableSpace) this.description += "More Space ";
     if (this.moreHabitableSpace2) this.description += "Even More Space ";
-    if (this.moreRobot) this.description += "More Robots";
+    if (this.moreRobot) this.description += "More Robots ";
     if (this.randomized) this.description += "Randomized ";
   }
 
