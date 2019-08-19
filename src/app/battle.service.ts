@@ -92,7 +92,7 @@ export class BattleService {
         const targets = battleFleets[(num + 1) % 2];
         if (targets.length < 1 || ships.length < 1) break;
         let defenders = targets.filter(s => s.class === "3");
-        console.log(defenders.length);
+        // console.log(defenders.length);
         let n = 0;
         for (const ship of ships) {
           n++;
