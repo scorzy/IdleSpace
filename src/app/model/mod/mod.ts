@@ -2,6 +2,7 @@ import { ISalvable } from "../base/ISalvable";
 import { ModData } from "./modData";
 import { IResource } from "../base/iResource";
 import { MainService } from "src/app/main.service";
+import { MyFromDecimal } from "../utility/myUtility";
 
 export class Mod implements ISalvable, IResource {
   quantity = new Decimal();
@@ -33,7 +34,7 @@ export class Mod implements ISalvable, IResource {
   }
   load(data: any): boolean {
     if (!("i" in data && data.i === this.id)) return false;
-    if ("q" in data) this.quantity = Decimal.fromDecimal(data.q);
+    if ("q" in data) this.quantity = MyFromDecimal(data.q);
     this.quantity = this.quantity.min(this.max);
     this.quantity = this.quantity.max(this.min);
     return true;

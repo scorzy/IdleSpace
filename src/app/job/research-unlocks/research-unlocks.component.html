@@ -15,6 +15,10 @@
     <span class="font-weight-bold"> {{ bon[0] }}: </span>
     <span class="text-success">{{ bon[1] }}</span>
   </li>
+  <li *ngFor="let cla of res.classes; trackBy: getClaId">
+    <span class="font-weight-bold">Ship Class:</span>
+    {{ cla.name }}
+  </li>
   <ng-component *ngIf="!res.firstDone">
     <li *ngFor="let unl of res.toUnlock; trackBy: getId">
       <span class="font-weight-bold">Unlock {{ getType(unl) }}:</span>

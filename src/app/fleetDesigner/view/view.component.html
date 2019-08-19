@@ -61,6 +61,54 @@
     </tr>
 
     <tr>
+      <td class="left">Armor Damage Reduction</td>
+      <td>
+        <app-formatted-quantity
+          [quantity]="design.totalArmorReduction"
+        ></app-formatted-quantity>
+      </td>
+      <td
+        *ngIf="showDifference"
+        [ngClass]="{
+          'text-success': design.editable.totalArmorReduction.gt(
+            design.totalArmorReduction
+          ),
+          'text-danger': design.editable.totalArmorReduction.lt(
+            design.totalArmorReduction
+          )
+        }"
+      >
+        <app-formatted-quantity
+          [quantity]="design.editable.totalArmorReduction"
+        ></app-formatted-quantity>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="left">Shield Damage Reduction</td>
+      <td>
+        <app-formatted-quantity
+          [quantity]="design.totalShieldReduction"
+        ></app-formatted-quantity>
+      </td>
+      <td
+        *ngIf="showDifference"
+        [ngClass]="{
+          'text-success': design.editable.totalShieldReduction.gt(
+            design.totalShieldReduction
+          ),
+          'text-danger': design.editable.totalShieldReduction.lt(
+            design.totalShieldReduction
+          )
+        }"
+      >
+        <app-formatted-quantity
+          [quantity]="design.editable.totalShieldReduction"
+        ></app-formatted-quantity>
+      </td>
+    </tr>
+
+    <tr>
       <td class="left">Total Energy</td>
       <td>
         <app-formatted-quantity
@@ -99,6 +147,30 @@
     </tr>
 
     <tr>
+      <td class="left">Shield Charger</td>
+      <td>
+        <app-formatted-quantity
+          [quantity]="design.totalShieldCharger"
+        ></app-formatted-quantity>
+      </td>
+      <td
+        *ngIf="showDifference"
+        [ngClass]="{
+          'text-success': design.editable.totalShieldCharger.gt(
+            design.totalShieldCharger
+          ),
+          'text-danger': design.editable.totalShieldCharger.lt(
+            design.totalShieldCharger
+          )
+        }"
+      >
+        <app-formatted-quantity
+          [quantity]="design.editable.totalShieldCharger"
+        ></app-formatted-quantity>
+      </td>
+    </tr>
+
+    <tr>
       <td class="left">Armor Damage</td>
       <td>
         <app-formatted-quantity
@@ -131,6 +203,26 @@
               design.shieldDamage
             ),
             'text-danger': design.editable.shieldDamage.lt(design.shieldDamage)
+          }"
+        ></app-formatted-quantity>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="left">Tile /s</td>
+      <td>
+        <app-formatted-quantity
+          [quantity]="design.totalTilePerSec"
+        ></app-formatted-quantity>
+      </td>
+      <td *ngIf="showDifference">
+        <app-formatted-quantity
+          [quantity]="design.editable.totalTilePerSec"
+          [ngClass]="{
+            'text-success':
+              design.editable.totalTilePerSec > design.totalTilePerSec,
+            'text-danger':
+              design.editable.totalTilePerSec < design.totalTilePerSec
           }"
         ></app-formatted-quantity>
       </td>

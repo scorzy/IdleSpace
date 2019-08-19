@@ -20,6 +20,8 @@ import { BonusStack } from "../bonus/bonusStack";
 import { ZERO_DECIMAL_IMMUTABLE } from "../game";
 import { Bonus } from "../bonus/bonus";
 import { AutomatorManager } from "../automators/automatorManager";
+import { ShipDesign } from "../fleet/shipDesign";
+import { MyFromDecimal } from "../utility/myUtility";
 
 export const MAX_ENEMY_LIST_SIZE = 10;
 const DARK_MATTER_START_LEVEL = 2;
@@ -62,6 +64,7 @@ export class EnemyManager implements ISalvable {
   moreHabitable = false;
   moreHabitable2 = false;
   randomized = false;
+  moreRobot = false;
 
   nukeAction: NukeAction;
   missileDamageBonus = new BonusStack();
@@ -71,6 +74,10 @@ export class EnemyManager implements ISalvable {
   prestigeModal = false;
   ascendModal = false;
   totalTime = 0;
+  mergeLevel = 0;
+  currentMerge = 0;
+  rewardMessage = "";
+  rewardMessages: Array<[string, Decimal]> = [];
 
   static getInstance(): EnemyManager {
     return EnemyManager.instance;
@@ -100,13 +107,40 @@ export class EnemyManager implements ISalvable {
     if (this.inBattle || !this.currentEnemy) return false;
     this.fightEnemy = this.currentEnemy;
 
+    //  Merge tiles
+    while (
+      this.currentMerge < this.mergeLevel &&
+      this.currentMerge + this.currentEnemy.currentZone.number < 99
+    ) {
+      this.currentMerge++;
+      const zoneToMerge = this.currentEnemy.zones[
+        this.currentEnemy.currentZone.number + this.currentMerge
+      ];
+      zoneToMerge.generateShips(this.currentEnemy.shipsDesign);
+      zoneToMerge.ships.forEach(ship => {
+        zoneToMerge.mergedOrigin = this.currentEnemy.currentZone;
+        const originalShip = this.currentEnemy.currentZone.ships.find(
+          s => s.name === ship.name
+        );
+        if (originalShip) {
+          originalShip.quantity = originalShip.quantity.plus(ship.quantity);
+        } else {
+          this.currentEnemy.currentZone.ships.push(ship);
+        }
+      });
+      this.currentEnemy.currentZone.originalNavCap = ShipDesign.GetTotalNavalCap(
+        this.currentEnemy.currentZone.ships
+      );
+      zoneToMerge.ships = [];
+    }
+
     Emitters.getInstance().battleEndEmitter.emit(1);
     this.inBattle = true;
     FleetManager.getInstance().reload();
     this.currentEnemy.currentZone.reload();
 
     const battleRequest = new BattleRequest();
-    battleRequest.minTime = 1 - 0.3 * AllSkillEffects.FAST_COMBAT.numOwned;
+    battleRequest.minTime = FleetManager.getInstance().timePerFight - 0.1;
     battleRequest.minTime = Math.max(battleRequest.minTime, 0);
     battleRequest.playerFleet = FleetManager.getInstance().ships.map(s =>
       s.getShipData()
@@ -132,7 +166,7 @@ export class EnemyManager implements ISalvable {
     result.enemyLost.forEach(e => {
       const ship = this.currentEnemy.currentZone.ships.find(s => s.id === e[0]);
       if (ship) {
-        ship.quantity = ship.quantity.minus(Decimal.fromDecimal(e[1]));
+        ship.quantity = ship.quantity.minus(MyFromDecimal(e[1]));
         if (ship.quantity.lt(1)) {
           this.currentEnemy.currentZone.ships = this.currentEnemy.currentZone.ships.filter(
             s => s !== ship
@@ -142,18 +176,47 @@ export class EnemyManager implements ISalvable {
     });
     result.playerLost.forEach(e => {
       const ship = FleetManager.getInstance().ships.find(s => s.id === e[0]);
-      ship.quantity = ship.quantity.minus(Decimal.fromDecimal(e[1]));
+      ship.quantity = ship.quantity.minus(MyFromDecimal(e[1]));
       ship.quantity = ship.quantity.max(0);
     });
     this.currentEnemy.currentZone.reload();
+    for (let n = 0; n <= this.currentMerge; n++) {
+      const mergedZone = this.currentEnemy.zones[
+        this.currentEnemy.currentZone.number + n
+      ];
+      mergedZone.reload();
+    }
 
     //#region Win
     if (result.result === "1") {
       this.currentEnemy.currentZone.ships = null;
       this.currentEnemy.currentZone.originalNavCap = null;
       //#region Reward
-      const currentZone = this.currentEnemy.currentZone;
-      this.rewardPlayer(currentZone.reward);
+      this.rewardMessage = "";
+      this.rewardMessages = [];
+
+      for (let n = 0; n <= this.currentMerge; n++) {
+        const mergedZone = this.currentEnemy.zones[
+          this.currentEnemy.currentZone.number + n
+        ];
+        this.rewardPlayer(mergedZone.reward);
+      }
+      try {
+        if (OptionsService.battleWinNotification) {
+          this.rewardMessages.forEach(e => {
+            this.rewardMessage =
+              this.rewardMessage +
+              "+ " +
+              MainService.formatPipe.transform(e[1]) +
+              " " +
+              e[0] +
+              "<br/>";
+          });
+          MainService.toastr.success(this.rewardMessage, "Battle Win", {
+            enableHtml: true
+          });
+        }
+      } catch (ex) {}
       //#endregion
       //#region Dark Matter
       if (this.currentEnemy.level >= DARK_MATTER_START_LEVEL) {
@@ -167,7 +230,7 @@ export class EnemyManager implements ISalvable {
         );
       }
       //#endregion
-      if (this.currentEnemy.currentZone.number >= 99) {
+      if (this.currentEnemy.currentZone.number + this.currentMerge >= 99) {
         if (this.currentEnemy.level === 1 && this.maxLevel === 1) {
           this.prestigeModal = true;
         }
@@ -194,28 +257,36 @@ export class EnemyManager implements ISalvable {
           }
         } catch (ex) {}
       } else {
+        for (let n = 0; n <= this.currentMerge; n++) {
+          const mergedZone = this.currentEnemy.zones[
+            this.currentEnemy.currentZone.number + n
+          ];
+          mergedZone.completed = true;
+          mergedZone.reload();
+        }
         this.currentEnemy.currentZone.completed = true;
         this.currentEnemy.currentZone.reload();
         this.currentEnemy.currentZone = this.currentEnemy.zones[
-          this.currentEnemy.currentZone.number + 1
+          this.currentEnemy.currentZone.number + 1 + this.currentMerge
         ];
         this.currentEnemy.currentZone.generateShips(
           this.currentEnemy.shipsDesign
         );
         this.currentEnemy.currentZone.reload();
       }
+      this.currentMerge = 0;
     }
     //#endregion
 
     this.inBattle = false;
+    FleetManager.getInstance().setFight();
   }
   /**
    * Reward player for winning a battle
    * if reward is null give a random reward
    */
-  rewardPlayer(reward: Reward) {
+  private rewardPlayer(reward: Reward) {
     const resMan = ResourceManager.getInstance();
-    let message = "";
     let gain = new Decimal();
 
     const addSpace = !!reward;
@@ -247,18 +318,12 @@ export class EnemyManager implements ISalvable {
             resMan.habitableSpace.quantity = resMan.habitableSpace.quantity.plus(
               gainDistrict
             );
-            message =
-              "+ " +
-              MainService.formatPipe.transform(gainDistrict) +
-              " " +
-              resMan.habitableSpace.name +
-              "<br/>";
+            this.addOrUpdateMessages(resMan.habitableSpace.name, gainDistrict);
           }
           gain = new Decimal(RESEARCH_REWARD * this.currentEnemy.level).times(
             prestigeMulti
           );
           ResearchManager.getInstance().update(gain);
-          message += "+ " + MainService.formatPipe.transform(gain) + " research";
           break;
 
         case Reward.MetalMine:
@@ -266,23 +331,14 @@ export class EnemyManager implements ISalvable {
             resMan.miningDistrict.quantity = resMan.miningDistrict.quantity.plus(
               gainDistrict
             );
-            message =
-              "+ " +
-              MainService.formatPipe.transform(gainDistrict) +
-              " " +
-              resMan.miningDistrict.name +
-              "<br/>";
+            this.addOrUpdateMessages(resMan.miningDistrict.name, gainDistrict);
           }
           gain = new Decimal(METAL_REWARD * this.currentEnemy.level).times(
             prestigeMulti
           );
           resMan.metal.quantity = resMan.metal.quantity.plus(gain);
           resMan.metal.quantity = resMan.metal.quantity.min(resMan.metal.limit);
-          message +=
-            "+ " +
-            MainService.formatPipe.transform(gain) +
-            " " +
-            resMan.metal.name;
+          this.addOrUpdateMessages(resMan.metal.name, gain);
           break;
 
         case Reward.CrystalMine:
@@ -290,12 +346,7 @@ export class EnemyManager implements ISalvable {
             resMan.crystalDistrict.quantity = resMan.crystalDistrict.quantity.plus(
               gainDistrict
             );
-            message +=
-              "+ " +
-              MainService.formatPipe.transform(gainDistrict) +
-              " " +
-              resMan.crystalDistrict.name +
-              "<br/>";
+            this.addOrUpdateMessages(resMan.crystalDistrict.name, gainDistrict);
           }
           gain = new Decimal(CRYSTAL_REWARD * this.currentEnemy.level).times(
             prestigeMulti
@@ -304,11 +355,7 @@ export class EnemyManager implements ISalvable {
           resMan.crystal.quantity = resMan.crystal.quantity.min(
             resMan.crystal.limit
           );
-          message +=
-            "+ " +
-            MainService.formatPipe.transform(gain) +
-            " " +
-            resMan.crystal.name;
+          this.addOrUpdateMessages(resMan.crystal.name, gain);
           break;
 
         case Reward.Robot:
@@ -318,11 +365,7 @@ export class EnemyManager implements ISalvable {
           resMan.drone.unlock();
           resMan.drone.quantity = resMan.drone.quantity.plus(gain);
           resMan.drone.quantity = resMan.drone.quantity.min(resMan.drone.limit);
-          message +=
-            "+ " +
-            MainService.formatPipe.transform(gain) +
-            " " +
-            resMan.drone.name;
+          this.addOrUpdateMessages(resMan.drone.name, gain);
           break;
 
         case Reward.Alloy:
@@ -331,11 +374,7 @@ export class EnemyManager implements ISalvable {
           );
           resMan.alloy.quantity = resMan.alloy.quantity.plus(gain);
           resMan.alloy.quantity = resMan.alloy.quantity.min(resMan.alloy.limit);
-          message +=
-            "+ " +
-            MainService.formatPipe.transform(gain) +
-            " " +
-            resMan.alloy.name;
+          this.addOrUpdateMessages(resMan.alloy.name, gain);
           break;
 
         case Reward.Enemy:
@@ -343,12 +382,7 @@ export class EnemyManager implements ISalvable {
             prestigeMulti
           );
           this.addProgress(gain);
-          message +=
-            "+ " +
-            MainService.formatPipe.transform(gain) +
-            " " +
-            resMan.searchProgress.name;
-
+          this.addOrUpdateMessages(resMan.searchProgress.name, gain);
           break;
         case Reward.Shipyard:
           gain = new Decimal(SHIPYARD_REWARD * this.currentEnemy.level).times(
@@ -357,21 +391,20 @@ export class EnemyManager implements ISalvable {
           resMan.shipyardProgress.quantity = resMan.shipyardProgress.quantity.plus(
             gain
           );
-          message +=
-            "+ " +
-            MainService.formatPipe.transform(gain) +
-            " " +
-            resMan.shipyardProgress.name;
+          this.addOrUpdateMessages(resMan.shipyardProgress.name, gain);
           break;
       }
     }
-    try {
-      if (OptionsService.battleWinNotification) {
-        MainService.toastr.success(message, "Battle Win", {
-          enableHtml: true
-        });
-      }
-    } catch (ex) {}
+  }
+
+  private addOrUpdateMessages(what: string, quantity: Decimal) {
+    let elem = this.rewardMessages.find(e => e[0] === what);
+    if (!elem) {
+      elem = [what, quantity];
+      this.rewardMessages.push(elem);
+    } else {
+      elem[1] = elem[1].plus(quantity);
+    }
   }
 
   delete(enemy: Enemy) {
@@ -387,7 +420,8 @@ export class EnemyManager implements ISalvable {
       (this.moreCrystal ? 1 : 0) +
       (this.moreHabitable ? 1 : 0) +
       (this.randomized ? 1 : 0) +
-      (this.moreHabitable2 ? 1 : 0);
+      (this.moreHabitable2 ? 1 : 0) +
+      (this.moreRobot ? 1 : 0);
     return new Decimal(5e3).times(Decimal.pow(1.2, level - 1));
   }
   /**
@@ -401,6 +435,7 @@ export class EnemyManager implements ISalvable {
     searchJob.moreHabitableSpace = this.moreHabitable;
     searchJob.moreHabitableSpace2 = this.moreHabitable2;
     searchJob.randomized = this.randomized;
+    searchJob.moreRobot = this.moreRobot;
     searchJob.total = this.getRequiredSearch(level);
     searchJob.generateNameDescription();
     this.searchJobs.push(searchJob);
@@ -490,6 +525,9 @@ export class EnemyManager implements ISalvable {
     if (this.moreHabitable) data.mh = this.moreHabitable;
     if (this.moreHabitable2) data.mh2 = this.moreHabitable2;
     if (this.randomized) data.ra = this.randomized;
+    if (this.moreRobot) data.mr = this.moreRobot;
+    if (this.mergeLevel !== 0) data.mer = this.mergeLevel;
+    if (this.currentMerge !== 0) data.cumer = this.currentMerge;
 
     return data;
   }
@@ -534,6 +572,21 @@ export class EnemyManager implements ISalvable {
     if ("mh" in data) this.moreHabitable = data.mh;
     if ("mh2" in data) this.moreHabitable2 = data.mh2;
     if ("ra" in data) this.randomized = data.ra;
+    if ("mr" in data) this.moreRobot = data.mr;
+    if ("mer" in data) this.mergeLevel = data.mer;
+    if ("cumer" in data) this.currentMerge = data.cumer;
+
+    if (this.currentEnemy) {
+      for (let n = 0; n <= this.currentMerge; n++) {
+        const mergedZone = this.currentEnemy.zones[
+          this.currentEnemy.currentZone.number + n
+        ];
+        if (mergedZone) {
+          mergedZone.mergedOrigin = this.currentEnemy.currentZone;
+          mergedZone.reload();
+        }
+      }
+    }
 
     return true;
   }

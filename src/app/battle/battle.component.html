@@ -3,7 +3,7 @@
   *ngIf="ms.game.enemyManager.currentEnemy; else noEnemy"
 >
   <div class="clr-row" *ngIf="ms.game.enemyManager.currentEnemy">
-    <div class="clr-col-12 clr-col-md-7">
+    <div class="clr-col-12 clr-col-sm-12 clr-col-lg-7">
       <h1>
         <clr-icon
           [attr.shape]="ms.game.enemyManager.currentEnemy?.shape"
@@ -23,6 +23,12 @@
           [quantity]="totalDistrictGain"
           [integer]="true"
         ></app-formatted-quantity>
+        &nbsp;&nbsp;&nbsp; Fight time:
+        <app-formatted-quantity
+          [quantity]="ms.game.fleetManager.timePerFight"
+          [integer]="false"
+        ></app-formatted-quantity>
+        s
       </span>
 
       <br />
@@ -32,14 +38,15 @@
         <button
           class="btn btn-success"
           (click)="startBattle()"
-          [disabled]="ms.game.enemyManager.inBattle"
-          [disabled]="!ms.game.fleetManager.fightEnabled"
+          [disabled]="
+            ms.game.enemyManager.inBattle || !ms.game.fleetManager.fightEnabled
+          "
         >
           <clr-icon shape="ship"></clr-icon>
           Fight
         </button>
         <button
-          class="btn btn-primary"
+          class="btn btn-primary nuke"
           [ngClass]="{
             'btn-success': ms.game.enemyManager.nukeAction.nukeAll,
             'btn-primary': !ms.game.enemyManager.nukeAction.nukeAll
@@ -68,7 +75,7 @@
             id="btn-demo-check-1"
             [(ngModel)]="ms.game.fleetManager.autoFight"
           />
-          <label for="btn-demo-check-1">Auto Fight</label>
+          <label for="btn-demo-check-1">A. Fight</label>
         </div>
         <div class="checkbox btn">
           <input
@@ -76,7 +83,7 @@
             id="btn-demo-check-2"
             [(ngModel)]="ms.game.fleetManager.autoReinforce"
           />
-          <label for="btn-demo-check-2">Auto Reinforce</label>
+          <label for="btn-demo-check-2">A. Reinforce</label>
         </div>
         <div
           class="checkbox btn"
@@ -87,7 +94,7 @@
             id="check-3"
             [(ngModel)]="ms.game.enemyManager.autoNuke"
           />
-          <label for="check-3">Auto Nuke</label>
+          <label for="check-3">A. Nuke</label>
         </div>
         <div class="checkbox btn">
           <input
@@ -96,46 +103,71 @@
             title="Auto proceed to next enemy."
             [(ngModel)]="ms.game.enemyManager.autoNext"
           />
-          <label for="check-next">Auto Next</label>
+          <label for="check-next">A. Next</label>
         </div>
       </div>
 
-      <form clrForm clrLayout="compact">
-        <clr-input-container>
-          <label
-            >Auto Fight min %
-            <!-- <clr-signpost>
-              <clr-signpost-content *clrIfOpen>
-                <h3>Auto Fight %</h3>
-                <p>
-                  Minimum percentage of actual fleet capacity needed to auto
-                  fight. 100 equals to fight only at full fleet.
-                </p>
-              </clr-signpost-content>
-            </clr-signpost> -->
-          </label>
+      <div class="clr-row">
+        <div class="clr-col-6 clr-col-xl-4">
+          <form clrForm clrLayout="compact">
+            <clr-input-container>
+              <label class="clr-col-12 clr-col-md-8 clr-col-xl-6"
+                >Auto Fight min %
+              </label>
 
-          <input
-            clrInput
-            placeholder="100"
-            name="autoPerc"
-            type="number"
-            min="0"
-            max="100"
-            [(ngModel)]="ms.game.fleetManager.autoFightPer"
-          />
-        </clr-input-container>
-      </form>
+              <input
+                class="clr-col-12 clr-col-md-4"
+                clrInput
+                placeholder="100"
+                name="autoPerc"
+                type="number"
+                min="0"
+                max="100"
+                [(ngModel)]="ms.game.fleetManager.autoFightPer"
+              />
+            </clr-input-container>
+          </form>
+        </div>
+
+        <div class="clr-col-6 clr-col-xl-4" *ngIf="maxExtraTile >= 1">
+          <form clrForm clrLayout="compact">
+            <clr-input-container>
+              <label class="clr-col-12 clr-col-md-10"
+                >Extra tile / fight
+                <small
+                  >(max:
+                  <app-formatted-quantity
+                    [quantity]="maxExtraTile"
+                    [integer]="true"
+                  ></app-formatted-quantity
+                  >)</small
+                >
+              </label>
+
+              <input
+                class="clr-col-12 clr-col-md-2"
+                clrInput
+                placeholder="100"
+                name="autoPerc"
+                type="number"
+                min="0"
+                [attr.max]="maxExtraTile"
+                [(ngModel)]="ms.game.enemyManager.mergeLevel"
+              />
+            </clr-input-container>
+          </form>
+        </div>
+      </div>
 
       <!-- <br /><br /> -->
       <app-battlefield
         [enemy]="ms.game.enemyManager.currentEnemy"
       ></app-battlefield>
     </div>
-    <div class="clr-col-12 clr-col-md-5">
-      <h4>You</h4>
+    <div class="clr-col-12 clr-col-sm-12 clr-col-lg-5">
+      <h4>{{ ms.options.name }}</h4>
       <app-fleet-table [fleet]="ms.game.fleetManager.ships"></app-fleet-table>
-      <h4>Enemy</h4>
+      <h4>{{ ms.game.enemyManager.currentEnemy?.name }}</h4>
       <app-fleet-table
         [fleet]="ms.game.enemyManager.currentEnemy.currentZone.ships"
       ></app-fleet-table>

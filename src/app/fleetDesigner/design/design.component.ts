@@ -13,6 +13,7 @@ import { ShipDesign } from "src/app/model/fleet/shipDesign";
 import { ShipTypes, ShipType } from "src/app/model/fleet/shipTypes";
 import { ResearchManager } from "src/app/model/research/researchManager";
 import { MAX_DESIGN } from "src/app/model/fleet/fleetManager";
+import { ShipClass, Classes } from "src/app/model/fleet/class";
 declare let preventScroll;
 
 @Component({
@@ -27,8 +28,10 @@ export class DesignComponent implements OnInit, OnDestroy, AfterViewInit {
   name = "";
   id = "";
   type = "1";
+  class = "";
 
   unlockedShips: ShipType[] = [];
+  unlockedClasses: ShipClass[] = [];
 
   private subscriptions: Subscription[] = [];
 
@@ -66,6 +69,7 @@ export class DesignComponent implements OnInit, OnDestroy, AfterViewInit {
     for (let i = 0; i < maxTitan; i++) {
       this.unlockedShips.push(ShipType.GetTitan(i));
     }
+    this.unlockedClasses = Classes.filter(c => c.unlocked);
 
     this.type = "1";
     this.subscriptions.push(
@@ -81,7 +85,12 @@ export class DesignComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.isDisabled()) return false;
 
     const shipType = this.unlockedShips.find(t => t.id === this.type);
-    const design = this.ms.game.fleetManager.addDesign(this.name, shipType);
+    const shipClass = Classes.find(c => c.id === this.class);
+    const design = this.ms.game.fleetManager.addDesign(
+      this.name,
+      shipType,
+      shipClass
+    );
 
     this.router.navigate(["/fleet/design/" + design.id]);
   }

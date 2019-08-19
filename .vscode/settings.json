@@ -3,6 +3,7 @@
     "typescript.tsdk": "node_modules/typescript/lib",
     "window.zoomLevel": 0.5,
     "cSpell.words": [
-        "PLAYFAB"
+        "PLAYFAB",
+        "cuauhtli"
     ]
 }

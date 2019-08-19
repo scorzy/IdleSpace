@@ -14,4 +14,5 @@ export interface IResearchData {
   navalCapacity?: number;
   ship?: ShipType;
   bonus?: Array<[string, string]>;
+  classesToUnlock?: string[];
 }

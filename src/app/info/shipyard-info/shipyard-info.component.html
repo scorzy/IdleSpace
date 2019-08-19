@@ -14,6 +14,15 @@
     <strong>Armor</strong>: Health, Run out of this and the ship is destroyed.
   </li>
   <li><strong>Shield</strong>: Takes damage before Armor.</li>
+
+  <li>
+    <strong>Armor Damage Reduction</strong>: Reduces incoming damages to armor.
+  </li>
+  <li>
+    <strong>Shield Damage Reduction</strong>: Reduces incoming damages to
+    shield.
+  </li>
+
   <li><strong>Energy</strong>: Must be positive, has no effect in battle.</li>
   <li><strong>Damage</strong>: Average damage, see modules for more info.</li>
   <li>
@@ -21,13 +30,21 @@
     explode (lower is better).
   </li>
   <li><strong>Price</strong>: Price of one ship in Alloy.</li>
+  <li>
+    <strong>Tile /s</strong>: Speed in tile per second. Total speed of fleets is
+    the lowest among your ships.
+  </li>
+  <li>
+    <strong>Shield Charger</strong>: Technicians only - Amount of shield
+    recharged to the most wounded ship with shield >0
+  </li>
 </ul>
 <p>
   Ships designs are a list of modules, bigger ships can have more modules.
   Designs are limited by module count and module points. Modules can have
   different sizes, Larger sizes cost more points.
 </p>
-<h6>Weapons</h6>
+<h5>Weapons</h5>
 <ul class="list">
   <li>
     <strong>Laser</strong>: Starting weapon, anti armor, 75% vs shield, 125% vs
@@ -45,11 +62,11 @@
     <strong>Gauss Rifle</strong>: Anti-Shield, 170% vs shield, 30% vs armor
   </li>
   <li>
-    <strong>Rail Gun</strong>: Anti-Shield, 10% damage bonus but doesn't damage
-    armor, 210% vs shield, 0% vs armor
+    <strong>Emp Impulse</strong>: Anti-Shield, 10% damage bonus but doesn't
+    damage armor, 210% vs shield, 0% vs armor
   </li>
 </ul>
-<h6>Energy</h6>
+<h5>Energy</h5>
 <ul class="list">
   <li>
     <strong>Solar Panel</strong>: Cheap and doesn't increases explosion chance.
@@ -63,10 +80,34 @@
     increases explosion chance.
   </li>
 </ul>
-<h6>Defense</h6>
+<h5>Defense</h5>
 <ul class="list">
   <li><strong>Armor</strong>: Basic defense, doesn't consume energy.</li>
   <li><strong>Shield</strong>: Takes damage before armor, consumes energy.</li>
+  <li>
+    <strong>Deflector</strong>: Reduce damage taken from armor, consume energy.
+  </li>
+  <li>
+    <strong>Jammer</strong>: Reduce damage taken from shield, consumes energy.
+  </li>
+</ul>
+<h5>Thruster</h5>
+<ul class="list">
+  <li>
+    <strong>Solar Wing</strong>: Small speed boost, doesn't consume energy.
+  </li>
+  <li><strong>Ion Thruster</strong>: Medium speed boost, consume energy.</li>
+  <li>
+    <strong>Warp Drive</strong>: Big speed boost, consume energy and increase
+    explosion chance.
+  </li>
+</ul>
+<h5>Special</h5>
+<ul class="list">
+  <li>
+    <strong>Shield charger</strong>: Technicians only - recharge the ship with
+    less shield
+  </li>
 </ul>
 <h3>Battle</h3>
 <p>
@@ -108,3 +149,21 @@
   the nuke button is green you have enough missiles to destroy all enemy
   defenses.
 </p>
+<h3>Fight Speed</h3>
+<p>
+  Thrusters and prestige can increase your fight speed. Fight is the minimum
+  among your ships. The minimun fight time is 0.2 sec, but you will get extra
+  tile per fight every 5 tile /s. 'Extra tile per fight' allows you to fight
+  more tile at the same time.
+</p>
+<h3>Classes</h3>
+<p>Classes are unlocked after Battlecruiser. Classes are:</p>
+<ul class="list">
+  <li><strong>Fighter</strong> +50% damage</li>
+  <li><strong>Bomber</strong> +100% damage; targets defense only</li>
+  <li><strong>Defender</strong> +50% defenses; draws 80% of enemy fire</li>
+  <li>
+    <strong>Technician</strong> cannot use weapons; has a special module to
+    recharge shields
+  </li>
+</ul>

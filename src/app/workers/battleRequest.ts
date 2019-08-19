@@ -5,11 +5,16 @@ export interface IWeapon {
 }
 export class ShipData {
   id: string;
+  class = "";
   quantity: Decimal;
   totalArmor: Decimal;
   totalShield: Decimal;
+  armorReduction: Decimal;
+  shieldReduction: Decimal;
+  shieldCharger: Decimal;
   modules: IWeapon[];
   explosionLevel = 30;
+  isDefense = false;
 }
 
 // tslint:disable-next-line: max-classes-per-file

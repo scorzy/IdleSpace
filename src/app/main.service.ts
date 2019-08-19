@@ -38,6 +38,7 @@ export class MainService {
   static endInPipe: EndInPipe;
   static toastr: ToastrService;
   static navalCapReinforceToast = false;
+  static researchesCompleted: string[];
 
   zipWorker: ITypedWorker<CompressRequest, CompressRequest2>;
   game: Game;
@@ -151,10 +152,11 @@ export class MainService {
 
   update() {
     if (!this.game) return false;
+    MainService.researchesCompleted = [];
 
     const now = Date.now();
     const diff = (now - this.last) / 1000;
-    // diff = diff * 100000;
+    // diff = diff * 1e10;
     this.game.update(diff);
     this.last = now;
     this.em.updateEmitter.emit(diff);
@@ -168,6 +170,21 @@ export class MainService {
         "Fleet not reinforced. Manual configuration needed!",
         "Exceeding naval capacity"
       );
+    }
+    if (MainService.researchesCompleted.length > 0) {
+      if (MainService.researchesCompleted.length > 4) {
+        MainService.toastr.show(
+          "",
+          Math.floor(MainService.researchesCompleted.length) +
+            " Researches completed",
+          {},
+          "toast-research"
+        );
+      } else {
+        MainService.researchesCompleted.forEach(r => {
+          MainService.toastr.show("", r, {}, "toast-research");
+        });
+      }
     }
   }
   reload() {
@@ -202,10 +219,12 @@ export class MainService {
       this.game = new Game();
       this.game.load(data.g);
       this.show = true;
-      this.toastr.info(
+      this.toastr.show(
         "You were offline for " +
           MainService.endInPipe.transform(Date.now() - this.last),
-        "Game Loaded"
+        "Game Loaded",
+        {},
+        "toast-load"
       );
       this.startAutoSave();
     } else {
@@ -222,7 +241,9 @@ export class MainService {
   }
 
   export() {
-    this.zipWorker.postMessage(new CompressRequest(this.getSave(), "", true, 1));
+    this.zipWorker.postMessage(
+      new CompressRequest(JSON.stringify(this.getSave()), "", true, 1)
+    );
   }
   save(auto = false, playfab = false) {
     if (!this.game) return false;
@@ -235,7 +256,7 @@ export class MainService {
     }
 
     this.zipWorker.postMessage(
-      new CompressRequest(this.getSave(), "", true, num)
+      new CompressRequest(JSON.stringify(this.getSave()), "", true, num)
     );
   }
   clear() {
@@ -248,7 +269,7 @@ export class MainService {
     if (input.compress) {
       let save = "";
       try {
-        save = LZString.compressToBase64(JSON.stringify(input.obj));
+        save = LZString.compressToBase64(input.obj);
       } catch (ex) {
         save = "";
       }
@@ -272,7 +293,7 @@ export class MainService {
           localStorage.setItem("saveDate", Date());
           this.lastSave = Date();
           if (result.requestId === 0 || this.options.autosaveNotification) {
-            this.toastr.success("Game Saved");
+            this.toastr.show("", "Game Saved", {}, "toast-save");
           }
         } else if (result.requestId === 1) {
           this.em.zipEmitter.emit(result.zipped);

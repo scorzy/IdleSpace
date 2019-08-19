@@ -30,7 +30,7 @@
               "src/assets",
               {
                 "glob": "break_infinity.min.js",
-                "input": "./node_modules/break_infinity.js/",
+                "input": "./node_modules/break_infinity.js/dist/",
                 "output": "./"
               },
               {
@@ -45,7 +45,7 @@
               "src/styles.scss"
             ],
             "scripts": [
-              "node_modules/break_infinity.js/break_infinity.min.js",
+              "node_modules/break_infinity.js/dist/break_infinity.min.js",
               "node_modules/@webcomponents/custom-elements/custom-elements.min.js",
               "node_modules/@clr/icons/clr-icons.min.js",
               "node_modules/swarm-numberformat/dist/swarm-numberformat.min.js"
@@ -112,7 +112,7 @@
               "src/assets",
               {
                 "glob": "break_infinity.min.js",
-                "input": "./node_modules/break_infinity.js/",
+                "input": "./node_modules/break_infinity.js/dist/",
                 "output": "./"
               },
               {
@@ -122,7 +122,7 @@
               }
             ],
             "scripts": [
-              "node_modules/break_infinity.js/break_infinity.min.js",
+              "node_modules/break_infinity.js/dist/break_infinity.min.js",
               "node_modules/@webcomponents/custom-elements/custom-elements.min.js",
               "node_modules/@clr/icons/clr-icons.min.js",
               "node_modules/swarm-numberformat/dist/swarm-numberformat.min.js"

@@ -12,7 +12,7 @@ export const ModulesData: IModuleData[] = [
     shieldPercent: 75,
     armorPercent: 125,
     nextToUnlock: ["p"],
-    researchPrice: 2e3,
+    researchPrice: 1e4,
     shape: "laser",
     start: true
   },
@@ -25,7 +25,7 @@ export const ModulesData: IModuleData[] = [
     damage: 10,
     shieldPercent: 30,
     armorPercent: 170,
-    researchPrice: 2e3,
+    researchPrice: 1e4,
     nextToUnlock: ["i"],
     shape: "plasma"
   },
@@ -38,7 +38,7 @@ export const ModulesData: IModuleData[] = [
     damage: 10,
     shieldPercent: 0,
     armorPercent: 210,
-    researchPrice: 2e3,
+    researchPrice: 1e4,
     shape: "disintegrator"
   },
   {
@@ -51,7 +51,7 @@ export const ModulesData: IModuleData[] = [
     shieldPercent: 125,
     armorPercent: 75,
     nextToUnlock: ["g"],
-    researchPrice: 2e3,
+    researchPrice: 1e4,
     shape: "mass"
   },
   {
@@ -64,20 +64,20 @@ export const ModulesData: IModuleData[] = [
     shieldPercent: 170,
     armorPercent: 30,
     nextToUnlock: ["e"],
-    researchPrice: 2e3,
+    researchPrice: 1e4,
     shape: "gauss"
   },
   {
     id: "e",
-    name: "Rail gun",
+    name: "Emp impulse",
     sizes: ALL_SIZES,
     energyBalance: -1,
     alloyPrice: 20,
     damage: 10,
     shieldPercent: 210,
     armorPercent: 0,
-    researchPrice: 2e3,
-    shape: "railgun"
+    researchPrice: 1e4,
+    shape: "emp"
   },
   {
     id: "S",
@@ -86,7 +86,7 @@ export const ModulesData: IModuleData[] = [
     energyBalance: 2,
     alloyPrice: 10,
     nextToUnlock: ["R"],
-    researchPrice: 2e3,
+    researchPrice: 1e4,
     shape: "solar",
     start: true
   },
@@ -97,7 +97,7 @@ export const ModulesData: IModuleData[] = [
     energyBalance: 4,
     alloyPrice: 20,
     nextToUnlock: ["F"],
-    researchPrice: 2e3,
+    researchPrice: 1e4,
     shape: "radioactive",
     explosionChance: 15
   },
@@ -107,7 +107,7 @@ export const ModulesData: IModuleData[] = [
     sizes: ALL_SIZES,
     energyBalance: 6,
     alloyPrice: 30,
-    researchPrice: 2e3,
+    researchPrice: 1e4,
     shape: "reactor",
     explosionChance: 25
   },
@@ -118,7 +118,7 @@ export const ModulesData: IModuleData[] = [
     energyBalance: 0,
     alloyPrice: 10,
     armor: BASE_ARMOR,
-    researchPrice: 2e3,
+    researchPrice: 1e4,
     shape: "armor",
     start: true
   },
@@ -129,7 +129,69 @@ export const ModulesData: IModuleData[] = [
     energyBalance: -1,
     alloyPrice: 20,
     shield: BASE_ARMOR,
-    researchPrice: 2e3,
+    researchPrice: 1e4,
     shape: "shield"
+  },
+  {
+    id: "f",
+    name: "Deflector",
+    sizes: ALL_SIZES,
+    energyBalance: -2,
+    alloyPrice: 40,
+    armorReduction: BASE_ARMOR / 4,
+    researchPrice: 1e4,
+    shape: "shieldRed"
+  },
+  {
+    id: "j",
+    name: "Jammer",
+    sizes: ALL_SIZES,
+    energyBalance: -2,
+    alloyPrice: 40,
+    shieldReduction: BASE_ARMOR / 4,
+    researchPrice: 1e4,
+    shape: "armorRed"
+  },
+  {
+    id: "c",
+    name: "Shield charger",
+    sizes: ALL_SIZES,
+    energyBalance: -2,
+    alloyPrice: 40,
+    shieldCharge: BASE_ARMOR * 0.8,
+    researchPrice: 1e4,
+    shape: "armor-upgrades"
+  },
+  {
+    id: "W",
+    name: "Solar Wing",
+    sizes: ALL_SIZES,
+    alloyPrice: 20,
+    nextToUnlock: ["T"],
+    researchPrice: 1e4,
+    tilePerSec: 0.1,
+    shape: "sail"
+  },
+  {
+    id: "T",
+    name: "Ion thruster",
+    sizes: ALL_SIZES,
+    alloyPrice: 40,
+    energyBalance: -1,
+    nextToUnlock: ["P"],
+    researchPrice: 1e4,
+    tilePerSec: 0.15,
+    shape: "ion"
+  },
+  {
+    id: "P",
+    name: "Warp drive",
+    sizes: ALL_SIZES,
+    alloyPrice: 80,
+    energyBalance: -2,
+    explosionChance: 10,
+    researchPrice: 1e4,
+    tilePerSec: 0.2,
+    shape: "warp"
   }
 ];

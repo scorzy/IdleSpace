@@ -26,11 +26,7 @@ export class AutomatorTableComponent implements OnInit {
   constructor(public ms: MainService) {}
 
   ngOnInit() {
-    for (
-      let i = 0;
-      i < this.ms.game.prestigeManager.maxPrestigePoints * 4;
-      i++
-    ) {
+    for (let i = 0; i < 100; i++) {
       const auto = this.ms.game.automatorManager.automatorGroups
         .filter(a => a.prestigeLevel === i)
         .map(a => [a.name, a.description]);

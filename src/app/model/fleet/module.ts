@@ -41,6 +41,10 @@ export interface IModuleData {
   shape?: string;
   explosionChance?: number;
   start?: boolean;
+  armorReduction?: DecimalSource;
+  shieldReduction?: DecimalSource;
+  shieldCharge?: DecimalSource;
+  tilePerSec?: number;
 }
 export class Module extends AbstractUnlockable {
   research: Research;
@@ -59,8 +63,12 @@ export class Module extends AbstractUnlockable {
     public shieldPercent = 0,
     public shield: Decimal = new Decimal(0),
     public armor: Decimal = new Decimal(0),
+    public shieldReduction: Decimal = new Decimal(0),
+    public armorReduction: Decimal = new Decimal(0),
     public explosionChance = 0,
-    public start = false
+    public start = false,
+    public shieldCharge: Decimal = new Decimal(0),
+    public tilePerSec = 0
   ) {
     super();
 
@@ -75,12 +83,20 @@ export class Module extends AbstractUnlockable {
     if (data.damage) ret.damage = new Decimal(data.damage);
     if (data.shield) ret.shield = new Decimal(data.shield);
     if (data.armor) ret.armor = new Decimal(data.armor);
+    if (data.shieldReduction) {
+      ret.shieldReduction = new Decimal(data.shieldReduction);
+    }
+    if (data.armorReduction) {
+      ret.armorReduction = new Decimal(data.armorReduction);
+    }
     if (data.armorPercent) ret.armorPercent = data.armorPercent;
     if (data.shieldPercent) ret.shieldPercent = data.shieldPercent;
     if (data.nextToUnlock) ret.nextToUnlock = data.nextToUnlock;
     if (data.researchPrice) ret.researchPrice = data.researchPrice;
     if (data.explosionChance) ret.explosionChance = data.explosionChance;
     if (data.start) ret.start = data.start;
+    if (data.shieldCharge) ret.shieldCharge = new Decimal(data.shieldCharge);
+    if (data.tilePerSec) ret.tilePerSec = data.tilePerSec;
     ret.shape = data.shape ? data.shape : "flask";
     return ret;
   }

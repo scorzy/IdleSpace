@@ -6,6 +6,7 @@ import { Action } from "../actions/abstractAction";
 import { IBuyable } from "../base/IBuyable";
 import { ISpendable } from "../base/ISpendable";
 import { BuySkillAction } from "../actions/buySkillAction";
+import { MyFromDecimal } from "../utility/myUtility";
 
 export class SkillEffect implements IResource, ISalvable, IBuyable {
   public static availableSkill: ISpendable = {
@@ -62,7 +63,7 @@ export class SkillEffect implements IResource, ISalvable, IBuyable {
   }
   load(data: any): boolean {
     if (!("i" in data || data.i !== this.id)) return false;
-    if ("q" in data) this.quantity = Decimal.fromDecimal(data.q);
+    if ("q" in data) this.quantity = MyFromDecimal(data.q);
     return true;
   }
 }

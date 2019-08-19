@@ -21,11 +21,20 @@ export class ResearchManager {
   isNewModal = false;
   //#region Researches
   betterResearch: Research;
+  computing: Research;
   energy: Research;
   modding: Research;
   telescope: Research;
   scavenger: Research;
   missile: Research;
+  classes: Research;
+  defender: Research;
+  deflector: Research;
+  jammer: Research;
+  shieldCharger: Research;
+  technician: Research;
+  massProduction: Research;
+  mTheory: Research;
   //#region Ship Types
   corvette: Research;
   frigate: Research;
@@ -48,6 +57,7 @@ export class ResearchManager {
       this.researches.push(Research.fromData(resData));
     }
     this.betterResearch = this.researches.find(r => r.id === "r");
+    this.computing = this.researches.find(r => r.id === "CO");
     this.corvette = this.researches.find(r => r.id === "c");
     this.frigate = this.researches.find(r => r.id === "f");
     this.destroyer = this.researches.find(r => r.id === "d");
@@ -61,8 +71,21 @@ export class ResearchManager {
     this.titan = this.researches.find(r => r.id === "n");
     this.titan.ratio = 1e3;
     this.missile = this.researches.find(r => r.id === "i");
-    ResourceManager.getInstance().energyX1.productionMultiplier.additiveBonus.push(
+    this.classes = this.researches.find(r => r.id === "cla");
+    this.defender = this.researches.find(r => r.id === "cl3");
+    this.technician = this.researches.find(r => r.id === "cl4");
+    this.massProduction = this.researches.find(r => r.id === "D1");
+    this.mTheory = this.researches.find(r => r.id === "Mt");
+
+    const resMan = ResourceManager.getInstance();
+    resMan.energyX1.productionMultiplier.additiveBonus.push(
       new Bonus(this.energy, 0.1)
+    );
+    resMan.computingX1.productionMultiplier.additiveBonus.push(
+      new Bonus(this.computing, 0.1, true)
+    );
+    resMan.droneFactory.productionMultiplier.additiveBonus.push(
+      new Bonus(this.massProduction, 0.2)
     );
 
     this.corvette.ship = ShipTypes[0];
@@ -135,6 +158,7 @@ export class ResearchManager {
    * Generate researches for ship modules
    */
   addOtherResearches() {
+    // console.log("addOtherResearches");
     //  Create researches for modules
     let moduleResearches = new Array<Research>();
     FleetManager.getInstance().allModules.forEach(m => {
@@ -142,11 +166,11 @@ export class ResearchManager {
         id: m.id + "-R",
         name: m.name,
         shape: m.shape,
-        price: 1e4,
+        price: m.researchPrice,
         description: "Unlock " + m.name
       };
       const research = Research.fromData(resData);
-      research.limit = new Decimal(1e4);
+      research.limit = new Decimal(1e6);
       research.toUnlock.push(m);
       m.research = research;
       research.module = m;
@@ -168,6 +192,16 @@ export class ResearchManager {
           });
       });
 
+    //  Add damage reduction researches to defender class
+    this.deflector = this.researches.find(r => r.id === "f-R");
+    this.jammer = this.researches.find(r => r.id === "j-R");
+    this.shieldCharger = this.researches.find(r => r.id === "c-R");
+    this.defender.toUnlock.push(this.deflector, this.jammer);
+    moduleResearches = moduleResearches.filter(
+      r => r !== this.deflector && r !== this.jammer && r !== this.shieldCharger
+    );
+    this.technician.toUnlock.push(this.shieldCharger);
+
     //  Add other modules to corvette research
     this.corvette.toUnlock = this.corvette.toUnlock.concat(moduleResearches);
   }
@@ -184,7 +218,12 @@ export class ResearchManager {
         }
       } else if (progress.gt(0)) {
         this.toDo.shift();
-        this.toDo.push(res);
+        if (res.maxLevel < 0 || Decimal.gte(res.maxLevel - 1, res.quantity)) {
+          this.toDo.push(res);
+        } else {
+          this.backLog.push(res);
+        }
+
         if (this.autoSort) {
           this.sortPrice();
         }
@@ -222,6 +261,7 @@ export class ResearchManager {
         const research = this.researches.find(u => u.id === res.i);
         if (research) {
           research.load(res);
+          research.unlocked = true;
           this.toDo.push(research);
         }
       }
@@ -232,6 +272,7 @@ export class ResearchManager {
         const research = this.researches.find(u => u.id === res.i);
         if (research) {
           research.load(res);
+          research.unlocked = true;
           this.backLog.push(research);
         }
       }
@@ -242,6 +283,7 @@ export class ResearchManager {
         const research = this.researches.find(u => u.id === res.i);
         if (research) {
           research.load(res);
+          research.unlocked = true;
           if (research.quantity.gte(research.limit)) {
             research.done = true;
             this.completed.push(research);

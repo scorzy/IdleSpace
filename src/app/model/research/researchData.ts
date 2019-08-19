@@ -20,8 +20,10 @@ export const ResearchData: IResearchData[] = [
     price: 5e3,
     description: "+10% energy",
     limit: Number.POSITIVE_INFINITY,
+    researchToUnlock: ["CO"],
     bonus: [["Energy Gain", "+10%"]]
   },
+
   {
     id: "c",
     name: "Corvette",
@@ -87,7 +89,7 @@ export const ResearchData: IResearchData[] = [
     shape: "flask",
     price: 1e14,
     description: "Unlock battlecruiser",
-    researchToUnlock: ["civ", "s"]
+    researchToUnlock: ["civ", "s", "cl1"]
   },
   {
     id: "s",
@@ -103,21 +105,39 @@ export const ResearchData: IResearchData[] = [
     shape: "titan",
     price: 1e20,
     description: "Unlock Titan",
+    researchToUnlock: ["Mt"],
     limit: 100
+  },
+  {
+    id: "Mt",
+    name: "M-theory",
+    shape: "atom-core",
+    price: 1e24,
+    description: "Improve science",
+    bonus: [["Science gain", "+2000%"]]
   },
   {
     id: "D",
     name: "Robot Factory",
-    shape: "battery",
+    shape: "robot",
     price: 1e7,
     description: "Robot Factory",
     resourceToUnlock: ["D", "F"],
-    researchToUnlock: ["i"]
+    researchToUnlock: ["i", "D1"]
+  },
+  {
+    id: "D1",
+    name: "Mass Production",
+    shape: "robot",
+    price: 1e12,
+    limit: Number.POSITIVE_INFINITY,
+    description: "Improve Robot Factory",
+    bonus: [["Robot Factory input/output", "+20%"]]
   },
   {
     id: "M",
     name: "Drone Modding",
-    shape: "battery",
+    shape: "hand",
     price: 2e5,
     description: "+1 drone modding point",
     limit: Number.POSITIVE_INFINITY,
@@ -155,7 +175,8 @@ export const ResearchData: IResearchData[] = [
     shape: "energy",
     price: 5e4,
     description: "unlock Electrical grid",
-    resourceToUnlock: ["eM"]
+    resourceToUnlock: ["eM"],
+    researchToUnlock: ["xM"]
   },
   {
     id: "civ",
@@ -164,5 +185,72 @@ export const ResearchData: IResearchData[] = [
     price: 1e14,
     description: "Unlock civilian ships",
     resourceToUnlock: ["te", "sc", "ss", "bs"]
+  },
+  {
+    id: "cl1",
+    name: "Ships Classes",
+    shape: "class",
+    price: 1e14,
+    description: "Unlock ships classes and fighter",
+    researchToUnlock: ["cl2", "cl3", "cl4"],
+    classesToUnlock: ["1"]
+  },
+  {
+    id: "cl2",
+    name: "Bomber",
+    shape: "bomber",
+    price: 1e14,
+    description: "Unlock Bomber",
+    classesToUnlock: ["2"]
+  },
+  {
+    id: "cl3",
+    name: "Defender",
+    shape: "defender",
+    price: 1e14,
+    description: "Unlock Defender",
+    classesToUnlock: ["3"]
+  },
+  {
+    id: "cl4",
+    name: "Technician",
+    shape: "scout",
+    price: 1e14,
+    description: "Unlock Technician",
+    classesToUnlock: ["4"]
+  },
+  // {
+  //   id: "cl5",
+  //   name: "Supply",
+  //   shape: "ufo",
+  //   price: 1e14,
+  //   description: "Unlock Supply",
+  //   classesToUnlock: ["5"]
+  // },
+  {
+    id: "xM",
+    name: "Computing center",
+    shape: "cpu",
+    price: 1e5,
+    description: "unlock Computing center",
+    resourceToUnlock: ["xM"],
+    researchToUnlock: ["sM", "CO"]
+  },
+  {
+    id: "sM",
+    name: "Science complex",
+    shape: "flask",
+    price: 1e6,
+    description: "unlock Science complex",
+    resourceToUnlock: ["sM"]
+  },
+  {
+    id: "CO",
+    name: "Computing",
+    shape: "cpu",
+    price: 1e6,
+    description: "+10% computing",
+    limit: Number.POSITIVE_INFINITY,
+    bonus: [["Computing Gain", "+10%"]]
   }
 ];

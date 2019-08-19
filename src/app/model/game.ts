@@ -14,6 +14,7 @@ import { AutomatorManager } from "./automators/automatorManager";
 import { ShipDesign } from "./fleet/shipDesign";
 import { Preset } from "./enemy/preset";
 import { SkillEffect } from "./prestige/skillEffects";
+import { Classes } from "./fleet/class";
 
 export const ZERO_DECIMAL_IMMUTABLE = new Decimal(0);
 
@@ -67,11 +68,17 @@ export class Game {
     this.resourceManager.crystalDistrict.quantity = new Decimal(2);
     // this.darkMatterManager.darkMatter.quantity = new Decimal(1e10);
 
+    this.researchBonus.additiveBonus.push(
+      new Bonus(this.resourceManager.scienceM, 1, true)
+    );
     this.researchBonus.multiplicativeBonus.push(
       new Bonus(this.researchManager.betterResearch, new Decimal(0.2))
     );
     this.researchBonus.multiplicativeBonus.push(
       new Bonus(this.resourceManager.scienceShip, new Decimal(0.05))
+    );
+    this.researchBonus.multiplicativeBonus.push(
+      new Bonus(this.researchManager.mTheory, 20, true)
     );
 
     this.resourceManager.allResources.forEach(
@@ -196,6 +203,7 @@ export class Game {
     this.resourceManager.loadPolynomial();
     if (this.isPaused) this.resourceManager.loadEndTime();
 
+    this.fleetManager.reloadFightTime();
     this.resourceManager.reloadActions();
     this.resourceManager.unlockedResources.forEach(r => r.setABC());
     this.fleetManager.reloadActions();
@@ -256,6 +264,9 @@ export class Game {
       : SkillEffect.availableSkill.quantity.plus(toAdd);
 
     this.automatorManager.resetTimers();
+    Classes.forEach(c => {
+      c.unlocked = false;
+    });
   }
   ascend() {
     if (!this.prestigeManager.canAscend()) return false;
@@ -308,7 +319,7 @@ export class Game {
     //   m.quantity = new Decimal(1e20);
     // });
     // this.prestigeManager.totalPrestige = 10;
-    // this.prestigeManager.ascension = 1;
+    // this.prestigeManager.ascension = 2;
 
     this.fleetManager.upgradingCheck();
     this.resourceManager.limitedResources.forEach(r => r.reloadLimit());
@@ -322,6 +333,11 @@ export class Game {
       h.unlockedAutomators = h.automators.filter(g => g.isUnlocked());
     });
     this.automatorManager.resetTimers();
+    this.fleetManager.reloadFightTime();
+    this.enemyManager.mergeLevel = Math.min(
+      this.enemyManager.mergeLevel,
+      this.fleetManager.maxTilePerFight
+    );
   }
   //#endregion
 }

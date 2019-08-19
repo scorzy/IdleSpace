@@ -1,5 +1,15 @@
+@media screen and (min-width: 900px) {
+  .res-progress {
+    float: right;
+  }
+}
+@media screen and (max-width: 900px) {
+  .res-progress {
+    display: block;
+  }
+}
+
 .res-progress {
-  float: right;
   font-size: 90%;
 }
 
@@ -13,6 +23,7 @@
 }
 .card-text {
   margin-bottom: 0;
+  min-width: 260px;
 }
 .no-margin-left {
   margin-left: 0;

@@ -30,6 +30,9 @@
       <span class="label label-warning" *ngIf="enemy.moreHabitableSpace2"
         >More Habitable Space</span
       >
+      <span class="label label-danger" *ngIf="enemy.moreRobot"
+        >More Robot c.</span
+      >
     </p>
     <p>
       <span class="label label-info"
@@ -42,6 +45,7 @@
       <span class="label label-warning"
         >Habitable Space {{ enemy.baseHabitable }}</span
       >
+      <span class="label label-danger">Robot c. {{ enemy.baseRobot }}</span>
     </p>
     <br />
     <div class="btn-group btn-primary">

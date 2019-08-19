@@ -12,6 +12,7 @@ import { ResearchManager } from "../research/researchManager";
 import { AllSkillEffects } from "../prestige/allSkillEffects";
 import sample from "lodash-es/sample";
 import { MainService } from "src/app/main.service";
+import { ShipClass } from "./class";
 
 export const MAX_NAVAL_CAPACITY = 1e4;
 export const MAX_DESIGN = 20;
@@ -44,6 +45,8 @@ export class FleetManager implements ISalvable {
   autoFightPer = 100;
   isUsed = false;
   totalShipWant = 0;
+  timePerFight = 1;
+  maxTilePerFight = 0;
 
   constructor() {
     FleetManager.instance = this;
@@ -100,8 +103,9 @@ export class FleetManager implements ISalvable {
     );
     this.reloadSliders();
   }
-  addDesign(name: string, type: ShipType): ShipDesign {
+  addDesign(name: string, type: ShipType, shipClass: ShipClass): ShipDesign {
     const design = new ShipDesign();
+    design.class = shipClass;
 
     design.id =
       "" +
@@ -345,6 +349,28 @@ export class FleetManager implements ISalvable {
         );
         this.reloadNavalCapacity();
       }
+    }
+  }
+  /**
+   * Reload max tile /s
+   */
+  reloadFightTime() {
+    this.timePerFight = 1;
+    this.maxTilePerFight = 0;
+    let tilePerSec = this.ships
+      .filter(s => s.quantity.gt(0))
+      .map(s => s.totalTilePerSec)
+      .reduce((p, n) => Math.min(p, n), Number.POSITIVE_INFINITY);
+
+    if (tilePerSec === Number.POSITIVE_INFINITY) return false;
+
+    tilePerSec += AllSkillEffects.FAST_COMBAT.numOwned * 0.25;
+    tilePerSec = tilePerSec * (AllSkillEffects.TILE_MERGE.numOwned * 0.2 + 1);
+    this.timePerFight = Math.floor(Math.max(1 / tilePerSec, 0.2) * 100) / 100;
+    this.maxTilePerFight = Math.floor(tilePerSec / 5);
+    const em = EnemyManager.getInstance();
+    if (em) {
+      em.mergeLevel = Math.min(em.mergeLevel, this.maxTilePerFight);
     }
   }
 }

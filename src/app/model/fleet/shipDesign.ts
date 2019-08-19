@@ -13,6 +13,8 @@ import { ShipData } from "src/app/workers/battleRequest";
 import { Job } from "../shipyard/job";
 import { Shipyard } from "../shipyard/shipyard";
 import { SliderOptions } from "../utility/sliderOptions";
+import { ShipClass, Classes } from "./class";
+import { MyFromDecimal } from "../utility/myUtility";
 
 export const SIZE_MULTI = 0.25;
 
@@ -27,12 +29,16 @@ export class ShipDesign implements ISalvable, IBuyable {
   totalDamage = new Decimal();
   totalArmor = new Decimal();
   totalShield = new Decimal();
+  totalArmorReduction = new Decimal();
+  totalShieldReduction = new Decimal();
   totalEnergy = new Decimal();
   armorDamage = new Decimal();
   shieldDamage = new Decimal();
   price = new Decimal();
   totalFleetPower = new Decimal();
   explosionChance = 30;
+  totalShieldCharger = new Decimal();
+  totalTilePerSec = 1;
 
   editable: ShipDesign;
   original: ShipDesign;
@@ -57,6 +63,8 @@ export class ShipDesign implements ISalvable, IBuyable {
     ceil: 100
   };
   order = 0;
+  class: ShipClass;
+  isDefense = false;
 
   /**
    * Generate Ships from presets
@@ -125,10 +133,14 @@ export class ShipDesign implements ISalvable, IBuyable {
     this.armorDamage = new Decimal(0);
     this.shieldDamage = new Decimal(0);
     this.totalFleetPower = new Decimal(0);
+    this.totalShieldCharger = new Decimal(0);
     this.totalArmor = new Decimal(this.type ? this.type.health : 0);
+    this.totalArmorReduction = new Decimal(0);
+    this.totalShieldReduction = new Decimal(0);
     this.usedModulePoint = 0;
     this.price = new Decimal(this.type.baseCost);
     this.explosionChance = 30;
+    this.totalTilePerSec = 1;
 
     this.modules
       .filter(q => q.isValid())
@@ -141,6 +153,15 @@ export class ShipDesign implements ISalvable, IBuyable {
         this.usedModulePoint += w.size;
 
         w.computedDamage = w.module.damage.times(bonus).times(sizeFactor);
+        // Fighter
+        if (this.class === Classes[0]) {
+          w.computedDamage = w.computedDamage.times(1.5);
+        }
+        // Bomber
+        if (this.class === Classes[1]) {
+          w.computedDamage = w.computedDamage.times(2);
+        }
+
         this.totalDamage = this.totalDamage.plus(w.computedDamage);
         this.totalEnergy = this.totalEnergy.plus(
           w.module.energyBalance.times(bonus).times(w.size)
@@ -151,23 +172,29 @@ export class ShipDesign implements ISalvable, IBuyable {
         this.totalShield = this.totalShield.plus(
           w.module.shield.times(bonus).times(sizeFactor)
         );
+        this.totalArmorReduction = this.totalArmorReduction.plus(
+          w.module.armorReduction.times(bonus).times(sizeFactor)
+        );
+        this.totalShieldReduction = this.totalShieldReduction.plus(
+          w.module.shieldReduction.times(bonus).times(sizeFactor)
+        );
+        this.totalShieldCharger = this.totalShieldCharger.plus(
+          w.module.shieldCharge.times(bonus).times(sizeFactor)
+        );
 
         if (w.module.armorPercent > 0) {
           this.armorDamage = this.armorDamage.plus(
-            w.module.damage
-              .times(bonus)
-              .times(sizeFactor)
-              .times(w.module.armorPercent / 100)
+            w.computedDamage.times(w.module.armorPercent / 100)
           );
         }
         if (w.module.shieldPercent > 0) {
           this.shieldDamage = this.shieldDamage.plus(
-            w.module.damage
-              .times(bonus)
-              .times(sizeFactor)
-              .times(w.module.shieldPercent / 100)
+            w.computedDamage.times(w.module.shieldPercent / 100)
           );
         }
+
+        this.totalTilePerSec =
+          this.totalTilePerSec + w.module.tilePerSec * bonus * sizeFactor;
 
         this.price = this.price.plus(
           w.module.alloyPrice.times(1 + (w.size - 1) * 2).times(multiPrice)
@@ -176,6 +203,25 @@ export class ShipDesign implements ISalvable, IBuyable {
         this.explosionChance +=
           w.module.explosionChance * (1 + (w.size - 1) * 0.2);
       });
+
+    //#region Classes
+    switch (this.class) {
+      case Classes[0]: // Fighter
+        break;
+      case Classes[1]: // Bomber
+        break;
+      case Classes[2]: // Defender
+        this.totalArmor = this.totalArmor.times(1.5);
+        this.totalShield = this.totalShield.times(1.5);
+        this.totalArmorReduction = this.totalArmorReduction.times(1.5);
+        this.totalShieldReduction = this.totalShieldReduction.times(1.5);
+        break;
+      case Classes[3]: // Technician
+        break;
+      case Classes[4]: // Supply
+        break;
+    }
+    //#endregion
 
     this.totalFleetPower = this.totalDamage
       .plus(this.totalShield)
@@ -211,12 +257,14 @@ export class ShipDesign implements ISalvable, IBuyable {
     data.m = this.modules.filter(m => m.isValid()).map(m => m.getSave());
     if (this.quantity.gt(0)) data.q = this.quantity;
     if (this.wantQuantity.gt(0)) data.w = this.wantQuantity;
+    if (this.class) data.cl = this.class.id;
+    if (this.isDefense) data.def = this.isDefense;
 
     return data;
   }
   load(data: any, isPlayer = true): boolean {
     this.id = data.i;
-    if ("q" in data) this.shipQuantity = Decimal.fromDecimal(data.q);
+    if ("q" in data) this.shipQuantity = MyFromDecimal(data.q);
     this.type = ShipTypes.find(t => t.id === data.t);
 
     if (this.type === null || this.type === undefined) {
@@ -244,11 +292,13 @@ export class ShipDesign implements ISalvable, IBuyable {
       }
     }
     if ("q" in data) {
-      this.quantity = Decimal.fromDecimal(data.q);
+      this.quantity = MyFromDecimal(data.q);
     }
     if ("w" in data) {
-      this.wantQuantity = Decimal.fromDecimal(data.w);
+      this.wantQuantity = MyFromDecimal(data.w);
     }
+    if ("cl" in data) this.class = Classes.find(c => c.id === data.cl);
+    if ("def" in data) this.isDefense = data.def;
 
     this.reload(isPlayer);
     return true;
@@ -263,7 +313,8 @@ export class ShipDesign implements ISalvable, IBuyable {
     this.modules.forEach(w => {
       this.editable.modules.push(DesignLine.copy(w));
     });
-
+    this.editable.class = this.class;
+    this.editable.isDefense = this.isDefense;
     this.editable.reload();
   }
   getCopy(): ShipDesign {
@@ -273,6 +324,8 @@ export class ShipDesign implements ISalvable, IBuyable {
     ret.name = this.name;
     ret.modules = this.modules;
     ret.order = this.order;
+    ret.class = this.class;
+    ret.isDefense = this.isDefense;
     ret.reload(false);
     return ret;
   }
@@ -338,15 +391,20 @@ export class ShipDesign implements ISalvable, IBuyable {
   getShipData(): ShipData {
     const shipData = new ShipData();
     shipData.id = this.id;
+    if (this.class) shipData.class = this.class.id;
     shipData.quantity = this.quantity;
     shipData.totalArmor = this.totalArmor;
     shipData.totalShield = this.totalShield;
     shipData.explosionLevel = this.explosionChance;
+    shipData.armorReduction = this.totalArmorReduction;
+    shipData.shieldReduction = this.totalShieldReduction;
+    shipData.shieldCharger = this.totalShieldCharger;
     shipData.modules = new Array<{
       computedDamage: Decimal
       shieldPercent: number
       armorPercent: number
     }>();
+    shipData.isDefense = this.isDefense;
 
     this.modules.forEach(m => {
       const weapon = {

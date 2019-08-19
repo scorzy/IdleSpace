@@ -35,6 +35,13 @@ export class EditorComponent
   titanSizes = [];
   shipNum = 1;
 
+  weapons: Module[] = [];
+  defenses: Module[] = [];
+  generators: Module[] = [];
+  damageReduction: Module[] = [];
+  other: Module[] = [];
+  drives: Module[] = [];
+
   constructor(
     public ms: MainService,
     private cd: ChangeDetectorRef,
@@ -44,6 +51,7 @@ export class EditorComponent
     if (typeof preventScroll === typeof Function) preventScroll();
   }
   ngOnChanges(changes: SimpleChanges) {
+    this.setClasses();
     if (this.design) this.design.copy();
     if (this.design.modules.length === 0) {
       this.edit();
@@ -62,6 +70,21 @@ export class EditorComponent
       this.edit();
     }
 
+    this.defenses = this.ms.game.fleetManager.unlockedModules.filter(
+      m => m.armor.gt(0) || m.shield.gt(0)
+    );
+    this.generators = this.ms.game.fleetManager.unlockedModules.filter(m =>
+      m.energyBalance.gt(0)
+    );
+    this.damageReduction = this.ms.game.fleetManager.unlockedModules.filter(
+      m => m.armorReduction.gt(0) || m.shieldReduction.gt(0)
+    );
+    this.drives = this.ms.game.fleetManager.unlockedModules.filter(
+      m => m.tilePerSec > 0
+    );
+
+    this.setClasses();
+
     this.subscriptions.push(
       this.ms.em.updateEmitter.subscribe(() => {
         this.cd.markForCheck();
@@ -74,6 +97,21 @@ export class EditorComponent
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
 
+  setClasses() {
+    if (
+      !this.design.class ||
+      (this.design.class.id !== "4" && this.design.class.id !== "5")
+    ) {
+      this.weapons = this.ms.game.fleetManager.unlockedModules.filter(m =>
+        m.damage.gt(0)
+      );
+    }
+    if (this.design.class && this.design.class.id === "4") {
+      this.other = this.ms.game.fleetManager.allModules.filter(m =>
+        m.shieldCharge.gt(0)
+      );
+    }
+  }
   addModule() {
     this.design.addModule();
     this.reload();

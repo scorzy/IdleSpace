@@ -1,128 +1,104 @@
-<div class="content-area">
-  <div class="clr-row clr-justify-content-between">
-    <h1>
-      <clr-icon shape="lightbulb" size="48" class="resIcon"></clr-icon
-      >Laboratory
-    </h1>
-
-    <!-- <button
-      type="button"
-      class="btn btn-icon btn-link infoPage"
-      (click)="infoModal = true"
-    >
-      <clr-icon shape="help-info"></clr-icon>
-    </button> -->
-  </div>
-
-  <div class="clr-row">
-    <div class="clr-col-12	clr-col-sm-12	clr-col-md-12	clr-col-lg-9	clr-col-xl-8">
-      <div class="clr-row">
+<div class="clr-row">
+  <div class="clr-col-12	clr-col-sm-12	clr-col-md-12	clr-col-lg-9	clr-col-xl-8">
+    <div class="clr-row">
+      <div class="clr-col-12	clr-col-sm-12	clr-col-md-6	clr-col-lg-6	clr-col-xl-6">
+        <h6>Backlog</h6>
         <div
-          class="clr-col-12	clr-col-sm-12	clr-col-md-6	clr-col-lg-6	clr-col-xl-6"
+          cdkDropList
+          #backLogList="cdkDropList"
+          [cdkDropListData]="ms.game.researchManager.backLog"
+          [cdkDropListConnectedTo]="[todoList]"
+          class="drag-list myBg"
+          (cdkDropListDropped)="drop($event)"
         >
-          <h4>Backlog</h4>
-          <div
-            cdkDropList
-            #backLogList="cdkDropList"
-            [cdkDropListData]="ms.game.researchManager.backLog"
-            [cdkDropListConnectedTo]="[todoList]"
-            class="drag-list myBg"
-            (cdkDropListDropped)="drop($event)"
+          <app-job
+            *ngFor="
+              let res of ms.game.researchManager.backLog;
+              trackBy: getResId
+            "
+            [job]="res"
+            [showDetails]="ms.showDetails"
+            cdkDrag
           >
-            <app-job
-              *ngFor="
-                let res of ms.game.researchManager.backLog;
-                trackBy: getResId
-              "
-              [job]="res"
-              [showDetails]="ms.showDetails"
-              cdkDrag
-            >
-            </app-job>
-          </div>
+          </app-job>
         </div>
+      </div>
+      <div class="clr-col-12	clr-col-sm-12	clr-col-md-6	clr-col-lg-6	clr-col-xl-6">
+        <h6>In progress</h6>
         <div
-          class="clr-col-12	clr-col-sm-12	clr-col-md-6	clr-col-lg-6	clr-col-xl-6"
+          cdkDropList
+          #todoList="cdkDropList"
+          [cdkDropListData]="ms.game.researchManager.toDo"
+          [cdkDropListConnectedTo]="[backLogList]"
+          class="drag-list myBg"
+          (cdkDropListDropped)="drop($event)"
         >
-          <h4>In progress</h4>
-          <div
-            cdkDropList
-            #todoList="cdkDropList"
-            [cdkDropListData]="ms.game.researchManager.toDo"
-            [cdkDropListConnectedTo]="[backLogList]"
-            class="drag-list myBg"
-            (cdkDropListDropped)="drop($event)"
+          <app-job
+            *ngFor="let res of ms.game.researchManager.toDo; trackBy: getResId"
+            [job]="res"
+            [showDetails]="ms.showDetails"
+            cdkDrag
           >
-            <app-job
-              *ngFor="
-                let res of ms.game.researchManager.toDo;
-                trackBy: getResId
-              "
-              [job]="res"
-              [showDetails]="ms.showDetails"
-              cdkDrag
-            >
-            </app-job>
-          </div>
+          </app-job>
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="clr-col-12	clr-col-sm-12	clr-col-md-12	clr-col-lg-3	clr-col-xl-4">
-      <p>
-        Unused Computing are converted to research. Researches on the backlog
-        will not be researched. <br />Research multiplier:
-        <app-formatted-quantity [quantity]="resMulti"></app-formatted-quantity
-        ><br />
-        <span>Computing is increasing at: </span>
-        <app-polynom [c]="ms.game.resourceManager.computing.c"> </app-polynom>
-        <br />
-        Research /s:
-        <app-formatted-quantity [quantity]="resPerSec"></app-formatted-quantity>
-      </p>
-
-      <button class="btn btn-outline" (click)="sortPrice()">
-        Sort by price
-      </button>
-      <button class="btn btn-outline" (click)="allBacklog()">
-        All Backlog
-      </button>
-      <button class="btn btn-outline" (click)="allToDo()">
-        All In Progress
-      </button>
-      <button class="btn btn-outline" (click)="bonus = true">
-        Show Bonus
-      </button>
-
+  <div class="clr-col-12	clr-col-sm-12	clr-col-md-12	clr-col-lg-3	clr-col-xl-4">
+    <p>
+      Unused Computing are converted to research. Researches on the backlog will
+      not be researched. <br />Research multiplier:
+      <app-formatted-quantity [quantity]="resMulti"></app-formatted-quantity
+      ><br />
+      <span>Computing is increasing at: </span>
+      <app-polynom [c]="ms.game.resourceManager.computing.c"> </app-polynom>
       <br />
-      <clr-toggle-container>
-        <clr-toggle-wrapper>
-          <input
-            type="checkbox"
-            clrToggle
-            name="showDetails"
-            [(ngModel)]="ms.showDetails"
-          />
-          <label>Show Details</label>
-        </clr-toggle-wrapper>
-      </clr-toggle-container>
+      Research /s:
+      <app-formatted-quantity [quantity]="resPerSec"></app-formatted-quantity>
+    </p>
 
-      <clr-toggle-container>
-        <clr-toggle-wrapper>
-          <input
-            type="checkbox"
-            clrToggle
-            name="autoSort"
-            [(ngModel)]="ms.game.researchManager.autoSort"
-          />
-          <label>Auto Sort</label>
-        </clr-toggle-wrapper>
-      </clr-toggle-container>
-      <div class="clr-subtext-wrapper">
-        <span class="clr-subtext"
-          >Auto Sort: sort researches after completion</span
-        >
-      </div>
+    <button class="btn btn-outline" (click)="sortPrice()">
+      Sort by price
+    </button>
+    <button class="btn btn-outline" (click)="allBacklog()">
+      All Backlog
+    </button>
+    <button class="btn btn-outline" (click)="allToDo()">
+      All In Progress
+    </button>
+    <button class="btn btn-outline" (click)="bonus = true">
+      Show Bonus
+    </button>
+
+    <br />
+    <clr-toggle-container>
+      <clr-toggle-wrapper>
+        <input
+          type="checkbox"
+          clrToggle
+          name="showDetails"
+          [(ngModel)]="ms.showDetails"
+        />
+        <label>Show Details</label>
+      </clr-toggle-wrapper>
+    </clr-toggle-container>
+
+    <clr-toggle-container>
+      <clr-toggle-wrapper>
+        <input
+          type="checkbox"
+          clrToggle
+          name="autoSort"
+          [(ngModel)]="ms.game.researchManager.autoSort"
+        />
+        <label>Auto Sort</label>
+      </clr-toggle-wrapper>
+    </clr-toggle-container>
+    <div class="clr-subtext-wrapper">
+      <span class="clr-subtext"
+        >Auto Sort: sort researches after completion</span
+      >
     </div>
   </div>
 </div>

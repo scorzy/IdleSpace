@@ -32,6 +32,7 @@ export class OptionsService {
   formatEmitter: EventEmitter<number> = new EventEmitter<number>();
   headerEmitter: EventEmitter<number> = new EventEmitter<number>();
   formatId = 0;
+  name = "You";
 
   constructor() {
     this.reloadHeader();
@@ -80,8 +81,8 @@ export class OptionsService {
       c: OptionsService.navalCapNotification,
       v: this.hideRefund,
       f: this.playFabAutoSave,
-      e: OptionsService.noAutomatorOff
-
+      e: OptionsService.noAutomatorOff,
+      y: this.name
     };
   }
   restore(data: any) {
@@ -105,6 +106,7 @@ export class OptionsService {
     if ("v" in data) this.hideRefund = data.v;
     if ("f" in data) this.playFabAutoSave = data.f;
     if ("e" in data) OptionsService.noAutomatorOff = data.e;
+    if ("y" in data) this.name = data.y;
     this.generateFormatter();
     this.reloadHeader();
   }

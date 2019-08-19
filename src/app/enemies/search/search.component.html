@@ -136,6 +136,17 @@
                 ></clr-icon
               ></label>
             </div>
+            <div class="checkbox btn" *ngIf="robot">
+              <input
+                type="checkbox"
+                id="btn-mr"
+                [(ngModel)]="ms.game.enemyManager.moreRobot"
+                [disabled]="
+                  !ms.game.enemyManager.moreRobot && this.bonusCount >= 3
+                "
+              />
+              <label for="btn-mr"> <clr-icon shape="robot"></clr-icon></label>
+            </div>
             <div class="checkbox btn" *ngIf="rand">
               <input
                 type="checkbox"

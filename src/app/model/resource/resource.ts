@@ -17,6 +17,7 @@ import { PLUS_ADD } from "../prestige/allSkillEffects";
 import { ModStack, MOD_MORE } from "../mod/modStack";
 import { IResource } from "../base/iResource";
 import { Automator } from "../automators/automator";
+import { MyFromDecimal } from "../utility/myUtility";
 
 export class Resource extends AbstractUnlockable
   implements ISpendable, IBuyable, IResource {
@@ -218,7 +219,7 @@ export class Resource extends AbstractUnlockable
   }
   load(data: any): boolean {
     if (!super.load(data)) return false;
-    if ("q" in data) this.quantity = Decimal.fromDecimal(data.q);
+    if ("q" in data) this.quantity = MyFromDecimal(data.q);
     if ("a" in data) {
       for (const actData of data.a) {
         if ("i" in actData) {

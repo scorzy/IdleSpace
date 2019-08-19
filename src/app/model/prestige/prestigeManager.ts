@@ -30,7 +30,10 @@ export class PrestigeManager implements ISalvable {
     );
   }
   canAscend(): boolean {
-    return this.prestigeToEarn + this.totalPrestige >= (20 * (1 + this.ascension)) + this.ascension;
+    return (
+      this.prestigeToEarn + this.totalPrestige >=
+      20 * (1 + this.ascension) + this.ascension
+    );
   }
   ascend() {
     this.ascension++;
@@ -65,6 +68,8 @@ export class PrestigeManager implements ISalvable {
     this.reset();
     if ("t" in data) this.totalPrestige = data.t;
     if ("a" in data) this.ascension = data.a;
+    // this.ascension = 2;
+    // this.totalPrestige = 100;
     if ("s" in data) {
       for (const effData of data.s) {
         const effect = AllSkillEffects.effectList.find(e => e.id === effData.i);

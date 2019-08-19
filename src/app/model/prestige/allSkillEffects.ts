@@ -59,6 +59,7 @@ export class AllSkillEffects {
   static readonly MODULE_LEVEL = new SkillEffect(13, "S", 2);
   static readonly DOUBLE_MISSILE = new SkillEffect(15, "S", 3);
   static readonly MULTI_FACTORY = new SkillEffect(16, "2");
+  static readonly TILE_MERGE = new SkillEffect(40, "S", 2);
   //#endregion
   //#region Robot Modding
   static readonly FACTORY_BONUS = new SkillEffect(17, "2", 3);
@@ -82,6 +83,7 @@ export class AllSkillEffects {
   static readonly SEARCH_HAB2 = new SkillEffect(32, "S", 1);
   static readonly SEARCH_RANDOM = new SkillEffect(33, "S", 1);
   static readonly DOUBLE_DISTRICTS = new SkillEffect(34, "S", 5);
+  static readonly SEARCH_ROBOT = new SkillEffect(41, "S", 1);
   //#endregion
   //#region Resource Gain Multi
   static readonly ENERGY_MULTI = new SkillEffect(35, "2");
@@ -146,7 +148,7 @@ export class AllSkillEffects {
       tier1[i].shape = resources[i].shape;
       tier1[i].getDescription = (num = 1) => {
         return (
-          "+" +
+          "+ " +
           MainService.formatPipe.transform(PLUS_ADD * num, true) +
           " " +
           workers[i].name +
@@ -209,11 +211,7 @@ export class AllSkillEffects {
     AllSkillEffects.FAST_COMBAT.limit = new Decimal(1);
     AllSkillEffects.FAST_COMBAT.isLimited = true;
     AllSkillEffects.FAST_COMBAT.getDescription = (num = 1) => {
-      return (
-        "- " +
-        MainService.formatPipe.transform(Math.min(0.3 * num, 1)) +
-        "s fight time"
-      );
+      return "+ " + MainService.formatPipe.transform(0.25 * num) + " tile /s";
     };
     AllSkillEffects.DOUBLE_NAVAL_CAPACITY.getDescription = (num = 1) => {
       return (
@@ -262,6 +260,14 @@ export class AllSkillEffects {
     resMan.missileX1.productionMultiplier.multiplicativeBonus.push(
       new Bonus(AllSkillEffects.MULTI_FACTORY, 2.5)
     );
+
+    AllSkillEffects.TILE_MERGE.limit = new Decimal(2);
+    AllSkillEffects.TILE_MERGE.isLimited = true;
+    AllSkillEffects.TILE_MERGE.getDescription = (num = 1) => {
+      return (
+        "+ " + MainService.formatPipe.transform(20 * num, true) + "% tile /s"
+      );
+    };
     //#endregion
     //#region Robot Modding
     AllSkillEffects.FACTORY_BONUS.getDescription = (num = 1) => {
@@ -382,6 +388,20 @@ export class AllSkillEffects {
         "% districts gain"
       );
     };
+
+    AllSkillEffects.SEARCH_ROBOT.limit = new Decimal(1);
+    AllSkillEffects.SEARCH_ROBOT.isLimited = true;
+    AllSkillEffects.SEARCH_ROBOT.getDescription = (num = 1) => {
+      return (
+        "+ " +
+        MainService.formatPipe.transform(50 * num, true) +
+        "% Searching, can search for robot c."
+      );
+    };
+    AllSkillEffects.SEARCH_ROBOT.name = "Prestige search robot c.";
+    resMan.searchX1.productionMultiplier.additiveBonus.push(
+      new Bonus(AllSkillEffects.SEARCH_ROBOT, 0.5, true)
+    );
     //#endregion
     //#region Gain Multi
     AllSkillEffects.ENERGY_MULTI.getDescription = (num = 1) => {
@@ -475,7 +495,9 @@ export class AllSkillEffects {
       AllSkillEffects.SEARCH_HAB2,
       AllSkillEffects.SEARCH_RANDOM,
       AllSkillEffects.DOUBLE_DISTRICTS,
-      AllSkillEffects.MULTI_FACTORY
+      AllSkillEffects.MULTI_FACTORY,
+      AllSkillEffects.TILE_MERGE,
+      AllSkillEffects.SEARCH_ROBOT
     ];
     if (!prestige) {
       AllSkillEffects.effectList.forEach(e => {

@@ -76,6 +76,8 @@ import { ChangelogComponent } from "./info/changelog/changelog.component";
 import { AutomatorsComponent } from "./automator-group/automators/automators.component";
 import { SkillNavComponent } from './prestige/skill-nav/skill-nav.component';
 import { SkillGroupComponent } from './prestige/skill-group/skill-group.component';
+import { LabTabsComponent } from './lab/lab-tabs/lab-tabs.component';
+import { LabAutoComponent } from './lab/lab-auto/lab-auto.component';
 
 @NgModule({
   declarations: [
@@ -145,7 +147,9 @@ import { SkillGroupComponent } from './prestige/skill-group/skill-group.componen
     ChangelogComponent,
     AutomatorsComponent,
     SkillNavComponent,
-    SkillGroupComponent
+    SkillGroupComponent,
+    LabTabsComponent,
+    LabAutoComponent
   ],
   imports: [
     BrowserAnimationsModule,

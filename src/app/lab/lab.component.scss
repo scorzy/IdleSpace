@@ -8,3 +8,9 @@ app-research {
 .cdk-drag-animating {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
+.drag-list {
+  margin-top: 0;
+}
+h6 {
+  margin-bottom: 0;
+}

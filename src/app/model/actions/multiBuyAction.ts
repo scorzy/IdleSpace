@@ -2,6 +2,7 @@ import { Action } from "./abstractAction";
 import { MultiPrice } from "../prices/multiPrice";
 import { Price } from "../prices/price";
 import { BuyAction } from "./buyAction";
+import { ZERO_DECIMAL_IMMUTABLE } from "../game";
 
 /**
  * Multiple Action aggregation
@@ -14,6 +15,15 @@ export class MultiBuyAction extends Action {
     this.id = "";
     this.actions.forEach(a => {
       this.id += "-" + a.id;
+    });
+    this.init();
+  }
+
+  init() {
+    this.multiPrice.prices.forEach(p => {
+      p.cost = ZERO_DECIMAL_IMMUTABLE;
+    });
+    this.actions.forEach(a => {
       a.multiPrice.prices.forEach(p => {
         let price = this.multiPrice.prices.find(
           k => k.spendable === p.spendable
@@ -38,6 +48,7 @@ export class MultiBuyAction extends Action {
     this.actions.forEach(a => a.afterBuy(number));
   }
   reload() {
+    this.init();
     if (this.isCapped()) {
       super.reload();
       this.canBuy = false;
@@ -46,6 +57,7 @@ export class MultiBuyAction extends Action {
       this.maxBuy = new Decimal(0);
       return;
     }
+    super.reload();
     this.actions
       .filter(a => a instanceof BuyAction && a.buyable.isLimited)
       .forEach(a => {
@@ -55,8 +67,6 @@ export class MultiBuyAction extends Action {
           this.maxBuy = this.maxBuy.min(max);
         }
       });
-
-    super.reload();
   }
   isCapped(): boolean {
     return (

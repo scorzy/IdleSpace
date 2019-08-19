@@ -74,7 +74,14 @@ export const descriptions = {
       "Electrical grid",
       "Increase production of Technicians by 100%, stack additive."
     ],
-
+    sM: [
+      "Science complex",
+      "Increase production of Science Drone by 100%, stack additive."
+    ],
+    xM: [
+      "Computing center",
+      "Increase production of Computing Drone by 100%, stack additive."
+    ],
     //  Civilian Ships
     te: [
       "Terraformer",

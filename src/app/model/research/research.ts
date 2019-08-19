@@ -10,6 +10,8 @@ import { OptionsService } from "src/app/options.service";
 import { IResource } from "../base/iResource";
 import { Module } from "../fleet/module";
 import { ShipType } from "../fleet/shipTypes";
+import { Classes, ShipClass } from "../fleet/class";
+import { MyFromDecimal } from "../utility/myUtility";
 
 export class Research extends AbstractUnlockable
   implements IHasQuantity, IResource, IJob {
@@ -34,11 +36,14 @@ export class Research extends AbstractUnlockable
   module: Module;
   ship: ShipType;
   bonus: Array<[string, string]>;
+  classes: ShipClass[];
 
   progressPercent = 0;
   done = false;
   firstDone = false;
   number = "";
+
+  maxLevel = -1;
 
   static fromData(data: IResearchData): Research {
     const ret = new Research();
@@ -52,6 +57,14 @@ export class Research extends AbstractUnlockable
     if (data.limit) ret.limit = new Decimal(data.limit);
     if (data.ship) ret.ship = data.ship;
     if (data.bonus) ret.bonus = data.bonus;
+    if (data.classesToUnlock) {
+      ret.classes = data.classesToUnlock.map(c =>
+        Classes.find(cl => cl.id === c)
+      );
+      ret.classes.forEach(cla => {
+        ret.toUnlock.push(cla);
+      });
+    }
     return ret;
   }
 
@@ -74,7 +87,7 @@ export class Research extends AbstractUnlockable
 
       //  Notification
       if (OptionsService.researchNotification) {
-        MainService.toastr.show("", name, {}, "toast-research");
+        MainService.researchesCompleted.push("" + name);
       }
     }
 
@@ -100,7 +113,8 @@ export class Research extends AbstractUnlockable
   onBuy() {}
   unlock(): boolean {
     if (super.unlock()) {
-      ResearchManager.getInstance().addAvailable(this);
+      if (this.maxLevel !== 0) ResearchManager.getInstance().addAvailable(this);
+      else ResearchManager.getInstance().backLog.push(this);
       return true;
     }
     return false;
@@ -146,17 +160,27 @@ export class Research extends AbstractUnlockable
   //#region Save and Load
   getSave(): any {
     const save = super.getSave();
+    delete save.u;
     if (this.progress.gt(0)) save.p = this.progress;
     if (this.quantity.gt(0)) save.q = this.quantity;
+    if (this.maxLevel !== -1) save.M = this.maxLevel;
     return save;
   }
   load(data: any): boolean {
     if (!super.load(data)) return false;
-    if ("p" in data) this.progress = Decimal.fromDecimal(data.p);
-    if ("q" in data) this.quantity = Decimal.fromDecimal(data.q);
+    if ("p" in data) this.progress = MyFromDecimal(data.p);
+    if ("q" in data) this.quantity = MyFromDecimal(data.q);
+    if ("M" in data) this.maxLevel = data.M;
 
     this.firstDone = this.quantity.gte(1);
     this.reloadNum();
+
+    if (this.firstDone && this.classes) {
+      this.classes.forEach(c => {
+        c.unlocked = true;
+      });
+    }
+
     return true;
   }
   //#endregion

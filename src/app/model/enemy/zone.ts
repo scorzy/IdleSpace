@@ -3,6 +3,7 @@ import { ISalvable } from "../base/ISalvable";
 import { Enemy } from "./enemy";
 import { Reward } from "./reward";
 import { ResourceManager } from "../resource/resourceManager";
+import { MyFromDecimal } from "../utility/myUtility";
 
 const TO_DO_COLOR = [245, 79, 71];
 const DONE_COLOR = [96, 181, 21];
@@ -18,6 +19,7 @@ export class Zone implements ISalvable {
   color = "rgb(245, 79, 71)";
   originalNavCap = new Decimal(0);
   shape: string;
+  mergedOrigin: Zone = null;
 
   generateShips(design: ShipDesign[]) {
     const multi = 1 + ((MAX_ZONE_QUANTITY_MULTI - 1) * (this.number + 1)) / 100;
@@ -34,24 +36,29 @@ export class Zone implements ISalvable {
     if (this.completed) {
       this.color = "rgb(96, 181, 21)";
     } else {
-      if (this.ships && this.ships.length > 0) {
-        this.ships.forEach(s => s.reload(false));
-        const totalNav = ShipDesign.GetTotalNavalCap(this.ships);
-        this.percentCompleted = 1 - totalNav.div(this.originalNavCap).toNumber();
-        this.color = "rgb(";
-        for (let i = 0; i < 3; i++) {
-          const col =
-            TO_DO_COLOR[i] +
-            (DONE_COLOR[i] - TO_DO_COLOR[i]) * this.percentCompleted;
-          this.color += col + (i < 2 ? "," : "");
-        }
-        this.color += ")";
+      if (this.mergedOrigin) {
+        this.color = this.mergedOrigin.color;
+      } else {
+        if (this.ships && this.ships.length > 0) {
+          this.ships.forEach(s => s.reload(false));
+          const totalNav = ShipDesign.GetTotalNavalCap(this.ships);
+          this.percentCompleted =
+            1 - totalNav.div(this.originalNavCap).toNumber();
+          this.color = "rgb(";
+          for (let i = 0; i < 3; i++) {
+            const col =
+              TO_DO_COLOR[i] +
+              (DONE_COLOR[i] - TO_DO_COLOR[i]) * this.percentCompleted;
+            this.color += col + (i < 2 ? "," : "");
+          }
+          this.color += ")";
 
-        let n = 1;
-        this.ships.forEach(s => {
-          s.order = n;
-          n++;
-        });
+          let n = 1;
+          this.ships.forEach(s => {
+            s.order = n;
+            n++;
+          });
+        }
       }
     }
 
@@ -80,7 +87,7 @@ export class Zone implements ISalvable {
         this.ships.push(ship);
       }
     }
-    if ("n" in data) this.originalNavCap = Decimal.fromDecimal(data.n);
+    if ("n" in data) this.originalNavCap = MyFromDecimal(data.n);
     if ("w" in data) this.reward = data.w;
     this.reload();
     return true;
@@ -97,6 +104,9 @@ export class Zone implements ISalvable {
         break;
       case Reward.CrystalMine:
         this.shape = ResourceManager.getInstance().crystal.shape;
+        break;
+      case Reward.Robot:
+        this.shape = ResourceManager.getInstance().drone.shape;
         break;
     }
   }

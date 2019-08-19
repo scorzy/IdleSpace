@@ -30,5 +30,9 @@ export const enemyIcons = [
   "ribbon",
   "biohazard",
   "laurel",
-  "horus"
+  "horus",
+  "shieldComb",
+  "sixth",
+  "cuauhtli",
+  "floatingPlat"
 ];

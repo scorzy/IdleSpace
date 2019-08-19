@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": "./",
-    "outDir": "./src/assets",
+    "outDir": "./src/assets_1/",
     "sourceMap": false,
     "declaration": false,
     "module": "umd",
@@ -17,6 +17,7 @@
     "./src/break_infinity.d.ts",
     "./src/app/workers/compressRequest2.ts",
     "./src/app/workers/ship.ts",
-    "./src/app/workers/battleResult.ts"
+    "./src/app/workers/battleResult.ts",
+    "./src/app/model/utility/myUtility.ts"
   ]
 }

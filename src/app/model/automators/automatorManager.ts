@@ -133,6 +133,22 @@ export class AutomatorManager implements ISalvable {
       this.enemyDeleteAutomator,
       this.searchWarpAutomator
     ];
+
+    //  Civilian 1
+    resMan.civilianShips.forEach(r => {
+      r.automation1Name = "Civilian Automation";
+      const autoBuy = new BuildingAutomator(r);
+      autoBuy.prestigeLevel = 30;
+      this.automatorGroups.push(autoBuy);
+    });
+
+    //  Buy Civilian Group
+    for (let i = 0; i < 3; i++) {
+      const autoGr1 = new BuildingGroupAutomator(resMan.tierGroups[3], i + 1);
+      autoGr1.description = "Multiple buy civilian ships at same time";
+      autoGr1.prestigeLevel += 16;
+      this.automatorGroups.push(autoGr1);
+    }
   }
 
   update(now: number) {

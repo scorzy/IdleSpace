@@ -1,5 +1,11 @@
 <h1>Options</h1>
 <form clrForm class="clr-form">
+  <clr-input-container>
+    <label>Your name:</label>
+    <input clrInput type="text" [(ngModel)]="ms.options.name" name="name" />
+  </clr-input-container>
+  <br />
+
   <div class="form-group">
     <label for="numFormat">Number format</label>
     <div class="select">
