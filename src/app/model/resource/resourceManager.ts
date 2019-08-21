@@ -315,7 +315,7 @@ export class ResourceManager implements ISalvable {
         new Price(this.habitableSpace, 10, BUILDING_EXP)
       ])
     );
-    this.metalX1.productionMultiplier.additiveBonus.push(
+    this.metalX1.productionMultiplier.multiplicativeBonus.push(
       new Bonus(this.metalM, 1, true)
     );
     this.crystalM.generateBuyAction(
@@ -325,7 +325,7 @@ export class ResourceManager implements ISalvable {
         new Price(this.habitableSpace, 10, BUILDING_EXP)
       ])
     );
-    this.crystalX1.productionMultiplier.additiveBonus.push(
+    this.crystalX1.productionMultiplier.multiplicativeBonus.push(
       new Bonus(this.crystalM, 1, true)
     );
     this.energyM.generateBuyAction(
@@ -335,7 +335,7 @@ export class ResourceManager implements ISalvable {
         new Price(this.habitableSpace, 10, BUILDING_EXP)
       ])
     );
-    this.energyX1.productionMultiplier.additiveBonus.push(
+    this.energyX1.productionMultiplier.multiplicativeBonus.push(
       new Bonus(this.energyM, 1, true)
     );
     this.scienceM.generateBuyAction(
@@ -352,7 +352,7 @@ export class ResourceManager implements ISalvable {
         new Price(this.habitableSpace, 10, BUILDING_EXP)
       ])
     );
-    this.computingX1.productionMultiplier.additiveBonus.push(
+    this.computingX1.productionMultiplier.multiplicativeBonus.push(
       new Bonus(this.computingM, 1, true)
     )
 

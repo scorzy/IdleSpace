@@ -68,7 +68,7 @@ export class Game {
     this.resourceManager.crystalDistrict.quantity = new Decimal(2);
     // this.darkMatterManager.darkMatter.quantity = new Decimal(1e10);
 
-    this.researchBonus.additiveBonus.push(
+    this.researchBonus.multiplicativeBonus.push(
       new Bonus(this.resourceManager.scienceM, 1, true)
     );
     this.researchBonus.multiplicativeBonus.push(
