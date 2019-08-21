@@ -20,8 +20,8 @@ class Ship {
   getCopy(): Ship {
     const ret = Ship.Ships.pop() || new Ship();
     ret.id = this.id;
-    ret.armor = MyFromDecimal(this.armor);
-    ret.shield = MyFromDecimal(this.shield);
+    ret.armor.fromDecimal(this.armor);
+    ret.shield.fromDecimal(this.shield);
     // Original value shouldn't get modified, reuse original object instead of creating 10000+ new ones for max ships.
     ret.originalArmor = this.originalArmor;
     ret.originalShield = this.originalShield;
