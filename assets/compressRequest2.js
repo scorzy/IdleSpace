@@ -1,1 +1,0 @@
-var CompressRequest2=function(obj,zipped,compress,requestId){this.obj=obj,this.zipped=zipped,this.compress=compress,this.requestId=requestId};
