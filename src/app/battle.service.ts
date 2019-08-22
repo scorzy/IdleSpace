@@ -38,8 +38,8 @@ export class BattleService {
   doBattle(input: BattleRequest, cb: (_: BattleResult) => void): void {
     // console.log(input);
     const initial = Date.now();
-    let playerShips = new Array<Ship>();
-    let enemyShip = new Array<Ship>();
+    const playerShips = new Array<Ship>();
+    const enemyShip = new Array<Ship>();
 
     //#region Initialize Fleets
     const fleets: Array<[Ship[], ShipData[]]> = [
@@ -73,8 +73,8 @@ export class BattleService {
         });
         const qta = MyFromDecimal(ds.quantity).toNumber();
         for (let num = 0; num < qta; num++) {
-          let copy = ship.getCopy();
-          copy.fleetIndex = ships.push(copy)-1;
+          const copy = ship.getCopy();
+          copy.fleetIndex = ships.push(copy) - 1;
         }
       });
     });
@@ -100,11 +100,13 @@ export class BattleService {
 
         for (const target of targets) {
           all.push(target);
-          if (target.class === "3")
+          if (target.class === "3") {
             defenders.push(target);
+          }
 
-          if (target.isDefense)
+          if (target.isDefense) {
             ground.push(target);
+          }
         }
 
         // console.log(defenders.length);
@@ -124,39 +126,48 @@ export class BattleService {
             availableTargets = defenders;
           }
 
+          if (availableTargets.length === 0) continue;
+
           for (const weapon of ship.modules) {
-            const target = availableTargets[Math.floor(Math.random() * availableTargets.length)];
+            const target =
+              availableTargets[
+                Math.floor(Math.random() * availableTargets.length)
+              ];
 
             // targeted dead ship, consider attack as missed
-            if (target.armor.lt(0)) continue
+            if (target.armor.lt(0)) continue;
 
             let damageToDo = weapon.damage;
             //  Damage to shield
             if (target.shield.gt(0)) {
               const shieldPercent = weapon.shieldPercent / 100;
-              let maxShieldDamage = damageToDo.times(shieldPercent)
+              const maxShieldDamage = damageToDo
+                .times(shieldPercent)
                 .minus(target.shieldReduction)
                 .max(0);
 
               //  Skip if damage <0.1% shield
-              if (maxShieldDamage.lt(target.shield.div(1000))) continue
+              if (maxShieldDamage.lt(target.shield.div(1000))) continue;
 
               target.shield = target.shield.minus(maxShieldDamage);
 
-              if (target.shield.gte(0)) continue
+              if (target.shield.gte(0)) continue;
 
-              damageToDo = target.shield.minus(target.shieldReduction).abs().div(shieldPercent);
+              damageToDo = target.shield
+                .minus(target.shieldReduction)
+                .abs()
+                .div(shieldPercent);
               // console.log(damageToDo.toNumber());
-
             }
             //  Damage to Armor
             if (damageToDo.gt(0)) {
-              let maxArmorDamage = damageToDo.times(weapon.armorPercent / 100)
+              const maxArmorDamage = damageToDo
+                .times(weapon.armorPercent / 100)
                 .minus(target.armorReduction)
                 .max(0);
 
               //  Skip if damage < 0.1% armor
-              if (maxArmorDamage.lt(target.armor.div(1000))) continue
+              if (maxArmorDamage.lt(target.armor.div(1000))) continue;
 
               target.armor = target.armor.minus(maxArmorDamage);
               //  Check explosion
@@ -195,7 +206,7 @@ export class BattleService {
               if (target.armor.lt(0)) {
                 target.free();
 
-                let last_target = targets.pop();
+                const last_target = targets.pop();
                 // Modify target array inplace without shifting every item (optimization)
                 if (target !== last_target) {
                   // Take the last target in array and put it where the target was.
@@ -203,12 +214,11 @@ export class BattleService {
                   targets[target.fleetIndex] = last_target;
                 }
               }
-
             }
-          };
+          }
 
           // If all target are dead, skip the rest of the ships in fleet.
-          if (targets.length === 0 ) {
+          if (targets.length === 0) {
             // console.log("break");
             break;
           }
@@ -220,8 +230,10 @@ export class BattleService {
 
       //  Recharge shields
       for (const ships of battleFleets) {
-        let totalCharge = ships
-          .reduce((p, s) => p.plus(s.shieldCharger), new Decimal(0));
+        let totalCharge = ships.reduce(
+          (p, s) => p.plus(s.shieldCharger),
+          new Decimal(0)
+        );
         // console.log("total charge: " + totalCharge.toNumber());
         if (totalCharge.gt(0)) {
           const sorted = ships
@@ -265,11 +277,11 @@ export class BattleService {
 
       arr[0].forEach(fl => {
         fleetCount[fl.id] = 0;
-      })
+      });
 
       // Count and free the ships object
       for (const ship of arr[1]) {
-        fleetCount[ship.id]+=1;
+        fleetCount[ship.id] += 1;
         ship.free();
       }
 

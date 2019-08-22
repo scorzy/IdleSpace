@@ -105,7 +105,7 @@ export class EnemyManager implements ISalvable {
   }
 
   mergeTiles() {
-    if (this.mergeLevel < 1) return false;
+    if (!this.currentEnemy || this.mergeLevel < 1) return false;
     while (
       this.currentMerge < this.mergeLevel &&
       this.currentMerge + this.currentEnemy.currentZone.number < 99
