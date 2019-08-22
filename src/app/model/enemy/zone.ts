@@ -36,7 +36,7 @@ export class Zone implements ISalvable {
     if (this.completed) {
       this.color = "rgb(96, 181, 21)";
     } else {
-      if (this.mergedOrigin) {
+      if (this.mergedOrigin && this.ships.length === 0) {
         this.color = this.mergedOrigin.color;
       } else {
         if (this.ships && this.ships.length > 0) {

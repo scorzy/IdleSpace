@@ -103,11 +103,9 @@ export class EnemyManager implements ISalvable {
     this.currentEnemy.generateZones();
     return true;
   }
-  startBattle() {
-    if (this.inBattle || !this.currentEnemy) return false;
-    this.fightEnemy = this.currentEnemy;
 
-    //  Merge tiles
+  mergeTiles() {
+    if (this.mergeLevel < 1) return false;
     while (
       this.currentMerge < this.mergeLevel &&
       this.currentMerge + this.currentEnemy.currentZone.number < 99
@@ -116,9 +114,9 @@ export class EnemyManager implements ISalvable {
       const zoneToMerge = this.currentEnemy.zones[
         this.currentEnemy.currentZone.number + this.currentMerge
       ];
+      zoneToMerge.mergedOrigin = this.currentEnemy.currentZone;
       zoneToMerge.generateShips(this.currentEnemy.shipsDesign);
       zoneToMerge.ships.forEach(ship => {
-        zoneToMerge.mergedOrigin = this.currentEnemy.currentZone;
         const originalShip = this.currentEnemy.currentZone.ships.find(
           s => s.name === ship.name
         );
@@ -133,6 +131,14 @@ export class EnemyManager implements ISalvable {
       );
       zoneToMerge.ships = [];
     }
+  }
+
+  startBattle() {
+    if (this.inBattle || !this.currentEnemy) return false;
+    this.fightEnemy = this.currentEnemy;
+
+    //  Merge tiles
+    this.mergeTiles();
 
     Emitters.getInstance().battleEndEmitter.emit(1);
     this.inBattle = true;
@@ -486,7 +492,15 @@ export class EnemyManager implements ISalvable {
     this.currentEnemy.currentZone.ships = this.currentEnemy.currentZone.ships.filter(
       s => s.quantity.gt(0)
     );
-    this.currentEnemy.currentZone.reload();
+    // this.currentEnemy.currentZone.reload();
+    for (let n = 0; n <= this.currentMerge; n++) {
+      const mergedZone = this.currentEnemy.zones[
+        this.currentEnemy.currentZone.number + n
+      ];
+      if (mergedZone) {
+        mergedZone.reload();
+      }
+    }
   }
   getMaxNuke(): Decimal {
     if (!this.currentEnemy || !this.currentEnemy.currentZone) {
