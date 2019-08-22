@@ -122,7 +122,7 @@ export class BattleService {
 
           ship.modules.forEach(weapon => {
             const target =
-              availableTargets[Math.floor(Math.random() * targets.length)];
+              availableTargets[Math.floor(Math.random() * availableTargets.length)];
             if (target) {
               let damageToDo = weapon.damage;
               //  Damage to shield
