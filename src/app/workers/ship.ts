@@ -1,5 +1,7 @@
 class Ship {
   private static Ships = new Array<Ship>();
+  private active: Boolean;
+  fleetIndex: number;
   id: string;
   armor: Decimal = new Decimal();
   originalArmor: Decimal;
@@ -19,6 +21,7 @@ class Ship {
 
   getCopy(): Ship {
     const ret = Ship.Ships.pop() || new Ship();
+    ret.active = true;
     ret.id = this.id;
     ret.armor.fromDecimal(this.armor);
     ret.shield.fromDecimal(this.shield);
@@ -38,7 +41,10 @@ class Ship {
 
   free(): void {
     // Reuse object to prevent gc
-    Ship.Ships.push(this);
+    if (this.active === true){
+        this.active = false;
+        Ship.Ships.push(this);
+    }
   }
 }
 
