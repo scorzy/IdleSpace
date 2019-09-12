@@ -18,8 +18,8 @@
     "make-themes": "node-sass ./src/themes --output ./src/assets --output-style compressed",
     "stylelint": "stylelint 'src/**/*.scss' --fix",
     "release": "ngh --dir=dist/IdleSpace",
-    "merge":"uglifyjs src/assets_1/workers/battleResult.js src/assets_1/workers/compressRequest2.js src/assets_1/workers/ship.js src/assets_1/model/utility/myUtility.js --compress -o src/assets/is.js",
-    "merge2":"uglifyjs src/assets_1/workers/compressRequest2.js --compress -o src/assets/compressRequest2.js"
+    "merge": "uglifyjs src/assets_1/workers/battleResult.js src/assets_1/workers/compressRequest2.js src/assets_1/workers/ship.js src/assets_1/model/utility/myUtility.js --compress -o src/assets/is.js",
+    "merge2": "uglifyjs src/assets_1/workers/compressRequest2.js --compress -o src/assets/compressRequest2.js"
   },
   "private": true,
   "husky": {
