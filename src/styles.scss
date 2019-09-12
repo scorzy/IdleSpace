@@ -21,6 +21,11 @@ clr-icon {
   width: 24px;
 }
 
+/* Fixes icon getting cut off when collapsed #37 */
+.clr-vertical-nav.is-collapsed .nav-icon {
+    margin-left: 0 !important;
+}
+
 ::-webkit-scrollbar {
   height: 0.2rem;
   width: 0.2rem;
