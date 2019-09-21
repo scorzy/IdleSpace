@@ -96,10 +96,10 @@ export class MainService {
     MainService.endInPipe = new EndInPipe(this.options);
   }
   start() {
-    let savedData = localStorage.getItem("saveIS");
-    if (!savedData || savedData === null) {
-      savedData = localStorage.getItem("save");
-    }
+    const savedData = localStorage.getItem("saveIS");
+    // if (!savedData || savedData === null) {
+    //   savedData = localStorage.getItem("save");
+    // }
 
     if (savedData) {
       this.load(savedData);
